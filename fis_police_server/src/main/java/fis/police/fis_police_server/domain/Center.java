@@ -1,17 +1,22 @@
 package fis.police.fis_police_server.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@RequiredArgsConstructor
+@Getter
 public class Center {
 
     @Id
     @GeneratedValue
-    @Column
-    private Long center_id;     // 'primary_key',
+    @Column(name = "center_id")
+    private Long id;     // 'primary_key',
 
     @Column(length = 100)
     private String c_sido;        // '시도',
@@ -51,5 +56,11 @@ public class Center {
 
     @Column(length = 100)
     private String c_longitude;   // '경도',
+
+    @OneToMany(mappedBy = "center")
+    private List<Call> callList = new ArrayList<Call>();
+
+    @OneToMany(mappedBy = "center")
+    private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
 }
