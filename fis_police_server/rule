@@ -3,4 +3,4 @@
 3. 엔티티 수정시 협의 필요 + 스키마 참고해서 스키마 자료로 column이름 정함 추가로 요구사항에서 콜직원 입력할때마다 시간 쳐바ㅣㄱ히니까 @superclass 쓰던 하셈
 4. repository는 추가적으로 나오기 불가능 entity 별로 나오는 것임 => 내부로직은 알아서 구현 findbyid find all 등등
 
-test
+test test
