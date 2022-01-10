@@ -1,5 +1,8 @@
 package fis.police.fis_police_server.controller;
 
+import java.util.List;
+
+//현승구
 public interface CenterController {
 
     // 시설검색

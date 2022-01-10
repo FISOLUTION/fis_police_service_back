@@ -1,5 +1,7 @@
 package fis.police.fis_police_server.service;
 
+import java.util.List;
+
 public interface MessengerService {
 
     // 메신져 추기

@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
-import fis.police.fis_police_server.police_util.Maputil;
+import fis.police.fis_police_server.domain.Center;
+import java.util.List;
 
 public interface CenterService {
     // 시설 검색

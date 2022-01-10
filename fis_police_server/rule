@@ -22,6 +22,10 @@ git add .
 git commit -m ""
 git push origin feature/기능…/..
 깃헙가서 pull request 를 develop에게 !!!
+
+1. repository 구현체 만들어 놓기 => 메서드만 쳐놔
+
+
 =======
 test test
 >>>>>>> f450882d4e3deddd6e2f767a3d1214d31fd8d173
