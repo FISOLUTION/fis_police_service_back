@@ -1,11 +1,14 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.dto.SearchCenterDTO;
+import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+
 import java.util.List;
 
 public interface CenterService {
     // 시설 검색
-    List<Center> findCenterList();
+    List<SearchCenterResponseDTO> findCenterList(SearchCenterDTO searchCenterDTO);
 
     //  시설에 해당하는 콜정보, 스케줄정보, 시설정보 반환 로직
     Object centerInfo();
