@@ -6,8 +6,8 @@ spring:
     driver-class-name: org.h2.Driver
 
   mail:
-    host: imap.mailplug.co.kr
-    port: 993
+    host: smtp.mailplug.co.kr   # smtp.mailplug.co.kr  or  imap.mailplug.co.kr  or  pop3.mailplug.co.kr
+    port: 465              # 465  or 993  or  995
     username: fis182@fisolution.co.kr
     password: fis1234*
     properties:
