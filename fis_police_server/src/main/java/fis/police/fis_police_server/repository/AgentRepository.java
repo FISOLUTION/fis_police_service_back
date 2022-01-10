@@ -10,10 +10,6 @@ public interface AgentRepository {
 
     List<Agent> findAll();
 
-    void save();
-
-    void update();
-
-    void delete();
+    void save(Agent agent);
 
 }

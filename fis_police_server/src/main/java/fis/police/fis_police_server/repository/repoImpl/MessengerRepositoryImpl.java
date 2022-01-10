@@ -3,9 +3,16 @@ package fis.police.fis_police_server.repository.repoImpl;
 import fis.police.fis_police_server.domain.Messenger;
 import fis.police.fis_police_server.repository.MessengerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+/*
+    작성날짜: 2022/01/10 10:57 AM
+    작성자: 현승구
+    작성내용: MessengerRepositoryImpl 생성
+*/
+@Repository
 @RequiredArgsConstructor
 public class MessengerRepositoryImpl implements MessengerRepository {
 
