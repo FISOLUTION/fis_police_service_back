@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+/*
+    작성날짜: 2022/01/10 10:56 AM
+    작성자: 이승범
+    작성내용: AgentRepositoryImpl 생성
+*/
 @Repository
 @RequiredArgsConstructor
 public class AgentRepositoryImpl implements AgentRepository {
