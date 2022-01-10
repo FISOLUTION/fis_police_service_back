@@ -9,4 +9,5 @@ import javax.mail.MessagingException;
 public interface CallController {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request) throws MessagingException;
+    String test();
 }

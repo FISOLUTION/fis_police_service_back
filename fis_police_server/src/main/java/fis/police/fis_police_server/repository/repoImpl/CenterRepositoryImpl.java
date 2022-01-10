@@ -3,9 +3,11 @@ package fis.police.fis_police_server.repository.repoImpl;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.repository.CenterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+@Repository
 @RequiredArgsConstructor
 public class CenterRepositoryImpl implements CenterRepository {
 
