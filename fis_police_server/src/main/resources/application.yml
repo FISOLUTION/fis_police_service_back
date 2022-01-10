@@ -31,3 +31,7 @@ logging:
     org.hibernate.Type: trace
     org.apache.coyote.http11: debug
 
+naver:
+  client:
+    id: vb8g27znp3
+    secret: z5APZIFSWO5KyiQjE3QDleGDsGVBdz4IGkYpFQT5
