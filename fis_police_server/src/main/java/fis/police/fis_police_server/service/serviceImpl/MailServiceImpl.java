@@ -6,9 +6,15 @@ import fis.police.fis_police_server.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-
+/*
+    작성 날짜: 2022/01/10 1:18 오후
+    작성자: 고준영
+    작성 내용:  mail service ... 잘 모르겠당ㅋㄹㅎㅋ
+*/
+@Service
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
 

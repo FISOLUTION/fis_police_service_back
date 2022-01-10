@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class Call {
@@ -57,7 +57,11 @@ public class Call {
     @Lob
     private String agent_etc;     // '현장요원 특이사항
 
-
+/*
+    작성 날짜: 2022/01/10 1:14 오후
+    작성자: 고준영
+    작성 내용: service 계층에서 받아온 api 스펙을 바탕으로 call 객체 생성하는 생성자와 메서드
+*/
     public Call(Center center, User user, LocalDateTime dateTime, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
         this.center = center;
         this.user = user;
@@ -72,8 +76,8 @@ public class Call {
         this.agent_etc = agent_etc;
     }
 
-    public static Call createCall(CallSaveRequest request) {
-        Call call = new Call(request.getCenter(), request.getUser(), request.getDateTime(), request.getParticipation(),
+    public static Call createCall(CallSaveRequest request, Center center, User user) {
+        Call call = new Call(center, user, request.getDateTime(), request.getParticipation(),
                 request.getIn_out(), request.getC_manager(), request.getM_ph(), request.getM_email(), request.getNum(),
                 request.getCenter_etc(), request.getAgent_etc());
 

@@ -9,15 +9,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
+/*
+    작성 날짜: 2022/01/10 1:15 오후
+    작성자: 고준영
+    작성 내용:  call 기록 저장 시 받아올 api 스펙
+*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CallSaveRequest {
 
 //    private Long id;
-    private Center center;  // 추후에 center_id만 받아와서 center을 찾는 로직 구현해야 할 것으로 예상됨
-    private User user;      // 위와 마찬가지
+
+    private Long center_id;
+    private Long user_id;
     private LocalDateTime dateTime;
     private Participation participation;
     private InOut in_out;
