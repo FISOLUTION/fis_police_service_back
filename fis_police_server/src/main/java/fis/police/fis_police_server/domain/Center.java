@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.domain;
 
 import com.sun.istack.NotNull;
+import fis.police.fis_police_server.domain.enumType.Participation;
+import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +58,12 @@ public class Center {
 
     @Column(length = 100)
     private String c_longitude;   // '경도',
+
+    @Enumerated
+    private Participation participation;
+
+    @Enumerated
+    private Visited visited;
 
     @OneToMany(mappedBy = "center")
     private List<Call> callList = new ArrayList<Call>();
