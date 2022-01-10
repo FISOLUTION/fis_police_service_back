@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/*
+    작성날짜: 2022/01/10 5:41 PM
+    작성자: 이승범
+    작성내용: AgentServiceImpl 구현중
+*/
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -18,8 +23,16 @@ public class AgentServiceImpl implements AgentService {
 
     @Override // 현장요원 추가
     public void saveAgent(Agent agent) {
+
         agentRepository.save(agent);
     }
+
+//    private void validateDuplicateAgent(Agent agent){
+//        List<Agent> findAgentList = agentRepository.findById(agent.getId());
+//        if(!findAgentList.isEmpty()){
+//            throw new Exception("이미 존재하는 현장요원입니다.");
+//        }
+//    }
 
     @Override // 현장요원 수정
     public Boolean modifyAgent() {
