@@ -28,7 +28,8 @@ public class UserControllerImpl implements UserController {
     // 콜직원 추가
     @Override
     @PostMapping("/user")
-    public UserSaveResponse saveUser(@RequestBody UserSaveRequest request) {
+    public UserSaveResponse saveUser(@RequestBody UserSaveRequest request){
+        System.out.println("1. 들어가지나?"+request.getUser_id());
         if(request.getUser_id() == null){ // 새로운 회원
             return userService.saveUser(request);
         } else { //기존 회원일 경우 업데이트
