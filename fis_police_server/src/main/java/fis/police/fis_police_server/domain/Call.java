@@ -3,7 +3,10 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
+import fis.police.fis_police_server.dto.CallSaveRequest;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.convert.ReadingConverter;
 
@@ -12,6 +15,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
+//@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Call {
 
@@ -43,10 +48,39 @@ public class Call {
     @Column(length = 100)
     private String m_email;       // '시설 담당자 이메일 ',
 
+    @Column
+    private Integer num;          // '시설 예상인원'
+
     @Lob
     private String center_etc;    // '시설 특이사항
 
     @Lob
     private String agent_etc;     // '현장요원 특이사항
 
+/*
+    작성 날짜: 2022/01/10 1:14 오후
+    작성자: 고준영
+    작성 내용: service 계층에서 받아온 api 스펙을 바탕으로 call 객체 생성하는 생성자와 메서드
+*/
+    public Call(Center center, User user, LocalDateTime dateTime, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
+        this.center = center;
+        this.user = user;
+        this.dateTime = dateTime;
+        this.participation = participation;
+        this.in_out = in_out;
+        this.c_manager = c_manager;
+        this.m_ph = m_ph;
+        this.m_email = m_email;
+        this.num = num;
+        this.center_etc = center_etc;
+        this.agent_etc = agent_etc;
+    }
+
+    public static Call createCall(CallSaveRequest request, Center center, User user) {
+        Call call = new Call(center, user, request.getDateTime(), request.getParticipation(),
+                request.getIn_out(), request.getC_manager(), request.getM_ph(), request.getM_email(), request.getNum(),
+                request.getCenter_etc(), request.getAgent_etc());
+
+        return call;
+    }
 }

@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.dto.CallSaveRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,4 @@ public interface CallRepository {
 
     void save(Call call);
     Call findById(Long id);
-
 }
