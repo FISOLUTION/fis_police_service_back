@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @Getter
 public class Schedule {
 
+
     @Id @GeneratedValue
     @Column(name = "schedule_id")
     private Long id;
