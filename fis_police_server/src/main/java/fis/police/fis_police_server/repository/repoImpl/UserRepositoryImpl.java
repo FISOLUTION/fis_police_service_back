@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 
 /*
@@ -28,5 +29,11 @@ public class UserRepositoryImpl implements UserRepository {
     public User findById(Long id) {
         User findUserById = em.find(User.class, id);
         return findUserById;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return em.createQuery("select u from User u", User.class)
+                .getResultList();
     }
 }
