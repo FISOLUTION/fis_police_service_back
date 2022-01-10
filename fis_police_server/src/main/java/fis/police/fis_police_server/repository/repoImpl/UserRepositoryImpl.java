@@ -32,6 +32,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public List<User> findByNickname(String nickname) {
+        return em.createQuery("select u from User u where u.u_nickname = :nickname", User.class)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
+    @Override
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class)
                 .getResultList();
