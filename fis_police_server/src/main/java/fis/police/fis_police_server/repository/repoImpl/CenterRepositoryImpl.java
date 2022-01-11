@@ -3,16 +3,18 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.QCall;
 import fis.police.fis_police_server.domain.QCenter;
+import fis.police.fis_police_server.domain.QSchedule;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
-import fis.police.fis_police_server.service.exceptions.CustomSearchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
 
 @Repository
@@ -22,6 +24,8 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
     QCenter qCenter = QCenter.center;
+    QCall qCall = QCall.call;
+    QSchedule qSchedule = QSchedule.schedule;
 
     /*
         날짜 : 2022/01/10 10:42 오전
@@ -51,7 +55,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         작성내용 : querydsl이용해서 centersearch 구현
     */
     @Override
-    public List<SearchCenterResponseDTO> findBSearchCenterDTO(String c_name, String c_address, String c_ph) throws CustomSearchException {
+    public List<SearchCenterResponseDTO> findBSearchCenterDTO(String c_name, String c_address, String c_ph) {
         List<SearchCenterResponseDTO> centerList;
         if(c_name == null && c_address == null && c_ph == null){
             centerList =
@@ -74,7 +78,17 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
                             .limit(1000)
                             .fetch();
         }
-        if(centerList.isEmpty()) throw new CustomSearchException("findBSearchCenterDTO" ,"조건에 맞는 center가 존재하지 않습니다");
-        else return centerList;
+        return centerList;
+    }
+
+    @Override
+    public Center findByIdAndFetchAll(Long id) throws NoResultException, NonUniqueResultException {
+        //  list "select center from Center center join Center.Call on 조건 join
+        return em.createQuery("select center " +
+                "from Center center " +
+                "join center.callList as call on center.id = :id " +
+                "join center.scheduleList as schedule on center.id = :id", Center.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

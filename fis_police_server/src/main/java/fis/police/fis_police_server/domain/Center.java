@@ -3,8 +3,10 @@ package fis.police.fis_police_server.domain;
 import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Center {
 
@@ -65,10 +68,10 @@ public class Center {
     @Enumerated(EnumType.STRING)
     private Visited visited;
 
-    @OneToMany(mappedBy = "center")
+    @OneToMany(mappedBy = "center", cascade = CascadeType.PERSIST)
     private List<Call> callList = new ArrayList<Call>();
 
-    @OneToMany(mappedBy = "center")
+    @OneToMany(mappedBy = "center", cascade = CascadeType.PERSIST)
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
     /*
@@ -81,5 +84,7 @@ public class Center {
         this.c_address = c_address;
         this.c_ph = c_ph;
     }
+
+
 
 }
