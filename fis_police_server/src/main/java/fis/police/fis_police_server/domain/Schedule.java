@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -48,4 +49,13 @@ public class Schedule {
     @Column @Lob
     private String total_etc;               // 비고
 
+    /*
+        날짜 : 2022/01/11 5:24 오후
+        작성자 : 현승구
+        작성내용 : test 코드를 위한 constructor
+    */
+    public Schedule(Center center, String center_etc) {
+        this.center = center;
+        this.center_etc = center_etc;
+    }
 }

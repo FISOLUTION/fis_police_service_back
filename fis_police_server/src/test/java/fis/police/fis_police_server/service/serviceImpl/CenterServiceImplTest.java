@@ -52,15 +52,14 @@ class CenterServiceImplTest {
         SearchCenterDTO searchCenterDTO2 = new SearchCenterDTO(null, null, null);
         SearchCenterDTO searchCenterDTO3 = new SearchCenterDTO("시설이름 4", "서울", null);
         System.out.println("1차 데이터 검색");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList1 = centerService.findCenterList(searchCenterDTO1);
+        List<SearchCenterResponseDTO> searchCenterResponseDTOList1 = centerService.findCenterList("시설이름 1", null, null);
         searchCenterResponseDTOList1.stream().forEach(e-> System.out.println("e = " + e));
-        System.out.println("2차 데이터 검색 다나와야 함");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList2 = centerService.findCenterList(searchCenterDTO2);
+        System.out.println("2차 데이터 검색");
+        List<SearchCenterResponseDTO> searchCenterResponseDTOList2 = centerService.findCenterList(null, null, null);
         searchCenterResponseDTOList2.stream().forEach(e-> System.out.println("e = " + e));
         System.out.println("3차 데이터 검색");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList3 = centerService.findCenterList(searchCenterDTO3);
+        List<SearchCenterResponseDTO> searchCenterResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
         searchCenterResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
-
 
         Assertions.assertThat(searchCenterResponseDTOList1.size()).isEqualTo(1L);
         Assertions.assertThat(searchCenterResponseDTOList2.size()).isEqualTo(3L);

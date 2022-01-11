@@ -26,10 +26,12 @@ public class Call {
     @Column(name = "call_id")
     private Long id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "center_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "center_id")
     private Center center;      // BIGINT              NOT NULL                        comment 'center_id',
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;        // BIGINT                 NOT NULL                        comment 'user_id',
 
     @Column(length = 10)
@@ -84,5 +86,15 @@ public class Call {
                 request.getCenter_etc(), request.getAgent_etc());
 
         return call;
+    }
+
+    /*
+        날짜 : 2022/01/11 5:22 오후
+        작성자 : 현승구
+        작성내용 : test code 위한 constructor
+    */
+
+    public Call(Center center) {
+        this.center = center;
     }
 }
