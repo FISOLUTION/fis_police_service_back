@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /*
     작성 날짜: 2022/01/10 10:17 오전
@@ -45,6 +48,19 @@ public class CallRepositoryImpl implements CallRepository {
 //        센터 별 콜 기록 중 최근 값 찾아오기 (primary key가 가장 큰 거 찾아오면 될 듯함) 가장 최근에 저장된 콜 기록에서 메일 주소를 따오기 위함
 //        em.createQuery("select c from Call c where ")
         return null;
+
+    }
+
+    /*
+        작성 날짜: 2022/01/11 2:51 오후
+        작성자: 고준영
+        작성 내용: 날짜별 user의 통화 건수를 알아보기 위해 작성  뭔가 문제가 있는 것이 확실함...;
+    */
+    @Override
+    public List<Call> callByUser(String dateTime) {
+        return em.createQuery("select c from Call c where c.dateTime = : dateTime group by c.user.id", Call.class)
+                .setParameter("dateTime", dateTime)
+                .getResultList();
 
     }
 }

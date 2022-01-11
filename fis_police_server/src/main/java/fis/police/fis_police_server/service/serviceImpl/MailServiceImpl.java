@@ -41,12 +41,10 @@ public class MailServiceImpl implements MailService {
                 "<div>서울특별시 금천구 가산디지털2로 108 1204, 1207호 (가산동, 뉴티캐슬) <div>\n" +
                 "<div>TEL  : 070-7872-7748   Fax : 02-2626-9800<div>");
 
-
-
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-//        mimeMessageHelper.setFrom(from);
+        mimeMessageHelper.setFrom(from);
 //        mimeMessageHelper.setFrom(new InternetAddress(from));
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);
@@ -54,7 +52,6 @@ public class MailServiceImpl implements MailService {
 
 //        FileSystemResource fileSystemResource = new FileSystemResource("./2021_경찰청_팝업_배부용.jpeg");
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fileSystemResource);
-
 
         mailSender.send(message);
 
