@@ -1,15 +1,15 @@
 spring:
   datasource:
     url:  jdbc:h2:tcp://localhost/~/fis_police
-    username: bora
+    username: sa
     password:
     driver-class-name: org.h2.Driver
-
+# 작성자: 고준영, 작성내용: gmail로는 보내지는데 fis182@fisolution.co.kr에서는 보내지지 않는다 ㅅㅂ;
   mail:
-    host: imap.mailplug.co.kr
-    port: 993
-    username: fis182@fisolution.co.kr
-    password: fis1234*
+    host: smtp.gmail.com   # smtp.mailplug.co.kr  or  imap.mailplug.co.kr  or  pop3.mailplug.co.kr  or  smtp.gmail.com
+    port: 587              # 465  or 993  or  995  or  587
+    username: godoly5180@gmail.com
+    password: kjy734656
     properties:
       mail:
         smtp:
@@ -31,3 +31,7 @@ logging:
     org.hibernate.Type: trace
     org.apache.coyote.http11: debug
 
+naver:
+  client:
+    id: vb8g27znp3
+    secret: z5APZIFSWO5KyiQjE3QDleGDsGVBdz4IGkYpFQT5
