@@ -36,7 +36,10 @@ public class CallServiceImpl implements CallService {
         Call call = Call.createCall(request, center, user);
         callRepository.save(call);
         CallSaveResponse response = new CallSaveResponse();
-        response.setId(call.getId());
+        response.setCenter_id(call.getCenter().getId());
+        response.setUser_id(call.getUser().getId());
+        response.setCall_id(call.getId());
+//        response.setId(call.getId());
         response.setStatus_code("잘 저장됨");   // try catch 써야할 것으로 예상됨.
 
         return response;

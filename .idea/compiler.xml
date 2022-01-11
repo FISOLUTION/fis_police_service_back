@@ -10,5 +10,8 @@
         <module name="fis_police_server.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="fis_police_server.querydsl" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
