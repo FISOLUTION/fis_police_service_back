@@ -59,10 +59,10 @@ public class Center {
     @Column(length = 100)
     private String c_longitude;   // '경도',
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Participation participation;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Visited visited;
 
     @OneToMany(mappedBy = "center")
