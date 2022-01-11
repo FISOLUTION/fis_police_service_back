@@ -5,6 +5,8 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
+import fis.police.fis_police_server.dto.UserCallByDateRequest;
+import fis.police.fis_police_server.dto.UserCallByDateResponse;
 import fis.police.fis_police_server.service.serviceImpl.CallServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,5 +41,14 @@ public class CallControllerImpl implements CallController {
     @GetMapping("/call/test")
     public String test() {
         return "ok";
+    }
+
+    @GetMapping("/call/date")       // 내가 혼자 지은 url 임 , 회의 때 하지 않은 내용이라서
+    @Override
+    public UserCallByDateResponse userCallByDate(UserCallByDateRequest request) {
+
+        String date = request.getDate();
+        return callService.userCallByDate(date);
+
     }
 }
