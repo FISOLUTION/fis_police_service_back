@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CallSaveResponse {
 
-    private Long id;
+    private Long center_id;
+    private Long user_id;
+    private Long call_id;
 
     private String status_code;
 }
