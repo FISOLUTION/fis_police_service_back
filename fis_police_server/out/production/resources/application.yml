@@ -1,15 +1,15 @@
 spring:
   datasource:
     url:  jdbc:h2:tcp://localhost/~/fis_police
-    username: sa
+    username: bora
     password:
     driver-class-name: org.h2.Driver
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username:
-    password:
+    host: smtp.mailplug.co.kr   # smtp.mailplug.co.kr  or  imap.mailplug.co.kr  or  pop3.mailplug.co.kr
+    port: 465              # 465  or 993  or  995
+    username: fis182@fisolution.co.kr
+    password: fis1234*
     properties:
       mail:
         smtp:
@@ -31,3 +31,7 @@ logging:
     org.hibernate.Type: trace
     org.apache.coyote.http11: debug
 
+naver:
+  client:
+    id: vb8g27znp3
+    secret: z5APZIFSWO5KyiQjE3QDleGDsGVBdz4IGkYpFQT5

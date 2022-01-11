@@ -6,6 +6,7 @@ import fis.police.fis_police_server.dto.MailSendResponse;
 import fis.police.fis_police_server.service.serviceImpl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
@@ -22,8 +23,10 @@ public class MailControllerImpl implements MailController {
 
     @GetMapping("/mail/send")
     @Override
-    public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
+    public MailSendResponse sendMail(@RequestBody MailSendRequest request) throws MessagingException {
 
+        System.out.println("request.getCenter_id() = " + request.getCenter_id());
+        System.out.println("request.getM_email() = " + request.getM_email());
         return mailService.sendMail(request);
 
     }

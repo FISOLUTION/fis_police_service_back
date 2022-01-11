@@ -32,7 +32,7 @@ public class User {
     @Column(length = 100)
     private String u_nickname;              // "사용자 id"
 
-    @Column(length = 6)
+    @Column(length = 10)
     private String u_name;                  // '사용자 이름',
 
     @Column(length = 100)
@@ -74,7 +74,6 @@ public class User {
         User user = new User(request.getU_nickname(), request.getU_name(), request.getU_pwd(), request.getU_ph(), request.getU_sDate(), request.getU_auth());
         return user;
     }
-
 
 /*
     날짜 : 2022/01/10 1:54 오후
