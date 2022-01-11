@@ -52,7 +52,7 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 
-    public Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
+    public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
                              String a_equipment, LocalDateTime a_receiveDate, String a_latitude, String a_longitude) {
         Agent agent = new Agent();
         agent.a_name = a_name;
@@ -64,6 +64,7 @@ public class Agent {
         agent.a_receiveDate = a_receiveDate;
         agent.a_latitude = a_latitude;
         agent.a_longitude = a_longitude;
+        agent.a_status = AgentStatus.WORK;
         return agent;
     }
 }

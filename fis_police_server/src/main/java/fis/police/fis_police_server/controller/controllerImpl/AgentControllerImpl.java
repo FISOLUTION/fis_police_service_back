@@ -6,16 +6,11 @@ import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.serviceImpl.MapConfig;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -34,21 +29,7 @@ public class AgentControllerImpl implements AgentController {
     @Override
     @PostMapping("/agent")
     public void saveAgent(@RequestBody AgentSaveRequest request) {
-        try{
-            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-            factory.setConnectionRequestTimeout(5000);
-            factory.setReadTimeout(5000);
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
-            httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
-            String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="
-                    + request.getA_address();
-            final HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-            System.out.println(restTemplate.exchange(url, HttpMethod.GET, entity, String.class));
-        } catch (Exception e){
-            System.out.println(e);
-        }
+        agentService.saveAgent(request);
     }
 
     @Override
