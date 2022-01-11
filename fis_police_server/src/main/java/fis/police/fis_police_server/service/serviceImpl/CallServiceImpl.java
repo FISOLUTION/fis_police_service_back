@@ -5,9 +5,6 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
-import fis.police.fis_police_server.repository.CallRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.UserRepositoryImpl;
@@ -39,7 +36,6 @@ public class CallServiceImpl implements CallService {
         response.setCenter_id(call.getCenter().getId());
         response.setUser_id(call.getUser().getId());
         response.setCall_id(call.getId());
-//        response.setId(call.getId());
         response.setStatus_code("잘 저장됨");   // try catch 써야할 것으로 예상됨.
 
         return response;
