@@ -5,6 +5,8 @@ import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,7 +22,8 @@ import java.util.stream.Collectors;
     작성내용 : SelectDTO작성
 */
 
-@Data
+@Getter
+@Setter
 public class SelectCenterResponseDTO {
     private Long id;     // 'primary_key',
     private String c_sido;        // '시도',
