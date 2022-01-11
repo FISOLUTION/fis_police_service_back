@@ -71,4 +71,15 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
+    /*
+        날짜 : 2022/01/11 1:27 오후
+        작성자 : 현승구
+        작성내용 : 테스트용 생성자
+    */
+    public Center(String c_name, String c_address, String c_ph){
+        this.c_name = c_name;
+        this.c_address = c_address;
+        this.c_ph = c_ph;
+    }
+
 }
