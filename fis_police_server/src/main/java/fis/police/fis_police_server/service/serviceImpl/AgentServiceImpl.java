@@ -20,10 +20,12 @@ import java.util.List;
 public class AgentServiceImpl implements AgentService {
 
     private final AgentRepository agentRepository;
+    private final MapConfig mapConfig;
 
     @Override // 현장요원 추가
     public void saveAgent(Agent agent) {
-
+        System.out.println(mapConfig.getApiId());
+        System.out.println(mapConfig.getApiKey());
         agentRepository.save(agent);
     }
 

@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor
 @Getter
-
 /*
     날짜 : 2022/01/10 1:16 오후
     작성자 : 원보라
