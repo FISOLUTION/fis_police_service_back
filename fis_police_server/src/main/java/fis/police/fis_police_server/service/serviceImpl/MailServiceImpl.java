@@ -44,7 +44,7 @@ public class MailServiceImpl implements MailService {
         MailSendResponse response = new MailSendResponse();
         response.setCenter_id(request.getCenter_id());
         response.setM_email(request.getM_email());
-        response.setStatus_code("ok");
+
 
 
         String from = "fis182@fisolution.co.kr";
@@ -64,11 +64,11 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setSubject("제목입니다.");
         mimeMessageHelper.setText(body.toString(), true);
 
-//        FileSystemResource fileSystemResource = new FileSystemResource("./attachFile/2021_경찰청_팝업_배부용.jpeg");
-//        mimeMessageHelper.addAttachment("test.jpeg", fileSystemResource);
+//        FileSystemResource fileSystemResource = new FileSystemResource("./2021_경찰청_팝업_배부용.jpeg");
+//        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fileSystemResource);
 
         mailSender.send(message);
-
+        response.setStatus_code("ok");
 
         return response;
     }
