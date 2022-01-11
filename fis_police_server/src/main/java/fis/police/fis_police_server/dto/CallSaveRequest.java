@@ -21,7 +21,7 @@ public class CallSaveRequest {
 
     private Long center_id;
     private Long user_id;
-    private String dateTime;
+    private LocalDateTime dateTime;
     private Participation participation;
     private InOut in_out;
     private String c_manager;

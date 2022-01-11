@@ -85,6 +85,10 @@ public class Center {
         this.c_ph = c_ph;
     }
 
+    public Center(String c_name, Participation participation){
+        this.c_name = c_name;
+        this.participation = participation;
+    }
 
 
 }
