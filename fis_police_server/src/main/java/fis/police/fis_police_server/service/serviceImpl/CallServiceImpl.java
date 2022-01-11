@@ -5,6 +5,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
+import fis.police.fis_police_server.dto.UserCallByDateResponse;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.UserRepositoryImpl;
@@ -13,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+
 /*
     작성 날짜: 2022/01/10 1:17 오후
     작성자: 고준영
@@ -41,6 +45,34 @@ public class CallServiceImpl implements CallService {
         return response;
     }
 
+    /*
+        작성 날짜: 2022/01/11 5:02 오후
+        작성자: 고준영
+        작성 내용: 한 날짜에 콜 직원 별 통화 건수를 알기 위한 함수. 아직 완성 못함 ㅅㅂ
+    */
+    @Override
+    public UserCallByDateResponse userCallByDate(String date) {
+
+        List<Call> calls = callRepository.callByUser(date);
+
+        int[] amount;
+        amount = new int[calls.size()];
+
+
+        for (int i : amount) {
+            amount[i] = calls.get(i).getNum();
+        }
+
+        for (Call call : calls) {
+            System.out.println("call = " + call);
+        }
+
+        UserCallByDateResponse response = new UserCallByDateResponse();
+        response.setUserCall(amount);
+
+        return response;
+    }
+
     public Center findCenter(CallSaveRequest request) {
         Center findCenter = centerRepository.findById(request.getCenter_id());
         return findCenter;
@@ -49,6 +81,19 @@ public class CallServiceImpl implements CallService {
     public User findUser(CallSaveRequest request) {
         User findUser = userRepository.findById(request.getUser_id());
         return findUser;
+    }
+
+    /*
+        작성 날짜: 2022/01/11 2:54 오후
+        작성자: 고준영
+        작성 내용: 정해진 날짜에 user별 통화 건수를 알아내기 위한 service
+    */
+    public void callByUser() {
+        List<Call> calls = callRepository.callByUser("2021-12-11");
+        int size = calls.size();
+        int user[];
+        user = new int[size];
+
     }
 
 }

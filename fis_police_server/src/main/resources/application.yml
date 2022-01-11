@@ -1,7 +1,7 @@
 spring:
   datasource:
     url:  jdbc:h2:tcp://localhost/~/fis_police
-    username: bora
+    username: sa
     password:
     driver-class-name: org.h2.Driver
 # 작성자: 고준영, 작성내용: gmail로는 보내지는데 fis182@fisolution.co.kr에서는 보내지지 않는다 ㅅㅂ;
