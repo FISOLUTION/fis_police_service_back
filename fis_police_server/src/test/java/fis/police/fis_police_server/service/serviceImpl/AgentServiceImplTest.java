@@ -19,10 +19,6 @@ class AgentServiceImplTest {
 
     @Test
     void saveAgent() {
-        Agent agent = new Agent();
-        System.out.println("=====================");
-        agentService.saveAgent(agent);
-        System.out.println(mapConfig.getApiKey());
     }
 
     @Test
