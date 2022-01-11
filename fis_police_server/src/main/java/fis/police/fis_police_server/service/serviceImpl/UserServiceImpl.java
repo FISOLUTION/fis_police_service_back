@@ -2,6 +2,8 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.dto.UserSaveRequest;
+import fis.police.fis_police_server.dto.UserSaveResponse;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,26 +30,39 @@ public class UserServiceImpl implements UserService {
     //== 콜직원 추가 ==//
     @Override
     @Transactional
-    public Long saveUser(User user) {
-        validateDuplicateUser(user); //닉네임 중복 검사
+    public UserSaveResponse saveUser(UserSaveRequest request) {
+        validateDuplicateUser(request); //닉네임 중복 검사
+        User user = User.creatUser(request);// 회원 정보 저장
         userRepository.save(user);
-        return user.getId();
+        UserSaveResponse userSaveResponse = new UserSaveResponse();
+        userSaveResponse.setId(user.getId());
+        return userSaveResponse;
     }
 
     //== 닉네임 중복 검사 ==//
-    private void validateDuplicateUser(User user) {
-        List<User> findUser = userRepository.findByNickname(user.getU_nickname());
-        if (!findUser.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
+    private void validateDuplicateUser(UserSaveRequest request) {
+        List<User> findUser = userRepository.findByNickname(request.getU_nickname());
+        if (findUser.size() > 0) { //수정 시 중복 검사
+            if (!(findUser.get(0).getU_nickname().equals(request.getU_nickname()) && findUser.get(0).getId().equals(request.getUser_id())))
+            { //자신의 이름은 중복검사 안함
+                if (!findUser.isEmpty()) {
+                    throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
+                }
+            }
         }
     }
 
     //== 콜직원 수정 ==//
     @Override
     @Transactional
-    public Boolean modifyUser(Long id, String u_nickname, String u_name, String u_pwd, String u_ph, LocalDate u_sDate, UserAuthority u_auth) {
-        User user = userRepository.findById(id);
-        return user.updateUser(u_nickname, u_name, u_pwd, u_ph, u_sDate, u_auth);
+    public UserSaveResponse modifyUser(UserSaveRequest request) {
+        //Long id, String u_nickname, String u_name, String u_pwd, String u_ph, LocalDate u_sDate, UserAuthority u_auth) {
+        User user = userRepository.findById(request.getUser_id());
+        validateDuplicateUser(request); //닉네임 중복 검사
+        user.updateUser(request.getU_nickname(), request.getU_name(), request.getU_pwd(), request.getU_ph(), request.getU_sDate(), request.getU_auth());
+        UserSaveResponse userSaveResponse = new UserSaveResponse();
+        userSaveResponse.setId(user.getId());
+        return userSaveResponse;
     }
 
     //== 콜직원 한명 조회 =//

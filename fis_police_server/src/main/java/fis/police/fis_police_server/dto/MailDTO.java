@@ -13,7 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MailDTO {
 
-    private String address;
+    private String from_address;
+    private String to_address;
     private String title;
     private String context;
 

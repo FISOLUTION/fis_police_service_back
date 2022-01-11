@@ -4,10 +4,26 @@ spring:
     username: bora
     password:
     driver-class-name: org.h2.Driver
+# 작성자: 고준영, 작성내용: gmail로는 보내지는데 fis182@fisolution.co.kr에서는 보내지지 않는다 ㅅㅂ;
+  mail:
+    host: smtp.gmail.com   # smtp.mailplug.co.kr  or  imap.mailplug.co.kr  or  pop3.mailplug.co.kr  or  smtp.gmail.com
+    port: 587              # 465  or 993  or  995  or  587
+    username: godoly5180@gmail.com   #co.kr 이 아니라 .com 으로 바꿔야하나?
+    password: kjy734656
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+# 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로파서 include
+  profiles:
+    include:
+      - map
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto:
     properties:
       hibernate:
         #show_sql: true
@@ -18,4 +34,6 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.Type: trace
     org.apache.coyote.http11: debug
+
+
 

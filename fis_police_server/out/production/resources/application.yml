@@ -1,7 +1,11 @@
 spring:
   datasource:
     url:  jdbc:h2:tcp://localhost/~/fis_police
+<<<<<<< HEAD
     username: sa
+=======
+    username: bora
+>>>>>>> b8340d50f2116673af619fd0f1e6f543446e45ea
     password:
     driver-class-name: org.h2.Driver
 # 작성자: 고준영, 작성내용: gmail로는 보내지는데 fis182@fisolution.co.kr에서는 보내지지 않는다 ㅅㅂ;
@@ -16,6 +20,13 @@ spring:
           auth: true
           starttls:
             enable: true
+<<<<<<< HEAD
+=======
+# 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로파서 include
+  profiles:
+    include:
+      - map
+>>>>>>> b8340d50f2116673af619fd0f1e6f543446e45ea
 
   jpa:
     hibernate:
@@ -31,7 +42,12 @@ logging:
     org.hibernate.Type: trace
     org.apache.coyote.http11: debug
 
+<<<<<<< HEAD
 naver:
   client:
     id: vb8g27znp3
     secret: z5APZIFSWO5KyiQjE3QDleGDsGVBdz4IGkYpFQT5
+=======
+
+
+>>>>>>> b8340d50f2116673af619fd0f1e6f543446e45ea

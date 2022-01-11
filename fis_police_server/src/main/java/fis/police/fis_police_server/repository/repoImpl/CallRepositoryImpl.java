@@ -29,4 +29,22 @@ public class CallRepositoryImpl implements CallRepository {
         Call findCallById = em.find(Call.class, id);
         return findCallById;
     }
+
+    @Override
+    public Call findRecentDateByCenter(Long center_id) {
+
+        return null;
+    }
+
+    @Override
+    public Call findRecentByCenter(Long center_id) {
+
+//        return em.createQuery("select c from Call c join fetch c.center ce where ce.id = : center_id and c.dateTime = (select max(c.dateTime) from Call c)", Call.class)
+//                .setParameter("center_id", center_id)
+//                .getSingleResult();
+//        센터 별 콜 기록 중 최근 값 찾아오기 (primary key가 가장 큰 거 찾아오면 될 듯함) 가장 최근에 저장된 콜 기록에서 메일 주소를 따오기 위함
+//        em.createQuery("select c from Call c where ")
+        return null;
+
+    }
 }

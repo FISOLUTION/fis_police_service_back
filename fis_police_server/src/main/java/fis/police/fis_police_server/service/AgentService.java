@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AgentService {
     // 현장요원 추기
-    Boolean saveAgent();
+    void saveAgent(Agent agent);
 
     // 현장요원 수정
     Boolean modifyAgent();

@@ -33,7 +33,7 @@ public class Call {
 
     private LocalDateTime dateTime;       //'입력날짜 및 시간',
 
-    @Column(length = 100)
+    @Enumerated(EnumType.STRING)
     private Participation participation;  // '참여여부(참여/거부/보류/기타)',
 
     @Column(length = 100) @Enumerated(EnumType.STRING)
