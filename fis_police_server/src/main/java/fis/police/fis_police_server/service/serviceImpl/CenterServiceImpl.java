@@ -11,7 +11,7 @@ public class CenterServiceImpl implements CenterService {
     @Override
     public List<SearchCenterResponseDTO> findCenterList(SearchCenterDTO searchCenterDTO) {
         // 시설 이름, 주소, 전화번호로 검색한다.
-
+        return null;
     }
 
     @Override
