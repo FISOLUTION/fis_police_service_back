@@ -52,20 +52,18 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 
-    public Agent(Long id, List<Schedule> scheduleList, String a_name, String a_ph, String a_code, String a_address,
-                 HasCar a_hasCar, String a_equipment, LocalDateTime a_receiveDate, String a_latitude,
-                 String a_longitude, AgentStatus a_status) {
-        this.id = id;
-        this.scheduleList = scheduleList;
-        this.a_name = a_name;
-        this.a_ph = a_ph;
-        this.a_code = a_code;
-        this.a_address = a_address;
-        this.a_hasCar = a_hasCar;
-        this.a_equipment = a_equipment;
-        this.a_receiveDate = a_receiveDate;
-        this.a_latitude = a_latitude;
-        this.a_longitude = a_longitude;
-        this.a_status = a_status;
+    public Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
+                             String a_equipment, LocalDateTime a_receiveDate, String a_latitude, String a_longitude) {
+        Agent agent = new Agent();
+        agent.a_name = a_name;
+        agent.a_ph = a_ph;
+        agent.a_code = a_code;
+        agent.a_address = a_address;
+        agent.a_hasCar = a_hasCar;
+        agent.a_equipment = a_equipment;
+        agent.a_receiveDate = a_receiveDate;
+        agent.a_latitude = a_latitude;
+        agent.a_longitude = a_longitude;
+        return agent;
     }
 }
