@@ -7,6 +7,7 @@ import fis.police.fis_police_server.dto.CenterSaveDTO;
 import fis.police.fis_police_server.dto.SearchCenterDTO;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 import fis.police.fis_police_server.service.CenterService;
+import fis.police.fis_police_server.service.exceptions.CustomSearchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,10 +29,14 @@ public class CenterControllerImpl implements CenterController {
     */
     @PostMapping
     @Override
-    public List<SearchCenterResponseDTO> searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph) {
+    public List<SearchCenterResponseDTO> searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph) throws CustomSearchException {
         SearchCenterDTO searchCenterDTO = new SearchCenterDTO(c_name, c_address, c_ph);
-        List<SearchCenterResponseDTO> SearchCenterResponseDTO = centerService.findCenterList(searchCenterDTO);
-        return SearchCenterResponseDTO;
+        List<SearchCenterResponseDTO> results = centerService.findCenterList(searchCenterDTO);
+        if(results.equals(null)){
+            return null;
+            // 오류코드 발생 검색 오류 서버단에서 발생함
+        }
+        else return results;
     }
 
     @Override
