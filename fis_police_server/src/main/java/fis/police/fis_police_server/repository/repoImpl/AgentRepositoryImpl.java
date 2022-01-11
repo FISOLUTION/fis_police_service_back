@@ -25,13 +25,20 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> findAll() {
-        return em.createQuery("select a from Agent a", Agent.class)
+    public List<Agent> findByA_code(String a_code) {
+        return em.createQuery("select a from Agent a where a.a_code =:a_code", Agent.class)
+                .setParameter("a_code", a_code)
                 .getResultList();
     }
 
     @Override
+    public List<Agent> findAll() {
+        return em.createQuery("select a from Agent a", Agent.class).getResultList();
+    }
+
+    @Override
     public void save(Agent agent) {
+        System.out.println("RepositorySave");
         em.persist(agent);
     }
 

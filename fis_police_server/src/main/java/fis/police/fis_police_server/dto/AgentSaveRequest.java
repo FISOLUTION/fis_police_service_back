@@ -22,10 +22,7 @@ public class AgentSaveRequest {
     private String a_ph;                    //'현장 요원 전화번호',
     private String a_code;                  //'현장 요원 코드'
     private String a_address;               //'현장 요원 집 주소',
-    private HasCar a_hasCar;                //'자차 여부'
+    private boolean a_hasCar;               //'자차 여부'
     private String a_equipment;             //'장비 번호'
     private LocalDateTime a_receiveDate;    //'장비 수령 날짜'
-//    private String a_latitude;              //'현장 요원 위도',
-//    private String a_longitude;             //'현장 요원 경도',
-
 }
