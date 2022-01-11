@@ -19,11 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CallSaveRequest {
 
-//    private Long id;
-
     private Long center_id;
     private Long user_id;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private Participation participation;
     private InOut in_out;
     private String c_manager;
