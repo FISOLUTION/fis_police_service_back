@@ -24,4 +24,8 @@ public interface CallRepository {
     Call findRecentByCenter(Long center_id);
 
     List<Call> callByUser(String dateTime);
+
+    List<Call> callByDate(String date);
+
+
 }
