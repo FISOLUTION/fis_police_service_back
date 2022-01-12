@@ -53,22 +53,50 @@ public class CallServiceImpl implements CallService {
     @Override
     public UserCallByDateResponse userCallByDate(String date) {
 
-        List<Call> calls = callRepository.callByUser(date);
 
-        int[] amount;
-        amount = new int[calls.size()];
+        Call call3 = callRepository.findById(3L);
+        System.out.println("call3.getUser().getId() = " + call3.getUser().getId());
 
+        Call call5 = callRepository.findById(5L);
+        System.out.println("call5.getDateTime() = " + call5.getDateTime());
 
-        for (int i : amount) {
-            amount[i] = calls.get(i).getNum();
-        }
-
+        List<Call> calls = callRepository.callByDate("2021-12-11");
         for (Call call : calls) {
-            System.out.println("call = " + call);
+            System.out.println("call.getId() = " + call.getId());
         }
+
+        List<Integer> test = callRepository.test();
+        for (Integer integer : test) {
+            System.out.println("integer = " + integer);
+        }
+
+
+//
+//        List<Call> calls1 = callRepository.callByDate(date);
+//        System.out.println("calls1.size() = " + calls1.size());
+//        for (Call call : calls1) {
+//            System.out.println("call = " + call);
+//        }
+//        List<Call> calls = callRepository.callByUser(date);
+//        System.out.println("calls.size() = " + calls.size());
+//        for (Call call : calls) {
+//            System.out.println("call = " + call.getUser().getId());
+//        }
+//
+//        int[] amount;
+//        amount = new int[calls.size()];
+//
+//
+//        for (int i : amount) {
+//            amount[i] = calls.get(i).getNum();
+//        }
+//
+//        for (Call call : calls) {
+//            System.out.println("call = " + call);
+//        }
 
         UserCallByDateResponse response = new UserCallByDateResponse();
-        response.setUserCall(amount);
+//        response.setUserCall(amount);
 
         return response;
     }
