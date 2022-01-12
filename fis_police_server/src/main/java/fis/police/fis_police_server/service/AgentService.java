@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.client.RestClientException;
@@ -13,7 +14,7 @@ public interface AgentService {
             RestClientException, IllegalStateException, IndexOutOfBoundsException;
 
     // 현장요원 수정
-    Boolean modifyAgent();
+    void modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
 
     // 현장요원 조회
     List<Agent> getAgent();

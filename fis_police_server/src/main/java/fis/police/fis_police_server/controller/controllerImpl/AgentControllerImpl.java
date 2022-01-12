@@ -2,16 +2,14 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.AgentController;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.serviceImpl.MapConfig;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
 import javax.xml.bind.ValidationException;
@@ -27,7 +25,6 @@ import java.util.List;
 public class AgentControllerImpl implements AgentController {
 
     private final AgentService agentService;
-    private final MapConfig mapConfig;
 
     @Override
     @PostMapping("/agent")
@@ -50,8 +47,13 @@ public class AgentControllerImpl implements AgentController {
     }
 
     @Override
-    public Boolean modifyAgent() {
-        return null;
+    @PatchMapping("/agent")
+    public void modifyAgent(@RequestBody AgentModifyRequest request) {
+        try{
+            agentService.modifyAgent(request);
+        } catch (ParseException pe){
+
+        }
     }
 
     @Override

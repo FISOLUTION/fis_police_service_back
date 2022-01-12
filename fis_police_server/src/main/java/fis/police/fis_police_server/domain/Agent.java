@@ -29,6 +29,7 @@ public class Agent {
     @Column(length = 100)
     private String a_ph;                               //'현장 요원 전화번호',
 
+    // 작성자 : 이승범  유니크 속성 걸어줘야 됨
     @Column(length = 100)
     private String a_code;                             //'현장 요원 코드'
 
@@ -52,6 +53,7 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 
+    // 생성자
     public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
                              String a_equipment, LocalDateTime a_receiveDate, String a_latitude, String a_longitude) {
         Agent agent = new Agent();
@@ -66,5 +68,20 @@ public class Agent {
         agent.a_longitude = a_longitude;
         agent.a_status = AgentStatus.WORK;
         return agent;
+    }
+
+    // 현장요원 정보 수정을 위한 setter
+    public void modifyAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar, String a_equipment,
+                            LocalDateTime a_receiveDate, String a_latitude, String a_longitude, AgentStatus a_status){
+        this.a_name = a_name;
+        this.a_ph = a_ph;
+        this.a_code = a_code;
+        this.a_address = a_address;
+        this.a_hasCar = a_hasCar;
+        this.a_equipment = a_equipment;
+        this.a_receiveDate = a_receiveDate;
+        this.a_latitude = a_latitude;
+        this.a_longitude = a_longitude;
+        this.a_status = a_status;
     }
 }
