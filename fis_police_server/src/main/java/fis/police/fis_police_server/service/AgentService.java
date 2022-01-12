@@ -13,7 +13,7 @@ public interface AgentService {
             RestClientException, IllegalStateException, IndexOutOfBoundsException;
 
     // 현장요원 수정
-    Boolean modifyAgent();
+    void modifyAgent();
 
     // 현장요원 조회
     List<Agent> getAgent();

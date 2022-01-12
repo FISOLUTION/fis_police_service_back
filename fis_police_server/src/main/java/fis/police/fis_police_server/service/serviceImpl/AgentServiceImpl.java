@@ -69,8 +69,8 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override // 현장요원 수정
-    public Boolean modifyAgent() {
-        return null;
+    public void modifyAgent() {
+        Agent agent = agentRepository.findById()
     }
 
     @Override // 현장요원 조회

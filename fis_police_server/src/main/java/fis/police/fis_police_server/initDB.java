@@ -19,9 +19,9 @@ public class initDB {
     public void initDB(){
         Center center = new Center("센터1", Participation.PARTICIPATION);
 
-        System.out.println("===========================init DB================================");
-        em.persist(center);
-        em.flush();
-        System.out.println("===========================init DB================================");
+//        System.out.println("===========================init DB================================");
+//        em.persist(center);
+//        em.flush();
+//        System.out.println("===========================init DB================================");
     }
 }
