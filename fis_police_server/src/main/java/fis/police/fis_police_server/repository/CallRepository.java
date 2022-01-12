@@ -25,7 +25,7 @@ public interface CallRepository {
 
     List<Call> callByUser(String dateTime);
 
-    List<Call> callByDate(String date);
+    List<Call> callByDate(LocalDateTime date);
 
 
 }

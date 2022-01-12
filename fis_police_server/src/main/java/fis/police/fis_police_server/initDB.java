@@ -9,19 +9,19 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-@Component
-@RequiredArgsConstructor
-public class initDB {
-
-    private final EntityManager em;
-
-    @PostConstruct
-    public void initDB(){
-        Center center = new Center("센터1", Participation.PARTICIPATION);
-
-        System.out.println("===========================init DB================================");
-        em.persist(center);
-        em.flush();
-        System.out.println("===========================init DB================================");
-    }
-}
+//@Component
+//@RequiredArgsConstructor
+//public class initDB {
+//
+//    private final EntityManager em;
+//
+//    @PostConstruct
+//    public void initDB(){
+//        Center center = new Center("센터1", Participation.PARTICIPATION);
+//
+//        System.out.println("===========================init DB================================");
+//        em.persist(center);
+//        em.flush();
+//        System.out.println("===========================init DB================================");
+//    }
+//}
