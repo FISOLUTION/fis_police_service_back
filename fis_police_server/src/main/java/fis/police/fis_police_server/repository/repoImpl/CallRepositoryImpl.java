@@ -36,6 +36,10 @@ public class CallRepositoryImpl implements CallRepository {
     @Override
     public Call findRecentDateByCenter(Long center_id) {
 
+
+
+
+
         return null;
     }
 
@@ -58,9 +62,23 @@ public class CallRepositoryImpl implements CallRepository {
     */
     @Override
     public List<Call> callByUser(String dateTime) {
-        return em.createQuery("select c from Call c where c.dateTime = : dateTime group by c.user.id", Call.class)
+        return em.createQuery("select count(c) from Call c where c.dateTime = : dateTime group by c.user.id", Call.class)
                 .setParameter("dateTime", dateTime)
                 .getResultList();
 
     }
+
+    @Override
+    public List<Call> callByDate(String date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<Integer> test() {
+        return em.createQuery("select count(c), c. from Call c group by c.user.id", Integer.class)
+                .getResultList();
+    }
+
+
 }

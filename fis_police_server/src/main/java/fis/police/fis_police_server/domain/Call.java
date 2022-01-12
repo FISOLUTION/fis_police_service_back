@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
-//@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Call {
 
