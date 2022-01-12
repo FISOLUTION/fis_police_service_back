@@ -48,7 +48,7 @@ public class SelectCenterResponseDTO {
         private Long id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
         private Center center;      // BIGINT              NOT NULL                        comment 'center_id',
         private User user;        // BIGINT                 NOT NULL                        comment 'user_id'
-        private LocalDateTime dateTime;       //'입력날짜 및 시간',
+        private String dateTime;       //'입력날짜 및 시간',
         private Participation participation;  // '참여여부(참여/거부/보류/기타)',
         private InOut in_out;          // '접수방법',
         private String c_manager;      //'시설 담당자 성명',
