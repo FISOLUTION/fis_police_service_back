@@ -63,7 +63,8 @@ public class AgentServiceImpl implements AgentService {
     @Override
     @Transactional // 현장요원 수정
     // 수정사항 없어도 update 쿼리 나가는 이슈있음
-    public void modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException {
+    public void modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException,
+            IndexOutOfBoundsException, RestClientException {
         Agent findAgent = agentRepository.findById(request.getId());
         // 현장요원 코드가 달라졌으면 중복검사
         if (!findAgent.getA_code().equals(request.getA_code())) {
@@ -91,13 +92,14 @@ public class AgentServiceImpl implements AgentService {
         }
     }
 
-    @Override // 현장요원 조회
-    public List<Agent> getAgent() {
+    @Override // 전체 현장요원 조회
+    public List<Agent> getAgents() {
         return agentRepository.findAll();
     }
 
     // NaverMap api를 사용하여 도로명 주소로 위도경도 알아내는 로직
-    public Pair<String, String> addressToLocation(String address) throws ParseException {
+    public Pair<String, String> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
+            RestClientException{
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectionRequestTimeout(5000); // 연결시간 초과 5초
         factory.setReadTimeout(5000);   // 읽기시간 초과 5초

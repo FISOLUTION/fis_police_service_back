@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 /*
-    작성날짜: 2022/01/12 11:34 AM
+    작성날짜: 2022/01/12 3:03 PM
     작성자: 이승범
-    작성내용: AgentModifyRequest 를 위한 DTO
+    작성내용: Get AgentList 응답을 위한 DTO
 */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgentModifyRequest {
+public class AgentGetResponse {
 
     private Long id;                        //'현장 요원 PK'
     private String a_name;                  //'현장 요원 이름'

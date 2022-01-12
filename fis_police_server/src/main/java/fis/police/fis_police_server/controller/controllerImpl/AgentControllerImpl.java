@@ -2,10 +2,11 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.AgentController;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentGetResponse;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
+import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.service.AgentService;
-import fis.police.fis_police_server.service.serviceImpl.MapConfig;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestClientException;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
     작성날짜: 2022/01/11 1:39 PM
@@ -34,10 +36,10 @@ public class AgentControllerImpl implements AgentController {
         } catch (IllegalStateException ie){ // 현장요원 코드 중복
             System.out.println("현장요원 코드 중복");
             System.out.println(ie);
-        } catch (RestClientException re){ // api 요청 에러
+        } catch (RestClientException re){ // naver Map api 요청 에러
             System.out.println("api 요청 에러");
             System.out.println(re);
-        } catch (ParseException pe){ // api 응답(JSON) 파싱 에러
+        } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
             System.out.println("api 응답 에러");
             System.out.println(pe);
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
@@ -51,13 +53,30 @@ public class AgentControllerImpl implements AgentController {
     public void modifyAgent(@RequestBody AgentModifyRequest request) {
         try{
             agentService.modifyAgent(request);
-        } catch (ParseException pe){
-
+        } catch (IllegalStateException ie){ // 현장요원 코드 중복
+            System.out.println("현장요원 코드 중복");
+            System.out.println(ie);
+        } catch (RestClientException re){ // naver Map api 요청 에러
+            System.out.println("api 요청 에러");
+            System.out.println(re);
+        } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
+            System.out.println("api 응답 에러");
+            System.out.println(pe);
+        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
+            System.out.println("잘못된 주소 입력");
+            System.out.println(oe);
         }
     }
 
     @Override
-    public List<Agent> getAgent() {
-        return null;
+    @GetMapping("/agent")
+    public Result getAgent() {
+        List<Agent> AllAgentList = agentService.getAgents();
+        List<AgentGetResponse> collect = AllAgentList.stream()
+                .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
+                        a.getA_hasCar().converter(),a.getA_equipment(),a.getA_receiveDate(),a.getA_status().converter())
+                        ).collect(Collectors.toList());
+        return new Result(collect);
     }
+
 }
