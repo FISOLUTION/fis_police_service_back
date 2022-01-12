@@ -38,7 +38,6 @@ public class AgentRepositoryImpl implements AgentRepository {
 
     @Override
     public void save(Agent agent) {
-        System.out.println("RepositorySave");
         em.persist(agent);
     }
 

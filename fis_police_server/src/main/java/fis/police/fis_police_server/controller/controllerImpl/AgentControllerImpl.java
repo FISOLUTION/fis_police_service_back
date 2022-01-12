@@ -2,6 +2,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.AgentController;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.serviceImpl.MapConfig;
@@ -24,7 +25,6 @@ import java.util.List;
 public class AgentControllerImpl implements AgentController {
 
     private final AgentService agentService;
-    private final MapConfig mapConfig;
 
     @Override
     @PostMapping("/agent")
@@ -48,8 +48,12 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @PatchMapping("/agent")
-    public void modifyAgent(@RequestBody AgentSaveRequest request) {
-        agentService.modifyAgent();
+    public void modifyAgent(@RequestBody AgentModifyRequest request) {
+        try{
+            agentService.modifyAgent(request);
+        } catch (ParseException pe){
+
+        }
     }
 
     @Override

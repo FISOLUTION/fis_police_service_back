@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface AgentController {
     void saveAgent(AgentSaveRequest request);
 
     // 현장요원 수정
-    void modifyAgent();
+    void modifyAgent(AgentModifyRequest request);
 
     // 현장요원 조회
     List<Agent> getAgent();
