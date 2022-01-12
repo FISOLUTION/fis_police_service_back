@@ -25,6 +25,7 @@ public class CallSaveRequest {
     private Long user_id;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime dateTime;
 
     private Participation participation;

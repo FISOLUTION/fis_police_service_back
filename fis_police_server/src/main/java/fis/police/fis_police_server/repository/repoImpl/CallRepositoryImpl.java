@@ -75,6 +75,11 @@ public class CallRepositoryImpl implements CallRepository {
                 .getResultList();
     }
 
+    public List<Call> testDate(String date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .getResultList();
+    }
+
     public List<Call> test() {
         return em.createQuery("select c from Call c join fetch c.user", Call.class)
                 .getResultList();

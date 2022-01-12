@@ -51,20 +51,7 @@ public class CallServiceImpl implements CallService {
         작성 내용: 한 날짜에 콜 직원 별 통화 건수를 알기 위한 함수. 아직 완성 못함 ㅅㅂ
     */
     @Override
-    public UserCallByDateResponse userCallByDate(String date) {
-
-        List<Call> calls = callRepository.callByDate(LocalDateTime.of(2020, 03, 20, 15, 10));
-        for (Call call : calls) {
-            System.out.println("call.getId() = " + call.getId());
-        }
-
-
-        Call call3 = callRepository.findById(3L);
-        System.out.println("call3.getUser().getId() = " + call3.getUser().getId());
-
-        Call call5 = callRepository.findById(5L);
-        System.out.println("call5.getDateTime() = " + call5.getDateTime());
-
+    public UserCallByDateResponse userCallByDate(LocalDateTime date) {
 
 
         // 날짜값만 param으로 추가해서, 해당 날짜에 해당하는 콜 기록 다 긁어온 다음에, user_id 별로 count해서 배열로 배열이나 뭐 암튼 넘겨주면 될 것 같음
@@ -73,14 +60,10 @@ public class CallServiceImpl implements CallService {
         userCall = new int[all.size()];
 
         for (Call call : all) {
-            if(call.getUser().getId() == 1) {
-                userCall[0]++;
-            } else if(call.getUser().getId() == 2) {
-                userCall[1]++;
-            } else if(call.getUser().getId() == 3) {
-                userCall[2]++;
-            } else if(call.getUser().getId() == 4) {
-                userCall[3]++;
+            for (int i = 0; i < userCall.length; i++) {
+                if(call.getUser().getId() == i+1) {
+                    userCall[i]++;
+                }
             }
         }
         System.out.println("userCall[0] = " + userCall[0]);
@@ -89,6 +72,7 @@ public class CallServiceImpl implements CallService {
         System.out.println("userCall[3] = " + userCall[3]);
 
         UserCallByDateResponse response = new UserCallByDateResponse();
+        response.setUserCall(userCall);
 
         return response;
     }

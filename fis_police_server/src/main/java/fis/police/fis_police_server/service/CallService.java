@@ -6,8 +6,10 @@ import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.dto.UserCallByDateResponse;
 
+import java.time.LocalDateTime;
+
 public interface CallService {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request, Center center, User user);
-    UserCallByDateResponse userCallByDate(String date);
+    UserCallByDateResponse userCallByDate(LocalDateTime date);
 }
