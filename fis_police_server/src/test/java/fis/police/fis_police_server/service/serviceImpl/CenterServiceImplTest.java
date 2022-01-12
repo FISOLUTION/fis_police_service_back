@@ -5,7 +5,6 @@ import fis.police.fis_police_server.dto.SearchCenterDTO;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.exceptions.CustomSearchException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ class CenterServiceImplTest {
     @Test
     @DisplayName("센터찾기 테스트")
     @Rollback
-    void findCenterList() throws CustomSearchException {
+    void findCenterList(){
 
         Center center1 = new Center("시설이름 1", "서울", "001");
         Center center2 = new Center("시설이름 2", "서울", "002");

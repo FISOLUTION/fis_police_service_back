@@ -10,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -35,38 +37,36 @@ public class AgentServiceImpl implements AgentService {
 
     @Override // 현장요원 추가
     @Transactional
-    public void saveAgent(AgentSaveRequest request) {
-        try {
-            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-            factory.setConnectionRequestTimeout(5000); // 연결시간 초과 5초
-            factory.setReadTimeout(5000);   // 읽기시간 초과 5초
-            RestTemplate restTemplate = new RestTemplate(factory);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
-            httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
-            String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + request.getA_address();
-            var responseEntity =
-                    restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody());
-            JSONArray jsonArray = (JSONArray) jsonObject.get("addresses");
-            JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
-            HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
-            Agent agent = Agent.createAgent(request.getA_name(), request.getA_ph(),
-                    request.getA_code(), request.getA_address(), hasCar, request.getA_equipment(),
-                    request.getA_receiveDate(), jsonObject1.get("x").toString(), jsonObject1.get("y").toString());
-            agentRepository.save(agent);
-        } catch (Exception e) {
-            System.out.println("NaverMapApi request fail : " + e);
-        }
+    public void saveAgent(AgentSaveRequest request) throws ParseException, RestClientException,
+            IllegalStateException, IndexOutOfBoundsException {
+        validateDuplicateAgent(request);
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectionRequestTimeout(5000); // 연결시간 초과 5초
+        factory.setReadTimeout(5000);   // 읽기시간 초과 5초
+        RestTemplate restTemplate = new RestTemplate(factory);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
+        httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
+        String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + request.getA_address();
+        var responseEntity =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(responseEntity.getBody());
+        JSONArray jsonArray = (JSONArray) jsonObject.get("addresses");
+        JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
+        HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
+        Agent agent = Agent.createAgent(request.getA_name(), request.getA_ph(),
+                request.getA_code(), request.getA_address(), hasCar, request.getA_equipment(),
+                request.getA_receiveDate(), jsonObject1.get("x").toString(), jsonObject1.get("y").toString());
+        agentRepository.save(agent);
     }
 
-//    private void validateDuplicateAgent(AgentSaveRequest agentSaveRequest){
-//        List<Agent> findAgentList = agentRepository.findByA_code(agentSaveRequest.getA_code());
-//        if(!findAgentList.isEmpty()){
-//            throw new Exception("이미 존재하는 현장요원입니다.");
-//        }
-//    }
+    private void validateDuplicateAgent(AgentSaveRequest agentSaveRequest){
+        List<Agent> findAgentList = agentRepository.findByA_code(agentSaveRequest.getA_code());
+        if(!findAgentList.isEmpty()){
+            throw new IllegalStateException("이미 존재하는 현장요원입니다.");
+        }
+    }
 
     @Override // 현장요원 수정
     public Boolean modifyAgent() {
