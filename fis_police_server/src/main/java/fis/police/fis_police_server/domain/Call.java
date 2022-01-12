@@ -32,7 +32,8 @@ public class Call {
     @JoinColumn(name = "user_id")
     private User user;        // BIGINT                 NOT NULL                        comment 'user_id',
 
-    @Column(length = 10)
+//    @Column(length = 10)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime dateTime;       //'입력날짜 및 시간',
 
     @Enumerated(EnumType.STRING)

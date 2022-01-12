@@ -1,8 +1,12 @@
 package fis.police.fis_police_server.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 /*
     작성 날짜: 2022/01/11 3:49 오후
     작성자: 고준영
@@ -13,5 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserCallByDateRequest {
 
-    private String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime date;
 }
