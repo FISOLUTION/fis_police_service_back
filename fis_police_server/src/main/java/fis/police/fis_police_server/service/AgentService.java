@@ -17,5 +17,5 @@ public interface AgentService {
     void modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
 
     // 현장요원 조회
-    List<Agent> getAgent();
+    List<Agent> getAgents();
 }

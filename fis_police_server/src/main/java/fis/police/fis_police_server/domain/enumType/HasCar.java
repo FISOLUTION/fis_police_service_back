@@ -1,5 +1,9 @@
 package fis.police.fis_police_server.domain.enumType;
 
 public enum HasCar {
-    CAR, WALK
+    CAR, WALK;
+
+    public boolean converter(){
+        return true;
+    }
 }
