@@ -69,14 +69,24 @@ public class CallRepositoryImpl implements CallRepository {
     }
 
     @Override
-    public List<Call> callByDate(String date) {
+    public List<Call> callByDate(LocalDateTime date) {
         return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
                 .setParameter("date", date)
                 .getResultList();
     }
 
-    public List<Integer> test() {
-        return em.createQuery("select count(c), c. from Call c group by c.user.id", Integer.class)
+    public List<Call> testDate(String date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .getResultList();
+    }
+
+    public List<Call> test() {
+        return em.createQuery("select c from Call c join fetch c.user", Call.class)
+                .getResultList();
+    }
+
+    public List<Call> findAll() {
+        return em.createQuery("select c from Call c", Call.class)
                 .getResultList();
     }
 

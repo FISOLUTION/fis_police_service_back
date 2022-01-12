@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.time.LocalDateTime;
+
 /*
     작성 날짜: 2022/01/10 1:13 오후
     작성자: 고준영
@@ -47,7 +49,8 @@ public class CallControllerImpl implements CallController {
     @Override
     public UserCallByDateResponse userCallByDate(UserCallByDateRequest request) {
 
-        String date = request.getDate();
+//        String date = request.getDate();
+        LocalDateTime date = request.getDate();
         return callService.userCallByDate(date);
 
     }
