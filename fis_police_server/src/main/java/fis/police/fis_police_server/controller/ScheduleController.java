@@ -1,12 +1,14 @@
 package fis.police.fis_police_server.controller;
 
+import fis.police.fis_police_server.dto.ScheduleSaveRequest;
+
 import java.util.List;
 
 // 이승범
 public interface ScheduleController {
 
         // 현장요원 배치
-        Boolean assignAgent();
+        Boolean assignAgent(ScheduleSaveRequest scheduleSaveRequest);
 
         // 날짜 별 현장요원 일정 리스트
         List<Object> selectDate();

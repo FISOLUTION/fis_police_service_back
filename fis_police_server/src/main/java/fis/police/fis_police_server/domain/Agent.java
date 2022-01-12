@@ -2,7 +2,9 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor
 @Getter
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Agent {
 
     @Id
@@ -53,7 +56,13 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 
-    // 생성자
+
+    /*
+        작성날짜: 2022/01/11 5:05 PM
+        작성자: 이승범
+        작성내용: AgentService 구현을 위한 연관관계 메서드 및 setter 구현
+    */
+    // 생성 메서드
     public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
                              String a_equipment, LocalDateTime a_receiveDate, String a_latitude, String a_longitude) {
         Agent agent = new Agent();
