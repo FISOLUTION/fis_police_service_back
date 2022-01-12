@@ -1,7 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.repository.ScheuduleRepository;
+import fis.police.fis_police_server.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 */
 @Repository
 @RequiredArgsConstructor
-public class ScheduleRepositoryImpl implements ScheuduleRepository {
+public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     private final EntityManager em;
 
@@ -25,7 +25,7 @@ public class ScheduleRepositoryImpl implements ScheuduleRepository {
 
     @Override
     public Schedule findById(Long id) {
-        Schedule findScheById = em.find(Schedule.class, id);
-        return findScheById;
+        Schedule findScheduleById = em.find(Schedule.class, id);
+        return findScheduleById;
     }
 }

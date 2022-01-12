@@ -3,7 +3,7 @@ package fis.police.fis_police_server.domain.enumType;
 public enum AgentStatus {
     WORK, FIRED;
 
-    public boolean converter() {
-        return true;
+    public static boolean converter(AgentStatus agentStatus) {
+        return agentStatus == AgentStatus.WORK ? true : false;
     }
 }

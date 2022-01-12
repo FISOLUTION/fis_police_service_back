@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 @Entity
 @RequiredArgsConstructor
 @Getter
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
 
 
@@ -57,5 +59,39 @@ public class Schedule {
     public Schedule(Center center, String center_etc) {
         this.center = center;
         this.center_etc = center_etc;
+    }
+
+    /*
+        작성날짜: 2022/01/12 4:43 PM
+        작성자: 이승범
+        작성내용: ScheduleService 구현을 위한  연관관계 메서드 및 생성자 구현
+    */
+    public static Schedule createSchedule(Center center, User user, Agent agent, LocalDateTime receipt_date,
+                                          LocalDate visit_date, LocalTime visit_time, Integer estimate_num,
+                                          String center_etc, String agent_etc, String total_etc){
+        Schedule schedule = new Schedule();
+        schedule.mappingCenter(center);
+        schedule.mappingUser(user);
+        schedule.mappingAgent(agent);
+        schedule.receipt_date = receipt_date;
+        schedule.visit_date = visit_date;
+        schedule.visit_time = visit_time;
+        schedule.estimate_num = estimate_num;
+        schedule.center_etc = center_etc;
+        schedule.agent_etc = agent_etc;
+        schedule.total_etc = total_etc;
+        return schedule;
+    }
+    // ============ 연관관계 메서드 ===============
+    public void mappingCenter(Center center){
+        this.center = center;
+        center.getScheduleList().add(this);
+    }
+    public void mappingUser(User user){
+        this.user = user;
+    }
+    public void mappingAgent(Agent agent){
+        this.agent = agent;
+        agent.getScheduleList().add(this);
     }
 }

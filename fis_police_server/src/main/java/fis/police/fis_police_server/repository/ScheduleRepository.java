@@ -1,10 +1,9 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Schedule;
-import org.springframework.stereotype.Repository;
 
 //고준영
-public interface ScheuduleRepository {
+public interface ScheduleRepository {
 
     void save(Schedule schedule);
     Schedule findById(Long id);

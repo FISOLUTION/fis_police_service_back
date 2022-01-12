@@ -2,6 +2,8 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.AgentController;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.enumType.AgentStatus;
+import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.AgentGetResponse;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
@@ -29,7 +31,7 @@ public class AgentControllerImpl implements AgentController {
     private final AgentService agentService;
 
     @Override
-    @PostMapping("/agent")
+    @PostMapping("/agent") // 현장요원 추가
     public void saveAgent(@RequestBody AgentSaveRequest request) {
         try{
             agentService.saveAgent(request);
@@ -49,7 +51,7 @@ public class AgentControllerImpl implements AgentController {
     }
 
     @Override
-    @PatchMapping("/agent")
+    @PatchMapping("/agent") // 현장요원 정보 수정
     public void modifyAgent(@RequestBody AgentModifyRequest request) {
         try{
             agentService.modifyAgent(request);
@@ -69,12 +71,13 @@ public class AgentControllerImpl implements AgentController {
     }
 
     @Override
-    @GetMapping("/agent")
+    @GetMapping("/agent") // 전체 현장요원 리스트 조회
     public Result getAgent() {
         List<Agent> AllAgentList = agentService.getAgents();
         List<AgentGetResponse> collect = AllAgentList.stream()
                 .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
-                        a.getA_hasCar().converter(),a.getA_equipment(),a.getA_receiveDate(),a.getA_status().converter())
+                                HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
+                                AgentStatus.converter(a.getA_status()))
                         ).collect(Collectors.toList());
         return new Result(collect);
     }
