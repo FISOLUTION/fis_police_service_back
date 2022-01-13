@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;
@@ -15,8 +16,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
-//@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Call {
 
@@ -25,18 +24,22 @@ public class Call {
     @Column(name = "call_id")
     private Long id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "center_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "center_id")
     private Center center;      // BIGINT              NOT NULL                        comment 'center_id',
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;        // BIGINT                 NOT NULL                        comment 'user_id',
 
+//    @Column(length = 10)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime dateTime;       //'입력날짜 및 시간',
 
-    @Column(length = 100)
+    @Enumerated(EnumType.STRING)
     private Participation participation;  // '참여여부(참여/거부/보류/기타)',
 
-    @Column(length = 100) @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private InOut in_out;          // '접수방법',
 
     @Column(length = 100)
@@ -82,5 +85,15 @@ public class Call {
                 request.getCenter_etc(), request.getAgent_etc());
 
         return call;
+    }
+
+    /*
+        날짜 : 2022/01/11 5:22 오후
+        작성자 : 현승구
+        작성내용 : test code 위한 constructor
+    */
+
+    public Call(Center center) {
+        this.center = center;
     }
 }

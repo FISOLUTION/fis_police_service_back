@@ -8,6 +8,8 @@ import java.util.List;
 public interface AgentRepository {
     Agent findById(Long id);
 
+    public List<Agent> findByA_code(String a_code);
+
     List<Agent> findAll();
 
     void save(Agent agent);
