@@ -50,5 +50,6 @@ public class initDB {
             em.persist(center);
             em.flush();
         }
+
     }
 }

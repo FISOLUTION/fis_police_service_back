@@ -64,7 +64,7 @@ public class Schedule {
     /*
         작성날짜: 2022/01/12 4:43 PM
         작성자: 이승범
-        작성내용: ScheduleService 구현을 위한  연관관계 메서드 및 생성자 구현
+        작성내용: ScheduleService 구현을 위한  연관관계 메서드 및 생성 메서드 구현
     */
     public static Schedule createSchedule(Center center, User user, Agent agent, LocalDateTime receipt_date,
                                           LocalDate visit_date, LocalTime visit_time, Integer estimate_num,
@@ -87,11 +87,11 @@ public class Schedule {
         this.center = center;
         center.getScheduleList().add(this);
     }
-    public void mappingUser(User user){
-        this.user = user;
-    }
     public void mappingAgent(Agent agent){
         this.agent = agent;
         agent.getScheduleList().add(this);
+    }
+    public void mappingUser(User user){
+        this.user = user;
     }
 }
