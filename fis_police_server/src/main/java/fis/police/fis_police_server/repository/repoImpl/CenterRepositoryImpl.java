@@ -2,10 +2,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.QCall;
-import fis.police.fis_police_server.domain.QCenter;
-import fis.police.fis_police_server.domain.QSchedule;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
@@ -55,7 +52,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         작성내용 : querydsl이용해서 centersearch 구현
     */
     @Override
-    public List<SearchCenterResponseDTO> findBSearchCenterDTO(String c_name, String c_address, String c_ph) {
+    public List<SearchCenterResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph) {
         List<SearchCenterResponseDTO> centerList;
         if(c_name == null && c_address == null && c_ph == null){
             centerList =
@@ -86,9 +83,26 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         //  list "select center from Center center join Center.Call on 조건 join
         return em.createQuery("select center " +
                 "from Center center " +
-                "join center.callList as call on center.id = :id " +
-                "join center.scheduleList as schedule on center.id = :id", Center.class)
-                .setParameter("id", id)
+                "join fetch center.callList as call ", Center.class)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Center> findNearCenter(Float latitude, Float longitude) {
+        Float latitude_l = latitude - 0.009F;
+        Float latitude_h = latitude + 0.009F;
+
+        Float longitude_l = longitude - 0.009F;
+        Float longitude_h = longitude + 0.009F;
+
+        return em.createQuery("select center " +
+                "from Center center " +
+                "where center.c_latitude < :latitude_h and center.c_latitude > :latitude_l " +
+                "and center.c_longitude < :longitude_h and center.c_longitude > :longitude_l")
+                .setParameter("latitude_h", latitude_h)
+                .setParameter("latitude_l", latitude_l)
+                .setParameter("longitude_l", longitude_l)
+                .setParameter("longitude_h", latitude_h)
+                .getResultList();
     }
 }

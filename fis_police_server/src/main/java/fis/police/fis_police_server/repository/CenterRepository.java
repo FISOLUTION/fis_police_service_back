@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.repository;
 
+import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 
@@ -18,7 +19,9 @@ public interface CenterRepository {
     // 시설 삭제
     void delete(Center center);
 
-    List<SearchCenterResponseDTO> findBSearchCenterDTO(String c_name, String c_address, String c_ph);
+    List<SearchCenterResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph);
 
     Center findByIdAndFetchAll(Long center_id);
+
+    List<Center> findNearCenter(Float latitude, Float longitude);
 }

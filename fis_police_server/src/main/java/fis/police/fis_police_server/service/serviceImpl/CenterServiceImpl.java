@@ -26,7 +26,7 @@ public class CenterServiceImpl implements CenterService {
     */
    @Override
     public List<SearchCenterResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
-       List<SearchCenterResponseDTO> centerList = centerRepository.findBSearchCenterDTO(c_name, c_address, c_ph);
+       List<SearchCenterResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
        if(centerList.isEmpty())
            throw new NoResultException("findBSearchCenterDTO  로직에서 발생됨 조건에 맞는 center가 존재하지 않습니다");
        else return centerList;
@@ -39,17 +39,22 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public void saveCenter(Center center) {
-
         centerRepository.save(center);
     }
 
     @Override
-    public Boolean modifyCenter(Center center) {
-        return null;
+    public void modifyCenter(Center center) {
+        Center target = centerRepository.findById(center.getId());
+        target.modifyCenter(center);
     }
 
     @Override
     public List<Center> getCenter() {
         return null;
+    }
+
+    @Override
+    public Center findById(Long id) {
+        return centerRepository.findById(id);
     }
 }

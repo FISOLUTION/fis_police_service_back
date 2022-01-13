@@ -56,11 +56,8 @@ public class Center {
     @Column(length = 100)
     private String c_hpAddress;   // '홈페이지주소',
 
-    @Column(length = 100)
-    private String c_latitude;    // '위도',
-
-    @Column(length = 100)
-    private String c_longitude;   // '경도',
+    private Float c_latitude;    // '위도',
+    private Float c_longitude;   // '경도',
 
     @Enumerated(EnumType.STRING)
     private Participation participation;
@@ -90,5 +87,37 @@ public class Center {
         this.participation = participation;
     }
 
+    /*
+        날짜 : 2022/01/12 11:48 오전
+        작성자 : 현승구
+        작성내용 : Center 수정 로직
+    */
+    public void modifyCenter(Center center){
+        this.c_name = center.getC_name();
+        this.c_ph = center.getC_ph();
+        this.c_address = center.getC_address();
+    }
 
+
+    @Override
+    public String toString() {
+        return "Center{" +
+                "id=" + id +
+                ", c_sido='" + c_sido + '\'' +
+                ", c_sigungu='" + c_sigungu + '\'' +
+                ", c_name='" + c_name + '\'' +
+                ", c_type='" + c_type + '\'' +
+                ", c_status='" + c_status + '\'' +
+                ", c_address='" + c_address + '\'' +
+                ", c_zipcode='" + c_zipcode + '\'' +
+                ", c_ph='" + c_ph + '\'' +
+                ", c_faxNum='" + c_faxNum + '\'' +
+                ", c_people='" + c_people + '\'' +
+                ", c_hpAddress='" + c_hpAddress + '\'' +
+                ", c_latitude='" + c_latitude + '\'' +
+                ", c_longitude='" + c_longitude + '\'' +
+                ", participation=" + participation +
+                ", visited=" + "list 들은 서로 참조 이슈로 인해 제외됨" +
+                '}';
+    }
 }

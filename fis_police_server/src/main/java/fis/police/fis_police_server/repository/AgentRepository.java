@@ -14,4 +14,5 @@ public interface AgentRepository {
 
     void save(Agent agent);
 
+    List<Agent> findNearAgent(Float latitude, Float longitude, Long range);
 }

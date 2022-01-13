@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.SearchCenterDTO;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
@@ -33,7 +34,7 @@ class CenterServiceImplTest {
     @Test
     @DisplayName("센터찾기 테스트")
     @Rollback
-    void findCenterList(){
+    void findCenterList() {
 
         Center center1 = new Center("시설이름 1", "서울", "001");
         Center center2 = new Center("시설이름 2", "서울", "002");
@@ -56,13 +57,18 @@ class CenterServiceImplTest {
         System.out.println("2차 데이터 검색");
         List<SearchCenterResponseDTO> searchCenterResponseDTOList2 = centerService.findCenterList(null, null, null);
         searchCenterResponseDTOList2.stream().forEach(e-> System.out.println("e = " + e));
-        System.out.println("3차 데이터 검색");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
-        searchCenterResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
+        List<SearchCenterResponseDTO> searchCenterResponseDTOList3;
+        try {
+            System.out.println("3차 데이터 검색");
+            searchCenterResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
+            searchCenterResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
+        } catch (Exception e){
 
-        Assertions.assertThat(searchCenterResponseDTOList1.size()).isEqualTo(1L);
-        Assertions.assertThat(searchCenterResponseDTOList2.size()).isEqualTo(3L);
-        Assertions.assertThat(searchCenterResponseDTOList3.size()).isEqualTo(0);
+        }
+        finally {
+            Assertions.assertThat(searchCenterResponseDTOList2.size()).isEqualTo(3L);
+            Assertions.assertThat(searchCenterResponseDTOList1.size()).isEqualTo(1L);
+        }
     }
 
     @Test

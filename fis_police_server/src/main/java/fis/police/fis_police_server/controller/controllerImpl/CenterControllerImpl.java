@@ -4,6 +4,7 @@ import fis.police.fis_police_server.controller.CenterController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.CenterService;
+import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CenterControllerImpl implements CenterController {
 
     private final CenterService centerService;
+    private final MapServiceImpl mapService;
     /*
         날짜 : 2022/01/10 3:11 오후
         작성자 : 현승구
@@ -27,17 +29,17 @@ public class CenterControllerImpl implements CenterController {
     */
     @PostMapping
     @Override
-    public List<SearchCenterResponseDTO> searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
+    public Result searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
         try {
             SearchCenterDTO searchCenterDTO = new SearchCenterDTO(c_name, c_address, c_ph);
             String name = searchCenterDTO.getC_name();
             String address = searchCenterDTO.getC_address();
             String ph = searchCenterDTO.getC_ph();
             List<SearchCenterResponseDTO> results = centerService.findCenterList(name, address, ph);
-            return results;
+            return new Result(results);
         } catch (NoResultException noResultException){
             System.out.println(noResultException);
-            return new ArrayList<SearchCenterResponseDTO>();
+            return new Result(new ArrayList<SearchCenterResponseDTO>());
         } catch (NullPointerException nullPointerException){
             System.out.println("nullPointerException 이 발생하였습니다 ");
             return null;
@@ -50,10 +52,10 @@ public class CenterControllerImpl implements CenterController {
         작성내용 : 로직 작성 test코드 아직 작성 안함
     */
     @Override
-    public SelectCenterResponseDTO selectCenter(@RequestParam Long center_id) {
+    public Result selectCenter(@RequestParam Long center_id) {
         try{
             Center center =  centerService.centerInfo(center_id);
-            return new SelectCenterResponseDTO(center);
+            return new Result(new SelectCenterResponseDTO(center));
         } catch (NoResultException noResultException){
             // 결과물 없을 때 오류코드 발생 -> 해당 시설이 존재 하지 않음
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설이 존재 하지 않음" + center_id);
@@ -68,21 +70,36 @@ public class CenterControllerImpl implements CenterController {
         }
     }
 
+    /*
+        날짜 : 2022/01/12 12:06 오후
+        작성자 : 현승구
+        작성내용 : selectDate 호출시 주변 현장요원 나온다. -> 현장요원들 좌표 던져준다.
+    */
     @Override
-    public Object selectDate(@RequestParam Long center_id, @RequestParam String date) {
+    public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
+//        centerService.
+//        mapService.agentNearCenter()
         return null;
     }
 
     @Override
-    public Object searchNearCenter(@RequestParam Long center_id, @RequestParam Long range) {
-        return null;
+    public Result searchNearCenter(@RequestParam Long center_id, @RequestParam Long range) {
+        Center center = centerService.findById(center_id);
+        List<Center> nearList = mapService.centerNearCenter(center);
+        List<SearchNearCenterDTO> searchNearCenterDTOList = new ArrayList<SearchNearCenterDTO>();
+        nearList.stream()
+                .forEach(e -> {
+                    Float distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).floatValue();
+                    searchNearCenterDTOList.add(new SearchNearCenterDTO(e, distance));
+                });
+        return new Result(searchNearCenterDTOList);
     }
 
 
     /*
         날짜 : 2022/01/11 8:25 오후
         작성자 : 현승구
-        작성내용 :
+        작성내용 : 관리자 페이지에서 시설 저장
     */
     @Override
     public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO) {
@@ -98,7 +115,7 @@ public class CenterControllerImpl implements CenterController {
     /*
         날짜 : 2022/01/11 9:27 오후
         작성자 : 현승구
-        작성내용 : 시설 수정
+        작성내용 : 시설 수정 - 관리자 페이지에서 시설 수정
     */
     @Override
     public void modifyCenter(@RequestBody CenterModifyDTO centerModifyDTO) {
@@ -106,14 +123,23 @@ public class CenterControllerImpl implements CenterController {
             Center center = CenterModifyDTO.convertToCenter(centerModifyDTO);
             centerService.modifyCenter(center);
         } catch (Exception exception) {
-            System.out.println(" CenterController.saveCenter 에서 저장 안되는 오류 발생");
+            System.out.println(" CenterController.modifyCenter 에서 저장 안되는 오류 발생");
             // 오류코드 전성
         }
     }
+
+
+    /*
+        날짜 : 2022/01/12 12:05 오후
+        작성자 : 현승구
+        작성내용 : center_id 를 통해서 검색하는 건데 보류
+    */
 
     @Override
     public List<Object> getCenter(@RequestParam Long center) {
         return null;
     }
+
+
 
 }

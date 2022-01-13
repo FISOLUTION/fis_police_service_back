@@ -16,8 +16,10 @@ public interface CenterService {
     void saveCenter(Center center);
 
     // 시설 수정
-    Boolean modifyCenter(Center center);
+    void modifyCenter(Center center);
 
     // 시설 조회
     List<Center> getCenter();
+
+    Center findById(Long id);
 }
