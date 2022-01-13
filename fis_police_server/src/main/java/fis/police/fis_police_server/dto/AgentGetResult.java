@@ -13,3 +13,5 @@ import lombok.Data;
 public class AgentGetResult<T>{
     private T data;
 }
+
+
