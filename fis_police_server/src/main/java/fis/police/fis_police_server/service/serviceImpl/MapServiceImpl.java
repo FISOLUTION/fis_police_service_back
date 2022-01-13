@@ -27,6 +27,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MapServiceImpl implements MapService {
 
+    /*
+        날짜 : 2022/01/13 3:23 오후
+        작성자 : 현승구
+        작성내용 : map 작성
+    */
+
     private final AgentRepository agentRepository;
     private final CenterRepository centerRepository;
     private final MapConfig mapConfig;
@@ -36,20 +42,21 @@ public class MapServiceImpl implements MapService {
     public List<Agent> agentNearCenter(Center center, Long range) {
 
         Center target = centerRepository.findById(center.getId());
-        Float latitude = target.getC_latitude();
-        Float longitude = target.getC_longitude();
+        Double latitude = target.getC_latitude();
+        Double longitude = target.getC_longitude();
         agentRepository.findNearAgent(latitude, longitude, range);
         return null;
     }
 
     @Override
     public List<Center> centerNearCenter(Center center) {
+        System.out.println("center.getId() = " + center.getId());
         List<Center> centerList = centerRepository.findNearCenter(center.getC_latitude(), center.getC_longitude());
-        if(centerList.isEmpty()) throw new NoResultException();
-        return centerList;
+        if(centerList.isEmpty()) throw new NoResultException("centerNearCenter에서 결과가 없음");
+        else return centerList;
     }
 
-    public Pair<String, String> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
+    public Pair<Double, Double> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
             RestClientException {
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -62,7 +69,7 @@ public class MapServiceImpl implements MapService {
         JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
         JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
         JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
-        return new Pair<String, String>(addressResponse.get("x").toString(), addressResponse.get("y").toString());
+        return new Pair<Double, Double>(Double.parseDouble(addressResponse.get("x").toString()), Double.parseDouble(addressResponse.get("y").toString()));
     }
 
     public Double distance(double lat1, double lon1, double lat2, double lon2) {

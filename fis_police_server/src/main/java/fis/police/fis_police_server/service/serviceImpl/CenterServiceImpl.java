@@ -1,10 +1,14 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
+import fis.police.fis_police_server.service.MailService;
+import fis.police.fis_police_server.service.MapService;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +21,7 @@ import java.util.List;
 public class CenterServiceImpl implements CenterService {
 
     private final CenterRepository centerRepository;
-
+    private final MapService mapService;
 
     /*
         날짜 : 2022/01/11 11:48 오전
@@ -38,14 +42,18 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public void saveCenter(Center center) {
-        centerRepository.save(center);
+    public void saveCenter(Center center) throws ParseException {
+       Pair<Double, Double> location = mapService.addressToLocation(center.getC_address());
+       center.setLocation(location);
+       centerRepository.save(center);
     }
 
     @Override
-    public void modifyCenter(Center center) {
+    public void modifyCenter(Center center) throws ParseException {
         Center target = centerRepository.findById(center.getId());
         target.modifyCenter(center);
+        Pair<Double, Double> location = mapService.addressToLocation(target.getC_address());
+        target.setLocation(location);
     }
 
     @Override

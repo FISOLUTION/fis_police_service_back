@@ -24,8 +24,8 @@ public class CenterModifyDTO {
     private String c_faxNum;      // '팩스번호',
     private String c_people;      // '현원',
     private String c_hpAddress;   // '홈페이지주소',
-    private Float c_latitude;    // '위도',
-    private Float c_longitude;   // '경도',
+    private Double c_latitude;    // '위도',
+    private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
 

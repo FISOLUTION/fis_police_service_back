@@ -10,11 +10,11 @@ public class SearchNearCenterDTO {
     private String c_ph;
     private Participation participation;
     private Visited visited;
-    private Float distance;
-    private Float c_latitude;    // '위도',
-    private Float c_longitude;   // '경도',
+    private double distance;
+    private double c_latitude;    // '위도',
+    private double c_longitude;   // '경도',
 
-    public SearchNearCenterDTO(Center center, Float distance) {
+    public SearchNearCenterDTO(Center center, double distance) {
         this.c_id = center.getId();
         this.c_address = center.getC_address();
         this.c_ph = center.getC_ph();

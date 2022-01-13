@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import com.mysema.commons.lang.Pair;
 import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
@@ -56,8 +57,8 @@ public class Center {
     @Column(length = 100)
     private String c_hpAddress;   // '홈페이지주소',
 
-    private Float c_latitude;    // '위도',
-    private Float c_longitude;   // '경도',
+    private Double c_latitude;    // '위도',
+    private Double c_longitude;   // '경도',
 
     @Enumerated(EnumType.STRING)
     private Participation participation;
@@ -72,6 +73,16 @@ public class Center {
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
     /*
+        날짜 : 2022/01/13 3:51 오후
+        작성자 : 현승구
+        작성내용 : 위도 경도 설정자
+    */
+    public void setLocation(Pair<Double, Double> location){
+        this.c_longitude = location.getFirst();
+        this.c_latitude = location.getSecond();
+    }
+
+    /*
         날짜 : 2022/01/11 1:27 오후
         작성자 : 현승구
         작성내용 : 테스트용 생성자
@@ -80,6 +91,14 @@ public class Center {
         this.c_name = c_name;
         this.c_address = c_address;
         this.c_ph = c_ph;
+    }
+
+    public Center(String c_name, String c_address, String c_ph, Double c_latitude, Double c_longitude) {
+        this.c_name = c_name;
+        this.c_address = c_address;
+        this.c_ph = c_ph;
+        this.c_latitude = c_latitude;
+        this.c_longitude = c_longitude;
     }
 
     public Center(String c_name, Participation participation){

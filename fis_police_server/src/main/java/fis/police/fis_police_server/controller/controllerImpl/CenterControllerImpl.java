@@ -6,10 +6,9 @@ import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.json.simple.parser.ParseException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -82,17 +81,23 @@ public class CenterControllerImpl implements CenterController {
         return null;
     }
 
+    @GetMapping("/center/{center_id}")
     @Override
-    public Result searchNearCenter(@RequestParam Long center_id, @RequestParam Long range) {
-        Center center = centerService.findById(center_id);
-        List<Center> nearList = mapService.centerNearCenter(center);
-        List<SearchNearCenterDTO> searchNearCenterDTOList = new ArrayList<SearchNearCenterDTO>();
-        nearList.stream()
-                .forEach(e -> {
-                    Float distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).floatValue();
-                    searchNearCenterDTOList.add(new SearchNearCenterDTO(e, distance));
-                });
-        return new Result(searchNearCenterDTOList);
+    public Result searchNearCenter(@PathVariable Long center_id) {
+        try {
+            Center center = centerService.findById(center_id);
+            List<Center> nearList = mapService.centerNearCenter(center);
+            List<SearchNearCenterDTO> searchNearCenterDTOList = new ArrayList<SearchNearCenterDTO>();
+            nearList.stream()
+                    .forEach(e -> {
+                        Double distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).doubleValue();
+                        searchNearCenterDTOList.add(new SearchNearCenterDTO(e, distance));
+                    });
+            return new Result(searchNearCenterDTOList);
+        } catch (NoResultException noResultException){
+            System.out.println(noResultException.getMessage());
+            return null;
+        }
     }
 
 
@@ -106,6 +111,10 @@ public class CenterControllerImpl implements CenterController {
         try {
             Center center = CenterSaveDTO.convertToCenter(centerSaveDTO);
             centerService.saveCenter(center);
+        } catch (ParseException parseException){
+            System.out.println(" 잘못된 주소 정보 입력됨 ");
+        } catch (RestClientException restClientException){
+            System.out.println(" naver map api 호출중 오류 발생 ");
         } catch (Exception exception) {
             System.out.println(" CenterController.saveCenter 에서 저장 안되는 오류 발생");
             // 오류코드 전성
@@ -122,8 +131,12 @@ public class CenterControllerImpl implements CenterController {
         try {
             Center center = CenterModifyDTO.convertToCenter(centerModifyDTO);
             centerService.modifyCenter(center);
+        } catch (ParseException parseException){
+            System.out.println(" 잘못된 주소 정보 입력됨 ");
+        } catch (RestClientException restClientException){
+            System.out.println(" naver map api 호출중 오류 발생 ");
         } catch (Exception exception) {
-            System.out.println(" CenterController.modifyCenter 에서 저장 안되는 오류 발생");
+            System.out.println(" CenterController.saveCenter 에서 저장 안되는 오류 발생");
             // 오류코드 전성
         }
     }

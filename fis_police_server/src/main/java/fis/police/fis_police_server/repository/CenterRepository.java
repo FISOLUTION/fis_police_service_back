@@ -1,10 +1,8 @@
 package fis.police.fis_police_server.repository;
 
-import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 //현승구
@@ -23,5 +21,5 @@ public interface CenterRepository {
 
     Center findByIdAndFetchAll(Long center_id);
 
-    List<Center> findNearCenter(Float latitude, Float longitude);
+    List<Center> findNearCenter(double latitude, double longitude);
 }

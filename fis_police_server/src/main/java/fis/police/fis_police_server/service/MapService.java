@@ -15,7 +15,7 @@ public interface MapService {
     //선택된 시설 중심으로 일정거리(distance)의 Center List 보낸다
     List<Center> centerNearCenter(Center center);
 
-    Pair<String, String> addressToLocation(String address) throws ParseException;
+    Pair<Double, Double> addressToLocation(String address) throws ParseException;
 
     Double distance(double lat1, double lon1, double lat2, double lon2);
 }

@@ -88,21 +88,27 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     }
 
     @Override
-    public List<Center> findNearCenter(Float latitude, Float longitude) {
-        Float latitude_l = latitude - 0.009F;
-        Float latitude_h = latitude + 0.009F;
+    public List<Center> findNearCenter(double latitude, double longitude) {
+        double latitude_l = latitude - 0.009;
+        System.out.println("latitude_l = " + latitude_l);
+        double latitude_h = latitude + 0.009D;
+        System.out.println("latitude_h = " + latitude_h);
+        double longitude_l = longitude - 0.009;
+        System.out.println("longitude_l = " + longitude_l);
+        double longitude_h = longitude + 0.009;
+        System.out.println("longitude_h = " + longitude_h);
 
-        Float longitude_l = longitude - 0.009F;
-        Float longitude_h = longitude + 0.009F;
-
-        return em.createQuery("select center " +
+        List<Center> centerList = em.createQuery("select center " +
                 "from Center center " +
-                "where center.c_latitude < :latitude_h and center.c_latitude > :latitude_l " +
-                "and center.c_longitude < :longitude_h and center.c_longitude > :longitude_l")
+                "where center.c_latitude <= :latitude_h and center.c_latitude >= :latitude_l " +
+                "and center.c_longitude <= :longitude_h and center.c_longitude >= :longitude_l", Center.class)
                 .setParameter("latitude_h", latitude_h)
                 .setParameter("latitude_l", latitude_l)
                 .setParameter("longitude_l", longitude_l)
-                .setParameter("longitude_h", latitude_h)
+                .setParameter("longitude_h", longitude_h)
                 .getResultList();
+
+        System.out.println("centerList.toString() = " + centerList.toString());
+        return centerList;
     }
 }

@@ -22,7 +22,7 @@ public interface CenterController {
     Result selectDate(Long center_id, String date);
 
     // 주변시설 검색
-    Result searchNearCenter(Long center_id, Long range);
+    Result searchNearCenter(Long center_id);
 
     // 시설 추가
     void saveCenter(CenterSaveDTO centerSaveDTO);

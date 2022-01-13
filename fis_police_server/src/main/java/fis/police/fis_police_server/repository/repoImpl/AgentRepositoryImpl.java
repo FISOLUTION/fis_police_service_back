@@ -42,13 +42,13 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> findNearAgent(Float latitude, Float longitude, Long range) {
+    public List<Agent> findNearAgent(Double latitude, Double longitude, Long range) {
 
-        Float latitude_l = latitude - (0.009F * range);
-        Float latitude_h = latitude + (0.009F * range);
+        Double latitude_l = latitude - (0.009F * range);
+        Double latitude_h = latitude + (0.009F * range);
 
-        Float longitude_l = longitude - (0.009F * range);
-        Float longitude_h = longitude + (0.009F * range);
+        Double longitude_l = longitude - (0.009F * range);
+        Double longitude_h = longitude + (0.009F * range);
 
         return em.createQuery("select Agent " +
                 "from Agent agent " +
