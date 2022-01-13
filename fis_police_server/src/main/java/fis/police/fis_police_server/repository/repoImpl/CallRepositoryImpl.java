@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /*
     작성 날짜: 2022/01/10 10:17 오전
@@ -33,6 +36,10 @@ public class CallRepositoryImpl implements CallRepository {
     @Override
     public Call findRecentDateByCenter(Long center_id) {
 
+
+
+
+
         return null;
     }
 
@@ -47,4 +54,41 @@ public class CallRepositoryImpl implements CallRepository {
         return null;
 
     }
+
+    /*
+        작성 날짜: 2022/01/11 2:51 오후
+        작성자: 고준영
+        작성 내용: 날짜별 user의 통화 건수를 알아보기 위해 작성  뭔가 문제가 있는 것이 확실함...;
+    */
+    @Override
+    public List<Call> callByUser(String dateTime) {
+        return em.createQuery("select count(c) from Call c where c.dateTime = : dateTime group by c.user.id", Call.class)
+                .setParameter("dateTime", dateTime)
+                .getResultList();
+
+    }
+
+    @Override
+    public List<Call> callByDate(LocalDateTime date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<Call> testDate(String date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .getResultList();
+    }
+
+    public List<Call> test() {
+        return em.createQuery("select c from Call c join fetch c.user", Call.class)
+                .getResultList();
+    }
+
+    public List<Call> findAll() {
+        return em.createQuery("select c from Call c", Call.class)
+                .getResultList();
+    }
+
+
 }

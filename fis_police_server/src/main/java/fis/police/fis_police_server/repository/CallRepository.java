@@ -1,11 +1,10 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Call;
-import fis.police.fis_police_server.dto.CallSaveRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /*
     작성 날짜: 2022/01/10 10:17 오전
@@ -23,4 +22,10 @@ public interface CallRepository {
     */
     Call findRecentDateByCenter(Long center_id);
     Call findRecentByCenter(Long center_id);
+
+    List<Call> callByUser(String dateTime);
+
+    List<Call> callByDate(LocalDateTime date);
+
+
 }

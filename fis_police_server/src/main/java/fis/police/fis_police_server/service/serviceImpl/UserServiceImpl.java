@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.dto.UserInfoResponse;
 import fis.police.fis_police_server.dto.UserSaveRequest;
 import fis.police.fis_police_server.dto.UserSaveResponse;
 import fis.police.fis_police_server.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /*
@@ -43,11 +45,8 @@ public class UserServiceImpl implements UserService {
     private void validateDuplicateUser(UserSaveRequest request) {
         List<User> findUser = userRepository.findByNickname(request.getU_nickname());
         if (findUser.size() > 0) { //수정 시 중복 검사
-            if (!(findUser.get(0).getU_nickname().equals(request.getU_nickname()) && findUser.get(0).getId().equals(request.getUser_id())))
-            { //자신의 이름은 중복검사 안함
-                if (!findUser.isEmpty()) {
-                    throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
-                }
+            if (findUser.get(0).getId().equals(request.getUser_id())) { //자신의 이름은 중복검사 안함
+                throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
             }
         }
     }
@@ -75,7 +74,9 @@ public class UserServiceImpl implements UserService {
     //== 콜직원 전체 조회 ==//
     @Override
     @Transactional(readOnly = true)
-    public List<User> getUser() {
-        return userRepository.findAll();
+    public List<UserInfoResponse> getUser() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> new UserInfoResponse(user.getId(), user.getU_nickname(), user.getU_name(), user.getU_pwd(), user.getU_ph(), user.getU_sDate(), user.getU_auth()))
+                .collect(Collectors.toList());
     }
 }

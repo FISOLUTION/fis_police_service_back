@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.dto.UserInfoResponse;
 import fis.police.fis_police_server.dto.UserSaveRequest;
 import fis.police.fis_police_server.dto.UserSaveResponse;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,5 @@ public interface UserService {
     User findOneUser(Long id);
 
     // 콜직원 전체 조회
-    List<User> getUser();
+    List<UserInfoResponse> getUser();
 }

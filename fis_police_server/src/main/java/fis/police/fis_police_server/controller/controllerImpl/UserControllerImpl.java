@@ -2,6 +2,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.UserController;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.UserInfoResponse;
 import fis.police.fis_police_server.dto.UserSaveRequest;
 import fis.police.fis_police_server.dto.UserSaveResponse;
 import fis.police.fis_police_server.service.UserService;
@@ -31,9 +32,9 @@ public class UserControllerImpl implements UserController {
     public UserSaveResponse saveUser(@RequestBody UserSaveRequest request){
         System.out.println("1. 들어가지나?"+request.getUser_id());
         if(request.getUser_id() == null){ // 새로운 회원
-            return userService.saveUser(request);
+            return userService.saveUser(request); //회원 가입
         } else { //기존 회원일 경우 업데이트
-            return userService.modifyUser(request);
+            return userService.modifyUser(request); //회원 정보 수정
         }
     }
 
@@ -42,10 +43,10 @@ public class UserControllerImpl implements UserController {
         return null;
     }
 
-    // 콜직원 조회
+    // 콜직원 조회 (처음 화면 접속시 보여주는 리스트)
     @Override
     @GetMapping("/user")
-    public List<User> getUser() {
+    public List<UserInfoResponse> getUser() {
         return userService.getUser();
     }
 }

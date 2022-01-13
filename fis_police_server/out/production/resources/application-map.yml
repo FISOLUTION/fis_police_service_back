@@ -1,0 +1,5 @@
+# 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로생성
+naver:
+  client:
+    id: vb8g27znp3
+    secret: bhHCdnH16NmR7gKtKY5qPaUL6nG1YTFMWcT4JlLX
