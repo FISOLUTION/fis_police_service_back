@@ -14,12 +14,7 @@ import java.util.List;
 @Entity
 @RequiredArgsConstructor
 @Getter
-/*
-    날짜 : 2022/01/10 1:16 오후
-    작성자 : 원보라
-    작성내용 : TEST를 위헤 SETTER 열어둠
-*/
-@Setter
+
 public class User {
 
     @Id
