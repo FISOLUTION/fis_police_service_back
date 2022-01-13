@@ -49,6 +49,11 @@ public class User {
     List<Messenger> messengerList = new ArrayList<Messenger>();
 
 
+    /*
+            날짜 : 2022/01/10 2:58 오후
+            작성자 : 원보라
+            작성내용 : 생성 메서드
+    */
 
     public User(String u_nickname, String u_name, String u_pwd, String u_ph, LocalDate u_sDate, UserAuthority u_auth) {
         this.u_nickname = u_nickname;
@@ -58,12 +63,6 @@ public class User {
         this.u_sDate = u_sDate;
         this.u_auth = u_auth;
     }
-
-    /*
-            날짜 : 2022/01/10 2:58 오후
-            작성자 : 원보라
-            작성내용 : 생성 메서드
-    */
     public static User creatUser(UserSaveRequest request){
         User user = new User(request.getU_nickname(), request.getU_name(), request.getU_pwd(), request.getU_ph(), request.getU_sDate(), request.getU_auth());
         return user;
