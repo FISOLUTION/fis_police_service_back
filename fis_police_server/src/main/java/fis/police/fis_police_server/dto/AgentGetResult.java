@@ -10,7 +10,7 @@ import lombok.Data;
 */
 @Data
 @AllArgsConstructor
-public class Result <T>{
+public class AgentGetResult<T>{
     private T data;
 }
 

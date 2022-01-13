@@ -41,13 +41,13 @@ public class initDb2 {
 
         public void dbInit(){
             Agent agent1 = Agent.createAgent("asd", "123", "111", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123F, 123F);
+                    "", LocalDateTime.now(), 123D, 123D);
             em.persist(agent1);
             Agent agent2 = Agent.createAgent("asd", "123", "222", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123F, 123F);
+                    "", LocalDateTime.now(), 123D, 123D);
             em.persist(agent2);
             Agent agent3 = Agent.createAgent("asd", "123", "333", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123F, 123F);
+                    "", LocalDateTime.now(), 123D, 123D);
             em.persist(agent3);
             Center center1 = new Center("111", "분당구 불정로 6", "123", 36.963880825057295D, 127.94290388797995D);
             em.persist(center1);
