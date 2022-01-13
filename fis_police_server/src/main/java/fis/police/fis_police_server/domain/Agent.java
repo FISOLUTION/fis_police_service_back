@@ -47,11 +47,8 @@ public class Agent {
 
     private LocalDateTime a_receiveDate;                //'장비 수령 날짜'
 
-    @Column(length = 100)
-    private String a_latitude;                          //'현장 요원 위도',
-
-    @Column(length = 100)
-    private String a_longitude;                         //'현장 요원 경도',
+    private Float a_latitude;                          //'현장 요원 위도',
+    private Float a_longitude;                         //'현장 요원 경도',
 
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
@@ -64,7 +61,7 @@ public class Agent {
     */
     // 생성 메서드
     public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
-                             String a_equipment, LocalDateTime a_receiveDate, String a_latitude, String a_longitude) {
+                             String a_equipment, LocalDateTime a_receiveDate, Float a_latitude, Float a_longitude) {
         Agent agent = new Agent();
         agent.a_name = a_name;
         agent.a_ph = a_ph;
@@ -81,7 +78,7 @@ public class Agent {
 
     // 현장요원 정보 수정을 위한 setter
     public void modifyAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar, String a_equipment,
-                            LocalDateTime a_receiveDate, String a_latitude, String a_longitude, AgentStatus a_status){
+                            LocalDateTime a_receiveDate, Float a_latitude, Float a_longitude, AgentStatus a_status){
         this.a_name = a_name;
         this.a_ph = a_ph;
         this.a_code = a_code;
