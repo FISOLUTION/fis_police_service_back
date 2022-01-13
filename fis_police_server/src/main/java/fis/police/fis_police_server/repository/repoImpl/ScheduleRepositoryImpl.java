@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.util.List;
 
 /*
     작성 날짜: 2022/01/10 1:16 오후
@@ -27,5 +29,15 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public Schedule findById(Long id) {
         Schedule findScheduleById = em.find(Schedule.class, id);
         return findScheduleById;
+    }
+
+    /*
+        작성날짜: 2022/01/13 4:18 PM
+        작성자: 이승범
+        작성내용: findAllByDate 작성
+    */
+    @Override
+    public List<Schedule> findAllByDate(LocalDate date) {
+        return null;
     }
 }

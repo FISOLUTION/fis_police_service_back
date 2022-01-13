@@ -7,15 +7,13 @@ import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.AgentGetResponse;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.AgentGetResult;
 import fis.police.fis_police_server.service.AgentService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
-import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,14 +70,14 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
-    public Result getAgent() {
+    public AgentGetResult getAgent() {
         List<Agent> AllAgentList = agentService.getAgents();
         List<AgentGetResponse> collect = AllAgentList.stream()
                 .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
                                 HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
                                 AgentStatus.converter(a.getA_status()))
                         ).collect(Collectors.toList());
-        return new Result(collect);
+        return new AgentGetResult(collect);
     }
 
 }
