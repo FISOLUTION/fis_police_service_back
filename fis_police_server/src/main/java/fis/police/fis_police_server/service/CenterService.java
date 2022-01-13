@@ -2,6 +2,8 @@ package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+import org.json.simple.parser.ParseException;
+
 import javax.persistence.NoResultException;
 import java.util.List;
 
@@ -13,11 +15,13 @@ public interface CenterService {
     Center centerInfo(Long center_id);
 
     // 시설 추기
-    void saveCenter(Center center);
+    void saveCenter(Center center) throws ParseException;
 
     // 시설 수정
-    Boolean modifyCenter(Center center);
+    void modifyCenter(Center center) throws ParseException;
 
     // 시설 조회
     List<Center> getCenter();
+
+    Center findById(Long id);
 }

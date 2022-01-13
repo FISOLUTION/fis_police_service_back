@@ -13,3 +13,5 @@ import lombok.Data;
 public class Result <T>{
     private T data;
 }
+
+
