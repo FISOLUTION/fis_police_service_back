@@ -3,7 +3,9 @@ package fis.police.fis_police_server.dto;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
+import lombok.Data;
 
+@Data
 public class SearchNearCenterDTO {
     private Long c_id;
     private String c_address;
