@@ -26,9 +26,9 @@ public class QCenter extends EntityPathBase<Center> {
 
     public final StringPath c_hpAddress = createString("c_hpAddress");
 
-    public final StringPath c_latitude = createString("c_latitude");
+    public final NumberPath<Double> c_latitude = createNumber("c_latitude", Double.class);
 
-    public final StringPath c_longitude = createString("c_longitude");
+    public final NumberPath<Double> c_longitude = createNumber("c_longitude", Double.class);
 
     public final StringPath c_name = createString("c_name");
 
