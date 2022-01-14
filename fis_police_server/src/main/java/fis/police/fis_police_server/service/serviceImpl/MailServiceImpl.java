@@ -44,8 +44,8 @@ public class MailServiceImpl implements MailService {
 //            return Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", str);
 //        }
 
-        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
-        System.out.println("isEmail = " + isEmail);
+//        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
+//        System.out.println("isEmail = " + isEmail);
 
 
 
@@ -69,18 +69,6 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
-
-
-            /*
-                작성 날짜: 2022/01/12 3:51 오후
-                작성자: 고준영
-                작성 내용: 메일 첨부 파일을 붙여서 보내야 하지만, 파일의 경로가 잘못된 모양인지 FileNotFoundException 이 뜬다. 시발
-            */
-/*
-        String attach1 = "21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf";
-        FileSystemResource fsr = new FileSystemResource(attach1);
-        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
-*/
 
         mailSender.send(message);
 
