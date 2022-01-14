@@ -23,6 +23,7 @@ import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 /*
     작성 날짜: 2022/01/10 1:18 오후
@@ -38,6 +39,16 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
+
+//        public boolean isEmail(String str) {
+//            return Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", str);
+//        }
+
+        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
+        System.out.println("isEmail = " + isEmail);
+
+
+
 
         String from = "fis182@fisolution.co.kr";
         String to = request.getM_email();
