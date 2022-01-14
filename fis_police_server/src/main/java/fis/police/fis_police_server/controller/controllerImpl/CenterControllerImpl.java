@@ -12,6 +12,7 @@ import org.springframework.web.client.RestClientException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +31,15 @@ public class CenterControllerImpl implements CenterController {
     @Override
     public Result searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
         try {
-            SearchCenterDTO searchCenterDTO = new SearchCenterDTO(c_name, c_address, c_ph);
-            String name = searchCenterDTO.getC_name();
-            String address = searchCenterDTO.getC_address();
-            String ph = searchCenterDTO.getC_ph();
-            List<SearchCenterResponseDTO> results = centerService.findCenterList(name, address, ph);
+            CenterSearchDTO centerSearchDTO = new CenterSearchDTO(c_name, c_address, c_ph);
+            String name = centerSearchDTO.getC_name();
+            String address = centerSearchDTO.getC_address();
+            String ph = centerSearchDTO.getC_ph();
+            List<CenterSearchResponseDTO> results = centerService.findCenterList(name, address, ph);
             return new Result(results);
         } catch (NoResultException noResultException){
             System.out.println(noResultException);
-            return new Result(new ArrayList<SearchCenterResponseDTO>());
+            return new Result(new ArrayList<CenterSearchResponseDTO>());
         } catch (NullPointerException nullPointerException){
             System.out.println("nullPointerException 이 발생하였습니다 ");
             return null;
@@ -53,8 +54,8 @@ public class CenterControllerImpl implements CenterController {
     @Override
     public Result selectCenter(@RequestParam Long center_id) {
         try{
-            Center center =  centerService.centerInfo(center_id);
-            return new Result(new SelectCenterResponseDTO(center));
+            Center center = centerService.centerInfo(center_id);
+            return new Result(new CenterSelectResponseDTO(center));
         } catch (NoResultException noResultException){
             // 결과물 없을 때 오류코드 발생 -> 해당 시설이 존재 하지 않음
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설이 존재 하지 않음" + center_id);
@@ -76,9 +77,11 @@ public class CenterControllerImpl implements CenterController {
     */
     @Override
     public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
-//        centerService.
-//        mapService.agentNearCenter()
-        return null;
+        Center center = centerService.findById(center_id);
+        LocalDate visit_date = LocalDate.parse(date);
+        mapService.agentNearCenter(center, 2L, visit_date).stream()
+                .map(e -> new CenterSelectResponseDTO(e));
+
     }
 
     @GetMapping("/center/{center_id}")
@@ -87,13 +90,13 @@ public class CenterControllerImpl implements CenterController {
         try {
             Center center = centerService.findById(center_id);
             List<Center> nearList = mapService.centerNearCenter(center);
-            List<SearchNearCenterDTO> searchNearCenterDTOList = new ArrayList<SearchNearCenterDTO>();
+            List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList = new ArrayList<CenterSearchNearCenterDTO>();
             nearList.stream()
                     .forEach(e -> {
                         Double distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).doubleValue();
-                        searchNearCenterDTOList.add(new SearchNearCenterDTO(e, distance));
+                        centerSearchNearCenterDTOList.add(new CenterSearchNearCenterDTO(e, distance));
                     });
-            return new Result(searchNearCenterDTOList);
+            return new Result(centerSearchNearCenterDTOList);
         } catch (NoResultException noResultException){
             System.out.println(noResultException.getMessage());
             return null;

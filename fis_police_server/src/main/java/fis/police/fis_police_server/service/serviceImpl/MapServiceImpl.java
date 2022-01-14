@@ -21,6 +21,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.NoResultException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -39,13 +40,16 @@ public class MapServiceImpl implements MapService {
     private final HttpComponentsClientHttpRequestFactory httpRequestFactory;
 
     @Override
-    public List<Agent> agentNearCenter(Center center, Long range) {
-
+    public List<Agent> agentNearCenter(Center center, Long range, LocalDate visit_date) {
         Center target = centerRepository.findById(center.getId());
         Double latitude = target.getC_latitude();
         Double longitude = target.getC_longitude();
-        agentRepository.findNearAgent(latitude, longitude, range);
-        return null;
+        List<Agent> agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
+        while(agentList.size() >= 5) {
+            range = range + 2;
+            agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
+        }
+        return agentList;
     }
 
     @Override

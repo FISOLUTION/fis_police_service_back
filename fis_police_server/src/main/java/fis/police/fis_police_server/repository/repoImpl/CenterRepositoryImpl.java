@@ -3,7 +3,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
 import lombok.RequiredArgsConstructor;
@@ -52,12 +52,12 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         작성내용 : querydsl이용해서 centersearch 구현
     */
     @Override
-    public List<SearchCenterResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph) {
-        List<SearchCenterResponseDTO> centerList;
+    public List<CenterSearchResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph) {
+        List<CenterSearchResponseDTO> centerList;
         if(c_name == null && c_address == null && c_ph == null){
             centerList =
                     jpaQueryFactory
-                            .select(Projections.constructor(SearchCenterResponseDTO.class,
+                            .select(Projections.constructor(CenterSearchResponseDTO.class,
                                     qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .limit(1000)
@@ -66,7 +66,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         else {
             centerList =
                     jpaQueryFactory
-                            .select(Projections.constructor(SearchCenterResponseDTO.class,
+                            .select(Projections.constructor(CenterSearchResponseDTO.class,
                                     qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .where(cNameLike(c_name)
@@ -81,9 +81,13 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     @Override
     public Center findByIdAndFetchAll(Long id) throws NoResultException, NonUniqueResultException {
         //  list "select center from Center center join Center.Call on 조건 join
-        return em.createQuery("select center " +
-                "from Center center " +
-                "join fetch center.callList as call ", Center.class)
+        return em.createQuery("select schedule.center " +
+                "from Schedule schedule " +
+                "join fetch schedule.center " +
+                "join fetch schedule.agent " +
+                "join fetch schedule.center.callList " +
+                "where schedule.center.id = :id ", Center.class)
+                .setParameter("id", id)
                 .getSingleResult();
     }
 
