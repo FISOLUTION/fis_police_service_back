@@ -7,13 +7,16 @@ import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,19 +29,19 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 :
     */
-    @PostMapping
+    @GetMapping("/center/search")
     @Override
-    public Result searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
+    public Result searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph){
         try {
-            SearchCenterDTO searchCenterDTO = new SearchCenterDTO(c_name, c_address, c_ph);
-            String name = searchCenterDTO.getC_name();
-            String address = searchCenterDTO.getC_address();
-            String ph = searchCenterDTO.getC_ph();
-            List<SearchCenterResponseDTO> results = centerService.findCenterList(name, address, ph);
+            CenterSearchDTO centerSearchDTO = new CenterSearchDTO(c_name, c_address, c_ph);
+            String name = centerSearchDTO.getC_name();
+            String address = centerSearchDTO.getC_address();
+            String ph = centerSearchDTO.getC_ph();
+            List<CenterSearchResponseDTO> results = centerService.findCenterList(name, address, ph);
             return new Result(results);
         } catch (NoResultException noResultException){
             System.out.println(noResultException);
-            return new Result(new ArrayList<SearchCenterResponseDTO>());
+            return new Result(new ArrayList<CenterSearchResponseDTO>());
         } catch (NullPointerException nullPointerException){
             System.out.println("nullPointerException 이 발생하였습니다 ");
             return null;
@@ -50,11 +53,12 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : 로직 작성 test코드 아직 작성 안함
     */
+    @GetMapping("/center/select")
     @Override
     public Result selectCenter(@RequestParam Long center_id) {
         try{
-            Center center =  centerService.centerInfo(center_id);
-            return new Result(new SelectCenterResponseDTO(center));
+            Center center = centerService.centerInfo(center_id);
+            return new Result(new CenterSelectResponseDTO(center));
         } catch (NoResultException noResultException){
             // 결과물 없을 때 오류코드 발생 -> 해당 시설이 존재 하지 않음
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설이 존재 하지 않음" + center_id);
@@ -64,6 +68,7 @@ public class CenterControllerImpl implements CenterController {
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설 여러개 존재" + center_id);
             return null;
         } catch (Exception exception) {
+            System.out.println("exception = " + exception);
             System.out.println("CenterService.centerInfo 예기치 않은 오류 발생" + center_id);
             return null;
         }
@@ -74,11 +79,20 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : selectDate 호출시 주변 현장요원 나온다. -> 현장요원들 좌표 던져준다.
     */
+
     @Override
-    public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
-//        centerService.
-//        mapService.agentNearCenter()
-        return null;
+    @GetMapping("/center/{center_id}/date")
+    public Result selectDate(@PathVariable Long center_id, @RequestParam String date) {
+        try {
+            Center center = centerService.findById(center_id);
+            LocalDate visit_date = LocalDate.parse(date);
+            return new Result(mapService.agentNearCenter(center, 2L).stream()
+                    .map(e -> new CenterSelectDateResponseDTO(e, visit_date))
+                    .collect(Collectors.toList()));
+        } catch (Exception exception){
+            System.out.println("exception = " + exception);
+            return null;
+        }
     }
 
     @GetMapping("/center/{center_id}")
@@ -87,13 +101,13 @@ public class CenterControllerImpl implements CenterController {
         try {
             Center center = centerService.findById(center_id);
             List<Center> nearList = mapService.centerNearCenter(center);
-            List<SearchNearCenterDTO> searchNearCenterDTOList = new ArrayList<SearchNearCenterDTO>();
+            List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList = new ArrayList<CenterSearchNearCenterDTO>();
             nearList.stream()
                     .forEach(e -> {
                         Double distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).doubleValue();
-                        searchNearCenterDTOList.add(new SearchNearCenterDTO(e, distance));
+                        centerSearchNearCenterDTOList.add(new CenterSearchNearCenterDTO(e, distance));
                     });
-            return new Result(searchNearCenterDTOList);
+            return new Result(centerSearchNearCenterDTOList);
         } catch (NoResultException noResultException){
             System.out.println(noResultException.getMessage());
             return null;
@@ -106,7 +120,9 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : 관리자 페이지에서 시설 저장
     */
+
     @Override
+    @PostMapping("/center")
     public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO) {
         try {
             Center center = CenterSaveDTO.convertToCenter(centerSaveDTO);
@@ -127,6 +143,7 @@ public class CenterControllerImpl implements CenterController {
         작성내용 : 시설 수정 - 관리자 페이지에서 시설 수정
     */
     @Override
+    @PatchMapping("/center")
     public void modifyCenter(@RequestBody CenterModifyDTO centerModifyDTO) {
         try {
             Center center = CenterModifyDTO.convertToCenter(centerModifyDTO);
@@ -149,6 +166,7 @@ public class CenterControllerImpl implements CenterController {
     */
 
     @Override
+    @GetMapping("/center")
     public List<Object> getCenter(@RequestParam Long center) {
         return null;
     }

@@ -1,7 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface CenterRepository {
     // 시설 삭제
     void delete(Center center);
 
-    List<SearchCenterResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph);
+    List<CenterSearchResponseDTO> findBySearchCenterDTO(String c_name, String c_address, String c_ph);
 
     Center findByIdAndFetchAll(Long center_id);
 

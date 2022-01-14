@@ -49,11 +49,11 @@ public class initDb2 {
             Agent agent3 = Agent.createAgent("asd", "123", "333", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDateTime.now(), 123D, 123D);
             em.persist(agent3);
-            Center center1 = new Center("111", "분당구 불정로 6", "123", 36.963880825057295D, 127.94290388797995D);
+            Center center1 = new Center("111", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center1);
-            Center center2 = new Center("123", "분당구 불정로 6", "123", 36.968881825057295D, 127.94290388797995D);
+            Center center2 = new Center("123", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center2);
-            Center center3 = new Center("234", "분당구 불정로 6", "123", 36.961881425057295D, 127.94290388797995D);
+            Center center3 = new Center("234", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center3);
             User user1 = new User("111", "111", "111", "111",
                     LocalDate.now(), UserAuthority.USER);
