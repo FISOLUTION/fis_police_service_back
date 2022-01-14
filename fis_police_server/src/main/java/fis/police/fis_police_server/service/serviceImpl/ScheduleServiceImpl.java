@@ -4,6 +4,7 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.ScheduleGetResponse;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -43,10 +45,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.save(schedule);
         return true;
     }
-
+/*
+    작성날짜: 2022/01/13 5:54 PM
+    작성자: 이승범
+    작성내용: 날짜별 현장요원 스케줄 가져오기 구현
+*/
     @Override
-    public List<Object> selectDate() {
-        return null;
+    public List<Schedule> selectDate(LocalDate date) {
+        return scheduleRepository.findAllByDate(date);
     }
 
     @Override

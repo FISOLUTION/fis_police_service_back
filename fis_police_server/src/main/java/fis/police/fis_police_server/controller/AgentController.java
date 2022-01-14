@@ -1,12 +1,9 @@
 package fis.police.fis_police_server.controller;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.dto.AgentGetResponse;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.AgentGetResult;
 
-import java.util.List;
 /*
     작성날짜: 2022/01/12 3:38 PM
     작성자: 이승범
@@ -21,5 +18,5 @@ public interface AgentController {
     void modifyAgent(AgentModifyRequest request);
 
     // 현장요원 조회
-    Result getAgent();
+    AgentGetResult getAgent();
 }

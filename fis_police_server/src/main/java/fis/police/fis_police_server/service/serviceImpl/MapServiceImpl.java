@@ -45,7 +45,7 @@ public class MapServiceImpl implements MapService {
         Double latitude = target.getC_latitude();
         Double longitude = target.getC_longitude();
         List<Agent> agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
-        while(agentList.size() >= 5) {
+        while(agentList.size() >= 5 || range < 100) {
             range = range + 2;
             agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
         }

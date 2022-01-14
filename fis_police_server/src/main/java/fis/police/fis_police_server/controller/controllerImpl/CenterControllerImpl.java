@@ -15,6 +15,7 @@ import javax.persistence.NonUniqueResultException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 :
     */
-    @PostMapping
+    @GetMapping("/center/search")
     @Override
     public Result searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
         try {
@@ -51,6 +52,7 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : 로직 작성 test코드 아직 작성 안함
     */
+    @GetMapping("/center/select")
     @Override
     public Result selectCenter(@RequestParam Long center_id) {
         try{
@@ -75,13 +77,20 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : selectDate 호출시 주변 현장요원 나온다. -> 현장요원들 좌표 던져준다.
     */
-    @Override
-    public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
-        Center center = centerService.findById(center_id);
-        LocalDate visit_date = LocalDate.parse(date);
-        mapService.agentNearCenter(center, 2L, visit_date).stream()
-                .map(e -> new CenterSelectResponseDTO(e));
 
+    @Override
+    @GetMapping("/center/{center_id}/date")
+    public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
+        try {
+            Center center = centerService.findById(center_id);
+            LocalDate visit_date = LocalDate.parse(date);
+            return new Result(mapService.agentNearCenter(center, 2L, visit_date).stream()
+                    .map(e -> new CenterSelectDateResponseDTO(e))
+                    .collect(Collectors.toList()));
+        } catch (Exception exception){
+            System.out.println("exception = " + exception);
+            return null;
+        }
     }
 
     @GetMapping("/center/{center_id}")
@@ -109,7 +118,9 @@ public class CenterControllerImpl implements CenterController {
         작성자 : 현승구
         작성내용 : 관리자 페이지에서 시설 저장
     */
+
     @Override
+    @PostMapping("/center")
     public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO) {
         try {
             Center center = CenterSaveDTO.convertToCenter(centerSaveDTO);
@@ -130,6 +141,7 @@ public class CenterControllerImpl implements CenterController {
         작성내용 : 시설 수정 - 관리자 페이지에서 시설 수정
     */
     @Override
+    @PatchMapping("/center")
     public void modifyCenter(@RequestBody CenterModifyDTO centerModifyDTO) {
         try {
             Center center = CenterModifyDTO.convertToCenter(centerModifyDTO);
@@ -152,6 +164,7 @@ public class CenterControllerImpl implements CenterController {
     */
 
     @Override
+    @GetMapping("/center")
     public List<Object> getCenter(@RequestParam Long center) {
         return null;
     }

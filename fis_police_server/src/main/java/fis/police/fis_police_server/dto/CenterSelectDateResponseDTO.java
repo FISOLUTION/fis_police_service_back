@@ -45,7 +45,7 @@ public class CenterSelectDateResponseDTO {
 
     private static class ScheduleDTO{
         private Long id;
-        private Center center;
+        private CenterDTO center;
         private LocalDate visit_date;               // '방문날짜'
         private LocalTime visit_time;               // '방문시간'
         private Integer estimate_num;             // '예상인원'
@@ -55,7 +55,7 @@ public class CenterSelectDateResponseDTO {
 
         public ScheduleDTO(Schedule schedule) {
             this.id = schedule.getId();
-            this.center = schedule.getCenter();
+            this.center = new CenterDTO(schedule.getCenter().getC_name(),schedule.getCenter().getC_latitude(),schedule.getCenter().getC_longitude());
             this.visit_date = schedule.getVisit_date();
             this.visit_time = schedule.getVisit_time();
             this.estimate_num = schedule.getEstimate_num();
@@ -67,7 +67,9 @@ public class CenterSelectDateResponseDTO {
 
     @AllArgsConstructor
     private static class CenterDTO{
-        private Double
+        private String c_name;
+        private Double a_latitude;                          //'현장 요원 위도',
+        private Double a_longitude;                         //'현장 요원 경도',
     }
 
 
