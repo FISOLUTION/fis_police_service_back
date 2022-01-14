@@ -1,9 +1,8 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.dto.SearchCenterDTO;
-import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+import fis.police.fis_police_server.dto.CenterSearchDTO;
+import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
 import org.assertj.core.api.Assertions;
@@ -17,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -48,26 +45,26 @@ class CenterServiceImplTest {
 
         System.out.println("영속성 컨택스트 초기화");
 
-        SearchCenterDTO searchCenterDTO1 = new SearchCenterDTO("시설이름 1", null, null);
-        SearchCenterDTO searchCenterDTO2 = new SearchCenterDTO(null, null, null);
-        SearchCenterDTO searchCenterDTO3 = new SearchCenterDTO("시설이름 4", "서울", null);
+        CenterSearchDTO centerSearchDTO1 = new CenterSearchDTO("시설이름 1", null, null);
+        CenterSearchDTO centerSearchDTO2 = new CenterSearchDTO(null, null, null);
+        CenterSearchDTO centerSearchDTO3 = new CenterSearchDTO("시설이름 4", "서울", null);
         System.out.println("1차 데이터 검색");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList1 = centerService.findCenterList("시설이름 1", null, null);
-        searchCenterResponseDTOList1.stream().forEach(e-> System.out.println("e = " + e));
+        List<CenterSearchResponseDTO> centerSearchResponseDTOList1 = centerService.findCenterList("시설이름 1", null, null);
+        centerSearchResponseDTOList1.stream().forEach(e-> System.out.println("e = " + e));
         System.out.println("2차 데이터 검색");
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList2 = centerService.findCenterList(null, null, null);
-        searchCenterResponseDTOList2.stream().forEach(e-> System.out.println("e = " + e));
-        List<SearchCenterResponseDTO> searchCenterResponseDTOList3;
+        List<CenterSearchResponseDTO> centerSearchResponseDTOList2 = centerService.findCenterList(null, null, null);
+        centerSearchResponseDTOList2.stream().forEach(e-> System.out.println("e = " + e));
+        List<CenterSearchResponseDTO> centerSearchResponseDTOList3;
         try {
             System.out.println("3차 데이터 검색");
-            searchCenterResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
-            searchCenterResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
+            centerSearchResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
+            centerSearchResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
         } catch (Exception e){
 
         }
         finally {
-            Assertions.assertThat(searchCenterResponseDTOList2.size()).isEqualTo(3L);
-            Assertions.assertThat(searchCenterResponseDTOList1.size()).isEqualTo(1L);
+            Assertions.assertThat(centerSearchResponseDTOList2.size()).isEqualTo(3L);
+            Assertions.assertThat(centerSearchResponseDTOList1.size()).isEqualTo(1L);
         }
     }
 

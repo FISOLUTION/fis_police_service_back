@@ -2,10 +2,9 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.dto.SearchCenterResponseDTO;
+import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.MailService;
 import fis.police.fis_police_server.service.MapService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
@@ -29,8 +28,8 @@ public class CenterServiceImpl implements CenterService {
         작성내용 : 센터 검색
     */
    @Override
-    public List<SearchCenterResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
-       List<SearchCenterResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
+    public List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
+       List<CenterSearchResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
        if(centerList.isEmpty())
            throw new NoResultException("findBSearchCenterDTO  로직에서 발생됨 조건에 맞는 center가 존재하지 않습니다");
        else return centerList;
