@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="97952014-4774-4c0f-a66c-36343102b467" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/AgentGetResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CallNumDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/ScheduleGetByDateResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/ScheduleGetResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/SearchNearCenterDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fis_police_server/src/test/resources/application-map.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries-with-intellij-classes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QCenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/build/generated/querydsl/fis/police/fis_police_server/domain/QCenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/build/resources/main/application-map.yml" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/build/resources/main/application-map.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/out/production/resources/application-map.yml" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/out/production/resources/application-map.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/out/production/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/test/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/BeanConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/BeanConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/AgentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/AgentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/CenterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/CenterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/ScheduleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/ScheduleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/AgentControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/AgentControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/CallControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/CallControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/CenterControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/CenterControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/ScheduleControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/controller/controllerImpl/ScheduleControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Call.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Center.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/domain/Center.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CallSaveRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CallSaveRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CenterModifyDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CenterModifyDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CenterSaveDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/CenterSaveDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/SelectCenterResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/SelectCenterResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/UserCallByDateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/dto/UserCallByDateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/initDb2.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/initDb2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/AgentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/AgentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/CallRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/CallRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/CenterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/CenterRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/ScheduleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/ScheduleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/AgentRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/AgentRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/CallRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/CallRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/ScheduleRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/repository/repoImpl/ScheduleRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/CallService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/CallService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/CenterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/CenterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/MapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/MapService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/ScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/ScheduleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/AgentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/AgentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/CallServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/CallServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/CenterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/CenterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/MailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/MapServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/MapServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/ScheduleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/java/fis/police/fis_police_server/service/serviceImpl/ScheduleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/resources/application-map.yml" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/resources/application-map.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/FisPoliceServerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/FisPoliceServerApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/service/serviceImpl/CenterServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/fis_police_server/src/test/java/fis/police/fis_police_server/service/serviceImpl/CenterServiceImplTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/fis_police_server">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/fis_police_server">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="fis_police_server" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="23M5u8KmAANqBT3MKhcPXzujC2V" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="fis.police.fis_police_server.controller.controllerImpl" />
+      <recent name="fis.police.fis_police_server.service.exceptions" />
+      <recent name="fis.police.fis_police_server.domain.enumType" />
+      <recent name="fis.police.fis_police_server.domain" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="fis.police.fis_police_server.service.serviceImpl" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FisPoliceServerApplication">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginServiceImplTest.sessionTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fis_police_server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;fis.police.fis_police_server.service.serviceImpl.LoginServiceImplTest.sessionTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceImplTest.회원가입" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fis_police_server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;fis.police.fis_police_server.service.serviceImpl.UserServiceImplTest.회원가입&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceImplTest.회원가입중복" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fis_police_server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;fis.police.fis_police_server.service.serviceImpl.UserServiceImplTest.회원가입중복&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceImplTest.회원가입_닉네임_중복" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fis_police_server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;fis.police.fis_police_server.service.serviceImpl.UserServiceImplTest.회원가입_닉네임_중복&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="fis_police_server [compileQuerydsl]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fis_police_server" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileQuerydsl" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="FisPoliceServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="fis_police_server.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fis.police.fis_police_server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="fis.police.fis_police_server.FisPoliceServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.FisPoliceServerApplication" />
+        <item itemvalue="Gradle.LoginServiceImplTest.sessionTest" />
+        <item itemvalue="Gradle.UserServiceImplTest.회원가입_닉네임_중복" />
+        <item itemvalue="Gradle.UserServiceImplTest.회원가입" />
+        <item itemvalue="Gradle.fis_police_server [compileQuerydsl]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="97952014-4774-4c0f-a66c-36343102b467" name="Default Changelist" comment="" />
+      <created>1641531334654</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1641531334654</updated>
+      <workItem from="1641531336020" duration="30554000" />
+      <workItem from="1641798959083" duration="51000" />
+      <workItem from="1641799328139" duration="27575000" />
+      <workItem from="1642124045822" duration="18324000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.io.EOFException" package="java.io" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

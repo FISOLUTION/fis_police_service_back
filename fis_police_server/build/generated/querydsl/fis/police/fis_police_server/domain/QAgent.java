@@ -28,15 +28,9 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.HasCar> a_hasCar = createEnum("a_hasCar", fis.police.fis_police_server.domain.enumType.HasCar.class);
 
-<<<<<<< HEAD
-    public final NumberPath<Float> a_latitude = createNumber("a_latitude", Float.class);
-
-    public final NumberPath<Float> a_longitude = createNumber("a_longitude", Float.class);
-=======
     public final NumberPath<Double> a_latitude = createNumber("a_latitude", Double.class);
 
     public final NumberPath<Double> a_longitude = createNumber("a_longitude", Double.class);
->>>>>>> 933cf142a5c157a64523754ffe5be789a718e233
 
     public final StringPath a_name = createString("a_name");
 
