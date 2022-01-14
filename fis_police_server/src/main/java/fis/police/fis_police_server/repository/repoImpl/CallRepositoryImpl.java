@@ -34,61 +34,21 @@ public class CallRepositoryImpl implements CallRepository {
     }
 
     @Override
-    public Call findRecentDateByCenter(Long center_id) {
-
-
-
-
-
-        return null;
-    }
-
-    @Override
-    public Call findRecentByCenter(Long center_id) {
-
-//        return em.createQuery("select c from Call c join fetch c.center ce where ce.id = : center_id and c.dateTime = (select max(c.dateTime) from Call c)", Call.class)
-//                .setParameter("center_id", center_id)
-//                .getSingleResult();
-//        센터 별 콜 기록 중 최근 값 찾아오기 (primary key가 가장 큰 거 찾아오면 될 듯함) 가장 최근에 저장된 콜 기록에서 메일 주소를 따오기 위함
-//        em.createQuery("select c from Call c where ")
-        return null;
-
-    }
-
-    /*
-        작성 날짜: 2022/01/11 2:51 오후
-        작성자: 고준영
-        작성 내용: 날짜별 user의 통화 건수를 알아보기 위해 작성  뭔가 문제가 있는 것이 확실함...;
-    */
-    @Override
-    public List<Call> callByUser(String dateTime) {
-        return em.createQuery("select count(c) from Call c where c.dateTime = : dateTime group by c.user.id", Call.class)
-                .setParameter("dateTime", dateTime)
-                .getResultList();
-
-    }
-
-    @Override
-    public List<Call> callByDate(LocalDateTime date) {
-        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
-                .setParameter("date", date)
-                .getResultList();
-    }
-
-    public List<Call> testDate(String date) {
-        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
-                .getResultList();
-    }
-
-    public List<Call> test() {
-        return em.createQuery("select c from Call c join fetch c.user", Call.class)
-                .getResultList();
-    }
-
     public List<Call> findAll() {
         return em.createQuery("select c from Call c", Call.class)
                 .getResultList();
     }
 
+/*
+    작성 날짜: 2022/01/12 3:09 오후
+    작성자: 고준영
+    작성 내용: 위의 findAll 함수에 date 변수를 삽입한 것, LocalDateTime으로 되어있는 값을 갖고 노는 방법 공부 후 이걸로 findAll 대체 예정
+*/
+    @Override
+    public List<Call> testDate(String date) {
+        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+                .setParameter("date", date)
+                .getResultList();
+    }
 
 }
