@@ -30,7 +30,7 @@ public class QCall extends EntityPathBase<Call> {
 
     public final StringPath center_etc = createString("center_etc");
 
-    public final DateTimePath<java.time.LocalDateTime> dateTime = createDateTime("dateTime", java.time.LocalDateTime.class);
+    public final StringPath dateTime = createString("dateTime");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
