@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import com.sun.mail.util.logging.MailHandler;
 import fis.police.fis_police_server.dto.MailDTO;
 import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
@@ -10,11 +11,19 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 /*
     작성 날짜: 2022/01/10 1:18 오후
@@ -31,6 +40,16 @@ public class MailServiceImpl implements MailService {
     @Override
     public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
 
+//        public boolean isEmail(String str) {
+//            return Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", str);
+//        }
+
+//        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
+//        System.out.println("isEmail = " + isEmail);
+
+
+
+
         String from = "fis182@fisolution.co.kr";
         String to = request.getM_email();
         String subject = "지문 등 사전등록신청서 양식 입니다.";
@@ -41,25 +60,22 @@ public class MailServiceImpl implements MailService {
                 "<div>서울특별시 금천구 가산디지털2로 108 1204, 1207호 (가산동, 뉴티캐슬) <div>\n" +
                 "<div>TEL  : 070-7872-7748   Fax : 02-2626-9800<div>");
 
+        MailSendResponse response = new MailSendResponse();
+
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
         mimeMessageHelper.setFrom(from);
-//        mimeMessageHelper.setFrom(new InternetAddress(from));
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
 
-//        FileSystemResource fileSystemResource = new FileSystemResource("./2021_경찰청_팝업_배부용.jpeg");
-//        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fileSystemResource);
-
         mailSender.send(message);
 
-        MailSendResponse response = new MailSendResponse();
         response.setCenter_id(request.getCenter_id());
         response.setM_email(request.getM_email());
         response.setStatus_code("ok");
-
         return response;
+
     }
 }

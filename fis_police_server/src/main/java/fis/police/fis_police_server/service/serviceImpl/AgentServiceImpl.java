@@ -45,7 +45,7 @@ public class AgentServiceImpl implements AgentService {
             IllegalStateException, IndexOutOfBoundsException {
 
         validateDuplicateAgent(request); // 현장요원 코드 중복 검사
-        Pair<Float, Float> pair = addressToLocation(request.getA_address());
+        Pair<Double, Double> pair = addressToLocation(request.getA_address());
         HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
         Agent agent = Agent.createAgent(request.getA_name(), request.getA_ph(),
                 request.getA_code(), request.getA_address(), hasCar, request.getA_equipment(),
@@ -74,11 +74,15 @@ public class AgentServiceImpl implements AgentService {
         AgentStatus agentStatus = request.isA_status() ? AgentStatus.WORK : AgentStatus.FIRED;
         // 현장요원 주소가 바뀐 경우
         if (!request.getA_address().equals(findAgent.getA_address())) {
-            Pair<Float, Float> pair = addressToLocation(request.getA_address());
+            System.out.println("현장요원 주소가 바뀐 경우현장요원 주소가 바뀐 경우현장요원 주소가 바뀐 경우");
+            Pair<Double, Double> pair = addressToLocation(request.getA_address());
             findAgent.modifyAgent(request.getA_name(), request.getA_ph(), request.getA_code(),
                     request.getA_address(), hasCar, request.getA_equipment(), request.getA_receiveDate(),
                     pair.getFirst(), pair.getSecond(), agentStatus);
         } else { // 현장요원 주소는 안바뀐 경우
+            System.out.println("주소가 안바뀐 경우");
+            System.out.println("주소가 안바뀐 경우");
+            System.out.println("주소가 안바뀐 경우");
             findAgent.modifyAgent(request.getA_name(), request.getA_ph(), request.getA_code(),
                     request.getA_address(), hasCar, request.getA_equipment(), request.getA_receiveDate(),
                     findAgent.getA_latitude(), findAgent.getA_longitude(), agentStatus);
@@ -98,7 +102,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     // NaverMap api를 사용하여 도로명 주소로 위도경도 알아내는 로직
-    public Pair<Float, Float> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
+    public Pair<Double, Double> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
             RestClientException{
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectionRequestTimeout(5000); // 연결시간 초과 5초
@@ -112,10 +116,11 @@ public class AgentServiceImpl implements AgentService {
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
         JSONParser jsonParser = new JSONParser();
         JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
+        System.out.println(responseEntity.getBody());
         JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
         JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
-        Float x = Float.parseFloat(addressResponse.get("x").toString());
-        Float y = Float.parseFloat(addressResponse.get("y").toString());
-        return new Pair<Float, Float>(x, y);
+        Double x = Double.parseDouble(addressResponse.get("x").toString());
+        Double y = Double.parseDouble(addressResponse.get("y").toString());
+        return new Pair<Double, Double>(x, y);
     }
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -39,6 +40,26 @@ public class AgentRepositoryImpl implements AgentRepository {
     @Override
     public void save(Agent agent) {
         em.persist(agent);
+    }
+
+    @Override
+    public List<Agent> findNearAgent(Double latitude, Double longitude, Long range) {
+
+        Double latitude_l = latitude - (0.009F * range);
+        Double latitude_h = latitude + (0.009F * range);
+
+        Double longitude_l = longitude - (0.009F * range);
+        Double longitude_h = longitude + (0.009F * range);
+
+        return em.createQuery("select Agent " +
+                "from Agent agent " +
+                "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
+                "and agent.a_longitude < :longitude_h and agent.a_longitude > :longitude_l")
+                .setParameter("latitude_h", latitude_h)
+                .setParameter("latitude_l", latitude_l)
+                .setParameter("longitude_l", longitude_l)
+                .setParameter("longitude_h", longitude_h)
+                .getResultList();
     }
 
 }

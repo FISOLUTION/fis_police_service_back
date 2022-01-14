@@ -18,14 +18,8 @@ public interface CallRepository {
     /*
         작성 날짜: 2022/01/10 2:17 오후
         작성자: 고준영
-        작성 내용:  시설의 가장 최근 콜 기록을 가져오기 위한 메서드 두개
+        작성 내용:  해당 날짜의 콜 기록을 모두 긁어오는 함수, 서비스에서 콜 직원별로 분류. 따라서 추후에 param으로 date 삽입해야함
     */
-    Call findRecentDateByCenter(Long center_id);
-    Call findRecentByCenter(Long center_id);
-
-    List<Call> callByUser(String dateTime);
-
-    List<Call> callByDate(LocalDateTime date);
-
-
+    List<Call> findAll();
+    List<Call> testDate(String date);
 }
