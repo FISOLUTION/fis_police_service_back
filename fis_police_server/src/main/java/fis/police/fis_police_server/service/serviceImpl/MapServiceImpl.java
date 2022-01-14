@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.MapService;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.NoResultException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -40,15 +42,17 @@ public class MapServiceImpl implements MapService {
     private final HttpComponentsClientHttpRequestFactory httpRequestFactory;
 
     @Override
-    public List<Agent> agentNearCenter(Center center, Long range, LocalDate visit_date) {
+    public List<Agent> agentNearCenter(Center center, Long range) {
         Center target = centerRepository.findById(center.getId());
         Double latitude = target.getC_latitude();
         Double longitude = target.getC_longitude();
-        List<Agent> agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
-        while(agentList.size() >= 5 || range < 100) {
+
+        List<Agent> agentList = agentRepository.findNearAgent(latitude, longitude, range);
+        while(agentList.size() <= 5 && range < 30) {
             range = range + 2;
-            agentList = agentRepository.findNearAgent(latitude, longitude, range, visit_date);
+            agentList = agentRepository.findNearAgent(latitude, longitude, range);
         }
+        agentList.stream().forEach(agent -> System.out.println("agent.getId() = " + agent.getId()));
         return agentList;
     }
 

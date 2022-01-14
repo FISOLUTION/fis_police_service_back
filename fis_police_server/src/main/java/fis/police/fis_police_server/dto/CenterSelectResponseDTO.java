@@ -71,6 +71,7 @@ public class CenterSelectResponseDTO {
                 .collect(Collectors.toList());
     }
 
+    @Data
     private static class CallDTO{
         private Long id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
         private UserDTO user;
@@ -99,6 +100,7 @@ public class CenterSelectResponseDTO {
         }
     }
 
+    @Data
     private static class ScheduleDTO{
         private Long id;
         private UserDTO user;        // BIGINT                 NOT NULL                        comment 'user_id'
@@ -127,6 +129,7 @@ public class CenterSelectResponseDTO {
         }
     }
 
+    @Data
     @AllArgsConstructor
     public static class UserDTO{
         Long user_id;

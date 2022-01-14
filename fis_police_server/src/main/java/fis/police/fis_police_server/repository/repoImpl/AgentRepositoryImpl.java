@@ -1,14 +1,14 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 /*
     작성날짜: 2022/01/10 10:56 AM
@@ -44,31 +44,28 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> findNearAgent(Double latitude, Double longitude, Long range, LocalDate visit_date) {
-
+    public List<Agent> findNearAgent(Double latitude, Double longitude, Long range) {
         Double latitude_l = latitude - (0.009D * range);
         Double latitude_h = latitude + (0.009D * range);
-
         Double longitude_l = longitude - (0.009D * range);
         Double longitude_h = longitude + (0.009D * range);
-
         return em.createQuery
-//                ("select Agent " +
-//                "from Agent agent " +
-//                "join fetch agent.scheduleList " +
-//                "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
-//                "and agent.a_longitude < :longitude_h and agent.a_longitude > :longitude_l", Agent.class)
-                ("select Agent from Schedule schedule join fetch schedule.agent " +
-                        "where schedule.agent.a_latitude < :latitude_h and schedule.agent.a_latitude > :latitude_l " +
-                        "and schedule.agent.a_longitude < :longitude_h and schedule.agent.a_longitude > :longitude_l " +
-                        "and schedule.visit_date = :visit_date and schedule.agent.a_status = :a_status", Agent.class)
-                .setParameter("latitude_h", latitude_h)
-                .setParameter("latitude_l", latitude_l)
-                .setParameter("longitude_l", longitude_l)
-                .setParameter("longitude_h", longitude_h)
-                .setParameter("visit_date", visit_date)
-                .setParameter("a_status", AgentStatus.WORK)
-                .getResultList();
+//                ("select schedule from Schedule schedule join fetch schedule.agent join fetch schedule.center " +
+//                        "where schedule.agent.a_latitude < :latitude_h and schedule.agent.a_latitude > :latitude_l " +
+//                        "and schedule.agent.a_longitude < :longitude_h and schedule.agent.a_longitude > :longitude_l " +
+//                        "and schedule.visit_date = :visit_date and schedule.agent.a_status = :a_status", Schedule.class)
+                ("select agent from Agent agent " +
+                        "left join fetch agent.scheduleList as schedule " +
+                        "left join fetch schedule.center " +
+                        "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
+                        "and agent.a_longitude < :longitude_h and agent.a_longitude > :longitude_l " +
+                        "and agent.a_status = :a_status", Agent.class)
+                    .setParameter("latitude_h", latitude_h)
+                    .setParameter("latitude_l", latitude_l)
+                    .setParameter("longitude_l", longitude_l)
+                    .setParameter("longitude_h", longitude_h)
+                    .setParameter("a_status", AgentStatus.WORK)
+                    .getResultList();
     }
 
 }

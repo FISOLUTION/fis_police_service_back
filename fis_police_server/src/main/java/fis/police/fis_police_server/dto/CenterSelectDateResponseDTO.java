@@ -6,15 +6,20 @@ import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class CenterSelectDateResponseDTO {
+    //가능한 현장요원들을 던져준다.
     private Long id;         //'primary_key'
     private String a_name;                             //'현장 요원 이름'
     private String a_ph;                               //'현장 요원 전화번호',
@@ -23,11 +28,12 @@ public class CenterSelectDateResponseDTO {
     private HasCar a_hasCar;                            //'자차 여부'
     private String a_equipment;                         //'장비 번호'
     private LocalDateTime a_receiveDate;                //'장비 수령 날짜'
-    private Float a_latitude;                          //'현장 요원 위도',
-    private Float a_longitude;                         //'현장 요원 경도',
+    private Double a_latitude;                          //'현장 요원 위도',
+    private Double a_longitude;                         //'현장 요원 경도',
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
-    public CenterSelectDateResponseDTO(Agent agent){
+    public CenterSelectDateResponseDTO(Agent agent, LocalDate visit_date){
+        System.out.println("selectDateResDTO 생성 ") ;
         this.id = agent.getId();
         this.a_name = agent.getA_name();
         this.a_ph = agent.getA_ph();
@@ -39,11 +45,18 @@ public class CenterSelectDateResponseDTO {
         this.a_latitude = agent.getA_latitude();
         this.a_longitude = agent.getA_longitude();
         agent.getScheduleList().stream()
-                .map(e -> new ScheduleDTO(e))
-                .collect(Collectors.toList());
+                .forEach(schedule -> {
+                    if(schedule.getVisit_date().equals(visit_date)){
+                        ScheduleDTO scheduleDTO = new ScheduleDTO(schedule);
+                        this.scheduleList.add(scheduleDTO);
+                    }
+                });
+        Collections.sort(this.scheduleList);
+        // 이부분 성능 최적화가 헬
     }
 
-    private static class ScheduleDTO{
+    @Data
+    private static class ScheduleDTO implements Comparable<ScheduleDTO>{
         private Long id;
         private CenterDTO center;
         private LocalDate visit_date;               // '방문날짜'
@@ -54,6 +67,8 @@ public class CenterSelectDateResponseDTO {
         private String total_etc;               // 비고
 
         public ScheduleDTO(Schedule schedule) {
+            System.out.println("====================== ScheduleDTO 생성 ======================");
+            System.out.println("schedule.getId() = " + schedule.getId());
             this.id = schedule.getId();
             this.center = new CenterDTO(schedule.getCenter().getC_name(),schedule.getCenter().getC_latitude(),schedule.getCenter().getC_longitude());
             this.visit_date = schedule.getVisit_date();
@@ -62,9 +77,22 @@ public class CenterSelectDateResponseDTO {
             this.center_etc = schedule.getCenter_etc();
             this.agent_etc = schedule.getAgent_etc();
             this.total_etc = schedule.getTotal_etc();
+            System.out.println("====================== ScheduleDTO 생성 ======================");
+        }
+
+        @Override
+        public int compareTo(ScheduleDTO scheduleDTO) {
+            if (this.visit_time.isBefore(scheduleDTO.visit_time)) {
+                return -1;
+            } else if (this.visit_time.equals(visit_time)) {
+                return 0;
+            } else {
+                return 1;
+            }
         }
     }
 
+    @Data
     @AllArgsConstructor
     private static class CenterDTO{
         private String c_name;

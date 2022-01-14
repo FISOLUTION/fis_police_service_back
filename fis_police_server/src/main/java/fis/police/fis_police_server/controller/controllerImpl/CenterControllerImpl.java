@@ -7,6 +7,7 @@ import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
@@ -30,7 +31,7 @@ public class CenterControllerImpl implements CenterController {
     */
     @GetMapping("/center/search")
     @Override
-    public Result searchCenter(@RequestParam String c_name, @RequestParam String c_address, @RequestParam String c_ph){
+    public Result searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph){
         try {
             CenterSearchDTO centerSearchDTO = new CenterSearchDTO(c_name, c_address, c_ph);
             String name = centerSearchDTO.getC_name();
@@ -67,6 +68,7 @@ public class CenterControllerImpl implements CenterController {
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설 여러개 존재" + center_id);
             return null;
         } catch (Exception exception) {
+            System.out.println("exception = " + exception);
             System.out.println("CenterService.centerInfo 예기치 않은 오류 발생" + center_id);
             return null;
         }
@@ -80,12 +82,12 @@ public class CenterControllerImpl implements CenterController {
 
     @Override
     @GetMapping("/center/{center_id}/date")
-    public Result selectDate(@RequestParam Long center_id, @RequestParam String date) {
+    public Result selectDate(@PathVariable Long center_id, @RequestParam String date) {
         try {
             Center center = centerService.findById(center_id);
             LocalDate visit_date = LocalDate.parse(date);
-            return new Result(mapService.agentNearCenter(center, 2L, visit_date).stream()
-                    .map(e -> new CenterSelectDateResponseDTO(e))
+            return new Result(mapService.agentNearCenter(center, 2L).stream()
+                    .map(e -> new CenterSelectDateResponseDTO(e, visit_date))
                     .collect(Collectors.toList()));
         } catch (Exception exception){
             System.out.println("exception = " + exception);
