@@ -9,7 +9,6 @@ import lombok.Data;
     작성자: 이승범
     작성내용: Response 할때 json 배열을 객체로 감사기 위한 DTO
 */
-
 @Data
 @AllArgsConstructor
 public class Result<T>{

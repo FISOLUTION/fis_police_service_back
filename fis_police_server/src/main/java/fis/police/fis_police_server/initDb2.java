@@ -28,18 +28,18 @@ public class initDb2 {
     private final InitService initService;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         initService.dbInit();
     }
 
     @Component
     @Transactional
     @RequiredArgsConstructor
-    static class InitService{
+    static class InitService {
 
         private final EntityManager em;
 
-        public void dbInit(){
+        public void dbInit() {
             Agent agent1 = Agent.createAgent("asd", "123", "111", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDateTime.now(), 123D, 123D);
             em.persist(agent1);
@@ -65,10 +65,10 @@ public class initDb2 {
                     LocalDate.now(), UserAuthority.ADMIN);
             em.persist(user3);
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDateTime.now(),
-                    LocalDate.now(), LocalTime.now(), 123, "111", "111", "111");
+                    LocalDate.now(), LocalTime.now(), 123, "111", "111");
             em.persist(schedule1);
             Schedule schedule2 = Schedule.createSchedule(center2, user2, agent2, LocalDateTime.now(),
-                    LocalDate.now(), LocalTime.now(), 123, "222", "222", "222");
+                    LocalDate.now(), LocalTime.now(), 123, "222", "222");
             em.persist(schedule2);
         }
     }
