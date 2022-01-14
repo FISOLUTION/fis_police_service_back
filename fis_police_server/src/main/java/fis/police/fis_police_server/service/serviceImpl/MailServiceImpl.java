@@ -1,9 +1,11 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import com.sun.mail.util.logging.MailHandler;
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.dto.MailDTO;
 import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
+import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -17,11 +19,15 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -35,19 +41,39 @@ import java.util.regex.Pattern;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
-
+    private final CallRepositoryImpl callRepository;
 
     @Override
     public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
 
-//        public boolean isEmail(String str) {
-//            return Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", str);
-//        }
 
-//        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
-//        System.out.println("isEmail = " + isEmail);
+        // mail 형식 유효성을 검사하는 정규표현식인데, @만 들어가 있으면 그냥 true 내뱉는다... 이건 클라이언트에서 체크 하고 넘어와야 할 것 같아잉
+        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
+        System.out.println("isEmail = " + isEmail);
 
 
+        List<Call> calls = callRepository.callofCenter(request.getCenter_id());
+
+        for (Call call : calls) {
+            System.out.println("call.getId() = " + call.getId());
+        }
+        System.out.println("calls.size() = " + calls.size());
+
+        int max = -1;
+        for (int i = 0; i < calls.size(); i++) {
+            Long number = calls.get(i).getId();
+            if (max < number) {
+                max = Math.toIntExact(number);
+            }
+        }
+        System.out.println("max = " + max);
+
+        Call recentCall = callRepository.findById((long) max);
+
+        System.out.println("recentCall.getId() = " + recentCall.getId());
+        System.out.println("recentCall.getM_email() = " + recentCall.getM_email());
+        System.out.println("recentCall.getNum() = " + recentCall.getNum());
+        System.out.println("recentCall.getAgent_etc() = " + recentCall.getAgent_etc());
 
 
         String from = "fis182@fisolution.co.kr";
@@ -66,7 +92,8 @@ public class MailServiceImpl implements MailService {
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
         mimeMessageHelper.setFrom(from);
-        mimeMessageHelper.setTo(to);
+//        mimeMessageHelper.setTo(to);
+        mimeMessageHelper.setTo(recentCall.getM_email());
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
 

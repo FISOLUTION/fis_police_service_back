@@ -49,11 +49,11 @@ public class CallServiceImpl implements CallService {
             return response;
         } catch (NullPointerException e) {
             if (response.getCenter_id() == null && response.getUser_id() != null) {
-                response.setStatus_code("center 없음");
+                response.setStatus_code("해당 center 없음");
             } else if (response.getCenter_id() != null && response.getUser_id() == null) {
-                response.setStatus_code("user 없음");
+                response.setStatus_code("해당 user 없음");
             } else {
-                response.setStatus_code("center, user 모두 없음");
+                response.setStatus_code("해당 center, 해당 user 모두 없음");
             }
             return response;
         }
@@ -69,20 +69,11 @@ public class CallServiceImpl implements CallService {
     public UserCallByDateResponse userCallByDate(String date) {
 
 
-        // 날짜값만 param으로 추가해서, 해당 날짜에 해당하는 콜 기록 다 긁어온 다음에, user_id 별로 count해서 배열로 배열이나 뭐 암튼 넘겨주면 될 것 같음
-        List<Call> all = callRepository.findAll();
-        int[] userCall;
-        userCall = new int[all.size()];
-
-//        for (Call call : all) {
-//            for (int i = 0; i < userCall.length; i++) {
-//                if(call.getUser().getId() == i+1) {
-//                    userCall[i]++;
-//                }
-//            }
-//        }
 
         List<Call> calls = callRepository.testDate(date);
+        int[] userCall;
+        userCall = new int[calls.size()];
+
         for (Call call : calls) {
             System.out.println("call.getId() = " + call.getId());
         }

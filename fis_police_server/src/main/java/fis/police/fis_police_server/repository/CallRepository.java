@@ -22,4 +22,5 @@ public interface CallRepository {
     */
     List<Call> findAll();
     List<Call> testDate(String date);
+    List<Call> callofCenter(Long id);
 }

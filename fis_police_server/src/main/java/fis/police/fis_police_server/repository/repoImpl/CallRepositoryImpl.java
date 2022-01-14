@@ -27,7 +27,7 @@ public class CallRepositoryImpl implements CallRepository {
     }
 
     @Override
-    public Call findById(Long id) {
+     public Call findById(Long id) {
 
         Call findCallById = em.find(Call.class, id);
         return findCallById;
@@ -48,6 +48,14 @@ public class CallRepositoryImpl implements CallRepository {
     public List<Call> testDate(String date) {
         return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
                 .setParameter("date", date)
+                .getResultList();
+    }
+
+
+    @Override
+    public List<Call> callofCenter(Long id) {
+        return em.createQuery("select c from Call c where c.center.id = : id", Call.class)
+                .setParameter("id", id)
                 .getResultList();
     }
 

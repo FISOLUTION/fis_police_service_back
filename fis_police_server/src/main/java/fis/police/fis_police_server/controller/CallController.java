@@ -1,9 +1,6 @@
 package fis.police.fis_police_server.controller;
 
-import fis.police.fis_police_server.dto.CallSaveRequest;
-import fis.police.fis_police_server.dto.CallSaveResponse;
-import fis.police.fis_police_server.dto.UserCallByDateRequest;
-import fis.police.fis_police_server.dto.UserCallByDateResponse;
+import fis.police.fis_police_server.dto.*;
 
 import javax.mail.MessagingException;
 
@@ -11,6 +8,5 @@ import javax.mail.MessagingException;
 public interface CallController {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request) throws MessagingException;
-    String test();
-    UserCallByDateResponse userCallByDate(UserCallByDateRequest request);
+    Result callNumByDate(String date);
 }

@@ -25,8 +25,6 @@ public class MailControllerImpl implements MailController {
     @Override
     public MailSendResponse sendMail(@RequestBody MailSendRequest request) throws MessagingException {
 
-        System.out.println("request.getCenter_id() = " + request.getCenter_id());
-        System.out.println("request.getM_email() = " + request.getM_email());
         return mailService.sendMail(request);
 
     }
