@@ -26,5 +26,4 @@ public class ScheduleSaveRequest {
     private Integer estimate_num;
     private String center_etc;
     private String agent_etc;
-    private String total_etc;
 }

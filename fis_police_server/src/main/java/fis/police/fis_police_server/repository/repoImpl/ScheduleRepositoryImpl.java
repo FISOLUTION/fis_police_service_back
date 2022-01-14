@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Schedule;
+import fis.police.fis_police_server.dto.ScheduleByDateResponse;
 import fis.police.fis_police_server.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,15 +37,31 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         작성자: 이승범
         작성내용: findAllByDate 작성
     */
+//    @Override
+//    public List<Schedule> findAllByDate(LocalDate date) {
+//        return em.createQuery(
+//                "select s from Schedule s" +
+//                        " join fetch s.agent a" +
+//                        " join fetch s.user" +
+//                        " join fetch s.center" +
+//                        " where s.visit_date = :date" +
+//                        " order by a.a_name desc, s.visit_time desc", Schedule.class)
+//                .setParameter("date", date)
+//                .getResultList();
+//    }
+
     @Override
-    public List<Schedule> findAllByDate(LocalDate date) {
+    public List<ScheduleByDateResponse> findAllByDate(LocalDate date){
         return em.createQuery(
-                "select s from Schedule s" +
-                        " join fetch s.agent a" +
-                        " join fetch s.user" +
-                        " join fetch s.center" +
+                "select new fis.police.fis_police_server.dto.ScheduleByDateResponse(" +
+                        "s.id, a.a_code, a.a_name, c.id, c.c_name, c.c_address, c.c_ph, s.estimate_num, s.visit_date, " +
+                        "s.visit_time, s.center_etc, s.agent_etc, s.modified_info, s.total_etc, s.call_check, s.call_check_info)" +
+                        " from Schedule s " +
+                        " join s.agent a" +
+                        " join s.user u" +
+                        " join s.center c" +
                         " where s.visit_date = :date" +
-                        " order by a.a_name desc, s.visit_time desc", Schedule.class)
+                        " order by a.a_name desc, s.visit_time desc", ScheduleByDateResponse.class)
                 .setParameter("date", date)
                 .getResultList();
     }

@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Schedule;
+import fis.police.fis_police_server.dto.ScheduleByDateResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,5 +16,5 @@ public interface ScheduleRepository {
         작성자: 이승범
         작성내용: findAllByDate 작성
     */
-    List<Schedule> findAllByDate(LocalDate date);
+    List<ScheduleByDateResponse> findAllByDate(LocalDate date);
 }
