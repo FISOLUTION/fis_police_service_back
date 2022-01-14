@@ -38,6 +38,14 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     */
     @Override
     public List<Schedule> findAllByDate(LocalDate date) {
-        return null;
+        return em.createQuery(
+                "select s from Schedule s" +
+                        " join fetch s.agent a" +
+                        " join fetch s.user" +
+                        " join fetch s.center" +
+                        " where s.visit_date = :date" +
+                        " order by a.a_name desc, s.visit_time desc", Schedule.class)
+                .setParameter("date", date)
+                .getResultList();
     }
 }
