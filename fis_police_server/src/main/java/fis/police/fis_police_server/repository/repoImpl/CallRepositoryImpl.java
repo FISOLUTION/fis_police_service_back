@@ -33,12 +33,6 @@ public class CallRepositoryImpl implements CallRepository {
         return findCallById;
     }
 
-    @Override
-    public List<Call> findAll() {
-        return em.createQuery("select c from Call c", Call.class)
-                .getResultList();
-    }
-
 /*
     작성 날짜: 2022/01/12 3:09 오후
     작성자: 고준영
@@ -48,6 +42,13 @@ public class CallRepositoryImpl implements CallRepository {
     public List<Call> testDate(String date) {
         return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
                 .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
+    public List<Call> callByCenter(Long id) {
+        return em.createQuery("select c from Call c where c.center.id = : id", Call.class)
+                .setParameter("id", id)
                 .getResultList();
     }
 

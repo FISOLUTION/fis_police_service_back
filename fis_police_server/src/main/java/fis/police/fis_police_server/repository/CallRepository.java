@@ -20,6 +20,6 @@ public interface CallRepository {
         작성자: 고준영
         작성 내용:  해당 날짜의 콜 기록을 모두 긁어오는 함수, 서비스에서 콜 직원별로 분류. 따라서 추후에 param으로 date 삽입해야함
     */
-    List<Call> findAll();
     List<Call> testDate(String date);
+    List<Call> callByCenter(Long id);
 }
