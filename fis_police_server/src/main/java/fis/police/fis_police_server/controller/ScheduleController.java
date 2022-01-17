@@ -17,8 +17,5 @@ public interface ScheduleController {
 
         // 일정 수정
         Boolean modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
-
-        // 일정 공지
-        Boolean announceSchedule();
 }
 

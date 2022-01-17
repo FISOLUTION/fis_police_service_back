@@ -139,4 +139,27 @@ public class Center {
                 ", visited=" + "list 들은 서로 참조 이슈로 인해 제외됨" +
                 '}';
     }
+
+    public Center(Center center, List<Schedule> scheduleList, List<Call> callList){
+        this.id = center.getId();
+        this.c_sido = center.getC_sido();
+        this.c_sigungu = center.getC_sigungu();
+        this.c_name = center.getC_name();
+        this.c_type = center.getC_type();
+        this.c_status = center.getC_status();
+        this.c_address = center.getC_address();
+        this.c_zipcode = center.getC_zipcode();
+        this.c_ph = center.getC_ph();
+        this.c_faxNum = center.getC_faxNum();
+        this.c_people = center.getC_people();
+        this.c_hpAddress = center.getC_hpAddress();
+        this.c_latitude = center.getC_latitude();
+        this.c_longitude = center.getC_longitude();
+        this.participation = center.getParticipation();
+        this.visited = center.getVisited();
+        callList.stream()
+            .forEach(call -> this.callList.add(call));
+        scheduleList.stream()
+                .forEach(schedule -> this.scheduleList.add(schedule));
+    }
 }
