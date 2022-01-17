@@ -136,6 +136,7 @@ public class CenterSelectResponseDTO {
         String user_name;
     }
 
+    @Data
     @AllArgsConstructor
     public static class AgentDTO{
         Long agent_id;
