@@ -74,15 +74,11 @@ public class AgentServiceImpl implements AgentService {
         AgentStatus agentStatus = request.isA_status() ? AgentStatus.WORK : AgentStatus.FIRED;
         // 현장요원 주소가 바뀐 경우
         if (!request.getA_address().equals(findAgent.getA_address())) {
-            System.out.println("현장요원 주소가 바뀐 경우현장요원 주소가 바뀐 경우현장요원 주소가 바뀐 경우");
             Pair<Double, Double> pair = addressToLocation(request.getA_address());
             findAgent.modifyAgent(request.getA_name(), request.getA_ph(), request.getA_code(),
                     request.getA_address(), hasCar, request.getA_equipment(), request.getA_receiveDate(),
                     pair.getFirst(), pair.getSecond(), agentStatus);
         } else { // 현장요원 주소는 안바뀐 경우
-            System.out.println("주소가 안바뀐 경우");
-            System.out.println("주소가 안바뀐 경우");
-            System.out.println("주소가 안바뀐 경우");
             findAgent.modifyAgent(request.getA_name(), request.getA_ph(), request.getA_code(),
                     request.getA_address(), hasCar, request.getA_equipment(), request.getA_receiveDate(),
                     findAgent.getA_latitude(), findAgent.getA_longitude(), agentStatus);
