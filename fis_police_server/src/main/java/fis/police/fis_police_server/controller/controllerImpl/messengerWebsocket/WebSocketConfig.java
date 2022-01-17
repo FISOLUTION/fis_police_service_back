@@ -1,4 +1,4 @@
-package fis.police.fis_police_server.controller.controllerImpl;
+package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(socketHandler, "/chating")
-            .addInterceptors(new HandshakeInterceptor());
+            .addInterceptors(new HandshakeInterceptor()).
+                setAllowedOrigins("*");
     }
 }
