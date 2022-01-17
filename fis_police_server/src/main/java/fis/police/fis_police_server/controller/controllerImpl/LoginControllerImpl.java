@@ -54,16 +54,14 @@ public class LoginControllerImpl implements LoginController {
     @CrossOrigin
     @GetMapping("/test")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
-    public String loginSuccessV4(@SessionAttribute(name = "loginUser", required = false) User loginUser, Model model) {
+    public String loginSuccessV4(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
         if (loginUser == null) {
-            return "다시 로그인 해야되고";
+            return "다시 로그인 화면으로 돌아가게 해야함";
         }
         //세션이 유지되면
         model.addAttribute("loginUser", loginUser);
         return "로그인 성공";
     }
-
-
 
 
     //////////////////////////////////////일단 써놓은 Overide/////////////////////////
