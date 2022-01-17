@@ -7,6 +7,7 @@ import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -81,11 +82,13 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     @Override
     public Center findByIdAndFetchAll(Long id) throws NoResultException, NonUniqueResultException {
         //  list "select center from Center center join Center.Call on 조건 join
-        return em.createQuery("select center from Center center " +
-                "join fetch ", Center.class)
+        return em.createQuery("select distinct center from Center center " +
+                "left join fetch center.callList " +
+                "where center.id = :id ", Center.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
+
 
     @Override
     public List<Center> findNearCenter(double latitude, double longitude) {
