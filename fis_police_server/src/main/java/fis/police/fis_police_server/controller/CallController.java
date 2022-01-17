@@ -8,6 +8,4 @@ import javax.mail.MessagingException;
 public interface CallController {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request) throws MessagingException;
-    // 해당 날짜별 콜 직원의 통화 기록 현황
-    Result callNumByDate (String date);
 }

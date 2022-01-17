@@ -1,11 +1,5 @@
 package fis.police.fis_police_server;
 
-<<<<<<< HEAD
-=======
-import com.querydsl.jpa.impl.JPAQueryFactory;
-//import fis.police.fis_police_server.interceptor.LogInterceptor;
-//import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
->>>>>>> 3b8aacdd2c04cb593d9739b767f0f1bb2d5fef37
 import fis.police.fis_police_server.interceptor.LogInterceptor;
 import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.SpringApplication;
