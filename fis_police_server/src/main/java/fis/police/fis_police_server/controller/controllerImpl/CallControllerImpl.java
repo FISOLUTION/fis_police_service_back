@@ -29,7 +29,6 @@ import java.util.stream.Stream;
 public class CallControllerImpl implements CallController {
 
     private final CallServiceImpl callService;
-    private final CallRepository callRepository;
 
 
     @Override
@@ -43,71 +42,9 @@ public class CallControllerImpl implements CallController {
     }
 
     @Override
-    @GetMapping("/call/test")
-    public String test() {
-        return "ok";
-    }
-
-    @GetMapping("/call/date")       // 내가 혼자 지은 url 임 , 회의 때 하지 않은 내용이라서
-    @Override
-    public UserCallByDateResponse userCallByDate(@RequestBody UserCallByDateRequest request) {
-
-        String date = request.getDate();
-//        LocalDateTime date = request.getDate();
-        return callService.userCallByDate(date);
-
-    }
-
-
     @GetMapping("/testcall")
     public Result callNumByDate(@RequestParam String date) {
-
-        System.out.println("date = " + date);
-
-        List<Call> calls = callRepository.testDate(date);
-
-        System.out.println("calls.size() = " + calls.size());
-
-        int[] record;
-        record = new int[calls.size()];
-        for (Call call : calls) {
-            for (int i = 0; i < record.length; i++) {
-                if (call.getUser().getId() == i+1) {
-                    record[i]++;
-                }
-            }
-        }
-/*
-    작성 날짜: 2022/01/12 5:36 오후
-    작성자: 고준영
-    작성 내용: 해당 날짜별 콜 직원의 통화 건수를 객체 배열로 전달하려고 했으나, 아래 list에서 record 값은 맞게 나오지만 id값이 조금 이상하게 나온다. 이걸 한번 고쳐보자
-*/
-        List<CallNumDTO> list = new ArrayList<>();
-        CallNumDTO callnum = new CallNumDTO(calls.get(0).getUser().getId(), record[0]);
-        list.add(callnum);
-
-//        for (int i = 0; i < record.length; i++) {
-//            CallNumDTO data = new CallNumDTO(calls.get(i).getUser().getId(), record[i]);
-//            list.add(data);
-//        }
-
-        List<callNumDTO> collect = list.stream()
-                .map(l -> new callNumDTO(l.getUser_id(), l.getCall_num()))
-                .collect(Collectors.toList());
-
-
-        return new Result(collect);
+        return callService.callNumByDate(date);
     }
 
-    @Data
-    @AllArgsConstructor
-    static class Result<T> {
-        private T data;
-    }
-    @Data
-    @AllArgsConstructor
-    static class callNumDTO {
-        private Long user_id;
-        private int call_num;
-    }
 }
