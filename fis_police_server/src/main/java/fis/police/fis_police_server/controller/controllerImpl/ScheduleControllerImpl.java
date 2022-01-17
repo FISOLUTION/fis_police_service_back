@@ -4,7 +4,9 @@ import fis.police.fis_police_server.controller.ScheduleController;
 import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
+import fis.police.fis_police_server.service.AnnounceService;
 import fis.police.fis_police_server.service.ScheduleService;
+import fis.police.fis_police_server.service.serviceImpl.MapConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,8 @@ import java.time.LocalDate;
 public class ScheduleControllerImpl implements ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final AnnounceService announceService;
+    private final MapConfig mapConfig;
 /*
     작성날짜: 2022/01/13 1:40 PM
     작성자: 이승범
@@ -54,7 +58,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
-    @PatchMapping("schedule")
+    @PatchMapping("/schedule")
     public Boolean modifySchedule(@RequestBody ScheduleModifyRequest request) {
         try{
             scheduleService.modifySchedule(request);
@@ -68,8 +72,5 @@ public class ScheduleControllerImpl implements ScheduleController {
         return true;
     }
 
-    @Override
-    public Boolean announceSchedule() {
-        return null;
-    }
+
 }

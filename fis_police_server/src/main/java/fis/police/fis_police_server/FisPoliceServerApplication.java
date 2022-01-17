@@ -1,5 +1,11 @@
 package fis.police.fis_police_server;
 
+<<<<<<< HEAD
+=======
+import com.querydsl.jpa.impl.JPAQueryFactory;
+//import fis.police.fis_police_server.interceptor.LogInterceptor;
+//import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
+>>>>>>> 3b8aacdd2c04cb593d9739b767f0f1bb2d5fef37
 import fis.police.fis_police_server.interceptor.LogInterceptor;
 import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.SpringApplication;
@@ -13,9 +19,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class FisPoliceServerApplication {
 
-	public static void main(String[] args) {
-		ApplicationContext applicationContext = SpringApplication.run(FisPoliceServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = SpringApplication.run(FisPoliceServerApplication.class, args);
+    }
 
 	@Configuration
 	public class WebConfig implements WebMvcConfigurer {
@@ -27,17 +33,17 @@ public class FisPoliceServerApplication {
 					.allowedMethods("*");
 		}
 
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new LogInterceptor())
-					.order(1)
-					.addPathPatterns("/**")
-					.excludePathPatterns("/css/**", "/*.ico", "/error");
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new LogInterceptor())
+                    .order(1)
+                    .addPathPatterns("/**")
+                    .excludePathPatterns("/css/**", "/*.ico", "/error");
 
-			registry.addInterceptor(new LoginCheckInterceptor())
-					.order(2)
-					.addPathPatterns("/**")
-					.excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error");
-		}
-	}
+            registry.addInterceptor(new LoginCheckInterceptor())
+                    .order(2)
+                    .addPathPatterns("/**")
+                    .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error");
+        }
+    }
 }

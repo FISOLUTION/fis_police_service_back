@@ -19,4 +19,10 @@ public class MapConfig {
     @Value("${naver.client.secret}")
     private String apiKey;
 
+    @Value("${kakao.client.id}")
+    private String kakaoApiId;
+
+    @Value("${kakao.redirect.uri}")
+    private String kakaoRedirectUri;
+
 }
