@@ -2,16 +2,22 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import com.sun.mail.util.logging.MailHandler;
 import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.MailDTO;
 import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
+import fis.police.fis_police_server.repository.CenterRepository;
+import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -19,11 +25,14 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -33,16 +42,24 @@ import java.util.regex.Pattern;
     작성자: 고준영
     작성 내용:  mail service ... 잘 모르겠당ㅋㄹㅎㅋ
 */
+/*
+    작성 날짜: 2022/01/17 5:50 오후
+    작성자: 고준영
+    작성 내용: 잘못된 메일 주소로 간 메일은 mail.fisolution.co.kr 에서 수동으로 확인하자! ㅎㅎ
+*/
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
     private final CallRepositoryImpl callRepository;
+    private final CenterRepository centerRepository;
+    private final UserRepository userRepository;
 
     @Override
     public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
-
+//         해당 센터의 콜 기록 중 가장 최근 콜 기록 (call_id 가장 높은 것) 의 mail 주소를 따오는 로직
         Long center_id = request.getCenter_id();
         List<Call> calls = callRepository.callByCenter(center_id);
         int max = -1;
@@ -55,7 +72,7 @@ public class MailServiceImpl implements MailService {
         Call recentCall = callRepository.findById((long) max);
         System.out.println("recentCall.getId() = " + recentCall.getId());
         System.out.println("recentCall.getM_email() = " + recentCall.getM_email());
-
+        System.out.println("recentCall.getUser().getId() = " + recentCall.getUser().getId());
 
         String from = "fis182@fisolution.co.kr";
         String to = request.getM_email();
@@ -77,12 +94,45 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
 
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
 
-        response.setCenter_id(request.getCenter_id());
-        response.setM_email(request.getM_email());
-        response.setStatus_code("ok");
-        return response;
+            response.setCenter_id(request.getCenter_id());
+            response.setM_email(request.getM_email());
+            response.setStatus_code("ok");
 
+            checkMail(recentCall.getCenter().getId(), recentCall.getUser().getId(), request.getM_email());
+
+            return response;
+        } catch (MailException e) {
+            System.out.println("e = " + e);
+            return null;
+        }
+    }
+
+
+    public void checkMail(Long center_id, Long user_id, String mail) throws MessagingException {
+
+        Center findCenter = centerRepository.findById(center_id);
+        User findUser = userRepository.findById(user_id);
+
+        String from = "fis182@fisolution.co.kr";
+        String to = "fis182@fisolution.co.kr";
+        String subject = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY. MM. DD HH:MM")) + " " + findCenter.getC_name() + "에게 보낸 메일입니다.";
+        String text = "보낸이: " + findUser.getU_name()
+                + "\n센터 이름: " + findCenter.getC_name()
+                + "\n센터 email: " + mail
+                + "\n센터 전화번호: " + findCenter.getC_ph()
+                + "\n센터 id: " + findCenter.getId()
+                + "\n센터 주소: " + findCenter.getC_address();
+
+        MimeMessage checkMail = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(checkMail, true, "UTF-8");
+        mimeMessageHelper.setFrom(from);
+        mimeMessageHelper.setTo(to);
+        mimeMessageHelper.setSubject(subject);
+        mimeMessageHelper.setText(text);
+
+        mailSender.send(checkMail);
     }
 }
