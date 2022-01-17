@@ -2,6 +2,7 @@ package fis.police.fis_police_server;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.interceptor.LogInterceptor;
+import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +36,11 @@ public class FisPoliceServerApplication {
 					.order(1)
 					.addPathPatterns("/**")
 					.excludePathPatterns("/css/**", "/*.ico", "/error");
+
+			registry.addInterceptor(new LoginCheckInterceptor())
+					.order(2)
+					.addPathPatterns("/**")
+					.excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error");
 		}
 	}
 }

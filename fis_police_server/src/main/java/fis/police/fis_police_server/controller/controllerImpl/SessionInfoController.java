@@ -15,7 +15,7 @@ import java.util.Date;
 public class SessionInfoController {
     //세션 정보 출력
     @CrossOrigin
-    @GetMapping("/logintest")
+    @GetMapping("/login")
     public String sessionInfo(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session == null){
