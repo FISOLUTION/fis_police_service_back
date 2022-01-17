@@ -2,6 +2,8 @@ package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Messenger;
 
+import java.util.List;
+
 //현승구
 public interface MessengerRepository {
     // 시설 추가
@@ -12,4 +14,6 @@ public interface MessengerRepository {
 
     // 시설 삭제
     void delete(Messenger messenger);
+
+    List<Messenger> findAll();
 }

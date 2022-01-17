@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /*
     작성날짜: 2022/01/10 10:57 AM
@@ -34,5 +35,12 @@ public class MessengerRepositoryImpl implements MessengerRepository {
 
         em.createQuery("delete from Messenger where Messenger.id = :id")
                 .setParameter("id", id);
+    }
+
+    @Override
+    public List<Messenger> findAll() {
+        return em.createQuery("select messenger from Messenger messenger " +
+                "join fetch messenger.user ", Messenger.class)
+                .getResultList();
     }
 }
