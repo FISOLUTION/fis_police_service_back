@@ -17,10 +17,8 @@ public interface LoginController {
 //    String login();
 //    String logout();
 
-    String login(LoginRequest loginrequest, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request);
-
+    String login(LoginRequest loginrequest, HttpServletRequest request);
     String logout(HttpServletRequest request);
-
-    String loginSuccess(User loginUser, HttpServletRequest request, Model model);
+    String loginSuccess(Long loginUser, Model model);
 
 }
