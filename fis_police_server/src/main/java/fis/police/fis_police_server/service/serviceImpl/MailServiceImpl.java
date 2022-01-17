@@ -1,9 +1,11 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import com.sun.mail.util.logging.MailHandler;
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.dto.MailDTO;
 import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
+import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -22,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -35,19 +38,23 @@ import java.util.regex.Pattern;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
-
+    private final CallRepositoryImpl callRepository;
 
     @Override
     public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
 
-//        public boolean isEmail(String str) {
-//            return Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", str);
-//        }
-
-//        boolean isEmail = Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", request.getM_email());
-//        System.out.println("isEmail = " + isEmail);
-
-
+        Long center_id = request.getCenter_id();
+        List<Call> calls = callRepository.callByCenter(center_id);
+        int max = -1;
+        for (int i = 0; i < calls.size(); i++) {
+            int number = Math.toIntExact(calls.get(i).getId());
+            if (max < number) {
+                max = number;
+            }
+        }
+        Call recentCall = callRepository.findById((long) max);
+        System.out.println("recentCall.getId() = " + recentCall.getId());
+        System.out.println("recentCall.getM_email() = " + recentCall.getM_email());
 
 
         String from = "fis182@fisolution.co.kr";
