@@ -35,11 +35,16 @@ public class CallControllerImpl implements CallController {
     @PostMapping("/call")
     public CallSaveResponse saveCall(@RequestBody CallSaveRequest request) {
 
+        // dateTime = 날짜와 시간이므로 date 부분과 time 부분을 자름 (날짜별 통화건수 등을 알아내기 위해 날짜와 시간을 분리함)
+        String dateTime = request.getDateTime();
+        String date = dateTime.substring(0, 10);
+        String time = dateTime.substring(11);
 
         try{
+            // 기관과 콜 직원을 찾는 과정에서 NullPointerException 발생 가능
             Center center = callService.findCenter(request);
             User user = callService.findUser(request);
-            return callService.saveCall(request, center, user);
+            return callService.saveCall(request, center, user, date, time);
         } catch (NullPointerException e) {
             CallSaveResponse callSaveResponse = new CallSaveResponse();
             callSaveResponse.setCenter_id(request.getCenter_id());

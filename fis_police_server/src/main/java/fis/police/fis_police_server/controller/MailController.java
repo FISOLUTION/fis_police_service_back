@@ -9,5 +9,5 @@ import javax.mail.MessagingException;
 public interface MailController {
 
     // 시설에 메일 전송
-    MailSendResponse sendMail(MailSendRequest request) throws MessagingException;
+    MailSendResponse sendMail(Long center_id) throws MessagingException;
 }
