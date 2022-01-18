@@ -12,15 +12,15 @@ import java.util.List;
     작성 내용:  call repository interface 기본 메서드(save, findById)
 */
 public interface CallRepository {
-
+    // 콜 기록 저장
     void save(Call call);
+    // 콜 기록 조회
+    List<Call> findAll();
+    // 콜 기록 조회 (하나)
     Call findById(Long id);
-    /*
-        작성 날짜: 2022/01/10 2:17 오후
-        작성자: 고준영
-        작성 내용:  해당 날짜의 콜 기록을 모두 긁어오는 함수, 서비스에서 콜 직원별로 분류. 따라서 추후에 param으로 date 삽입해야함
-    */
-    List<Call> testDate(String date);
+    // 콜 기록 조회 (날짜별)
+    List<Call> callByDate(String date);
+    // 콜 기록 조회 (시설별)
     List<Call> callByCenter(Long id);
 
     List<CallTodayDTO> todayCallNum(String today);

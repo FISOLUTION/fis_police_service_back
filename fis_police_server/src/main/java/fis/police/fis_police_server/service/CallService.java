@@ -12,6 +12,4 @@ import java.time.LocalDateTime;
 public interface CallService {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request, Center center, User user);
-    // 해당 날짜별 콜 직원의 통화 기록 현황
-    Result callNumByDate (String date);
 }
