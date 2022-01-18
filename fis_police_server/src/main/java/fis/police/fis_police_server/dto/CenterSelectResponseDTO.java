@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.dto;
 
-import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
@@ -9,7 +11,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
