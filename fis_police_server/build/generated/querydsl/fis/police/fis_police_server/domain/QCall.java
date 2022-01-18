@@ -30,7 +30,7 @@ public class QCall extends EntityPathBase<Call> {
 
     public final StringPath center_etc = createString("center_etc");
 
-    public final StringPath dateTime = createString("dateTime");
+    public final StringPath date = createString("date");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -43,6 +43,8 @@ public class QCall extends EntityPathBase<Call> {
     public final NumberPath<Integer> num = createNumber("num", Integer.class);
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Participation> participation = createEnum("participation", fis.police.fis_police_server.domain.enumType.Participation.class);
+
+    public final StringPath time = createString("time");
 
     public final QUser user;
 

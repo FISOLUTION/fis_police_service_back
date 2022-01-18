@@ -35,11 +35,11 @@ public class CallServiceImpl implements CallService {
 
     @Transactional
     @Override
-    public CallSaveResponse saveCall(CallSaveRequest request, Center center, User user) {
+    public CallSaveResponse saveCall(CallSaveRequest request, Center center, User user, String date, String time) {
 
 
         // 저장할 콜 객체 생성
-        Call call = Call.createCall(request, center, user);
+        Call call = Call.createCall(request, center, user, date, time);
         // 콜 저장 (콜 기록은 수정 불가)
         callRepository.save(call);
 

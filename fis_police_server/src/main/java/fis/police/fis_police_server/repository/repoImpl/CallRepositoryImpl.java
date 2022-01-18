@@ -78,7 +78,7 @@ public class CallRepositoryImpl implements CallRepository {
         return jpaQueryFactory
                 .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
                 .from(qCall)
-                .where(qCall.dateTime.eq(today))
+                .where(qCall.date.eq(today))
                 .groupBy(qCall.user.id)
                 .fetch();
 
