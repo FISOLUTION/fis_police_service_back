@@ -37,10 +37,13 @@ public class CallServiceImpl implements CallService {
     @Override
     public CallSaveResponse saveCall(CallSaveRequest request, Center center, User user) {
 
-        CallSaveResponse response = new CallSaveResponse();
 
+        // 저장할 콜 객체 생성
         Call call = Call.createCall(request, center, user);
+        // 콜 저장 (콜 기록은 수정 불가)
         callRepository.save(call);
+
+        CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
         response.setUser_id(call.getUser().getId());
         response.setCall_id(call.getId());
@@ -49,11 +52,13 @@ public class CallServiceImpl implements CallService {
         return response;
     }
 
+    // 콜 기록에 저장될 기관 찾기
     public Center findCenter(CallSaveRequest request) {
         Center findCenter = centerRepository.findById(request.getCenter_id());
         return findCenter;
     }
 
+    // 콜 기록에 저장될 콜 직원 찾기
     public User findUser(CallSaveRequest request) {
         User findUser = userRepository.findById(request.getUser_id());
         return findUser;

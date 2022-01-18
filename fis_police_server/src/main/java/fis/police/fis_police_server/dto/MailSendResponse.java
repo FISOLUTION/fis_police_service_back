@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MailSendResponse {
-
     private Long center_id;
     private String m_email;
     private String status_code;

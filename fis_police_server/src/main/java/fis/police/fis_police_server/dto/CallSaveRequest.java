@@ -20,14 +20,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CallSaveRequest {
-
     private Long center_id;
     private Long user_id;
-
-
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private String dateTime;
-
     private Participation participation;
     private InOut in_out;
     private String c_manager;
@@ -36,5 +32,4 @@ public class CallSaveRequest {
     private Integer num;
     private String center_etc;
     private String agent_etc;
-
 }

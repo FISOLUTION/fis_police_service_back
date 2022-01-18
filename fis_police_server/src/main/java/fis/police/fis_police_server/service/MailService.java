@@ -7,5 +7,5 @@ import fis.police.fis_police_server.dto.MailSendResponse;
 import javax.mail.MessagingException;
 
 public interface MailService {
-    MailSendResponse sendMail(MailSendRequest request) throws MessagingException;
+    MailSendResponse sendMail(Long center_id) throws MessagingException;
 }
