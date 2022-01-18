@@ -101,10 +101,10 @@ public class UserServiceImpl implements UserService {
     //== user 별 총 통화 건수 ==//
     @Override
     @Transactional
-    public List<CallTodayDTO> totalCallNum() {
-        List<CallTodayDTO> CallTotalDTOList = callRepository.totalCallNum();
+    public List<CallAvgDTO> totalCallNum() {
+        List<CallAvgDTO> CallTotalDTOList = callRepository.totalCallNum();
 
-        System.out.println("CallTodayDTOList = " + CallTotalDTOList);
+        System.out.println("CallTotalDTOList = " + CallTotalDTOList);
         return CallTotalDTOList;
 
         //date 개수로 total 나눠야함

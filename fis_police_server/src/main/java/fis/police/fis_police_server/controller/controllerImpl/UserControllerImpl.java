@@ -50,7 +50,7 @@ public class UserControllerImpl implements UserController {
         String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         List<UserInfoResponse> collect = userService.getUser();
         List<CallTodayDTO> callTodayList = userService.todayCallNum(now);
-        List<CallTodayDTO> callTotalList = userService.totalCallNum();
+        List<CallAvgDTO> callAvgList = userService.totalCallNum();
         for(int i=0; i<collect.size(); i++) {
             for(int j=0; j<callTodayList.size(); j++) {
                 if (collect.get(i).getUser_id() == callTodayList.get(j).getUser_id()){
@@ -59,6 +59,8 @@ public class UserControllerImpl implements UserController {
                 }
             }
         }
+
+        System.out.println("callAvgList = " + callAvgList);
 
 
         return collect;
