@@ -63,10 +63,11 @@ public class Call {
     작성자: 고준영
     작성 내용: service 계층에서 받아온 api 스펙을 바탕으로 call 객체 생성하는 생성자와 메서드
 */
-    public Call(Center center, User user, String date, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
+    public Call(Center center, User user, String date, String time, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
         this.center = center;
         this.user = user;
         this.date = date;
+        this.time = time;
         this.participation = participation;
         this.in_out = in_out;
         this.c_manager = c_manager;
@@ -77,8 +78,8 @@ public class Call {
         this.agent_etc = agent_etc;
     }
 
-    public static Call createCall(CallSaveRequest request, Center center, User user) {
-        Call call = new Call(center, user, request.getDateTime(), request.getParticipation(),
+    public static Call createCall(CallSaveRequest request, Center center, User user, String date, String time) {
+        Call call = new Call(center, user, date, time, request.getParticipation(),
                 request.getIn_out(), request.getC_manager(), request.getM_ph(), request.getM_email(), request.getNum(),
                 request.getCenter_etc(), request.getAgent_etc());
 
