@@ -51,17 +51,9 @@ public class CallRepositoryImpl implements CallRepository {
         return findCallById;
     }
 
-<<<<<<< HEAD
-    /*
-        작성 날짜: 2022/01/12 3:09 오후
-        작성자: 고준영
-        작성 내용: 위의 findAll 함수에 date 변수를 삽입한 것, LocalDateTime으로 되어있는 값을 갖고 노는 방법 공부 후 이걸로 findAll 대체 예정
-    */
-=======
->>>>>>> 9e586176163c0f317fd9348d6c3ceae7db9ebbd2
     @Override
     public List<Call> callByDate(String date) {
-        return em.createQuery("select c from Call c where c.dateTime = : date", Call.class)
+        return em.createQuery("select c from Call c where c.date = : date", Call.class)
                 .setParameter("date", date)
                 .getResultList();
     }
