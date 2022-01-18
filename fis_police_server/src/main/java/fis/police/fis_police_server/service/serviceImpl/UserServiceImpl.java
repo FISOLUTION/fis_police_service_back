@@ -85,15 +85,11 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-
     //== user 별 오늘 통화 건수 ==//
     @Override
     @Transactional
     public List<CallTodayDTO> todayCallNum(String today) {
         List<CallTodayDTO> CallTodayDTOList = callRepository.todayCallNum(today);
-
-        System.out.println("CallTodayDTOList = " + CallTodayDTOList);
-
         return CallTodayDTOList;
     }
 
@@ -103,11 +99,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<CallAvgDTO> totalCallNum() {
         List<CallAvgDTO> CallTotalDTOList = callRepository.totalCallNum();
-
-        System.out.println("CallTotalDTOList = " + CallTotalDTOList);
         return CallTotalDTOList;
-
-        //date 개수로 total 나눠야함
     }
 
 }

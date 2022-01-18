@@ -88,20 +88,26 @@ public class initDb2 {
             Call call4 = new Call(center2, user2, "2022-01-18", "14:11:37", Participation.PARTICIPATION, InOut.IN, "담당자4", "010-4444-4444", "@naver", 20, "...", "...");
             em.persist(call4);
 
-            Call call5 = new Call(center2, user3, "2022-01-18", "11:39:28",Participation.PARTICIPATION, InOut.IN, "담당자5", "010-5555-5555", "@naver", 20, "...", "...");
-
+            Call call5 = new Call(center2, user2, "2022-01-18", "11:39:28",Participation.PARTICIPATION, InOut.IN, "담당자5", "010-5555-5555", "@naver", 20, "...", "...");
             em.persist(call5);
 
             Call call6 = new Call(center2, user2, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자6", "010-6666-6666", "@naver", 20, "...", "...");
             em.persist(call6);
 
-
             Call call7 = new Call(center2, user2, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자7", "010-7777-7777", "@naver", 20, "...", "...");
             em.persist(call7);
 
-
             Call call8 = new Call(center2, user3, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자8", "010-8888-8888", "@naver", 20, "...", "...");
             em.persist(call8);
+
+            Call call9 = new Call(center2, user2, "2022-01-20", "11:39:29", Participation.PARTICIPATION, InOut.IN, "담당자9", "010-9999-9999", "@naver", 20, "...", "...");
+            em.persist(call9);
+
+            Call call10 = new Call(center2, user2, "2022-01-20", "11:39:210", Participation.PARTICIPATION, InOut.IN, "담당자10", "010-1010-1010", "@naver", 20, "...", "...");
+            em.persist(call10);
+
+            Call call11 = new Call(center2, user2, "2022-01-20", "11:39:211", Participation.PARTICIPATION, InOut.IN, "담당자11", "010-1111-1111", "@naver", 20, "...", "...");
+            em.persist(call11);
         }
     }
 }
