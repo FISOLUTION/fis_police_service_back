@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.dto;
 
-import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
@@ -87,7 +89,7 @@ public class CenterSelectResponseDTO {
         public CallDTO(Call call){
             this.id = call.getId();
             this.user = new UserDTO(call.getUser().getId(), call.getUser().getU_name());
-            this.dateTime = call.getDate();
+            this.dateTime = call.getDate() + call.getTime();
             this.participation = call.getParticipation();
             this.in_out = call.getIn_out();
             this.c_manager = call.getC_manager();
