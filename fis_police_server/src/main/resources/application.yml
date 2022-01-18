@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.h2.Driver
 # 작성자: 고준영, 작성내용: mailjet이 안먹어서, 다시 mailplug로 시도 해봤는데, "mail.stmp.ssl.enable": true 박으니까 갑자기 잘 됨 ㅋㅋ 개꿀;
   mail:
-    host: smtp.mailplug.co.kr
+    host:
     port: 465
     username: fis182@fisolution.co.kr
     password: fis1234*

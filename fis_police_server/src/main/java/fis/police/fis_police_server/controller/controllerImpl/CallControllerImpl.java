@@ -35,16 +35,18 @@ public class CallControllerImpl implements CallController {
     @PostMapping("/call")
     public CallSaveResponse saveCall(@RequestBody CallSaveRequest request) {
 
-        Center center = callService.findCenter(request);
-        User user = callService.findUser(request);
 
-        return callService.saveCall(request, center, user);
-    }
-
-    @Override
-    @GetMapping("/testcall")
-    public Result callNumByDate(@RequestParam String date) {
-        return callService.callNumByDate(date);
+        try{
+            Center center = callService.findCenter(request);
+            User user = callService.findUser(request);
+            return callService.saveCall(request, center, user);
+        } catch (NullPointerException e) {
+            CallSaveResponse callSaveResponse = new CallSaveResponse();
+            callSaveResponse.setCenter_id(request.getCenter_id());
+            callSaveResponse.setUser_id(request.getUser_id());
+            callSaveResponse.setStatus_code("center 혹은 user 존재하지 않음");
+            return callSaveResponse;
+        }
     }
 
 }
