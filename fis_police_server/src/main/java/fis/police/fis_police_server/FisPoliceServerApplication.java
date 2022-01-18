@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+//import fis.police.fis_police_server.interceptor.LogInterceptor;
+//import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
+
 @SpringBootApplication
 public class FisPoliceServerApplication {
 
