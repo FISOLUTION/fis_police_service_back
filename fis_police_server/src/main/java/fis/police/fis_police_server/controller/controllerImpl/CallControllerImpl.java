@@ -34,9 +34,8 @@ public class CallControllerImpl implements CallController {
     @Override
     @PostMapping("/call")
     public CallSaveResponse saveCall(@RequestBody CallSaveRequest request) {
-
-
         try{
+            // 기관과 콜 직원을 찾는 과정에서 NullPointerException 발생 가능
             Center center = callService.findCenter(request);
             User user = callService.findUser(request);
             return callService.saveCall(request, center, user);

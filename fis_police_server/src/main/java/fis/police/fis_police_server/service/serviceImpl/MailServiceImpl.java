@@ -58,9 +58,8 @@ public class MailServiceImpl implements MailService {
     private final UserRepository userRepository;
 
     @Override
-    public MailSendResponse sendMail(MailSendRequest request) throws MessagingException {
+    public MailSendResponse sendMail(Long center_id) throws MessagingException {
 //         해당 센터의 콜 기록 중 가장 최근 콜 기록 (call_id 가장 높은 것) 의 mail 주소를 따오는 로직
-        Long center_id = request.getCenter_id();
         List<Call> calls = callRepository.callByCenter(center_id);
         int max = -1;
         for (int i = 0; i < calls.size(); i++) {
@@ -75,7 +74,7 @@ public class MailServiceImpl implements MailService {
         System.out.println("recentCall.getUser().getId() = " + recentCall.getUser().getId());
 
         String from = "fis182@fisolution.co.kr";
-        String to = request.getM_email();
+        String to = recentCall.getM_email();
         String subject = "지문 등 사전등록신청서 양식 입니다.";
 
         StringBuilder body = new StringBuilder();
@@ -84,8 +83,15 @@ public class MailServiceImpl implements MailService {
                 "<div>서울특별시 금천구 가산디지털2로 108 1204, 1207호 (가산동, 뉴티캐슬) <div>\n" +
                 "<div>TEL  : 070-7872-7748   Fax : 02-2626-9800<div>");
 
-        MailSendResponse response = new MailSendResponse();
+        // 첨부파일 경로 (absolute path)
+        String file1 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf";
+        FileSystemResource fsr = new FileSystemResource(file1);
+        String file2 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/2021_경찰청_팝업_배부용.jpeg";
+        FileSystemResource fsr2 = new FileSystemResource(file2);
+        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
+        FileSystemResource fsr3 = new FileSystemResource(file3);
 
+        // 전송할 메일 정보 설정
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -93,20 +99,27 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
+        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
+        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
+        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
+
+        MailSendResponse response = new MailSendResponse();
 
         try {
             mailSender.send(message);
 
-            response.setCenter_id(request.getCenter_id());
-            response.setM_email(request.getM_email());
+            response.setCenter_id(recentCall.getCenter().getId());
+            response.setM_email(recentCall.getM_email());
             response.setStatus_code("ok");
 
-            checkMail(recentCall.getCenter().getId(), recentCall.getUser().getId(), request.getM_email());
+//            checkMail(recentCall.getCenter().getId(), recentCall.getUser().getId(), request.getM_email());
 
             return response;
         } catch (MailException e) {
             System.out.println("e = " + e);
-            return null;
+            response.setM_email(recentCall.getM_email());
+            response.setStatus_code("메일 전송 오류");
+            return response;
         }
     }
 
