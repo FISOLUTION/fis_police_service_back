@@ -32,6 +32,7 @@ public class CallRepositoryImpl implements CallRepository {
     */
     private final JPAQueryFactory jpaQueryFactory;
     QCall qCall = QCall.call;
+    QCallView qCallView = QCallView.callView;
     QUser qUser = QUser.user;
 
 
@@ -76,7 +77,6 @@ public class CallRepositoryImpl implements CallRepository {
     @Override
     //user 별 오늘 통화 건수
     public List<CallTodayDTO> todayCallNum(String today) {
-        System.out.println("today ========= " + today);
         return jpaQueryFactory
                 .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
                 .from(qCall)
@@ -90,14 +90,14 @@ public class CallRepositoryImpl implements CallRepository {
     //user 별 총 통화 건수
     @Override
     public List<CallAvgDTO> totalCallNum() {
-//        return jpaQueryFactory
-//                .select(new QCallAvgDTO(qCall.user.id, qCall.count().avg()))
-//                .from(qCall)
-//                .groupBy(qCall.user.id, qCall.date)
-//                .fetch();
-        return em.createQuery("select avg (callview.count) from CallView callview " +
-                "group by callview.user")
-                .getResultList();
+        return jpaQueryFactory
+                .select(new QCallAvgDTO(qCallView.user.id, qCallView.count.avg()))
+                .from(qCallView)
+                .groupBy(qCallView.user)
+                .fetch();
+//        return em.createQuery("select avg (callview.count) from CallView callview " +
+//                "group by callview.user")
+//                .getResultList();
     }
 
 }

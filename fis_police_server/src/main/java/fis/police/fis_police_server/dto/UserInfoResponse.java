@@ -24,6 +24,6 @@ public class UserInfoResponse {
     private String u_ph;            //사용자 전화번호
     private LocalDate u_sDate;      //사용자 입사일
     private UserAuthority u_auth;   //사용자 권한 (ADMIN, USER, FIRED)
-    private int average_call;       //평균 통화 건수
+    private double average_call;    //평균 통화 건수
     private int today_call_num;     //오늘 통화 건수
 }
