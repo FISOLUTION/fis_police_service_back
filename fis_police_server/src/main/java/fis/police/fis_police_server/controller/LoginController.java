@@ -11,11 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 // 원보라
 public interface LoginController {
-//    Object login();
-//    Object logout();
 
-//    String login();
-//    String logout();
 
     String login(LoginRequest loginrequest, String redirectURL, HttpServletRequest request);
 

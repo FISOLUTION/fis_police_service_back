@@ -1,5 +1,6 @@
 package fis.police.fis_police_server;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.Participation;
@@ -74,6 +75,7 @@ public class initDB {
 
             User user5 =  new User( "fis005", "원보라5", "1234", "010-0000-0005", LocalDate.of(2025,05,05), UserAuthority.FIRED);
             em.persist(user5);
+
 
 
         }

@@ -2,9 +2,7 @@ package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.UserInfoResponse;
-import fis.police.fis_police_server.dto.UserSaveRequest;
-import fis.police.fis_police_server.dto.UserSaveResponse;
+import fis.police.fis_police_server.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,4 +24,14 @@ public interface UserService {
 
     // 콜직원 전체 조회
     List<UserInfoResponse> getUser();
+
+    // 오늘 통화한 사용자와 각자 통화 건수
+    List<CallTodayDTO> todayCallNum(String today);
+
+
+    // 사용자 각자 총 통화 건수
+    List<CallTodayDTO> totalCallNum();
+
+
+
 }

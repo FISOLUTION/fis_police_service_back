@@ -1,10 +1,10 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.UserInfoResponse;
-import fis.police.fis_police_server.dto.UserSaveRequest;
-import fis.police.fis_police_server.dto.UserSaveResponse;
+import fis.police.fis_police_server.dto.*;
+import fis.police.fis_police_server.repository.CallRepository;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final CallRepository callRepository;
 
     //== 콜직원 추가 ==//
     @Override
@@ -76,7 +81,33 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getUser() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> new UserInfoResponse(user.getId(), user.getU_nickname(), user.getU_name(), user.getU_pwd(), user.getU_ph(), user.getU_sDate(), user.getU_auth()))
+        return users.stream().map(user -> new UserInfoResponse(user.getId(), user.getU_nickname(), user.getU_name(), user.getU_pwd(), user.getU_ph(), user.getU_sDate(), user.getU_auth(),0,0))
                 .collect(Collectors.toList());
     }
+
+
+    //== user 별 오늘 통화 건수 ==//
+    @Override
+    @Transactional
+    public List<CallTodayDTO> todayCallNum(String today) {
+        List<CallTodayDTO> CallTodayDTOList = callRepository.todayCallNum(today);
+
+        System.out.println("CallTodayDTOList = " + CallTodayDTOList);
+
+        return CallTodayDTOList;
+    }
+
+
+    //== user 별 총 통화 건수 ==//
+    @Override
+    @Transactional
+    public List<CallTodayDTO> totalCallNum() {
+        List<CallTodayDTO> CallTotalDTOList = callRepository.totalCallNum();
+
+        System.out.println("CallTodayDTOList = " + CallTotalDTOList);
+        return CallTotalDTOList;
+
+        //date 개수로 total 나눠야함
+    }
+
 }
