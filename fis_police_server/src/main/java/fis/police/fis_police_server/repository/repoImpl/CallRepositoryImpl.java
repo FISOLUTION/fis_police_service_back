@@ -65,6 +65,27 @@ public class CallRepositoryImpl implements CallRepository {
                 .getResultList();
     }
 
+    public Call recentcall(Long id) {
+
+        Call recentCall = jpaQueryFactory
+                .select(qCall)
+                .from(qCall)
+                .where(qCall.center.id.eq(id))
+                .orderBy(qCall.id.desc())
+                .fetchFirst();
+        return recentCall;
+
+
+//        Long find = jpaQueryFactory
+//                .select(qCall.id.max())
+//                .from(qCall)
+//                .where(qCall.center.id.eq(id))
+//                .fetchFirst();
+//
+//        return findById(find);
+//        return find;
+    }
+
 
     /*
         날짜 : 2022/01/17 3:50 오후

@@ -59,19 +59,8 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public MailSendResponse sendMail(Long center_id) throws MessagingException {
-//         해당 센터의 콜 기록 중 가장 최근 콜 기록 (call_id 가장 높은 것) 의 mail 주소를 따오는 로직
-        List<Call> calls = callRepository.callByCenter(center_id);
-        int max = -1;
-        for (int i = 0; i < calls.size(); i++) {
-            int number = Math.toIntExact(calls.get(i).getId());
-            if (max < number) {
-                max = number;
-            }
-        }
-        Call recentCall = callRepository.findById((long) max);
-        System.out.println("recentCall.getId() = " + recentCall.getId());
-        System.out.println("recentCall.getM_email() = " + recentCall.getM_email());
-        System.out.println("recentCall.getUser().getId() = " + recentCall.getUser().getId());
+
+        Call recentCall = callRepository.recentcall(center_id);
 
         String from = "fis182@fisolution.co.kr";
         String to = recentCall.getM_email();
