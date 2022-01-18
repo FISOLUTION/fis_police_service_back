@@ -8,8 +8,8 @@ spring:
   mail:
     host:
     port: 465
-    username:
-    password:
+    username: fis182@fisolution.co.kr
+    password: fis1234*
     properties:
       "mail.smtp.ssl.enable": true
       mail:
