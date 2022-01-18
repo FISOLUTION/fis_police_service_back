@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -88,7 +87,7 @@ public class CenterSelectResponseDTO {
         public CallDTO(Call call){
             this.id = call.getId();
             this.user = new UserDTO(call.getUser().getId(), call.getUser().getU_name());
-            this.dateTime = call.getDateTime();
+            this.dateTime = call.getDate();
             this.participation = call.getParticipation();
             this.in_out = call.getIn_out();
             this.c_manager = call.getC_manager();
