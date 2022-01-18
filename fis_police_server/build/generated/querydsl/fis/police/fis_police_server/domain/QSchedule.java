@@ -26,6 +26,10 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath agent_etc = createString("agent_etc");
 
+    public final StringPath call_check = createString("call_check");
+
+    public final StringPath call_check_info = createString("call_check_info");
+
     public final QCenter center;
 
     public final StringPath center_etc = createString("center_etc");
@@ -33,6 +37,8 @@ public class QSchedule extends EntityPathBase<Schedule> {
     public final NumberPath<Integer> estimate_num = createNumber("estimate_num", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath modified_info = createString("modified_info");
 
     public final DateTimePath<java.time.LocalDateTime> receipt_date = createDateTime("receipt_date", java.time.LocalDateTime.class);
 
