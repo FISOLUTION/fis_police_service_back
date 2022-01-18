@@ -3,7 +3,9 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.dto.CallAvgDTO;
 import fis.police.fis_police_server.dto.CallTodayDTO;
+import fis.police.fis_police_server.dto.QCallAvgDTO;
 import fis.police.fis_police_server.dto.QCallTodayDTO;
 import fis.police.fis_police_server.repository.CallRepository;
 import lombok.RequiredArgsConstructor;
@@ -87,12 +89,15 @@ public class CallRepositoryImpl implements CallRepository {
 
     //user 별 총 통화 건수
     @Override
-    public List<CallTodayDTO> totalCallNum() {
-        return jpaQueryFactory
-                .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
-                .from(qCall)
-                .groupBy(qCall.user.id)
-                .fetch();
+    public List<CallAvgDTO> totalCallNum() {
+//        return jpaQueryFactory
+//                .select(new QCallAvgDTO(qCall.user.id, qCall.count().avg()))
+//                .from(qCall)
+//                .groupBy(qCall.user.id, qCall.date)
+//                .fetch();
+        return em.createQuery("select avg (callview.count) from CallView callview " +
+                "group by callview.user")
+                .getResultList();
     }
 
 }
