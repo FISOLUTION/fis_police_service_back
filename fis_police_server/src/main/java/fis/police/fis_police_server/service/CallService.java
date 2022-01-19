@@ -11,5 +11,5 @@ import java.time.LocalDateTime;
 
 public interface CallService {
     // 연락기록 저장
-    CallSaveResponse saveCall(CallSaveRequest request, Center center, User user);
+    CallSaveResponse saveCall(CallSaveRequest request, Center center, User user, String date, String time);
 }

@@ -1,10 +1,10 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.UserInfoResponse;
-import fis.police.fis_police_server.dto.UserSaveRequest;
-import fis.police.fis_police_server.dto.UserSaveResponse;
+import fis.police.fis_police_server.dto.*;
+import fis.police.fis_police_server.repository.CallRepository;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final CallRepository callRepository;
 
     //== 콜직원 추가 ==//
     @Override
@@ -44,8 +49,9 @@ public class UserServiceImpl implements UserService {
     //== 닉네임 중복 검사 ==//
     private void validateDuplicateUser(UserSaveRequest request) {
         List<User> findUser = userRepository.findByNickname(request.getU_nickname());
+        System.out.println("findUser.size() = " + findUser.size());
         if (findUser.size() > 0) { //수정 시 중복 검사
-            if (findUser.get(0).getId().equals(request.getUser_id())) { //자신의 이름은 중복검사 안함
+            if (!findUser.get(0).getId().equals(request.getUser_id())) { //자신의 이름은 중복검사 안함
                 throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
             }
         }
@@ -76,7 +82,25 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<UserInfoResponse> getUser() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> new UserInfoResponse(user.getId(), user.getU_nickname(), user.getU_name(), user.getU_pwd(), user.getU_ph(), user.getU_sDate(), user.getU_auth()))
+        return users.stream().map(user -> new UserInfoResponse(user.getId(), user.getU_nickname(), user.getU_name(), user.getU_pwd(), user.getU_ph(), user.getU_sDate(), user.getU_auth(),0,0))
                 .collect(Collectors.toList());
     }
+
+    //== user 별 오늘 통화 건수 ==//
+    @Override
+    @Transactional
+    public List<CallTodayDTO> todayCallNum(String today) {
+        List<CallTodayDTO> CallTodayDTOList = callRepository.todayCallNum(today);
+        return CallTodayDTOList;
+    }
+
+
+    //== user 별 총 통화 건수 ==//
+    @Override
+    @Transactional
+    public List<CallAvgDTO> totalCallNum() {
+        List<CallAvgDTO> CallTotalDTOList = callRepository.totalCallNum();
+        return CallTotalDTOList;
+    }
+
 }

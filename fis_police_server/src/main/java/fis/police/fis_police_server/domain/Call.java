@@ -1,18 +1,13 @@
 package fis.police.fis_police_server.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.convert.ReadingConverter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @RequiredArgsConstructor
@@ -34,7 +29,10 @@ public class Call {
 
     @Column(length = 10)
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private String dateTime;       //'입력날짜 및 시간',
+    private String date;       //'입력날짜 및 시간',
+
+    @Column(length = 10)
+    private String time;       //'입력날짜 및 시간',
 
     @Enumerated(EnumType.STRING)
     private Participation participation;  // '참여여부(참여/거부/보류/기타)',
@@ -65,10 +63,11 @@ public class Call {
     작성자: 고준영
     작성 내용: service 계층에서 받아온 api 스펙을 바탕으로 call 객체 생성하는 생성자와 메서드
 */
-    public Call(Center center, User user, String dateTime, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
+    public Call(Center center, User user, String date, String time, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
         this.center = center;
         this.user = user;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.participation = participation;
         this.in_out = in_out;
         this.c_manager = c_manager;
@@ -79,8 +78,8 @@ public class Call {
         this.agent_etc = agent_etc;
     }
 
-    public static Call createCall(CallSaveRequest request, Center center, User user) {
-        Call call = new Call(center, user, request.getDateTime(), request.getParticipation(),
+    public static Call createCall(CallSaveRequest request, Center center, User user, String date, String time) {
+        Call call = new Call(center, user, date, time, request.getParticipation(),
                 request.getIn_out(), request.getC_manager(), request.getM_ph(), request.getM_email(), request.getNum(),
                 request.getCenter_etc(), request.getAgent_etc());
 

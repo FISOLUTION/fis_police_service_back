@@ -1,9 +1,10 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.dto.CallAvgDTO;
+import fis.police.fis_police_server.dto.CallNumDTO;
+import fis.police.fis_police_server.dto.CallTodayDTO;
 
-import javax.persistence.TypedQuery;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /*
@@ -22,4 +23,7 @@ public interface CallRepository {
     List<Call> callByDate(String date);
     // 콜 기록 조회 (시설별)
     List<Call> callByCenter(Long id);
+
+    List<CallTodayDTO> todayCallNum(String today);
+    List<CallAvgDTO> totalCallNum();
 }

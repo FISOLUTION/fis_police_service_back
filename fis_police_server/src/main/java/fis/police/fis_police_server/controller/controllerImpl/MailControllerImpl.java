@@ -1,15 +1,17 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.MailController;
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
+import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.service.serviceImpl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.List;
+
 /*
     작성 날짜: 2022/01/10 2:07 오후
     작성자: 고준영
@@ -20,10 +22,11 @@ import javax.mail.MessagingException;
 public class MailControllerImpl implements MailController {
 
     private final MailServiceImpl mailService;
+    private final CallRepositoryImpl callRepository;
 
-    @GetMapping("/mail/send")
+    @GetMapping("/center/{center_id}/sendmail")
     @Override
-    public MailSendResponse sendMail(@RequestBody MailSendRequest request) throws MessagingException {
-        return mailService.sendMail(request);
+    public MailSendResponse sendMail(@PathVariable Long center_id) throws MessagingException {
+        return mailService.sendMail(center_id);
     }
 }

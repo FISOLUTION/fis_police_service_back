@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Messenger;
+import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.repository.MessengerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,14 @@ public class MessengerRepositoryImpl implements MessengerRepository {
     public List<Messenger> findAll() {
         return em.createQuery("select messenger from Messenger messenger " +
                 "join fetch messenger.user ", Messenger.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Messenger> findByUser(User user) {
+        return em.createQuery("select messenger from Messenger messenger " +
+                "join fetch messenger.user on messenger.user.id = :id", Messenger.class)
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 }

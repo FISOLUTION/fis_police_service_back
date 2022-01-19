@@ -1,10 +1,9 @@
 package fis.police.fis_police_server;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.domain.enumType.InOut;
+import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -70,6 +69,45 @@ public class initDb2 {
             Schedule schedule2 = Schedule.createSchedule(center2, user2, agent2, LocalDateTime.now(),
                     LocalDate.now(), LocalTime.now(), 123, "222", "222");
             em.persist(schedule2);
+
+/*
+    날짜 : 2022/01/17 4:39 오후
+    작성자 : 원보라
+    작성내용 : call init db 추가
+*/
+            Call call1 = new Call(center1, user1, "2022-01-18", "12:23:12", Participation.PARTICIPATION, InOut.IN, "담당자1", "010-1111-1111", "@naver", 20, "...", "...");
+            em.persist(call1);
+
+            Call call2 = new Call(center2, user1, "2022-01-18", "18:49:48", Participation.PARTICIPATION, InOut.IN, "담당자2", "010-2222-2222", "@naver", 20, "...", "...");
+            em.persist(call2);
+
+            Call call3 = new Call(center1, user2, "2022-01-18", "10:37:12", Participation.PARTICIPATION, InOut.IN, "담당자3", "010-3333-3333", "@naver", 20, "...", "...");
+            em.persist(call3);
+
+
+            Call call4 = new Call(center2, user2, "2022-01-18", "14:11:37", Participation.PARTICIPATION, InOut.IN, "담당자4", "010-4444-4444", "@naver", 20, "...", "...");
+            em.persist(call4);
+
+            Call call5 = new Call(center2, user2, "2022-01-18", "11:39:28",Participation.PARTICIPATION, InOut.IN, "담당자5", "010-5555-5555", "@naver", 20, "...", "...");
+            em.persist(call5);
+
+            Call call6 = new Call(center2, user2, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자6", "010-6666-6666", "@naver", 20, "...", "...");
+            em.persist(call6);
+
+            Call call7 = new Call(center2, user2, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자7", "010-7777-7777", "@naver", 20, "...", "...");
+            em.persist(call7);
+
+            Call call8 = new Call(center2, user3, "2022-01-19", "11:39:28", Participation.PARTICIPATION, InOut.IN, "담당자8", "010-8888-8888", "@naver", 20, "...", "...");
+            em.persist(call8);
+
+            Call call9 = new Call(center2, user2, "2022-01-20", "11:39:29", Participation.PARTICIPATION, InOut.IN, "담당자9", "010-9999-9999", "@naver", 20, "...", "...");
+            em.persist(call9);
+
+            Call call10 = new Call(center2, user2, "2022-01-20", "11:39:210", Participation.PARTICIPATION, InOut.IN, "담당자10", "010-1010-1010", "@naver", 20, "...", "...");
+            em.persist(call10);
+
+            Call call11 = new Call(center2, user2, "2022-01-20", "11:39:211", Participation.PARTICIPATION, InOut.IN, "담당자11", "010-1111-1111", "@naver", 20, "...", "...");
+            em.persist(call11);
         }
     }
 }
