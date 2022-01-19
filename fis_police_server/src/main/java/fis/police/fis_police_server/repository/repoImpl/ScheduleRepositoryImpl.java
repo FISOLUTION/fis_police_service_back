@@ -60,7 +60,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                         " join s.agent a" +
                         " join s.user u" +
                         " join s.center c" +
-                        " where s.visit_date = :date" +
+                        " where s.visit_date = :date and s.valid = true" +
                         " order by a.a_name desc, s.visit_time desc", ScheduleByDateResponse.class)
                 .setParameter("date", date)
                 .getResultList();

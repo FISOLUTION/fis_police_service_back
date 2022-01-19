@@ -17,4 +17,11 @@ public interface ScheduleService {
     // 일정 수정
     void modifySchedule(ScheduleModifyRequest request);
 
+    /*
+        작성날짜: 2022/01/19 4:31 PM
+        작성자: 이승범
+        작성내용: 일정취소 기능 추가
+    */
+    // 일정 취소
+    void cancelSchedule(Long schedule_id);
 }

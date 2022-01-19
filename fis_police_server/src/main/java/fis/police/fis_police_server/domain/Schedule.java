@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -68,8 +69,13 @@ public class Schedule {
     @Lob
     private String modified_info;           // 변경 사항
 
+    @NotNull
     @Column
-    private boolean isAnnouncement;         // 카톡 공지 여부
+    private boolean announcement;         // 카톡 공지 여부
+
+    @NotNull
+    @Column
+    private boolean valid;                 // 스케줄 유효한지
 
     /*
         날짜 : 2022/01/11 5:24 오후
@@ -99,13 +105,15 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
-        schedule.isAnnouncement = false;
+        schedule.announcement = false;
+        schedule.valid = true;
         return schedule;
     }
-    public void modifySchedule(ScheduleModifyRequest request, Agent agent, Center center){
+
+    public void modifySchedule(ScheduleModifyRequest request, Agent agent, Center center) {
         this.mappingAgent(agent);
         this.mappingCenter(center);
-        this.estimate_num=request.getEstimate_num();
+        this.estimate_num = request.getEstimate_num();
         this.visit_date = request.getVisit_date();
         this.visit_time = request.getVisit_time();
         this.center_etc = request.getCenter_etc();
@@ -114,6 +122,19 @@ public class Schedule {
         this.total_etc = request.getTotal_etc();
         this.call_check = request.getCall_check();
         this.call_check_info = request.getCall_check_info();
+    }
+
+    /*
+        작성날짜: 2022/01/19 4:39 PM
+        작성자: 이승범
+        작성내용: 스케줄의 일정공지 여부와 유효성을 판단하기위 setter
+    */
+    public void afterAnnouncement() {
+        this.announcement = true;
+    }
+
+    public void cancel(){
+        this.valid = false;
     }
 
     // ============ 연관관계 메서드 ===============
