@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ScheduleService {
     // 현장요원 배치
-    Boolean assignAgent(ScheduleSaveRequest scheduleSaveRequest) throws Exception;
+    void assignAgent(ScheduleSaveRequest scheduleSaveRequest) throws Exception;
 
     // 날짜 별 현장요원 일정 리스트
     List<ScheduleByDateResponse> selectDate(LocalDate localDate);

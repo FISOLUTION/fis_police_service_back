@@ -47,7 +47,6 @@ public class AgentControllerImpl implements AgentController {
             System.out.println(oe);
         }
     }
-
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
     public void modifyAgent(@RequestBody AgentModifyRequest request) {
@@ -67,7 +66,6 @@ public class AgentControllerImpl implements AgentController {
             System.out.println(oe);
         }
     }
-
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
     public AgentGetResult getAgent() {
@@ -79,5 +77,4 @@ public class AgentControllerImpl implements AgentController {
                         ).collect(Collectors.toList());
         return new AgentGetResult(collect);
     }
-
 }

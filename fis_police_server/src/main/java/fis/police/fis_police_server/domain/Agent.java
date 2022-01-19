@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import lombok.AccessLevel;
