@@ -49,8 +49,9 @@ public class UserServiceImpl implements UserService {
     //== 닉네임 중복 검사 ==//
     private void validateDuplicateUser(UserSaveRequest request) {
         List<User> findUser = userRepository.findByNickname(request.getU_nickname());
+        System.out.println("findUser.size() = " + findUser.size());
         if (findUser.size() > 0) { //수정 시 중복 검사
-            if (findUser.get(0).getId().equals(request.getUser_id())) { //자신의 이름은 중복검사 안함
+            if (!findUser.get(0).getId().equals(request.getUser_id())) { //자신의 이름은 중복검사 안함
                 throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
             }
         }
