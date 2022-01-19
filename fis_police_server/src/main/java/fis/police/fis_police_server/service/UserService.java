@@ -30,7 +30,7 @@ public interface UserService {
 
 
     // 사용자 각자 총 통화 건수
-    List<CallTodayDTO> totalCallNum();
+    List<CallAvgDTO> totalCallNum();
 
 
 

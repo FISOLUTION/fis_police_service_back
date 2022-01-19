@@ -4,7 +4,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.QCall;
 import fis.police.fis_police_server.domain.QUser;
+import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.dto.CallAvgDTO;
 import fis.police.fis_police_server.dto.CallTodayDTO;
+import fis.police.fis_police_server.dto.QCallAvgDTO;
 import fis.police.fis_police_server.dto.QCallTodayDTO;
 import fis.police.fis_police_server.repository.CallRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class CallRepositoryImpl implements CallRepository {
     */
     private final JPAQueryFactory jpaQueryFactory;
     QCall qCall = QCall.call;
+    QCallView qCallView = QCallView.callView;
     QUser qUser = QUser.user;
 
 
@@ -66,6 +70,27 @@ public class CallRepositoryImpl implements CallRepository {
                 .getResultList();
     }
 
+    public Call recentcall(Long id) {
+
+        Call recentCall = jpaQueryFactory
+                .select(qCall)
+                .from(qCall)
+                .where(qCall.center.id.eq(id))
+                .orderBy(qCall.id.desc())
+                .fetchFirst();
+        return recentCall;
+
+
+//        Long find = jpaQueryFactory
+//                .select(qCall.id.max())
+//                .from(qCall)
+//                .where(qCall.center.id.eq(id))
+//                .fetchFirst();
+//
+//        return findById(find);
+//        return find;
+    }
+
 
     /*
         날짜 : 2022/01/17 3:50 오후
@@ -75,7 +100,6 @@ public class CallRepositoryImpl implements CallRepository {
     @Override
     //user 별 오늘 통화 건수
     public List<CallTodayDTO> todayCallNum(String today) {
-        System.out.println("today ========= " + today);
         return jpaQueryFactory
                 .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
                 .from(qCall)
@@ -88,12 +112,15 @@ public class CallRepositoryImpl implements CallRepository {
 
     //user 별 총 통화 건수
     @Override
-    public List<CallTodayDTO> totalCallNum() {
+    public List<CallAvgDTO> totalCallNum() {
         return jpaQueryFactory
-                .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
-                .from(qCall)
-                .groupBy(qCall.user.id)
+                .select(new QCallAvgDTO(qCallView.user.id, qCallView.count.avg()))
+                .from(qCallView)
+                .groupBy(qCallView.user)
                 .fetch();
+//        return em.createQuery("select avg (callview.count) from CallView callview " +
+//                "group by callview.user")
+//                .getResultList();
     }
 
 }

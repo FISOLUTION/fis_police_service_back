@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.dto.CallAvgDTO;
 import fis.police.fis_police_server.dto.CallNumDTO;
 import fis.police.fis_police_server.dto.CallTodayDTO;
 
@@ -24,5 +25,5 @@ public interface CallRepository {
     List<Call> callByCenter(Long id);
 
     List<CallTodayDTO> todayCallNum(String today);
-    List<CallTodayDTO> totalCallNum();
+    List<CallAvgDTO> totalCallNum();
 }
