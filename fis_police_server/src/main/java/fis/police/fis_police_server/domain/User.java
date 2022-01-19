@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,18 @@ public class User {
     private Long id;
     //user_id         BIGINT              // 'primary_key',
 
+    @NotBlank
     @Column(length = 100)
     private String u_nickname;              // "사용자 id"
 
+    @NotBlank
     @Column(length = 10)
     private String u_name;                  // '사용자 이름',
 
+    @NotBlank
     @Column(length = 100)
     private String u_pwd;                   // '사용자 비밀번호',
+
 
     @Column(length = 15)
     private String u_ph;                    // '사용자 전화번호',
@@ -38,6 +44,7 @@ public class User {
     @Column
     private LocalDate u_sDate;                 // '입사일'
 
+    @NotNull // enum 때문에 notblank 안됨
     @Column
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
