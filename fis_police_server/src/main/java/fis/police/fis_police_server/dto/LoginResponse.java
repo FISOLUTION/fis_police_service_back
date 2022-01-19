@@ -19,4 +19,5 @@ import java.time.LocalDate;
 public class LoginResponse {
     private String u_name;
     private UserAuthority u_auth;
+    private String sc; //status code
 }

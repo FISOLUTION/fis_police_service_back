@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.LoginRequest;
+import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.service.exceptions.LoginServiceException;
 
 import javax.servlet.http.Cookie;
@@ -13,7 +14,11 @@ public interface LoginService {
 //
 //    Object logout();
 
-    Long login(LoginRequest request);
+    //로그인 시 세션 저장소에 저장할 사용자 pk
+    Long loginUserId(LoginRequest request);
+
+    //로그인 res dto
+    LoginResponse loginRes(LoginRequest request);
 
     //세션 생성 (로그인)
     void createSession(Object value, HttpServletResponse response);

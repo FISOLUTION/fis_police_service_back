@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.LoginRequest;
+import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.LoginService;
 import fis.police.fis_police_server.service.exceptions.LoginServiceException;
@@ -22,21 +23,52 @@ import java.util.concurrent.ConcurrentHashMap;
 @Transactional
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
-
     private final UserRepository userRepository;
     public static final String SESSION_COOKIE_NAME = "sessionID";
     private Map<String, Object> sessionStore = new ConcurrentHashMap<>();
 
 
+    //로그인 시 세션 저장소에 저장할 사용자 pk
+    @Override
+    @Transactional
+    public Long loginUserId(LoginRequest request) {
+        List<User> user = userRepository.findByNickname(request.getU_nickname());
+        if (user.size() != 0) {
+            if (user.get(0).getU_pwd().equals(request.getU_pwd())) {
+                return user.get(0).getId();
+            }
+        }
+        return null;
+    }
+
     //로그인
     @Override
     @Transactional
-    public Long login(LoginRequest request) {
+    public LoginResponse loginRes(LoginRequest request) {
         List<User> user = userRepository.findByNickname(request.getU_nickname());
-        if (user.get(0).getU_pwd().equals(request.getU_pwd())) {
-            return user.get(0).getId();
-        } else return null;
+        LoginResponse loginResponse = new LoginResponse();
+        if (user.size() != 0) {
+            if (!user.get(0).getU_pwd().equals(request.getU_pwd())) {
+                loginResponse.setSc("pwdFail"); // 비밀번호 틀림
+                loginResponse.setU_name(null);
+                loginResponse.setU_auth(null);
+                return loginResponse;
+            } else if (user.get(0).getU_pwd().equals(request.getU_pwd())) {
+                loginResponse.setSc("success"); // 로그인 성공
+                loginResponse.setU_name(user.get(0).getU_name());
+                loginResponse.setU_auth(user.get(0).getU_auth());
+                return loginResponse;
+            }
+        } else {
+            loginResponse.setSc("idFail"); // 아이디 존재 안함
+            loginResponse.setU_name(null);
+            loginResponse.setU_auth(null);
+            return loginResponse;
+
+        }
+        return null;
     }
+
 
     //세션 저장
     @Override
@@ -82,11 +114,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-
 }
-
-
-
 
 
 //    @Override
