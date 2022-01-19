@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Messenger;
+import fis.police.fis_police_server.domain.User;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface MessengerRepository {
     void delete(Messenger messenger);
 
     List<Messenger> findAll();
+
+    List<Messenger> findByUser(User user);
 }

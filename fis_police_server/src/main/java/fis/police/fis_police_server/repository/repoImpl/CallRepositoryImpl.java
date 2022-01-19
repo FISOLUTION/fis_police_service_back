@@ -1,7 +1,9 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.domain.QCall;
+import fis.police.fis_police_server.domain.QUser;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.dto.CallAvgDTO;
 import fis.police.fis_police_server.dto.CallTodayDTO;
@@ -66,6 +68,27 @@ public class CallRepositoryImpl implements CallRepository {
         return em.createQuery("select c from Call c where c.center.id = : id", Call.class)
                 .setParameter("id", id)
                 .getResultList();
+    }
+
+    public Call recentcall(Long id) {
+
+        Call recentCall = jpaQueryFactory
+                .select(qCall)
+                .from(qCall)
+                .where(qCall.center.id.eq(id))
+                .orderBy(qCall.id.desc())
+                .fetchFirst();
+        return recentCall;
+
+
+//        Long find = jpaQueryFactory
+//                .select(qCall.id.max())
+//                .from(qCall)
+//                .where(qCall.center.id.eq(id))
+//                .fetchFirst();
+//
+//        return findById(find);
+//        return find;
     }
 
 

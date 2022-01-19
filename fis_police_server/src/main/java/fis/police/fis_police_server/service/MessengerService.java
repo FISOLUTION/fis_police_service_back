@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Messenger;
+import fis.police.fis_police_server.domain.User;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface MessengerService {
     void deleteMessenger(Messenger messenger);
 
     // 메신져 조회
-    List<Messenger> getMessenger();
+    List<Messenger> getMessenger(User user);
 }

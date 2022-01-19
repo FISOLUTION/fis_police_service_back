@@ -26,6 +26,20 @@ public class SocketHandler extends TextWebSocketHandler {
         super.afterConnectionEstablished(session);
         System.out.println("session = " + session);
         sessionMap.put(session.getId(), session);
+
+//        // 전에 있던 메세지들 보내주기
+//        User requestUser = (User) session.getAttributes().get("loginUser");
+//        messengerService.getMessenger(requestUser).stream()
+//                .forEach(msg -> {
+//                    User user = msg.getUser();
+//                    String textMsg = msg.getContext() + " " + msg.getSendTime() + " " + user.getU_name();
+//                    try {
+//                        session.sendMessage(new TextMessage(textMsg));
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+
     }
 
     @Override
@@ -34,16 +48,21 @@ public class SocketHandler extends TextWebSocketHandler {
 
         Map<String, Object> attribute = session.getAttributes();
         User user = (User) attribute.get("loginUser");
+
         System.out.println("user.getU_name() = 핸들러 부분입니다" + user.getU_name());
         user.setId(2L);
         user.setU_auth(UserAuthority.ADMIN);
-        Messenger messenger = new Messenger(msg + user.getU_name() + "가 보냄", user);
+        Messenger messenger = new Messenger(msg, user);
         messengerService.saveMessenger(messenger);
 
         for(String key : sessionMap.keySet()) {
             WebSocketSession wss = sessionMap.get(key);
             try {
-                wss.sendMessage(new TextMessage(msg + "가 보냄"));
+                // admin 과 보낸 사용자 에게만 보낸다.
+                User acceptUser = (User) wss.getAttributes().get("loginUser");
+//                if(acceptUser.getU_auth() == UserAuthority.ADMIN || wss.equals(session)) {
+                    wss.sendMessage(new TextMessage("옛다!"));
+//                }
             }catch(Exception e) {
                 System.out.println("핸들링에서 발생 = " + e);
                 e.printStackTrace();

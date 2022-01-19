@@ -2,12 +2,14 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.QCall;
+import fis.police.fis_police_server.domain.QCenter;
+import fis.police.fis_police_server.domain.QSchedule;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -101,7 +103,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         double longitude_h = longitude + 0.009;
         System.out.println("longitude_h = " + longitude_h);
 
-        List<Center> centerList = em.createQuery("select center " +
+        List<Center> centerList = em.createQuery("select distinct center " +
                 "from Center center " +
                 "where center.c_latitude <= :latitude_h and center.c_latitude >= :latitude_l " +
                 "and center.c_longitude <= :longitude_h and center.c_longitude >= :longitude_l", Center.class)

@@ -25,8 +25,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         // 위의 파라미터 중, attributes 에 값을 저장하면 웹소켓 핸들러 클래스의 WebSocketSession에 전달된다
         try {
             System.out.println("Before Handshake");
-
-
             ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
             System.out.println("URI:"+request.getURI());
 
