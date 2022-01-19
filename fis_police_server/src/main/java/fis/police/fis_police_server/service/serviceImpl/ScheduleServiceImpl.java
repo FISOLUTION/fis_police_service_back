@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public Boolean assignAgent(ScheduleSaveRequest request) throws Exception {
+    public void assignAgent(ScheduleSaveRequest request) throws Exception {
         Center findCenter =  centerRepository.findById(request.getCenter_id());
         User findUser = userRepository.findById(request.getUser_id());
         Agent findAgent = agentRepository.findById(request.getAgent_id());
@@ -44,7 +44,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                 request.getVisit_date(), request.getVisit_time(), request.getEstimate_num(),
                 request.getCenter_etc(), request.getAgent_etc());
         scheduleRepository.save(schedule);
-        return true;
     }
 /*
     작성날짜: 2022/01/13 5:54 PM

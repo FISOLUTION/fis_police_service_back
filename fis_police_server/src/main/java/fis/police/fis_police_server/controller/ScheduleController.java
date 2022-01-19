@@ -10,12 +10,12 @@ import java.time.LocalDate;
 public interface ScheduleController {
 
         // 현장요원 배치
-        Boolean assignAgent(ScheduleSaveRequest scheduleSaveRequest);
+        void assignAgent(ScheduleSaveRequest scheduleSaveRequest);
 
         // 날짜 별 현장요원 일정 리스트
         Result selectDate(LocalDate date);
 
         // 일정 수정
-        Boolean modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
+        void modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
 }
 
