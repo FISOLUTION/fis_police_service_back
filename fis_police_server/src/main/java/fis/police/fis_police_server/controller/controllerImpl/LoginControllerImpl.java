@@ -3,7 +3,9 @@ package fis.police.fis_police_server.controller.controllerImpl;
 import fis.police.fis_police_server.controller.LoginController;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.LoginRequest;
+import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.service.LoginService;
+import fis.police.fis_police_server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,17 +23,22 @@ import javax.servlet.http.HttpSession;
 public class LoginControllerImpl implements LoginController {
 
     private final LoginService loginService;
+    private final UserService userService;
 
     @Override
     @CrossOrigin
     @PostMapping("/login")
     //나중에 url 정해지면 다시 보기
-    public String login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
         Long loginUserId = loginService.login(loginrequest);
+
+        LoginResponse loginResponse = new LoginResponse();
 
         //로그인 실패
         if (loginUserId == null) {
-            return "로그인 실패";
+            loginResponse.setU_name("fail");
+            loginResponse.setU_auth(null);
+            return loginResponse;
         }
 
         //로그인 성공 처리
@@ -39,7 +46,10 @@ public class LoginControllerImpl implements LoginController {
         HttpSession session = request.getSession(); //디폴트 True: 기존있으면 기존반환, 없을 때 새로 생성  <-> false: 없을 때 새로 생성안함
         //세션에 로그인 회원 정보 보관
         session.setAttribute("loginUser", loginUserId);
-        return "redirect:"+redirectURL;
+        User loginUser = userService.findOneUser(loginUserId);
+        loginResponse.setU_name(loginUser.getU_name());
+        loginResponse.setU_auth(loginUser.getU_auth());
+        return loginResponse;
     }
 
 
@@ -51,7 +61,7 @@ public class LoginControllerImpl implements LoginController {
         if (session != null) {
             session.invalidate(); //세션 지움
         }
-        return "redirect:/";
+        return "logout";
     }
 
     @Override
@@ -60,11 +70,11 @@ public class LoginControllerImpl implements LoginController {
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
     public String loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
         if (loginUser == null) {
-            return "다시 로그인 화면으로 돌아가게 해야함";
+            return "returnToLogin";
         }
         //세션이 유지되면
         model.addAttribute("loginUser", loginUser);
-        return "로그인 성공";
+        return "LoginSuccess";
     }
 }
 

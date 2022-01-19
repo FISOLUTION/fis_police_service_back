@@ -26,7 +26,6 @@ public class FisPoliceServerApplication {
 					.allowCredentials(true)
 					.allowedMethods("*");
 		}
-
 //        @Override
 //        public void addInterceptors(InterceptorRegistry registry) {
 //            registry.addInterceptor(new LogInterceptor())
