@@ -23,8 +23,6 @@ import java.time.LocalDate;
 public class ScheduleControllerImpl implements ScheduleController {
 
     private final ScheduleService scheduleService;
-    private final AnnounceService announceService;
-    private final MapConfig mapConfig;
 /*
     작성날짜: 2022/01/13 1:40 PM
     작성자: 이승범
@@ -32,12 +30,11 @@ public class ScheduleControllerImpl implements ScheduleController {
 */
     @Override
     @PostMapping("/schedule")// 현장요원 배치
-    public Boolean assignAgent(@RequestBody ScheduleSaveRequest request) {
+    public void assignAgent(@RequestBody ScheduleSaveRequest request) {
         try{
-            return scheduleService.assignAgent(request);
+            scheduleService.assignAgent(request);
         } catch (Exception e){
             System.out.println(e);
-            return false;
         }
     }
 /*
@@ -59,18 +56,13 @@ public class ScheduleControllerImpl implements ScheduleController {
 
     @Override
     @PatchMapping("/schedule")
-    public Boolean modifySchedule(@RequestBody ScheduleModifyRequest request) {
+    public void modifySchedule(@RequestBody ScheduleModifyRequest request) {
         try{
             scheduleService.modifySchedule(request);
         } catch (NullPointerException ne){
             System.out.println("존재하지 않는 요원 코드입니다.");
-            return false;
         } catch (Exception e){
             System.out.println(e);
-            return false;
         }
-        return true;
     }
-
-
 }

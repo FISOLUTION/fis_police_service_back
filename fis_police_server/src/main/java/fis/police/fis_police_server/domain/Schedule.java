@@ -68,6 +68,9 @@ public class Schedule {
     @Lob
     private String modified_info;           // 변경 사항
 
+    @Column
+    private boolean isAnnouncement;         // 카톡 공지 여부
+
     /*
         날짜 : 2022/01/11 5:24 오후
         작성자 : 현승구
@@ -96,6 +99,7 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
+        schedule.isAnnouncement = false;
         return schedule;
     }
     public void modifySchedule(ScheduleModifyRequest request, Agent agent, Center center){
