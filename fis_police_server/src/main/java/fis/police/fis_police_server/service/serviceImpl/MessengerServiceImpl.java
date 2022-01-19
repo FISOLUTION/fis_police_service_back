@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Messenger;
+import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.repository.MessengerRepository;
 import fis.police.fis_police_server.service.MessengerService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,11 @@ public class MessengerServiceImpl implements MessengerService {
     }
 
     @Override
-    public List<Messenger> getMessenger() {
-         return messengerRepository.findAll();
+    public List<Messenger> getMessenger(User user) {
+        if(user.getU_auth() == UserAuthority.ADMIN) {
+            return messengerRepository.findAll();
+        } else {
+            return messengerRepository.findByUser(user);
+        }
     }
 }

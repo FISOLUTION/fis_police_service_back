@@ -1,8 +1,9 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.domain.Call;
+import fis.police.fis_police_server.domain.QCall;
+import fis.police.fis_police_server.domain.QUser;
 import fis.police.fis_police_server.dto.CallTodayDTO;
 import fis.police.fis_police_server.dto.QCallTodayDTO;
 import fis.police.fis_police_server.repository.CallRepository;
@@ -78,7 +79,7 @@ public class CallRepositoryImpl implements CallRepository {
         return jpaQueryFactory
                 .select(new QCallTodayDTO(qCall.user.id, qCall.count()))
                 .from(qCall)
-                .where(qCall.dateTime.eq(today))
+                .where(qCall.date.eq(today))
                 .groupBy(qCall.user.id)
                 .fetch();
 
