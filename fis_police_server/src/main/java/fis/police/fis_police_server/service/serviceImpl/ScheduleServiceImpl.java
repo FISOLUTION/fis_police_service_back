@@ -72,4 +72,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         Center findCenter = centerRepository.findById(request.getCenter_id());
         findSchedule.modifySchedule(request, findAgent, findCenter);
     }
+
+    /*
+        작성날짜: 2022/01/19 4:39 PM
+        작성자: 이승범
+        작성내용: 스케줄 취소 구현
+    */
+    @Override
+    @Transactional
+    public void cancelSchedule(Long schedule_id) {
+        Schedule findSchedule = scheduleRepository.findById(schedule_id);
+        findSchedule.cancel();
+    }
 }

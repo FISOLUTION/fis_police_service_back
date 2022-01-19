@@ -11,9 +11,11 @@ import fis.police.fis_police_server.dto.AgentGetResult;
 import fis.police.fis_police_server.service.AgentService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,12 @@ public class AgentControllerImpl implements AgentController {
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
             System.out.println("잘못된 주소 입력");
             System.out.println(oe);
+        } catch (ConstraintViolationException cve){
+            System.out.println("요청 데이터가 불완전");
+            System.out.println("cve");
+        } catch (TransactionSystemException tse){
+            System.out.println(tse);
+            System.out.println("요청 데이터가 불완전");
         }
     }
     @Override

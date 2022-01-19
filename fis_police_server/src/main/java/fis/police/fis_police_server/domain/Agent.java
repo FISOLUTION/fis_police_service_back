@@ -1,6 +1,5 @@
 package fis.police.fis_police_server.domain;
 
-import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import lombok.AccessLevel;
@@ -9,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +28,24 @@ public class Agent {
     @OneToMany(mappedBy = "agent")
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
+    @NotBlank
     @Column(length = 100)
     private String a_name;                             //'현장 요원 이름'
 
+    @NotBlank
     @Column(length = 100)
     private String a_ph;                               //'현장 요원 전화번호',
 
     // 작성자 : 이승범  유니크 속성 걸어줘야 됨
+    @NotBlank
     @Column(length = 100)
     private String a_code;                             //'현장 요원 코드'
 
+    @NotBlank
     @Column(length = 100)
     private String a_address;                          //'현장 요원 집 주소',
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private HasCar a_hasCar;                            //'자차 여부'
 
@@ -48,9 +54,12 @@ public class Agent {
 
     private LocalDateTime a_receiveDate;                //'장비 수령 날짜'
 
+    @NotNull
     private Double a_latitude;                          //'현장 요원 위도',
+    @NotNull
     private Double a_longitude;                         //'현장 요원 경도',
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 

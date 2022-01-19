@@ -17,5 +17,8 @@ public interface ScheduleController {
 
         // 일정 수정
         void modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
+
+        // 일정 취소
+        void cancelSchedule(Long schedule_id);
 }
 
