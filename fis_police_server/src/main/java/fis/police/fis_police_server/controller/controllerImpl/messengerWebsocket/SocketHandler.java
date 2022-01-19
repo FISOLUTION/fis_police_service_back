@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,18 +28,21 @@ public class SocketHandler extends TextWebSocketHandler {
         System.out.println("session = " + session);
         sessionMap.put(session.getId(), session);
 
-//        // 전에 있던 메세지들 보내주기
-//        User requestUser = (User) session.getAttributes().get("loginUser");
-//        messengerService.getMessenger(requestUser).stream()
-//                .forEach(msg -> {
-//                    User user = msg.getUser();
-//                    String textMsg = msg.getContext() + " " + msg.getSendTime() + " " + user.getU_name();
-//                    try {
-//                        session.sendMessage(new TextMessage(textMsg));
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                });
+        // 전에 있던 메세지들 보내주기
+        User requestUser = (User) session.getAttributes().get("loginUser");
+        requestUser.setId(2L);
+        requestUser.setU_auth(UserAuthority.ADMIN);
+
+        messengerService.getMessenger(requestUser).stream()
+                .forEach(msg -> {
+                    User user = msg.getUser();
+                    String textMsg = msg.getContext() + " " + msg.getSendTime() + " " + user.getU_name();
+                    try {
+                        session.sendMessage(new TextMessage(textMsg));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
     }
 
@@ -61,7 +65,7 @@ public class SocketHandler extends TextWebSocketHandler {
                 // admin 과 보낸 사용자 에게만 보낸다.
                 User acceptUser = (User) wss.getAttributes().get("loginUser");
 //                if(acceptUser.getU_auth() == UserAuthority.ADMIN || wss.equals(session)) {
-                    wss.sendMessage(new TextMessage("옛다!"));
+                    wss.sendMessage(new TextMessage(messenger.getContext() + " " + messenger.getSendTime() + " " + user.getId() ));
 //                }
             }catch(Exception e) {
                 System.out.println("핸들링에서 발생 = " + e);
