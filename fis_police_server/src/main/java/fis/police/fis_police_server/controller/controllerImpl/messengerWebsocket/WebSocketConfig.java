@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocket;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -14,16 +14,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
+@RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    @Autowired
-    SocketHandler socketHandler;
+    private final SocketHandler socketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(socketHandler, "/chating")
+        registry.addHandler(socketHandler, "/messenger/websocket")
             .addInterceptors(new HandshakeInterceptor())
-                .setAllowedOriginPatterns("*")
-                .setAllowedOrigins("*");
+                .setAllowedOrigins("*")
+                .setAllowedOriginPatterns("*");
     }
 }
