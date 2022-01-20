@@ -4,13 +4,14 @@ import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 
 // 이승범
 public interface ScheduleController {
 
         // 현장요원 배치
-        void assignAgent(ScheduleSaveRequest scheduleSaveRequest);
+        void assignAgent(ScheduleSaveRequest scheduleSaveRequest, HttpServletRequest httpServletRequest);
 
         // 날짜 별 현장요원 일정 리스트
         Result selectDate(LocalDate date);
