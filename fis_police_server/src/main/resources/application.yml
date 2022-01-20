@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url:  jdbc:h2:tcp://localhost/~/fis_police
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url:  jdbc:mysql://localhost:3306
+    username: fistest
+    password: fistest1207
+    driver-class-name: com.mysql.cj.jdbc.Driver
 # 작성자: 고준영, 작성내용: mailjet이 안먹어서, 다시 mailplug로 시도 해봤는데, "mail.stmp.ssl.enable": true 박으니까 갑자기 잘 됨 ㅋㅋ 개꿀;
   mail:
     host: smtp.mailplug.co.kr
@@ -26,7 +26,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop  # 작성자 이승범 ddl-auto: create-drop 해놓음
+      ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
     properties:
       hibernate:
         #show_sql: true
