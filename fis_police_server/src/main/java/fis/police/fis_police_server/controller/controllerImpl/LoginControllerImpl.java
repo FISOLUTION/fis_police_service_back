@@ -41,9 +41,15 @@ public class LoginControllerImpl implements LoginController {
         //로그인 성공 처리
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
         HttpSession session = request.getSession(); //디폴트 True: 기존있으면 기존반환, 없을 때 새로 생성  <-> false: 없을 때 새로 생성안함
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute("loginUser", loginUserId);
 
+        //세션에 로그인 회원 정보 보관
+        //로그인 페이지로 이동시 세션 만료 됨
+        if(!session.isNew()) {
+            session.invalidate();
+            session = request.getSession();
+            System.out.println("session.isNew() = " + session.isNew());
+        }
+        session.setAttribute("loginUser", loginUserId);
         return loginResponse;
     }
 
@@ -61,7 +67,7 @@ public class LoginControllerImpl implements LoginController {
 
     @Override
     @CrossOrigin
-    @GetMapping("/")
+    @GetMapping("/checkLogin")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
     public String loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
         if (loginUser == null) {
