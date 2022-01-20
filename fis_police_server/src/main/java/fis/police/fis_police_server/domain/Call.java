@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Getter
 public class Call {
 
+
     @Id
     @GeneratedValue
     @Column(name = "call_id")
