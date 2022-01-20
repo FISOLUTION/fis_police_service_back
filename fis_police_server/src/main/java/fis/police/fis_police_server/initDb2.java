@@ -1,10 +1,7 @@
 package fis.police.fis_police_server;
 
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.domain.enumType.HasCar;
-import fis.police.fis_police_server.domain.enumType.InOut;
-import fis.police.fis_police_server.domain.enumType.Participation;
-import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.domain.enumType.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

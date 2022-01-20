@@ -30,14 +30,11 @@ public class LoginControllerImpl implements LoginController {
     @PostMapping("/login")
     //나중에 url 정해지면 다시 보기
     public LoginResponse login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
-        Long loginUserId = loginService.login(loginrequest);
-
-        LoginResponse loginResponse = new LoginResponse();
+        LoginResponse loginResponse = loginService.loginRes(loginrequest);
+        Long loginUserId = loginService.loginUserId(loginrequest);
 
         //로그인 실패
-        if (loginUserId == null) {
-            loginResponse.setU_name("fail");
-            loginResponse.setU_auth(null);
+        if (!loginResponse.getSc().equals("success")) {
             return loginResponse;
         }
 
@@ -46,9 +43,7 @@ public class LoginControllerImpl implements LoginController {
         HttpSession session = request.getSession(); //디폴트 True: 기존있으면 기존반환, 없을 때 새로 생성  <-> false: 없을 때 새로 생성안함
         //세션에 로그인 회원 정보 보관
         session.setAttribute("loginUser", loginUserId);
-        User loginUser = userService.findOneUser(loginUserId);
-        loginResponse.setU_name(loginUser.getU_name());
-        loginResponse.setU_auth(loginUser.getU_auth());
+
         return loginResponse;
     }
 

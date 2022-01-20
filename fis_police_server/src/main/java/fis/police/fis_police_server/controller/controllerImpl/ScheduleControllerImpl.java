@@ -40,7 +40,7 @@ public class ScheduleControllerImpl implements ScheduleController {
 /*
     작성날짜: 2022/01/13 1:44 PM
     작성자: 이승범
-    작성내용: selectDate 작성 날짜별 현장요원 리스트
+    작성내용: selectDate 작성 날짜별 스케줄
 */
     @Override
     @GetMapping("/schedule")
@@ -53,7 +53,11 @@ public class ScheduleControllerImpl implements ScheduleController {
             return null;
         }
     }
-
+    /*
+        작성날짜: 2022/01/14 4:33 PM
+        작성자: 이승범
+        작성내용: 스케줄 수정
+    */
     @Override
     @PatchMapping("/schedule")
     public void modifySchedule(@RequestBody ScheduleModifyRequest request) {
@@ -62,6 +66,21 @@ public class ScheduleControllerImpl implements ScheduleController {
         } catch (NullPointerException ne){
             System.out.println("존재하지 않는 요원 코드입니다.");
         } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    /*
+        작성날짜: 2022/01/19 4:33 PM
+        작성자: 이승범
+        작성내용: 스케줄 취소 구현
+    */
+    @Override
+    @GetMapping("/schedule/cancel")
+    public void cancelSchedule(@RequestParam("schedule_id") Long schedule_id) {
+        try{
+            scheduleService.cancelSchedule(schedule_id);
+        }catch (Exception e){
             System.out.println(e);
         }
     }

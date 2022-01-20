@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /*
@@ -42,7 +43,7 @@ public class AgentServiceImpl implements AgentService {
     @Override
     @Transactional // 현장요원 추가
     public void saveAgent(AgentSaveRequest request) throws ParseException, RestClientException,
-            IllegalStateException, IndexOutOfBoundsException {
+            IllegalStateException, IndexOutOfBoundsException, ConstraintViolationException {
         validateDuplicateAgent(request); // 현장요원 코드 중복 검사
         Pair<Double, Double> pair = addressToLocation(request.getA_address());
         HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
