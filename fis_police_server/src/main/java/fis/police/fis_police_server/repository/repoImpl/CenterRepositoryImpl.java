@@ -85,7 +85,9 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     public Center findByIdAndFetchAll(Long id) throws NoResultException, NonUniqueResultException {
         //  list "select center from Center center join Center.Call on 조건 join
         return em.createQuery("select distinct center from Center center " +
-                "left join fetch center.callList " +
+                "left join fetch center.callList as call " +
+                "join fetch call.user " +
+                "left join fetch center.scheduleList " +
                 "where center.id = :id ", Center.class)
                 .setParameter("id", id)
                 .getSingleResult();
