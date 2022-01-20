@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @RequiredArgsConstructor
 @Getter
+@Table(name = "Calls")
 public class Call {
 
     @Id
