@@ -22,6 +22,7 @@ class CenterRepositoryImplTest {
     @Autowired
     CenterRepositoryImpl centerRepository;
 
+
     @Test
     @DisplayName("센터 저장 테스트")
     void save() {
