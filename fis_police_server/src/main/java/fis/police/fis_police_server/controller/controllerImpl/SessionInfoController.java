@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -16,9 +17,10 @@ public class SessionInfoController {
     //세션 정보 출력
     @CrossOrigin
     @GetMapping("/login")
-    public String sessionInfo(HttpServletRequest request){
+    public String sessionInfo(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
         if(session == null){
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
             return "세션이 없습니다.";
         }
         session.getAttributeNames().asIterator()
@@ -30,6 +32,7 @@ public class SessionInfoController {
         log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));//마지막 세션 접근 시간
         log.info("isNew={}", session.isNew());
 
+        response.setStatus(HttpServletResponse.SC_OK);
         return "세션 출력";
     }
 }
