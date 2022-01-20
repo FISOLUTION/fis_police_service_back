@@ -1,23 +1,15 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.CallController;
-import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.CallRepository;
+import fis.police.fis_police_server.dto.CallSaveRequest;
+import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.service.serviceImpl.CallServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import javax.mail.MessagingException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /*
     작성 날짜: 2022/01/10 1:13 오후

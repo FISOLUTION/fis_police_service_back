@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSaveResponse {
-    private Long id;
+    private Long user_id;
     private String status_code;
 }

@@ -6,6 +6,7 @@ import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.MapService;
+import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,10 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public void saveCenter(Center center) throws ParseException {
+    public void saveCenter(Center center) throws ParseException, DuplicateSaveException {
+       if(centerRepository.findNameAndPh(center.getC_name(),center.getC_ph()).size() != 0){
+           throw new DuplicateSaveException("중복된 센터 존재 에러발생");
+       }
        Pair<Double, Double> location = mapService.addressToLocation(center.getC_address());
        center.setLocation(location);
        centerRepository.save(center);
