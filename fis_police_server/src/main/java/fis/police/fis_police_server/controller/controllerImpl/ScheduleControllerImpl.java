@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 /*
@@ -30,9 +32,11 @@ public class ScheduleControllerImpl implements ScheduleController {
 */
     @Override
     @PostMapping("/schedule")// 현장요원 배치
-    public void assignAgent(@RequestBody ScheduleSaveRequest request) {
+    public void assignAgent(@RequestBody ScheduleSaveRequest request, HttpServletRequest httpServletRequest) {
         try{
-            scheduleService.assignAgent(request);
+            HttpSession session = httpServletRequest.getSession();
+            Long userId = (Long) session.getAttribute("loginUser");
+            scheduleService.assignAgent(request, userId);
         } catch (Exception e){
             System.out.println(e);
         }
