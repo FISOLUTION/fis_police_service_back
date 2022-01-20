@@ -112,7 +112,6 @@ public class AgentServiceImpl implements AgentService {
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
         JSONParser jsonParser = new JSONParser();
         JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
-        System.out.println(responseEntity.getBody());
         JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
         JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
         Double x = Double.parseDouble(addressResponse.get("x").toString());
