@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CallSaveRequest {
     private Long center_id;
-    private Long user_id;
+//    private Long user_id;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private String dateTime;
     private Participation participation;
