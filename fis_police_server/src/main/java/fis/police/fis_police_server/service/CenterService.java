@@ -1,20 +1,27 @@
 package fis.police.fis_police_server.service;
 
-import fis.police.fis_police_server.police_util.Maputil;
+import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
+import org.json.simple.parser.ParseException;
+
+import javax.persistence.NoResultException;
+import java.util.List;
 
 public interface CenterService {
-    // 시설 검색
-    List<Center> findCenterList();
+    // 시설 검색 검색 실패시 null 반환 아무것도 없을 시에 빈 ArrayList 반환 검색결과로 SearchCenterResponseDTO 반환
+    List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException;
 
     //  시설에 해당하는 콜정보, 스케줄정보, 시설정보 반환 로직
-    Object centerInfo();
+    Center centerInfo(Long center_id);
 
     // 시설 추기
-    Boolean saveCenter();
+    void saveCenter(Center center) throws ParseException;
 
     // 시설 수정
-    Boolean modifyCenter();
+    void modifyCenter(Center center) throws ParseException;
 
     // 시설 조회
     List<Center> getCenter();
+
+    Center findById(Long id);
 }
