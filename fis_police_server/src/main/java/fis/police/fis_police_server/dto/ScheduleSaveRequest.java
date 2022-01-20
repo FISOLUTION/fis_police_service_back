@@ -18,7 +18,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class ScheduleSaveRequest {
     private Long center_id;
-    private Long user_id;
     private Long agent_id;
     private LocalDateTime receipt_date;
     private LocalDate visit_date;
