@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-01-20T03:56:24" hostname="junyeong.local" time="0.184">
+  <properties/>
+  <testcase name="findSearchCenterDTO()" classname="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" time="0.075"/>
+  <testcase name="delete()" classname="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" time="0.004"/>
+  <testcase name="findById()" classname="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" time="0.092"/>
+  <testcase name="센터 저장 테스트" classname="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" time="0.007"/>
+  <testcase name="findByIdAndFetchAll()" classname="fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest" time="0.003"/>
+  <system-out><![CDATA[12:56:20.667 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+12:56:20.678 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+12:56:20.703 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+12:56:20.710 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest], using SpringBootContextLoader
+12:56:20.713 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]: class path resource [fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImplTest-context.xml] does not exist
+12:56:20.713 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]: class path resource [fis/police/fis_police_server/repository/repoImpl/CenterRepositoryImplTestContext.groovy] does not exist
+12:56:20.713 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+12:56:20.714 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]: CenterRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:56:20.748 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]
+12:56:20.795 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/build/classes/java/main/fis/police/fis_police_server/FisPoliceServerApplication.class]
+12:56:20.797 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration fis.police.fis_police_server.FisPoliceServerApplication for test class fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest
+12:56:20.861 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest]: using defaults.
+12:56:20.862 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener]
+12:56:20.887 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@cc62a3b, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@6cc0bcf6, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@29539e36, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@32f61a31, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@f5c79a6, org.springframework.test.context.support.DirtiesContextTestExecutionListener@669253b7, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5305c37d, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@51a06cbe, org.springframework.test.context.event.EventPublishingTestExecutionListener@3dddbe65, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@49a64d82, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@344561e0, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@66d23e4a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@36ac8a63, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4d9d1b69, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@52c8295b]
+12:56:20.889 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+12:56:20.932 [Test worker] DEBUG org.springframework.boot.ApplicationServletEnvironment - Activating profiles []
+12:56:20.933 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.2)
+
+2022-01-20 12:56:21.196  INFO 59307 --- [    Test worker] f.p.f.r.r.CenterRepositoryImplTest       : Starting CenterRepositoryImplTest using Java 11.0.12 on junyeong.local with PID 59307 (started by junyeong in /Users/junyeong/study/spring/fis_police_service_back/fis_police_server)
+2022-01-20 12:56:21.197  INFO 59307 --- [    Test worker] f.p.f.r.r.CenterRepositoryImplTest       : The following profiles are active: map
+2022-01-20 12:56:21.686  INFO 59307 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-20 12:56:21.708  INFO 59307 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
+2022-01-20 12:56:22.055  INFO 59307 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-20 12:56:22.094  INFO 59307 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.3.Final
+2022-01-20 12:56:22.228  INFO 59307 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-20 12:56:22.319  INFO 59307 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-01-20 12:56:22.375  INFO 59307 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-01-20 12:56:22.398  INFO 59307 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-01-20 12:56:23.001 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists agent CASCADE 
+2022-01-20 12:56:23.003 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists call CASCADE 
+2022-01-20 12:56:23.003 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists center CASCADE 
+2022-01-20 12:56:23.004 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists messenger CASCADE 
+2022-01-20 12:56:23.004 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists schedule CASCADE 
+2022-01-20 12:56:23.004 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop table if exists user CASCADE 
+2022-01-20 12:56:23.005 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    drop sequence if exists hibernate_sequence
+2022-01-20 12:56:23.006 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : create sequence hibernate_sequence start with 1 increment by 1
+2022-01-20 12:56:23.007 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table agent (
+       agent_id bigint not null,
+        a_address varchar(100),
+        a_code varchar(100),
+        a_equipment varchar(100),
+        a_has_car varchar(255) not null,
+        a_latitude double not null,
+        a_longitude double not null,
+        a_name varchar(100),
+        a_ph varchar(100),
+        a_receive_date timestamp,
+        a_status varchar(255) not null,
+        primary key (agent_id)
+    )
+2022-01-20 12:56:23.008 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table call (
+       call_id bigint not null,
+        agent_etc clob,
+        c_manager varchar(100),
+        center_etc clob,
+        date varchar(10),
+        in_out varchar(255),
+        m_email varchar(100),
+        m_ph varchar(100),
+        num integer,
+        participation varchar(255),
+        time varchar(10),
+        center_id bigint,
+        user_id bigint,
+        primary key (call_id)
+    )
+2022-01-20 12:56:23.009 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table center (
+       center_id bigint not null,
+        c_address varchar(100),
+        c_fax_num varchar(100),
+        c_hp_address varchar(100),
+        c_latitude double,
+        c_longitude double,
+        c_name varchar(100),
+        c_people varchar(100),
+        c_ph varchar(100),
+        c_sido varchar(100),
+        c_sigungu varchar(100),
+        c_status varchar(100),
+        c_type varchar(100),
+        c_zipcode varchar(100),
+        participation varchar(255),
+        visited varchar(255),
+        primary key (center_id)
+    )
+2022-01-20 12:56:23.010 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table messenger (
+       messenger_id bigint not null,
+        context clob,
+        send_time timestamp,
+        user_id bigint,
+        primary key (messenger_id)
+    )
+2022-01-20 12:56:23.011 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table schedule (
+       schedule_id bigint not null,
+        agent_etc clob,
+        announcement boolean not null,
+        call_check varchar(20),
+        call_check_info varchar(100),
+        center_etc clob,
+        estimate_num integer,
+        modified_info clob,
+        receipt_date timestamp,
+        total_etc clob,
+        valid boolean not null,
+        visit_date date,
+        visit_time time,
+        agent_id bigint,
+        center_id bigint,
+        user_id bigint,
+        primary key (schedule_id)
+    )
+2022-01-20 12:56:23.012 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    create table user (
+       user_id bigint not null,
+        u_auth varchar(255) not null,
+        u_name varchar(10),
+        u_nickname varchar(100),
+        u_ph varchar(15),
+        u_pwd varchar(100),
+        u_s_date date,
+        primary key (user_id)
+    )
+2022-01-20 12:56:23.013 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table call 
+       add constraint FKhmsyoonae86al2we35riljnsx 
+       foreign key (center_id) 
+       references center
+2022-01-20 12:56:23.014 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table call 
+       add constraint FK93j5ewsw8l71fatet8af7b0su 
+       foreign key (user_id) 
+       references user
+2022-01-20 12:56:23.015 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table messenger 
+       add constraint FK4artb2d2esnd3nchjxjwq0xe0 
+       foreign key (user_id) 
+       references user
+2022-01-20 12:56:23.016 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table schedule 
+       add constraint FKrrkbnaopjd5v9mud8l26mvpa7 
+       foreign key (agent_id) 
+       references agent
+2022-01-20 12:56:23.017 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table schedule 
+       add constraint FKbmes8j0flan5gqrff2xs23vi4 
+       foreign key (center_id) 
+       references center
+2022-01-20 12:56:23.017 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    
+    alter table schedule 
+       add constraint FKa50n59y1j4a6qwa42p8jiguds 
+       foreign key (user_id) 
+       references user
+2022-01-20 12:56:23.020  INFO 59307 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-20 12:56:23.027  INFO 59307 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+em.getClass() = class com.sun.proxy.$Proxy123
+2022-01-20 12:56:23.424 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.452 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.456 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.457 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.457 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.458 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.459 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.469 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.475 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.476 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.477 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.478 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.489 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.490 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.491 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.491 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.492 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.493 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.494 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.495 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.496 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.497 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.498 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.498 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.499 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.499 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.499 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.500 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.500 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.501 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.501 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.502 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.503 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.503 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:23.506 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        agent
+        (a_address, a_code, a_equipment, a_has_car, a_latitude, a_longitude, a_name, a_ph, a_receive_date, a_status, agent_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.507 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        agent
+        (a_address, a_code, a_equipment, a_has_car, a_latitude, a_longitude, a_name, a_ph, a_receive_date, a_status, agent_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.508 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        agent
+        (a_address, a_code, a_equipment, a_has_car, a_latitude, a_longitude, a_name, a_ph, a_receive_date, a_status, agent_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.509 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.509 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.510 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.510 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.511 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.511 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        user
+        (u_auth, u_name, u_nickname, u_ph, u_pwd, u_s_date, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.512 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        schedule
+        (agent_id, agent_etc, announcement, call_check, call_check_info, center_id, center_etc, estimate_num, modified_info, receipt_date, total_etc, user_id, valid, visit_date, visit_time, schedule_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.517 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        schedule
+        (agent_id, agent_etc, announcement, call_check, call_check_info, center_id, center_etc, estimate_num, modified_info, receipt_date, total_etc, user_id, valid, visit_date, visit_time, schedule_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.518 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.519 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.520 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.520 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.521 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.522 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.522 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.523 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.524 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.524 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.525 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        call
+        (agent_etc, c_manager, center_id, center_etc, date, in_out, m_email, m_ph, num, participation, time, user_id, call_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:23.704  WARN 59307 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-01-20 12:56:24.088  INFO 59307 --- [    Test worker] f.p.f.r.r.CenterRepositoryImplTest       : Started CenterRepositoryImplTest in 3.153 seconds (JVM running for 4.034)
+2022-01-20 12:56:24.106  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@1b1d93e9, testMethod = findSearchCenterDTO@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@28fef9a2]; rollback [true]
+2022-01-20 12:56:24.173  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@1b1d93e9, testMethod = findSearchCenterDTO@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]
+2022-01-20 12:56:24.179  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@63024843, testMethod = delete@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@28fef9a2]; rollback [true]
+2022-01-20 12:56:24.181  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@63024843, testMethod = delete@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]
+2022-01-20 12:56:24.183  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@53ce27fa, testMethod = findById@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@28fef9a2]; rollback [true]
+2022-01-20 12:56:24.188 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:24.189 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:24.195 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        center0_.center_id as center_i1_2_0_,
+        center0_.c_address as c_addres2_2_0_,
+        center0_.c_fax_num as c_fax_nu3_2_0_,
+        center0_.c_hp_address as c_hp_add4_2_0_,
+        center0_.c_latitude as c_latitu5_2_0_,
+        center0_.c_longitude as c_longit6_2_0_,
+        center0_.c_name as c_name7_2_0_,
+        center0_.c_people as c_people8_2_0_,
+        center0_.c_ph as c_ph9_2_0_,
+        center0_.c_sido as c_sido10_2_0_,
+        center0_.c_sigungu as c_sigun11_2_0_,
+        center0_.c_status as c_statu12_2_0_,
+        center0_.c_type as c_type13_2_0_,
+        center0_.c_zipcode as c_zipco14_2_0_,
+        center0_.participation as partici15_2_0_,
+        center0_.visited as visited16_2_0_ 
+    from
+        center center0_ 
+    where
+        center0_.center_id=?
+center = Center{id=29, c_sido='null', c_sigungu='null', c_name='이승범', c_type='null', c_status='null', c_address='null', c_zipcode='null', c_ph='null', c_faxNum='null', c_people='null', c_hpAddress='null', c_latitude='null', c_longitude='null', participation=PARTICIPATION, visited=list 들은 서로 참조 이슈로 인해 제외됨}
+2022-01-20 12:56:24.274  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@53ce27fa, testMethod = findById@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]
+2022-01-20 12:56:24.276  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@369d624d, testMethod = save@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@28fef9a2]; rollback [true]
+2022-01-20 12:56:24.277 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    call next value for hibernate_sequence
+2022-01-20 12:56:24.277 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        center
+        (c_address, c_fax_num, c_hp_address, c_latitude, c_longitude, c_name, c_people, c_ph, c_sido, c_sigungu, c_status, c_type, c_zipcode, participation, visited, center_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2022-01-20 12:56:24.278 DEBUG 59307 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        center0_.center_id as center_i1_2_0_,
+        center0_.c_address as c_addres2_2_0_,
+        center0_.c_fax_num as c_fax_nu3_2_0_,
+        center0_.c_hp_address as c_hp_add4_2_0_,
+        center0_.c_latitude as c_latitu5_2_0_,
+        center0_.c_longitude as c_longit6_2_0_,
+        center0_.c_name as c_name7_2_0_,
+        center0_.c_people as c_people8_2_0_,
+        center0_.c_ph as c_ph9_2_0_,
+        center0_.c_sido as c_sido10_2_0_,
+        center0_.c_sigungu as c_sigun11_2_0_,
+        center0_.c_status as c_statu12_2_0_,
+        center0_.c_type as c_type13_2_0_,
+        center0_.c_zipcode as c_zipco14_2_0_,
+        center0_.participation as partici15_2_0_,
+        center0_.visited as visited16_2_0_ 
+    from
+        center center0_ 
+    where
+        center0_.center_id=?
+center = Center{id=30, c_sido='null', c_sigungu='null', c_name='이승범', c_type='null', c_status='null', c_address='null', c_zipcode='null', c_ph='null', c_faxNum='null', c_people='null', c_hpAddress='null', c_latitude='null', c_longitude='null', participation=PARTICIPATION, visited=list 들은 서로 참조 이슈로 인해 제외됨}
+2022-01-20 12:56:24.282  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@369d624d, testMethod = save@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]
+2022-01-20 12:56:24.284  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@74ec4df3, testMethod = findByIdAndFetchAll@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@28fef9a2]; rollback [true]
+2022-01-20 12:56:24.286  INFO 59307 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1d572e62 testClass = CenterRepositoryImplTest, testInstance = fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImplTest@74ec4df3, testMethod = findByIdAndFetchAll@CenterRepositoryImplTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@29caf222 testClass = CenterRepositoryImplTest, locations = '{}', classes = '{class fis.police.fis_police_server.FisPoliceServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@6941827a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1af146, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@fb9c7aa, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@21baa903, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@20a8a64e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3e2055d6], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
