@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @Transactional
 class CenterRepositoryImplTest {
@@ -52,9 +50,16 @@ class CenterRepositoryImplTest {
     void delete() {
     }
 
+
     @Test
-    void findBSearchCenterDTO() {
+    public void findSearchCenterDTO() throws Exception {
+        //given
+
+        //when
+
+        //then
     }
+
 
     @Test
     void findByIdAndFetchAll(){
@@ -83,7 +88,7 @@ class CenterRepositoryImplTest {
         Center center1 = centerRepository.findByIdAndFetchAll(center.getId());
 
         System.out.println("center1.getId() + center1.getC_name() = " + center1.getId() + center1.getCallList());
-        center.getScheduleList().stream()
+        center1.getScheduleList().stream()
                 .forEach(e -> {
                     System.out.println("e.getParticipation() = " + e.getCenter_etc());
                 });
