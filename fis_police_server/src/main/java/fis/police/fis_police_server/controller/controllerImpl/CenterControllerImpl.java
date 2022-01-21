@@ -4,6 +4,7 @@ import fis.police.fis_police_server.controller.CenterController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.CenterService;
+import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestClientException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,10 +125,13 @@ public class CenterControllerImpl implements CenterController {
 
     @Override
     @PostMapping("/center")
-    public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO) {
+    public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO, HttpServletResponse response) {
         try {
             Center center = CenterSaveDTO.convertToCenter(centerSaveDTO);
             centerService.saveCenter(center);
+        } catch (DuplicateSaveException duplicateSaveException){
+            System.out.println("duplicateSaveException.getMessage() = " + duplicateSaveException.getMessage());
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
         } catch (ParseException parseException){
             System.out.println(" 잘못된 주소 정보 입력됨 ");
         } catch (RestClientException restClientException){

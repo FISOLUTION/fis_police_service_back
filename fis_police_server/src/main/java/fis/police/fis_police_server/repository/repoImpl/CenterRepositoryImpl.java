@@ -61,7 +61,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
             centerList =
                     jpaQueryFactory
                             .select(Projections.constructor(CenterSearchResponseDTO.class,
-                                    qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
+                                    qCenter.id, qCenter.c_name, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .limit(1000)
                             .fetch();
@@ -70,7 +70,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
             centerList =
                     jpaQueryFactory
                             .select(Projections.constructor(CenterSearchResponseDTO.class,
-                                    qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
+                                    qCenter.id, qCenter.c_name ,qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .where(cNameLike(c_name)
                                     .and(cAddressLike(c_address))
@@ -86,7 +86,10 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         //  list "select center from Center center join Center.Call on 조건 join
         return em.createQuery("select distinct center from Center center " +
                 "left join fetch center.callList as call " +
+<<<<<<< HEAD
                 "join fetch call.user " +
+=======
+>>>>>>> 36453df3e1a6a5c1620b712eeab701203d3c5425
                 "where center.id = :id ", Center.class)
                 .setParameter("id", id)
                 .getSingleResult();
@@ -116,5 +119,14 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
 
         System.out.println("centerList.toString() = " + centerList.toString());
         return centerList;
+    }
+
+    @Override
+    public List<Center> findNameAndPh(String c_name, String c_ph) {
+        return em.createQuery("select center from Center center " +
+                "where center.c_name = :c_name and center.c_ph = :c_ph", Center.class)
+                .setParameter("c_name", c_name)
+                .setParameter("c_ph", c_ph)
+                .getResultList();
     }
 }
