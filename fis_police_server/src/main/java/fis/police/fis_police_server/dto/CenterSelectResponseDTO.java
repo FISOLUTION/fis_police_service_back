@@ -44,7 +44,7 @@ public class CenterSelectResponseDTO {
     private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
-    private List<CenterDTO> ceterList = new ArrayList<>();
+    private List<CenterDTO> centerList = new ArrayList<>();
     private List<CallDTO> callList = new ArrayList<CallDTO>();
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
@@ -65,7 +65,7 @@ public class CenterSelectResponseDTO {
         this.c_longitude = center.getC_longitude();
         this.participation = center.getParticipation();
         this.visited = center.getVisited();
-        this.ceterList = nearCenterList.stream()
+        this.centerList = nearCenterList.stream()
                 .map(nearCenter -> new CenterDTO(nearCenter))
                 .collect(Collectors.toList());
         this.callList = center.getCallList().stream()
