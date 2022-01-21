@@ -22,7 +22,7 @@ public class FisPoliceServerApplication {
 		@Override
 		public void addCorsMappings(CorsRegistry registry){
 			registry.addMapping("/**")
-					.allowedOriginPatterns("http://*:[*]")
+					.allowedOriginPatterns("*")
 					.allowCredentials(true)
 					.allowedMethods("*");
 		}
