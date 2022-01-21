@@ -60,7 +60,13 @@ public class CenterControllerImpl implements CenterController {
     public Result selectCenter(@RequestParam Long center_id) {
         try{
             Center center = centerService.centerInfo(center_id);
-            return new Result(new CenterSelectResponseDTO(center));
+            List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList = new ArrayList<CenterSearchNearCenterDTO>();
+            mapService.centerNearCenter(center).stream()
+                    .forEach(e -> {
+                        Double distance = mapService.distance(center.getC_latitude(), center.getC_longitude(), e.getC_latitude(), e.getC_longitude()).doubleValue();
+                        centerSearchNearCenterDTOList.add(new CenterSearchNearCenterDTO(e, distance));
+                    });
+            return new Result(new CenterSelectResponseDTO(center, centerSearchNearCenterDTOList));
         } catch (NoResultException noResultException){
             // 결과물 없을 때 오류코드 발생 -> 해당 시설이 존재 하지 않음
             System.out.println("CenterService.centerInfo 에서 발생 해당 시설이 존재 하지 않음" + center_id);
@@ -115,6 +121,7 @@ public class CenterControllerImpl implements CenterController {
             return null;
         }
     }
+
 
 
     /*

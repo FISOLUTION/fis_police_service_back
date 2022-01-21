@@ -61,7 +61,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
             centerList =
                     jpaQueryFactory
                             .select(Projections.constructor(CenterSearchResponseDTO.class,
-                                    qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
+                                    qCenter.id, qCenter.c_name, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .limit(1000)
                             .fetch();
@@ -70,7 +70,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
             centerList =
                     jpaQueryFactory
                             .select(Projections.constructor(CenterSearchResponseDTO.class,
-                                    qCenter.id, qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
+                                    qCenter.id, qCenter.c_name ,qCenter.c_address, qCenter.c_ph, qCenter.participation, qCenter.visited))
                             .from(qCenter)
                             .where(cNameLike(c_name)
                                     .and(cAddressLike(c_address))

@@ -44,10 +44,11 @@ public class CenterSelectResponseDTO {
     private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
+    private List<CenterSearchNearCenterDTO> ceterList = new ArrayList<>();
     private List<CallDTO> callList = new ArrayList<CallDTO>();
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
-    public CenterSelectResponseDTO(Center center) {
+    public CenterSelectResponseDTO(Center center, List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList) {
         this.center_id = center.getId();
         this.c_sido = center.getC_sido();
         this.c_sigungu = center.getC_sigungu();
@@ -64,6 +65,7 @@ public class CenterSelectResponseDTO {
         this.c_longitude = center.getC_longitude();
         this.participation = center.getParticipation();
         this.visited = center.getVisited();
+        this.ceterList = centerSearchNearCenterDTOList;
         this.callList = center.getCallList().stream()
                 .map(call -> new CallDTO(call))
                 .collect(Collectors.toList());
