@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 /*
     작성날짜: 2022/01/12 11:34 AM
@@ -22,6 +23,6 @@ public class AgentModifyRequest {
     private String a_address;               //'현장 요원 집 주소',
     private boolean a_hasCar;               //'자차 여부'
     private String a_equipment;             //'장비 번호'
-    private LocalDateTime a_receiveDate;    //'장비 수령 날짜'
+    private LocalDate a_receiveDate;    //'장비 수령 날짜'
     private boolean a_status;               //'퇴사 여부'
 }
