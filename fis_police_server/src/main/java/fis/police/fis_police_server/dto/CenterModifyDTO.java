@@ -6,13 +6,12 @@ import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.ArrayList;
 
 @Data
 public class CenterModifyDTO {
-    private Long id;     // 'primary_key',
+    private Long center_id;     // 'primary_key',
     private String c_sido;        // '시도',
     private String c_sigungu;     // '시군구',
     private String c_name;        // '시설명',
@@ -30,7 +29,7 @@ public class CenterModifyDTO {
     private Visited visited;
 
     public static Center convertToCenter (CenterModifyDTO centerModifyDTO) {
-        return  new Center(centerModifyDTO.getId(),
+        return  new Center(centerModifyDTO.getCenter_id(),
                 centerModifyDTO.getC_sido(),
                 centerModifyDTO.getC_sigungu(),
                 centerModifyDTO.getC_name(),

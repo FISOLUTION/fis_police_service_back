@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public void assignAgent(ScheduleSaveRequest request) throws Exception {
+    public void assignAgent(ScheduleSaveRequest request, Long userId) throws Exception {
         Center findCenter =  centerRepository.findById(request.getCenter_id());
-        User findUser = userRepository.findById(request.getUser_id());
+        User findUser = userRepository.findById(userId);
         Agent findAgent = agentRepository.findById(request.getAgent_id());
         Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request.getReceipt_date(),
                 request.getVisit_date(), request.getVisit_time(), request.getEstimate_num(),

@@ -1,9 +1,7 @@
 package fis.police.fis_police_server.dto;
 
 import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,15 +10,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class CenterSelectDateResponseDTO {
     //가능한 현장요원들을 던져준다.
-    private Long id;         //'primary_key'
+    private Long agent_id;         //'primary_key'
     private String a_name;                             //'현장 요원 이름'
     private String a_ph;                               //'현장 요원 전화번호',
     private String a_code;                             //'현장 요원 코드'
@@ -34,7 +30,7 @@ public class CenterSelectDateResponseDTO {
 
     public CenterSelectDateResponseDTO(Agent agent, LocalDate visit_date){
         System.out.println("selectDateResDTO 생성 ") ;
-        this.id = agent.getId();
+        this.agent_id = agent.getId();
         this.a_name = agent.getA_name();
         this.a_ph = agent.getA_ph();
         this.a_code = agent.getA_code();
@@ -57,7 +53,7 @@ public class CenterSelectDateResponseDTO {
 
     @Data
     private static class ScheduleDTO implements Comparable<ScheduleDTO>{
-        private Long id;
+        private Long schedule_id;
         private CenterDTO center;
         private LocalDate visit_date;               // '방문날짜'
         private LocalTime visit_time;               // '방문시간'
@@ -69,7 +65,7 @@ public class CenterSelectDateResponseDTO {
         public ScheduleDTO(Schedule schedule) {
             System.out.println("====================== ScheduleDTO 생성 ======================");
             System.out.println("schedule.getId() = " + schedule.getId());
-            this.id = schedule.getId();
+            this.schedule_id = schedule.getId();
             this.center = new CenterDTO(schedule.getCenter().getC_name(),schedule.getCenter().getC_latitude(),schedule.getCenter().getC_longitude());
             this.visit_date = schedule.getVisit_date();
             this.visit_time = schedule.getVisit_time();

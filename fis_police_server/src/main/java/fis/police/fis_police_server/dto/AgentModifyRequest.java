@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AgentModifyRequest {
 
-    private Long id;                        //'현장 요원 PK'
+    private Long agent_id;                        //'현장 요원 PK'
     private String a_name;                  //'현장 요원 이름'
     private String a_ph;                    //'현장 요원 전화번호',
     private String a_code;                  //'현장 요원 코드'

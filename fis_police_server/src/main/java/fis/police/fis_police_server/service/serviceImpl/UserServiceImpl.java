@@ -1,8 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.CallRepository;
 import fis.police.fis_police_server.repository.UserRepository;
@@ -11,12 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -42,7 +35,7 @@ public class UserServiceImpl implements UserService {
         User user = User.creatUser(request);// 회원 정보 저장
         userRepository.save(user);
         UserSaveResponse userSaveResponse = new UserSaveResponse();
-        userSaveResponse.setId(user.getId());
+        userSaveResponse.setUser_id(user.getId());
         return userSaveResponse;
     }
 
@@ -66,7 +59,7 @@ public class UserServiceImpl implements UserService {
         validateDuplicateUser(request); //닉네임 중복 검사
         user.updateUser(request.getU_nickname(), request.getU_name(), request.getU_pwd(), request.getU_ph(), request.getU_sDate(), request.getU_auth());
         UserSaveResponse userSaveResponse = new UserSaveResponse();
-        userSaveResponse.setId(user.getId());
+        userSaveResponse.setUser_id(user.getId());
         return userSaveResponse;
     }
 
