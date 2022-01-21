@@ -65,7 +65,7 @@ public class AgentServiceImpl implements AgentService {
     // 수정사항 없어도 update 쿼리 나가는 이슈있음
     public void modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException,
             IndexOutOfBoundsException, RestClientException {
-        Agent findAgent = agentRepository.findById(request.getId());
+        Agent findAgent = agentRepository.findById(request.getAgent_id());
         // 현장요원 코드가 달라졌으면 중복검사
         if (!findAgent.getA_code().equals(request.getA_code())) {
             validateDuplicateModifyAgent(request);
@@ -112,7 +112,6 @@ public class AgentServiceImpl implements AgentService {
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
         JSONParser jsonParser = new JSONParser();
         JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
-        System.out.println(responseEntity.getBody());
         JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
         JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
         Double x = Double.parseDouble(addressResponse.get("x").toString());

@@ -22,4 +22,6 @@ public interface CenterRepository {
     Center findByIdAndFetchAll(Long center_id);
 
     List<Center> findNearCenter(double latitude, double longitude);
+
+    List<Center> findNameAndPh(String c_name, String c_ph);
 }

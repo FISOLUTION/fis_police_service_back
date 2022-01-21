@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Setter
 @Data
 public class CenterSelectResponseDTO {
-    private Long id;     // 'primary_key',
+    private Long center_id;     // 'primary_key',
     private String c_sido;        // '시도',
     private String c_sigungu;     // '시군구',
     private String c_name;        // '시설명',
@@ -48,7 +48,7 @@ public class CenterSelectResponseDTO {
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
     public CenterSelectResponseDTO(Center center) {
-        this.id = center.getId();
+        this.center_id = center.getId();
         this.c_sido = center.getC_sido();
         this.c_sigungu = center.getC_sigungu();
         this.c_name = center.getC_name();
@@ -74,7 +74,7 @@ public class CenterSelectResponseDTO {
 
     @Data
     private static class CallDTO{
-        private Long id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
+        private Long call_id;         //BIGINT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
         private UserDTO user;
         private String dateTime;       //'입력날짜 및 시간',
         private Participation participation;  // '참여여부(참여/거부/보류/기타)',
@@ -87,7 +87,7 @@ public class CenterSelectResponseDTO {
         private String agent_etc;     // '현장요원 특이사항
 
         public CallDTO(Call call){
-            this.id = call.getId();
+            this.call_id = call.getId();
             this.user = new UserDTO(call.getUser().getId(), call.getUser().getU_name());
             this.dateTime = call.getDate() + call.getTime();
             this.participation = call.getParticipation();
@@ -103,7 +103,7 @@ public class CenterSelectResponseDTO {
 
     @Data
     private static class ScheduleDTO{
-        private Long id;
+        private Long schedule_id;
         private UserDTO user;        // BIGINT                 NOT NULL                        comment 'user_id'
         private Long user_id;
         private AgentDTO agent;
@@ -116,7 +116,7 @@ public class CenterSelectResponseDTO {
         private String total_etc;               // 비고
 
         public ScheduleDTO(Schedule schedule) {
-            this.id = schedule.getId();
+            this.schedule_id = schedule.getId();
             this.user = new UserDTO(schedule.getUser().getId(), schedule.getUser().getU_name());
             this.user_id = schedule.getUser().getId();
             this.agent = new AgentDTO(schedule.getAgent().getId(), schedule.getAgent().getA_name());

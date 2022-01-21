@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
+import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import org.json.simple.parser.ParseException;
 
 import javax.persistence.NoResultException;
@@ -15,7 +16,7 @@ public interface CenterService {
     Center centerInfo(Long center_id);
 
     // 시설 추기
-    void saveCenter(Center center) throws ParseException;
+    void saveCenter(Center center) throws ParseException, DuplicateSaveException;
 
     // 시설 수정
     void modifyCenter(Center center) throws ParseException;

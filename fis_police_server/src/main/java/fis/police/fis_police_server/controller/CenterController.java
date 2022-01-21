@@ -2,6 +2,7 @@ package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 //현승구
@@ -25,7 +26,7 @@ public interface CenterController {
     Result searchNearCenter(Long center_id);
 
     // 시설 추가
-    void saveCenter(CenterSaveDTO centerSaveDTO);
+    void saveCenter(CenterSaveDTO centerSaveDTO, HttpServletResponse response);
 
     // 시설 수정
     void modifyCenter(CenterModifyDTO centerModifyDTO);

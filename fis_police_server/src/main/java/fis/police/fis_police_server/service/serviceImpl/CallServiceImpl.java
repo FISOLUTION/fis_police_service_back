@@ -45,7 +45,6 @@ public class CallServiceImpl implements CallService {
 
         CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
-        response.setUser_id(call.getUser().getId());
         response.setCall_id(call.getId());
         response.setStatus_code("잘 저장됨");
 
@@ -58,9 +57,4 @@ public class CallServiceImpl implements CallService {
         return findCenter;
     }
 
-    // 콜 기록에 저장될 콜 직원 찾기
-    public User findUser(CallSaveRequest request) {
-        User findUser = userRepository.findById(request.getUser_id());
-        return findUser;
-    }
 }

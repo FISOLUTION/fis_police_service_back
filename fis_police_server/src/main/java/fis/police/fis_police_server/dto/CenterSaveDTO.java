@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Data
 public class CenterSaveDTO {
-    private Long id;     // 'primary_key',
+    private Long center_id;     // 'primary_key',
     private String c_sido;        // '시도',
     private String c_sigungu;     // '시군구',
     private String c_name;        // '시설명',
@@ -29,7 +29,7 @@ public class CenterSaveDTO {
     private Visited visited;
 
     public static Center convertToCenter (CenterSaveDTO centerSaveDTO) {
-        return  new Center(centerSaveDTO.getId(),
+        return new Center(centerSaveDTO.getCenter_id(),
                 centerSaveDTO.getC_sido(),
                 centerSaveDTO.getC_sigungu(),
                 centerSaveDTO.getC_name(),

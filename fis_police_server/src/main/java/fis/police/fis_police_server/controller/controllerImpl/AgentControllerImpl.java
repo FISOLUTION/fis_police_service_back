@@ -10,11 +10,13 @@ import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.dto.AgentGetResult;
 import fis.police.fis_police_server.service.AgentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,52 +28,63 @@ import java.util.stream.Collectors;
 */
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AgentControllerImpl implements AgentController {
 
     private final AgentService agentService;
 
     @Override
     @PostMapping("/agent") // 현장요원 추가
-    public void saveAgent(@RequestBody AgentSaveRequest request) {
+    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response) {
         try{
             agentService.saveAgent(request);
         } catch (IllegalStateException ie){ // 현장요원 코드 중복
             System.out.println("현장요원 코드 중복");
             System.out.println(ie);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (RestClientException re){ // naver Map api 요청 에러
             System.out.println("api 요청 에러");
             System.out.println(re);
+            response.setStatus(501);
         } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
             System.out.println("api 응답 에러");
             System.out.println(pe);
+            response.setStatus(502);
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
             System.out.println("잘못된 주소 입력");
             System.out.println(oe);
-        } catch (ConstraintViolationException cve){
-            System.out.println("요청 데이터가 불완전");
-            System.out.println("cve");
+            response.setStatus(401);
         } catch (TransactionSystemException tse){
             System.out.println(tse);
             System.out.println("요청 데이터가 불완전");
+            response.setStatus(402);
         }
     }
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(@RequestBody AgentModifyRequest request) {
+    public void modifyAgent(@RequestBody AgentModifyRequest request, HttpServletResponse response) {
         try{
             agentService.modifyAgent(request);
         } catch (IllegalStateException ie){ // 현장요원 코드 중복
             System.out.println("현장요원 코드 중복");
             System.out.println(ie);
+            response.setStatus(400);
         } catch (RestClientException re){ // naver Map api 요청 에러
             System.out.println("api 요청 에러");
             System.out.println(re);
+            response.setStatus(501);
         } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
             System.out.println("api 응답 에러");
             System.out.println(pe);
+            response.setStatus(502);
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
             System.out.println("잘못된 주소 입력");
             System.out.println(oe);
+            response.setStatus(401);
+        } catch (TransactionSystemException tse){
+            System.out.println(tse);
+            System.out.println("요청 데이터가 불완전");
+            response.setStatus(402);
         }
     }
     @Override
