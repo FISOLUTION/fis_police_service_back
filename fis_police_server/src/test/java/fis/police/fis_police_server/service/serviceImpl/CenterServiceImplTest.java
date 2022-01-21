@@ -57,10 +57,10 @@ class CenterServiceImplTest {
         List<CenterSearchResponseDTO> centerSearchResponseDTOList3;
         try {
             System.out.println("3차 데이터 검색");
-            centerSearchResponseDTOList3 = centerService.findCenterList("시설이름 4", "서울", null);
+            centerSearchResponseDTOList3 = centerService.findCenterList("시설이름", "서울", null);
             centerSearchResponseDTOList3.stream().forEach(e-> System.out.println("e = " + e));
         } catch (Exception e){
-
+            System.out.println("e = " + e);
         }
         finally {
             //Assertions.assertThat(centerSearchResponseDTOList2.size()).isEqualTo(3L);
