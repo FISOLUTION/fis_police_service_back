@@ -42,7 +42,7 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath modified_info = createString("modified_info");
 
-    public final DateTimePath<java.time.LocalDateTime> receipt_date = createDateTime("receipt_date", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> receipt_date = createDate("receipt_date", java.time.LocalDate.class);
 
     public final StringPath total_etc = createString("total_etc");
 

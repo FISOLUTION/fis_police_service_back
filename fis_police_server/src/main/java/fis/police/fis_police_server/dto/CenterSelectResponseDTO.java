@@ -44,11 +44,11 @@ public class CenterSelectResponseDTO {
     private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
-    private List<CenterDTO> centerList = new ArrayList<>();
+    private List<CenterSearchNearCenterDTO> ceterList = new ArrayList<>();
     private List<CallDTO> callList = new ArrayList<CallDTO>();
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
-    public CenterSelectResponseDTO(Center center, List<Center> nearCenterList) {
+    public CenterSelectResponseDTO(Center center, List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList) {
         this.center_id = center.getId();
         this.c_sido = center.getC_sido();
         this.c_sigungu = center.getC_sigungu();
@@ -65,9 +65,7 @@ public class CenterSelectResponseDTO {
         this.c_longitude = center.getC_longitude();
         this.participation = center.getParticipation();
         this.visited = center.getVisited();
-        this.centerList = nearCenterList.stream()
-                .map(nearCenter -> new CenterDTO(nearCenter))
-                .collect(Collectors.toList());
+        this.ceterList = centerSearchNearCenterDTOList;
         this.callList = center.getCallList().stream()
                 .map(call -> new CallDTO(call))
                 .collect(Collectors.toList());
@@ -111,7 +109,7 @@ public class CenterSelectResponseDTO {
         private UserDTO user;        // BIGINT                 NOT NULL                        comment 'user_id'
         private Long user_id;
         private AgentDTO agent;
-        private LocalDateTime receipt_date;             // '접수일'
+        private LocalDate receipt_date;             // '접수일'
         private LocalDate visit_date;               // '방문날짜'
         private LocalTime visit_time;               // '방문시간'
         private Integer estimate_num;             // '예상인원'
@@ -146,32 +144,5 @@ public class CenterSelectResponseDTO {
     public static class AgentDTO{
         Long agent_id;
         String agent_name;
-    }
-
-    @Data
-    private class CenterDTO {
-        private Long center_id;     // 'primary_key',
-        private String c_name;        // '시설명',
-        private String c_status;      // '운영현황',
-        private String c_address;     // '주소',
-        private String c_ph;          // '전화번호',
-        private String c_people;      // '현원',
-        private Double c_latitude;    // '위도',
-        private Double c_longitude;   // '경도',
-        private Participation participation;
-        private Visited visited;
-
-        public CenterDTO(Center center){
-            this.center_id = center.getId();
-            this.c_name = center.getC_name();
-            this.c_status = center.getC_ph();
-            this.c_address = center.getC_address();
-            this.c_ph = center.getC_ph();
-            this.c_people = center.getC_people();
-            this.c_latitude = center.getC_latitude();
-            this.c_longitude = center.getC_longitude();
-            this.participation = center.getParticipation();
-            this.visited = center.getVisited();
-        }
     }
 }
