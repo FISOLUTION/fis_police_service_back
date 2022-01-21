@@ -9,11 +9,11 @@ import javax.persistence.*;
 @Entity
 @Subselect(
         "select user_id, count(call_id) as count " +
-        "from Calls " +
+        "from calls " +
         "group by user_id, date"
 )
 @Immutable
-@Synchronize("Calls")
+@Synchronize("calls")
 public class CallView {
     @Id
     @GeneratedValue
