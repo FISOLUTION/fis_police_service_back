@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /*
@@ -19,7 +18,7 @@ import java.time.LocalTime;
 public class ScheduleSaveRequest {
     private Long center_id;
     private Long agent_id;
-    private LocalDateTime receipt_date;
+    private LocalDate receipt_date;
     private LocalDate visit_date;
     private LocalTime visit_time;
     private Integer estimate_num;
