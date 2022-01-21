@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -38,7 +37,7 @@ public class Schedule {
     private Agent agent;
 
     @Column
-    private LocalDateTime receipt_date;             // '접수일'
+    private LocalDate receipt_date;             // '접수일'
 
     @Column
     private LocalDate visit_date;               // '방문날짜'
@@ -93,7 +92,7 @@ public class Schedule {
         작성자: 이승범
         작성내용: ScheduleService 구현을 위한  연관관계 메서드 및 생성 메서드 구현
     */
-    public static Schedule createSchedule(Center center, User user, Agent agent, LocalDateTime receipt_date,
+    public static Schedule createSchedule(Center center, User user, Agent agent, LocalDate receipt_date,
                                           LocalDate visit_date, LocalTime visit_time, Integer estimate_num,
                                           String center_etc, String agent_etc) {
         Schedule schedule = new Schedule();
