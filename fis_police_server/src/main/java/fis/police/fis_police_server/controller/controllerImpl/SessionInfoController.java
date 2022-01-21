@@ -20,7 +20,7 @@ public class SessionInfoController {
     public String sessionInfo(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
         if(session == null){
-            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE); //406
             return "세션이 없습니다.";
         }
         session.getAttributeNames().asIterator()
@@ -32,7 +32,7 @@ public class SessionInfoController {
         log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));//마지막 세션 접근 시간
         log.info("isNew={}", session.isNew());
 
-        response.setStatus(HttpServletResponse.SC_OK);
+        response.setStatus(HttpServletResponse.SC_OK); //200
         return "세션 출력";
     }
 }
