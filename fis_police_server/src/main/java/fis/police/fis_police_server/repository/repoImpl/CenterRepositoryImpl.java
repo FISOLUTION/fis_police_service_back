@@ -86,10 +86,6 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         //  list "select center from Center center join Center.Call on 조건 join
         return em.createQuery("select distinct center from Center center " +
                 "left join fetch center.callList as call " +
-<<<<<<< HEAD
-                "join fetch call.user " +
-=======
->>>>>>> 36453df3e1a6a5c1620b712eeab701203d3c5425
                 "where center.id = :id ", Center.class)
                 .setParameter("id", id)
                 .getSingleResult();
