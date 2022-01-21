@@ -73,12 +73,12 @@ public class MailServiceImpl implements MailService {
                 "<div>TEL  : 070-7872-7748   Fax : 02-2626-9800<div>");
 
         // 첨부파일 경로 (absolute path)
-        String file1 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf";
-        FileSystemResource fsr = new FileSystemResource(file1);
-        String file2 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/2021_경찰청_팝업_배부용.jpeg";
-        FileSystemResource fsr2 = new FileSystemResource(file2);
-        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
-        FileSystemResource fsr3 = new FileSystemResource(file3);
+//        String file1 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf";
+//        FileSystemResource fsr = new FileSystemResource(file1);
+//        String file2 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/2021_경찰청_팝업_배부용.jpeg";
+//        FileSystemResource fsr2 = new FileSystemResource(file2);
+//        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
+//        FileSystemResource fsr3 = new FileSystemResource(file3);
 
         // 전송할 메일 정보 설정
         MimeMessage message = mailSender.createMimeMessage();
@@ -88,9 +88,9 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setText(body.toString(), true);
-        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
-        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
-        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
+//        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
+//        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
+//        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
 
         MailSendResponse response = new MailSendResponse();
 
