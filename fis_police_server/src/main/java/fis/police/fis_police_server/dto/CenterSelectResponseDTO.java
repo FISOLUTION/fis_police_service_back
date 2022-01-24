@@ -44,10 +44,11 @@ public class CenterSelectResponseDTO {
     private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
+    private List<CenterSearchNearCenterDTO> ceterList = new ArrayList<>();
     private List<CallDTO> callList = new ArrayList<CallDTO>();
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
-    public CenterSelectResponseDTO(Center center) {
+    public CenterSelectResponseDTO(Center center, List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList) {
         this.center_id = center.getId();
         this.c_sido = center.getC_sido();
         this.c_sigungu = center.getC_sigungu();
@@ -64,6 +65,7 @@ public class CenterSelectResponseDTO {
         this.c_longitude = center.getC_longitude();
         this.participation = center.getParticipation();
         this.visited = center.getVisited();
+        this.ceterList = centerSearchNearCenterDTOList;
         this.callList = center.getCallList().stream()
                 .map(call -> new CallDTO(call))
                 .collect(Collectors.toList());
@@ -107,7 +109,7 @@ public class CenterSelectResponseDTO {
         private UserDTO user;        // BIGINT                 NOT NULL                        comment 'user_id'
         private Long user_id;
         private AgentDTO agent;
-        private LocalDateTime receipt_date;             // '접수일'
+        private LocalDate receipt_date;             // '접수일'
         private LocalDate visit_date;               // '방문날짜'
         private LocalTime visit_time;               // '방문시간'
         private Integer estimate_num;             // '예상인원'
