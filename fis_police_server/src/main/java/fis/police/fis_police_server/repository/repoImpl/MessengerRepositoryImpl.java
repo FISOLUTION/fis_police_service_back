@@ -47,7 +47,7 @@ public class MessengerRepositoryImpl implements MessengerRepository {
 
     @Override
     public List<Messenger> findByUser(User user) {
-        return em.createQuery("select messenger from Messenger messenger " +
+        return em.createQuery("select distinct messenger from Messenger messenger " +
                 "join fetch messenger.user on messenger.user.id = :id", Messenger.class)
                 .setParameter("id", user.getId())
                 .getResultList();
