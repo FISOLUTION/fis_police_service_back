@@ -23,7 +23,7 @@ public class CenterSelectDateResponseDTO {
     private String a_address;                          //'현장 요원 집 주소',
     private HasCar a_hasCar;                            //'자차 여부'
     private String a_equipment;                         //'장비 번호'
-    private LocalDateTime a_receiveDate;                //'장비 수령 날짜'
+    private LocalDate a_receiveDate;                //'장비 수령 날짜'
     private Double a_latitude;                          //'현장 요원 위도',
     private Double a_longitude;                         //'현장 요원 경도',
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();

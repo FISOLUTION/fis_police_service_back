@@ -109,7 +109,7 @@ public class CenterSelectResponseDTO {
         private UserDTO user;        // BIGINT                 NOT NULL                        comment 'user_id'
         private Long user_id;
         private AgentDTO agent;
-        private LocalDateTime receipt_date;             // '접수일'
+        private LocalDate receipt_date;             // '접수일'
         private LocalDate visit_date;               // '방문날짜'
         private LocalTime visit_time;               // '방문시간'
         private Integer estimate_num;             // '예상인원'

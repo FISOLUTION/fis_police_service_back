@@ -37,13 +37,13 @@ public class initDb2 {
 
         public void dbInit() {
             Agent agent1 = Agent.createAgent("asd", "123", "111", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D);
             em.persist(agent1);
             Agent agent2 = Agent.createAgent("asd", "123", "222", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D);
             em.persist(agent2);
             Agent agent3 = Agent.createAgent("asd", "123", "333", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDateTime.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D);
             em.persist(agent3);
             Center center1 = new Center("111", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center1);
@@ -60,10 +60,10 @@ public class initDb2 {
             User user3 = new User("333", "333", "333", "333",
                     LocalDate.now(), UserAuthority.ADMIN);
             em.persist(user3);
-            Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDateTime.now(),
+            Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 123, "111", "111");
             em.persist(schedule1);
-            Schedule schedule2 = Schedule.createSchedule(center2, user2, agent2, LocalDateTime.now(),
+            Schedule schedule2 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 123, "222", "222");
             em.persist(schedule2);
 
