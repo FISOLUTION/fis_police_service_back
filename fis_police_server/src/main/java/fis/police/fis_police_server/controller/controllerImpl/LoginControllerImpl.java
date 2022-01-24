@@ -44,7 +44,7 @@ public class LoginControllerImpl implements LoginController {
 
         //세션에 로그인 회원 정보 보관
         //로그인 페이지로 이동시 세션 만료 됨
-        if(!session.isNew()) {
+        if (!session.isNew()) {
             session.invalidate();
             session = request.getSession();
             System.out.println("session.isNew() = " + session.isNew());
@@ -70,16 +70,17 @@ public class LoginControllerImpl implements LoginController {
     @GetMapping("/checkLogin")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
     public LoginResponse loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
-        LoginResponse loginResponse = loginService.loginCheck(loginUser);
-        //세션에 데이터 없으면
-        if (loginUser == null) {
-            return loginResponse; //fail
-        }
-
-
-        //세션이 유지되면
-        model.addAttribute("loginUser", loginUser);
-        return loginResponse;   //success
+        LoginResponse loginResponse = new LoginResponse();
+            try {
+                loginResponse = loginService.loginCheck(loginUser);
+                model.addAttribute("loginUser", loginUser);     //세션이 유지되면
+            } catch (IllegalStateException ie) {                            //세션에 데이터 없으면
+                System.out.println(ie);
+                loginResponse.setSc("fail");
+            } finally {
+                System.out.println("loginResponse = " + loginResponse);
+                return loginResponse;
+            }
     }
 }
 

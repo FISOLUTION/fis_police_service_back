@@ -73,14 +73,16 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @Transactional
     public LoginResponse loginCheck(Long loginUser) {
-        User user = userRepository.findById(loginUser);
         LoginResponse loginResponse = new LoginResponse();
+        if (loginUser == null) {
+            throw new IllegalStateException("세션에 데이터 없음");//로그인 사용자 없
+        }
+        User user = userRepository.findById(loginUser);
         if (user != null) {
             loginResponse.setSc("success");
             loginResponse.setU_auth(user.getU_auth());
             return loginResponse;
         }
-        loginResponse.setSc("fail");
         return loginResponse;
     }
 
