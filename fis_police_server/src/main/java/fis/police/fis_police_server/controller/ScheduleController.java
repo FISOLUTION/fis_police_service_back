@@ -5,6 +5,7 @@ import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 // 이승범
@@ -20,6 +21,6 @@ public interface ScheduleController {
         void modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
 
         // 일정 취소
-        void cancelSchedule(Long schedule_id);
+        void cancelSchedule(Long schedule_id, HttpServletResponse response);
 }
 
