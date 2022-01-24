@@ -1,17 +1,16 @@
 package fis.police.fis_police_server.controller;
 
-import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.UserInfoResponse;
 import fis.police.fis_police_server.dto.UserSaveRequest;
-import fis.police.fis_police_server.dto.UserSaveResponse;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 //원보라
 
 public interface UserController  {
     // 콜직원 추가
-    UserSaveResponse saveUser(UserSaveRequest request);
+    void saveUser(UserSaveRequest request, HttpServletResponse response);
 
     // 콜직원 수정
     Boolean modifyUser();

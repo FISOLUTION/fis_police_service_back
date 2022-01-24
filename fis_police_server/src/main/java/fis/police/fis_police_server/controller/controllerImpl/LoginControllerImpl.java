@@ -69,13 +69,17 @@ public class LoginControllerImpl implements LoginController {
     @CrossOrigin
     @GetMapping("/checkLogin")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
-    public String loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
+    public LoginResponse loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
+        LoginResponse loginResponse = loginService.loginCheck(loginUser);
+        //세션에 데이터 없으면
         if (loginUser == null) {
-            return "returnToLogin";
+            return loginResponse; //fail
         }
+
+
         //세션이 유지되면
         model.addAttribute("loginUser", loginUser);
-        return "LoginSuccess";
+        return loginResponse;   //success
     }
 }
 
