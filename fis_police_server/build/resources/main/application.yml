@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url:  jdbc:mysql://localhost:3306/test
+    username: fistest
+    password: fistest1207
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # 작성자: 고준영, 작성내용: mailjet이 안먹어서, 다시 mailplug로 시도 해봤는데, "mail.stmp.ssl.enable": true 박으니까 갑자기 잘 됨 ㅋㅋ 개꿀;
+  mail:
+    host: smtp.mailplug.co.kr
+    port: 465
+    username: fis182@fisolution.co.kr
+    password: fis1234*
+    properties:
+      "mail.smtp.ssl.enable": true
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  #          ssl:
+  #            enable: true
+  # 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로파서 include
+  profiles:
+    include:
+      - map
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.Type: trace
+
+
