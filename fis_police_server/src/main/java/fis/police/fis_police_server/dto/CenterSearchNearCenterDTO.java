@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class CenterSearchNearCenterDTO {
     private Long center_id;
+    private String c_name;
+    private String c_people;
     private String c_address;
     private String c_ph;
     private Participation participation;
@@ -18,6 +20,8 @@ public class CenterSearchNearCenterDTO {
 
     public CenterSearchNearCenterDTO(Center center, double distance) {
         this.center_id = center.getId();
+        this.c_name = center.getC_name();
+        this.c_people = center.getC_people();
         this.c_address = center.getC_address();
         this.c_ph = center.getC_ph();
         this.participation = center.getParticipation();
