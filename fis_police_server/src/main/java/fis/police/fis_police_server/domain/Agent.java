@@ -11,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class Agent {
     */
     // 생성 메서드
     public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
-                             String a_equipment, LocalDate a_receiveDate, Double a_latitude, Double a_longitude) {
+                             String a_equipment, LocalDate a_receiveDate, Double a_longitude, Double a_latitude) {
         Agent agent = new Agent();
         agent.a_name = a_name;
         agent.a_ph = a_ph;
@@ -89,7 +88,7 @@ public class Agent {
 
     // 현장요원 정보 수정을 위한 setter
     public void modifyAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar, String a_equipment,
-                            LocalDate a_receiveDate, Double a_latitude, Double a_longitude, AgentStatus a_status){
+                            LocalDate a_receiveDate, Double a_longitude, Double a_latitude, AgentStatus a_status){
         this.a_name = a_name;
         this.a_ph = a_ph;
         this.a_code = a_code;
