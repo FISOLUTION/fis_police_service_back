@@ -26,7 +26,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         try {
             System.out.println("Before Handshake");
             ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-            System.out.println("ssreq.getHeaders().toString() = " + ssreq.getHeaders().toString());
+            System.out.println("ssreq.getHeaders().toString() = " + ssreq.getHeaders().toString() + '\n');
             System.out.println("URI:"+request.getURI());
 
             HttpServletRequest req =  ssreq.getServletRequest();
@@ -34,16 +34,13 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         /*String userId = req.getParameter("userid");
         System.out.println("param, id:"+userId);
         attributes.put("userId", userId);*/
-            User user = new User();
-            user.setU_name("현승구");
-            req.getSession().setAttribute("loginUser", user);
             // HttpSession 에 저장된 이용자의 아이디를 추출하는 경우
-            User user1 = (User) req.getSession().getAttribute("loginUser");
-            attributes.put("loginUser", user1);
-            System.out.println("HttpSession에 저장된 id:"+ user1.getU_name());
+            Long user_id = (Long) req.getSession().getAttribute("loginUser");
+            attributes.put("loginUser", user_id);
+            System.out.println("HttpSession에 저장된 id:"+ user_id + '\n');
             return super.beforeHandshake(request, response, wsHandler, attributes);
         } catch (Exception e) {
-            System.out.println("e = " + e);
+            System.out.println("e = " + e + '\n');
             return false;
         }
 
@@ -53,7 +50,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
     public void afterHandshake(ServerHttpRequest request,
                                ServerHttpResponse response, WebSocketHandler wsHandler,
                                Exception ex) {
-        System.out.println("After Handshake");
+        System.out.println("After Handshake" + '\n');
 
         super.afterHandshake(request, response, wsHandler, ex);
     }
