@@ -24,6 +24,10 @@ jobs:
       - name: move to fisDir
         run: cd ./fis_police_server
         shell: bash
+        
+      - name: asd
+        run: ls -l
+        shell: bash
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
