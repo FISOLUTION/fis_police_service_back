@@ -27,7 +27,8 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("session = " + session);
+        System.out.println("============================ 소켓 커낵션 생성이후 ==================================\n");
+        System.out.println("session = " + session + '\n');
         sessionMap.put(session.getId(), session);
 
         // 전에 있던 메세지들 보내주기
@@ -44,7 +45,7 @@ public class SocketHandler extends TextWebSocketHandler {
                         e.printStackTrace();
                     }
                 });
-
+        System.out.println("============================ 소켓 커낵션 이후 끝 ==================================\n");
     }
 
     @Override
