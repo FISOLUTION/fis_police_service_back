@@ -18,6 +18,6 @@ public interface LoginController {
 
     String logout(HttpServletRequest request);
 
-    String loginSuccess(Long loginUser, Model model);
+    LoginResponse loginSuccess(Long loginUser, Model model);
 
 }

@@ -20,6 +20,9 @@ public interface LoginService {
     //로그인 res dto
     LoginResponse loginRes(LoginRequest request);
 
+    //로그인 체크 권한 알려주기
+    LoginResponse loginCheck(Long loginUser);
+
     //세션 생성 (로그인)
     void createSession(Object value, HttpServletResponse response);
 
