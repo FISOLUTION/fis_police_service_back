@@ -3,6 +3,7 @@ package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocke
 import fis.police.fis_police_server.domain.Messenger;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.MessengerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class SocketHandler extends TextWebSocketHandler {
 
     private final MessengerService messengerService;
+    private final UserRepository userRepository;
     HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
 
     @Override
@@ -29,7 +31,8 @@ public class SocketHandler extends TextWebSocketHandler {
         sessionMap.put(session.getId(), session);
 
         // 전에 있던 메세지들 보내주기
-        User requestUser = (User) session.getAttributes().get("loginUser");
+        Long user_id = (Long) session.getAttributes().get("loginUser");
+        User requestUser = userRepository.findById(user_id);
         requestUser.setId(2L);
         requestUser.setU_auth(UserAuthority.ADMIN);
 
