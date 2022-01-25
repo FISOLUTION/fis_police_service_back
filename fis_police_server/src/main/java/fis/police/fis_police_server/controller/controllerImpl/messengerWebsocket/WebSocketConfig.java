@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(socketHandler, "/messenger/websocket")
             .addInterceptors(new HandshakeInterceptor())
-                .setAllowedOrigins("*")
+                .setAllowedOrigins("http://54.175.8.114/*", "ws://54.175.8.114/*")
                 .setAllowedOriginPatterns("*");
     }
 }
