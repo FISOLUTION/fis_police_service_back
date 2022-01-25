@@ -23,21 +23,21 @@ public class FisPoliceServerApplication {
 		@Override
 		public void addCorsMappings(CorsRegistry registry){
 			registry.addMapping("/**")
-					.allowedOriginPatterns("*", "http://localhost:3000/*")
+					.allowedOriginPatterns("*", "http://54.175.8.114")
 					.allowCredentials(true)
 					.allowedMethods("*");
 		}
-//        @Override
-//        public void addInterceptors(InterceptorRegistry registry) {
-//            registry.addInterceptor(new LogInterceptor())
-//                    .order(1)
-//                    .addPathPatterns("/**")
-//                    .excludePathPatterns("/css/**", "/*.ico", "/error","/messenger/*");
-//
-//            registry.addInterceptor(new LoginCheckInterceptor())
-//                    .order(2)
-//                    .addPathPatterns("/**")
-//                    .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/messenger/*");
-//        }
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new LogInterceptor())
+                    .order(1)
+                    .addPathPatterns("/**")
+                    .excludePathPatterns("/css/**", "/*.ico", "/error","/messenger/*");
+
+            registry.addInterceptor(new LoginCheckInterceptor())
+                    .order(2)
+                    .addPathPatterns("/**")
+                    .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/messenger/*");
+        }
     }
 }
