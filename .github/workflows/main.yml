@@ -26,6 +26,6 @@ jobs:
         shell: bash
         
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./fis_police_server/gradlew build
         shell: bash
         
