@@ -22,7 +22,7 @@ jobs:
           java-version: 11
           
       - name: move to fisDir
-        run: cd ./fis_police_server
+        run: pwd
         shell: bash
 
       - name: Grant execute permission for gradlew
