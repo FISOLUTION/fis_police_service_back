@@ -20,32 +20,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      
-      - name: asddsa
-        run: pwd
-        shell: bash
-      
-      - name: qweewq
-        run: ls -l
-        shell: bash
-      
-      - name: move to fisDir
-        run: cd fis_police_server
-        shell: bash
-        
-      - name: aq
-        run: ls -l
-        shell: bash
-
-      - name: sw
-        run: pwd
-        shell: bash
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+        working-directory: ./fis_police_server
         shell: bash
         
       - name: Build with Gradle
         run: ./gradlew build
+        working-directory: ./fis_police_server
         shell: bash
         
