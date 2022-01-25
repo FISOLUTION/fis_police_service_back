@@ -30,7 +30,7 @@ jobs:
         shell: bash
       
       - name: move to fisDir
-        run: cd ./fis_police_server
+        run: cd fis_police_server
         shell: bash
         
       - name: aq
@@ -38,7 +38,7 @@ jobs:
         shell: bash
 
       - name: sw
-        run: cd ./fis_police_server
+        run: pwd
         shell: bash
 
       - name: Grant execute permission for gradlew
