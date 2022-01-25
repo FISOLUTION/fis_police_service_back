@@ -24,6 +24,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(socketHandler, "/messenger/websocket")
             .addInterceptors(new HandshakeInterceptor())
                 .setAllowedOrigins("http://54.175.8.114/*", "ws://54.175.8.114/*")
-                .setAllowedOriginPatterns("*");
+                .setAllowedOriginPatterns("http://54.175.8.114/*", "ws://54.175.8.114/*", "*");
     }
 }
