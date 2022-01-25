@@ -58,6 +58,7 @@ public class AgentControllerImpl implements AgentController {
             System.out.println(tse);
             System.out.println("요청 데이터가 불완전");
             response.setStatus(402);
+
         }
     }
     @Override
@@ -85,6 +86,7 @@ public class AgentControllerImpl implements AgentController {
             System.out.println(tse);
             System.out.println("요청 데이터가 불완전");
             response.setStatus(402);
+
         }
     }
     @Override
