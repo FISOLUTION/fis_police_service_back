@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
   
 env:
-  S3_BUKET_NAME: fis-police-back-githubaction
+  S3_BUCKET_NAME: fis-police-back-githubaction
   PROJECT_NAME: github-action
 
 jobs:
