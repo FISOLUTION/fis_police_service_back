@@ -25,6 +25,7 @@ public class FisPoliceServerApplication {
 			registry.addMapping("/**")
 					.allowedOriginPatterns("*", "http://54.175.8.114")
 					.allowCredentials(true)
+                    .allowedHeaders("*")
 					.allowedMethods("*");
 		}
         @Override
