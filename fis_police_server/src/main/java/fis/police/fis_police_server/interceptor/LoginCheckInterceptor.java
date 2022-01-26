@@ -2,6 +2,7 @@ package fis.police.fis_police_server.interceptor;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            return true;
+        }
 
         String requestURI = request.getRequestURI();
         log.info("인증 체크 인터셉터 실행 {}", requestURI);

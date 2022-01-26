@@ -1,5 +1,7 @@
 package fis.police.fis_police_server;
 
+import fis.police.fis_police_server.interceptor.LogInterceptor;
+import fis.police.fis_police_server.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
