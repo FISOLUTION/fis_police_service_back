@@ -25,7 +25,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             //로그인으로 redirect
 //            response.sendRedirect("/login?redirectURL=" + requestURI); //나중에 url 정해지면 다시 보기
             response.sendRedirect("/login");
-            response.sendError(500,"미인증 사용자 요청"); //흠  이게 가려낭 ?
+            response.sendError(499,"미인증 사용자 요청"); //흠  이게 가려낭 ?
             return false;
         }
         return true;
