@@ -25,10 +25,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
@@ -60,10 +57,19 @@ public class MailServiceImpl implements MailService {
     @Override
     public MailSendResponse sendMail(Long center_id) throws MessagingException {
 
+        MailSendResponse response = new MailSendResponse();
+
         Call recentCall = callRepository.recentcall(center_id);
 
         String from = "fis182@fisolution.co.kr";
         String to = recentCall.getM_email();
+        try {
+            InternetAddress addr = new InternetAddress(to);
+            addr.validate();
+        } catch (AddressException e) {
+            response.setStatus_code("올바르지 않은 메일 형식");
+            return response;
+        }
         String subject = "지문 등 사전등록신청서 양식 입니다.";
 
         StringBuilder body = new StringBuilder();
@@ -92,7 +98,6 @@ public class MailServiceImpl implements MailService {
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
 
-        MailSendResponse response = new MailSendResponse();
 
         try {
             mailSender.send(message);
