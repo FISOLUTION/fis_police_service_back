@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +68,12 @@ public class CenterSelectResponseDTO {
         this.callList = center.getCallList().stream()
                 .map(call -> new CallDTO(call))
                 .collect(Collectors.toList());
-        this.scheduleList = center.getScheduleList().stream()
-                .map(schedule -> new ScheduleDTO(schedule))
-                .collect(Collectors.toList());
+        center.getScheduleList().stream()
+                .forEach(schedule -> {
+                    if(schedule.isValid()) {
+                        this.scheduleList.add(new ScheduleDTO(schedule));
+                    }
+                });
     }
 
     @Data

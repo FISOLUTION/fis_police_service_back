@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +41,7 @@ public class CenterSelectDateResponseDTO {
         this.a_longitude = agent.getA_longitude();
         agent.getScheduleList().stream()
                 .forEach(schedule -> {
-                    if(schedule.getVisit_date().equals(visit_date)){
+                    if(schedule.getVisit_date().equals(visit_date) && schedule.isValid()){
                         ScheduleDTO scheduleDTO = new ScheduleDTO(schedule);
                         this.scheduleList.add(scheduleDTO);
                     }

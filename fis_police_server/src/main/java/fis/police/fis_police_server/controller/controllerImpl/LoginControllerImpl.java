@@ -30,7 +30,10 @@ public class LoginControllerImpl implements LoginController {
     @PostMapping("/login")
     //나중에 url 정해지면 다시 보기
     public LoginResponse login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
+        System.out.println("================================= 로그인 컨트롤러 접근 ===================================\n");
         LoginResponse loginResponse = loginService.loginRes(loginrequest);
+        System.out.println("================================= 로그인 컨트롤러에서 sql문 날렸음 접근 ===================================\n");
+        System.out.println("loginResponse = " + loginResponse.getSc());
         Long loginUserId = loginService.loginUserId(loginrequest);
 
         //로그인 실패

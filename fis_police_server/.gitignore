@@ -1,5 +1,5 @@
-build
 .gradle
 out
 /src/main/java/fis/police/fis_police_server/initDB.java
+/src/main/java/fis/police/fis_police_server/initDb2.java
 /src/main/resources/application-map.yml
