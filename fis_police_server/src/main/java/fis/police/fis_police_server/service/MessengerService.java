@@ -11,7 +11,7 @@ public interface MessengerService {
     void saveMessenger(Messenger messenger);
 
     // 메신져 삭제(보기완료)
-    void deleteMessenger(Messenger messenger);
+    void deleteMessenger(Long id);
 
     // 메신져 조회
     List<Messenger> getMessenger(User user);

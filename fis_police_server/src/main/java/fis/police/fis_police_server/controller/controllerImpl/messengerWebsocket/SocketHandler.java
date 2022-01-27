@@ -6,6 +6,7 @@ import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.MessengerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class SocketHandler extends TextWebSocketHandler {
 
     private final MessengerService messengerService;
@@ -27,8 +29,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("============================ 소켓 커낵션 생성이후 ==================================\n");
-        System.out.println("session = " + session + '\n');
+        log.info("소캣 연결 이후 초기 작업 진행 session = {}", session);
         sessionMap.put(session.getId(), session);
 
         // 전에 있던 메세지들 보내주기
@@ -38,26 +39,26 @@ public class SocketHandler extends TextWebSocketHandler {
         messengerService.getMessenger(requestUser).stream()
                 .forEach(msg -> {
                     User user = msg.getUser();
-                    String textMsg = msg.getContext() + " " + msg.getSendTime() + " " + user.getU_name();
-                    try {
-                        session.sendMessage(new TextMessage(textMsg));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(requestUser.getU_auth() == UserAuthority.ADMIN || requestUser.getId().equals(user.getId())) {
+                        String textMsg = msg.getContext() + " " + msg.getSendTime() + " " + user.getU_name() + " " + msg.getId();
+                        try {
+                            session.sendMessage(new TextMessage(textMsg));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
-        System.out.println("============================ 소켓 커낵션 이후 끝 ==================================\n");
+        log.info("소캣 연결 이후 초기 작업 진행 session = {}", session);
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String msg = message.getPayload();
-
+        log.info("session = {} 에서 message = {} 보냄", session, msg);
         Map<String, Object> attribute = session.getAttributes();
-
         Long user_id = (Long) session.getAttributes().get("loginUser");
         User user = userRepository.findById(user_id);
 
-        System.out.println("user.getU_name() = 핸들러 부분입니다" + user.getU_name()+ "\n");
         Messenger messenger = new Messenger(msg, user);
         messengerService.saveMessenger(messenger);
 
@@ -65,10 +66,10 @@ public class SocketHandler extends TextWebSocketHandler {
             WebSocketSession wss = sessionMap.get(key);
             try {
                 // admin 과 보낸 사용자 에게만 보낸다.
-                user_id = (Long) session.getAttributes().get("loginUser");
-                User acceptUser = userRepository.findById(user_id);
-                if(acceptUser.getU_auth() == UserAuthority.ADMIN || wss.equals(session)) {
-                    wss.sendMessage(new TextMessage(messenger.getContext() + " " + messenger.getSendTime() + " " + user.getId() ));
+                user_id = (Long) wss.getAttributes().get("loginUser");
+                User receiveUser = userRepository.findById(user_id);
+                if(receiveUser.getU_auth() == UserAuthority.ADMIN || wss.equals(session)) {
+                    wss.sendMessage(new TextMessage(messenger.getContext() + " " + messenger.getSendTime() + " " + user.getU_name() + " " + messenger.getId()));
                 }
             }catch(Exception e) {
                 System.out.println("핸들링에서 발생 = " + e + "\n");
