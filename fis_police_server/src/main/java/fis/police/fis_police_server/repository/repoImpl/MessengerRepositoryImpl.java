@@ -31,11 +31,10 @@ public class MessengerRepositoryImpl implements MessengerRepository {
     }
 
     @Override
-    public void delete(Messenger messenger) {
-        Long id = messenger.getId();
-
-        em.createQuery("delete from Messenger where Messenger.id = :id")
-                .setParameter("id", id);
+    public void delete(Long id) {
+        em.createQuery("delete from Messenger messenger where messenger.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
