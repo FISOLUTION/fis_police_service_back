@@ -16,7 +16,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) { //preflight cors 방지
             return true;
         }
         String requestURI = request.getRequestURI();
