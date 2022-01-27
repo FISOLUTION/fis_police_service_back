@@ -53,7 +53,7 @@ public class AgentControllerImpl implements AgentController {
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
             System.out.println("잘못된 주소 입력");
             System.out.println(oe);
-            response.setStatus(401);
+            response.setStatus(403);
         } catch (TransactionSystemException tse){
             System.out.println(tse);
             System.out.println("요청 데이터가 불완전");
@@ -81,7 +81,7 @@ public class AgentControllerImpl implements AgentController {
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
             System.out.println("잘못된 주소 입력");
             System.out.println(oe);
-            response.setStatus(401);
+            response.setStatus(403);
         } catch (TransactionSystemException tse){
             System.out.println(tse);
             System.out.println("요청 데이터가 불완전");
