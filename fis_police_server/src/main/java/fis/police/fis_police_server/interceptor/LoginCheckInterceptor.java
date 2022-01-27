@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.apache.http.HttpStatus.SC_MOVED_PERMANENTLY;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
@@ -23,10 +23,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         String requestURI = request.getRequestURI();
         log.info("인증 체크 인터셉터 실행 {}", requestURI);
         HttpSession session = request.getSession(false);
-        System.out.println("session.getAttribute(\"loginUser\") = " + session.getAttribute("loginUser") + '\n');
         if (session == null || session.getAttribute("loginUser") == null) {
             log.info("미인증 사용자 요청");
-            response.sendError(SC_MOVED_PERMANENTLY,"미인증 사용자 요청"); //301 이면 로그인 페이지 넘어가게
+            response.sendError(SC_UNAUTHORIZED,"미인증 사용자 요청"); //401 이면 로그인 페이지 넘어가게
             return false;
         }
         return true;
