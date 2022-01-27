@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static org.apache.http.HttpStatus.SC_MOVED_PERMANENTLY;
+
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) { //preflight cors 방지
             return true;
         }
         String requestURI = request.getRequestURI();
@@ -22,10 +24,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("loginUser") == null) {
             log.info("미인증 사용자 요청");
-            //로그인으로 redirect
-//            response.sendRedirect("/login?redirectURL=" + requestURI); //나중에 url 정해지면 다시 보기
-            response.sendRedirect("/login");
-            response.sendError(499,"미인증 사용자 요청"); //흠  이게 가려낭 ?
+            response.sendError(SC_MOVED_PERMANENTLY,"미인증 사용자 요청"); //301 이면 로그인 페이지 넘어가게
             return false;
         }
         return true;
