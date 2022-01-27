@@ -37,7 +37,7 @@ public class FisPoliceServerApplication {
             registry.addInterceptor(new LoginCheckInterceptor())
                     .order(2)
                     .addPathPatterns("/**")
-                    .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/messenger/*");
+                    .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error", "/messenger/*", "/sendmail/*");
         }
     }
 }

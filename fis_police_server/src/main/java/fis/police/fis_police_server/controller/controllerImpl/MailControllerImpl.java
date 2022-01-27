@@ -24,7 +24,7 @@ public class MailControllerImpl implements MailController {
     private final MailServiceImpl mailService;
     private final CallRepositoryImpl callRepository;
 
-    @GetMapping("/center/{center_id}/sendmail")
+    @GetMapping("/sendmail/{center_id}")
     @Override
     public MailSendResponse sendMail(@PathVariable Long center_id) throws MessagingException {
         return mailService.sendMail(center_id);
