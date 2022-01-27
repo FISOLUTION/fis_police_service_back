@@ -15,6 +15,6 @@ permission:
 
 hooks:
   ApplicationStart:
-    - location: scripts/deploy.sh
+    - location: fis_police_server/scripts/deploy.sh
       timeout: 180
       runs: ec2-user
