@@ -1,4 +1,3 @@
 .gradle
 out
-build
 /src/main/resources/application-map.yml
