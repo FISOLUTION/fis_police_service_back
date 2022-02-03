@@ -1,6 +1,5 @@
 package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocket;
 
-import fis.police.fis_police_server.domain.User;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -26,8 +25,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         try {
             System.out.println("Before Handshake"+ '\n');
             ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-            System.out.println("ssreq.getHeaders().toString() = " + ssreq.getHeaders().toString() + '\n');
-            System.out.println("URI:"+request.getURI());
 
             HttpServletRequest req =  ssreq.getServletRequest();
 
