@@ -4,6 +4,6 @@ public enum AgentStatus {
     WORK, FIRED;
 
     public static boolean converter(AgentStatus agentStatus) {
-        return agentStatus == AgentStatus.WORK ? true : false;
+        return agentStatus == AgentStatus.WORK;
     }
 }
