@@ -24,8 +24,6 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
     QCenter qCenter = QCenter.center;
-    QCall qCall = QCall.call;
-    QSchedule qSchedule = QSchedule.schedule;
 
     /*
         날짜 : 2022/01/10 10:42 오전
@@ -86,6 +84,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
         //  list "select center from Center center join Center.Call on 조건 join
         return em.createQuery("select distinct center from Center center " +
                 "left join fetch center.callList as call " +
+                "left join fetch call.user " +
                 "where center.id = :id ", Center.class)
                 .setParameter("id", id)
                 .getSingleResult();
@@ -95,13 +94,9 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     @Override
     public List<Center> findNearCenter(double latitude, double longitude) {
         double latitude_l = latitude - 0.009;
-        System.out.println("latitude_l = " + latitude_l);
         double latitude_h = latitude + 0.009D;
-        System.out.println("latitude_h = " + latitude_h);
         double longitude_l = longitude - 0.009;
-        System.out.println("longitude_l = " + longitude_l);
         double longitude_h = longitude + 0.009;
-        System.out.println("longitude_h = " + longitude_h);
 
         List<Center> centerList = em.createQuery("select distinct center " +
                 "from Center center " +
@@ -113,7 +108,6 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
                 .setParameter("longitude_h", longitude_h)
                 .getResultList();
 
-        System.out.println("centerList.toString() = " + centerList.toString());
         return centerList;
     }
 
