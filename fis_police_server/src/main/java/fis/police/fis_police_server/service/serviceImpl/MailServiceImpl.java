@@ -12,6 +12,7 @@ import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.service.MailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,6 +27,7 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
@@ -47,6 +49,7 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
@@ -55,7 +58,7 @@ public class MailServiceImpl implements MailService {
     private final UserRepository userRepository;
 
     @Override
-    public MailSendResponse sendMail(Long center_id) throws MessagingException {
+    public MailSendResponse sendMail(Long center_id, HttpServletRequest request) throws MessagingException {
 
         MailSendResponse response = new MailSendResponse();
 
@@ -96,6 +99,7 @@ public class MailServiceImpl implements MailService {
             addr.validate();
         } catch (AddressException e) {
             response.setStatus_code("올바르지 않은 메일 형식");
+            log.warn("[로그인 id값: {}] [url: {}] [에러정보: {}]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail", "AddressException 올바르지 않은 메일 형식");
             return response;
         }
         try {
@@ -104,14 +108,13 @@ public class MailServiceImpl implements MailService {
             response.setCenter_id(recentCall.getCenter().getId());
             response.setM_email(recentCall.getM_email());
             response.setStatus_code("메일 전송 완료");
-
+            log.info("[로그인 id값: {}] [url: {}] [요청: 성공]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail");
 //            checkMail(recentCall.getCenter().getId(), recentCall.getUser().getId(), request.getM_email());
-
             return response;
         } catch (MailException e) {
-            System.out.println("e = " + e);
             response.setM_email(recentCall.getM_email());
             response.setStatus_code("메일 전송 오류");
+            log.error("[로그인 id값: {}] [url: {}] [에러정보: {}]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail", "MailException 메일 전송 오류");
             return response;
 
         }

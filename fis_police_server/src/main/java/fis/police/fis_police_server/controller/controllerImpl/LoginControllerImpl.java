@@ -28,17 +28,13 @@ public class LoginControllerImpl implements LoginController {
 
     @Override
     @PostMapping("/login")
-    //나중에 url 정해지면 다시 보기
     public LoginResponse login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
-        System.out.println("================================= 로그인 컨트롤러 접근 ===================================\n");
         LoginResponse loginResponse = loginService.loginRes(loginrequest);
-        System.out.println("================================= 로그인 컨트롤러에서 sql문 날렸음 접근 ===================================\n");
-        System.out.println("loginResponse = " + loginResponse.getSc());
         Long loginUserId = loginService.loginUserId(loginrequest);
 
         //로그인 실패
         if (!loginResponse.getSc().equals("success")) {
-            log.error("error가 발생했습니다.");
+            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]",loginUserId,"/login");
             return loginResponse;
         }
 
@@ -52,9 +48,9 @@ public class LoginControllerImpl implements LoginController {
         if (!session.isNew()) {
             session.invalidate();
             session = request.getSession();
-            System.out.println("session.isNew() = " + session.isNew());
         }
         session.setAttribute("loginUser", loginUserId);
+        log.info("[로그인 id값: {}] [url: {}] [로그인 성공]",loginUserId,"/login");
         return loginResponse;
     }
 
@@ -72,16 +68,16 @@ public class LoginControllerImpl implements LoginController {
     @Override
     @GetMapping("/checkLogin")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
-    public LoginResponse loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
+    public LoginResponse loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model,HttpServletRequest req) {
         LoginResponse loginResponse = new LoginResponse();
             try {
                 loginResponse = loginService.loginCheck(loginUser);
                 model.addAttribute("loginUser", loginUser);     //세션이 유지되면
-            } catch (IllegalStateException ie) {                            //세션에 데이터 없으면
-                log.error(ie.getMessage());
+            } catch (IllegalStateException ie) {
+                //세션에 데이터 없으면
+                log.error("[로그인 id값: {}] [url: {}] [{}]", req.getSession().getAttribute("loginUser"),"/checkLogin",ie.getMessage());
                 loginResponse.setSc("fail");
             } finally {
-                System.out.println("loginResponse = " + loginResponse);
                 return loginResponse;
             }
     }

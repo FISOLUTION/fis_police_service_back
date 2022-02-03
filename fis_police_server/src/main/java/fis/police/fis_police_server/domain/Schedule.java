@@ -70,10 +70,6 @@ public class Schedule {
 
     @NotNull
     @Column
-    private boolean announcement;         // 카톡 공지 여부
-
-    @NotNull
-    @Column
     private boolean valid;                 // 스케줄 유효한지
 
     /*
@@ -104,7 +100,6 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
-        schedule.announcement = false;
         schedule.valid = true;
         return schedule;
     }
