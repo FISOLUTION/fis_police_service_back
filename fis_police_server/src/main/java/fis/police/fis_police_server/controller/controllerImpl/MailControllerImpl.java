@@ -21,7 +21,6 @@ import javax.mail.internet.InternetAddress;
 public class MailControllerImpl implements MailController {
 
     private final MailServiceImpl mailService;
-    private final CallRepositoryImpl callRepository;
 
     @GetMapping("/center/{center_id}/sendmail")
     @Override
@@ -29,16 +28,4 @@ public class MailControllerImpl implements MailController {
         return mailService.sendMail(center_id);
     }
 
-    @GetMapping("/mail/valid/test/{mail}")
-    public String testMailValidate(@PathVariable String mail) {
-        System.out.println("mail = " + mail);
-        String result = "true";
-        try {
-            InternetAddress addr = new InternetAddress(mail);
-            addr.validate();
-        } catch (AddressException e) {
-            result = "false";
-        }
-        return result;
-    }
 }
