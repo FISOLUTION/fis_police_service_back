@@ -37,7 +37,7 @@ public class UserControllerImpl implements UserController {
             try {
                  userService.saveUser(request);//회원 가입
             } catch (IllegalStateException ie) { // 로그인 닉네임 중복 검사
-                log.warn("로그인 id값 : [{}] {}",req.getSession().getAttribute("loginUser"),ie.getMessage());
+                log.warn("[로그인 id값: {}] [url: {}] [{}]",req.getSession().getAttribute("loginUser"),"/user",ie.getMessage());
                 response.setStatus(402);
             }
 
@@ -45,7 +45,7 @@ public class UserControllerImpl implements UserController {
             try {
                  userService.modifyUser(request);//회원 정보 수정
             } catch (IllegalStateException ie) { // 로그인 닉네임 중복 검사
-                log.warn("로그인 id값 : [{}] {}",req.getSession().getAttribute("loginUser"),ie.getMessage());
+                log.warn("[로그인 id값: {}] [url: {}] [{}]",req.getSession().getAttribute("loginUser"),"/user",ie.getMessage());
                 response.setStatus(402);
             }
         }
