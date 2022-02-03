@@ -103,20 +103,6 @@ public class Call {
         center.getCallList().add(this);
     }
 
-    /*
-        작성 날짜: 2022/01/20 10:32 오전
-        작성자: 고준영
-        작성 내용: 연관관계 편의 메서드
-    */
-    public void mappingCenter(Center center) {
-        this.center = center;
-        center.getCallList().add(this);
-    }
-
-    public void mappingUser(User user) {
-        this.user = user;
-        user.getCallList().add(this);
-    }
 
     /*
         날짜 : 2022/01/11 5:22 오후
