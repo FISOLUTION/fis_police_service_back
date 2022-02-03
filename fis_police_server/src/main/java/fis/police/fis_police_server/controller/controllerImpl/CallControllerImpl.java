@@ -8,6 +8,7 @@ import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.service.UserService;
 import fis.police.fis_police_server.service.serviceImpl.CallServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 */
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class CallControllerImpl implements CallController {
 
     private final CallServiceImpl callService;
@@ -42,11 +44,13 @@ public class CallControllerImpl implements CallController {
             HttpSession session = req.getSession();
             Long userId = (Long) session.getAttribute("loginUser");
             User user = userService.findOneUser(userId);
+            log.info("[로그인 id값: {}] [url: {}] [요청: 콜기록 저장]", req.getSession().getAttribute("loginUser"), "/call");
             return callService.saveCall(request, center, user, date, time);
         } catch (NullPointerException e) {
             CallSaveResponse callSaveResponse = new CallSaveResponse();
             callSaveResponse.setCenter_id(request.getCenter_id());
             callSaveResponse.setStatus_code("center 혹은 user 존재하지 않음");
+            log.error("[로그인 id값: {}] [url: {}] [에러정보: {}]", req.getSession().getAttribute("loginUser"), "/call", "존재하지 않는 center 혹은 user");
             return callSaveResponse;
         }
     }
