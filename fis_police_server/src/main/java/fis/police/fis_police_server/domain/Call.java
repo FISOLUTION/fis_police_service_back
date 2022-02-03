@@ -5,15 +5,17 @@ import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
 @Getter
+@NoArgsConstructor
 @Table(name = "Calls")
 public class Call {
+
 
     @Id
     @GeneratedValue
@@ -99,6 +101,21 @@ public class Call {
     public void mappingUser(User user) {
         this.user = user;
         center.getCallList().add(this);
+    }
+
+    /*
+        작성 날짜: 2022/01/20 10:32 오전
+        작성자: 고준영
+        작성 내용: 연관관계 편의 메서드
+    */
+    public void mappingCenter(Center center) {
+        this.center = center;
+        center.getCallList().add(this);
+    }
+
+    public void mappingUser(User user) {
+        this.user = user;
+        user.getCallList().add(this);
     }
 
     /*

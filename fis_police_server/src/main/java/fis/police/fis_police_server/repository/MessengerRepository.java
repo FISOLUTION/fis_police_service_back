@@ -14,7 +14,7 @@ public interface MessengerRepository {
     Messenger findById(Long id);
 
     // 시설 삭제
-    void delete(Messenger messenger);
+    void delete(Long id);
 
     List<Messenger> findAll();
 

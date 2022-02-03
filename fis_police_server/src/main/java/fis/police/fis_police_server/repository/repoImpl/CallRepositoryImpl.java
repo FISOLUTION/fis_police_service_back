@@ -35,7 +35,6 @@ public class CallRepositoryImpl implements CallRepository {
     private final JPAQueryFactory jpaQueryFactory;
     QCall qCall = QCall.call;
     QCallView qCallView = QCallView.callView;
-    QUser qUser = QUser.user;
 
 
     @Override
@@ -79,16 +78,6 @@ public class CallRepositoryImpl implements CallRepository {
                 .orderBy(qCall.id.desc())
                 .fetchFirst();
         return recentCall;
-
-
-//        Long find = jpaQueryFactory
-//                .select(qCall.id.max())
-//                .from(qCall)
-//                .where(qCall.center.id.eq(id))
-//                .fetchFirst();
-//
-//        return findById(find);
-//        return find;
     }
 
 

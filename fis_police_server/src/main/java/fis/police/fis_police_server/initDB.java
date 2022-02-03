@@ -1,17 +1,15 @@
 package fis.police.fis_police_server;
 
-import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 
 
