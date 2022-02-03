@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@RequiredArgsConstructor
 @Getter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Agent {
 
     @Id
@@ -36,9 +34,8 @@ public class Agent {
     @Column(length = 100)
     private String a_ph;                               //'현장 요원 전화번호',
 
-    // 작성자 : 이승범  유니크 속성 걸어줘야 됨
     @NotBlank
-    @Column(length = 100)
+    @Column(length = 100, unique = true)
     private String a_code;                             //'현장 요원 코드'
 
     @NotBlank

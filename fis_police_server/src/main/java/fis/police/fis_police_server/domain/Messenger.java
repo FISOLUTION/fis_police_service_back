@@ -24,10 +24,6 @@ public class Messenger {
     @Column
     private LocalDateTime sendTime;
 
-    public Messenger(String s) {
-
-    }
-
     public Messenger(String s, User user) {
         this.user = user;
         this.context = s;

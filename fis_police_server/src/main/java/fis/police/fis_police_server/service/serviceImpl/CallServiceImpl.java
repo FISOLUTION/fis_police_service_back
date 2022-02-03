@@ -31,7 +31,6 @@ public class CallServiceImpl implements CallService {
 
     private final CallRepositoryImpl callRepository;
     private final CenterRepositoryImpl centerRepository;
-    private final UserRepositoryImpl userRepository;
 
     @Transactional
     @Override
