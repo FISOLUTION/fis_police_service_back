@@ -26,8 +26,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         try {
             System.out.println("Before Handshake");
             ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-            System.out.println("ssreq.getHeaders().toString() = " + ssreq.getHeaders().toString());
-            System.out.println("URI:"+request.getURI());
 
             HttpServletRequest req =  ssreq.getServletRequest();
 

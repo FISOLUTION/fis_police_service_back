@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -28,7 +27,6 @@ public class LoginControllerImpl implements LoginController {
     private final UserService userService;
 
     @Override
-    @CrossOrigin
     @PostMapping("/login")
     //나중에 url 정해지면 다시 보기
     public LoginResponse login(@RequestBody LoginRequest loginrequest, @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
@@ -37,6 +35,7 @@ public class LoginControllerImpl implements LoginController {
 
         //로그인 실패
         if (!loginResponse.getSc().equals("success")) {
+            log.error("error가 발생했습니다.");
             return loginResponse;
         }
 
@@ -58,7 +57,6 @@ public class LoginControllerImpl implements LoginController {
 
 
     @Override
-    @CrossOrigin
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -69,7 +67,6 @@ public class LoginControllerImpl implements LoginController {
     }
 
     @Override
-    @CrossOrigin
     @GetMapping("/checkLogin")
     //이미 로그인 된 사용자를 찾을 때 (이 기능은 세션을 생성하지 않음)
     public LoginResponse loginSuccess(@SessionAttribute(name = "loginUser", required = false) Long loginUser, Model model) {
@@ -78,7 +75,7 @@ public class LoginControllerImpl implements LoginController {
                 loginResponse = loginService.loginCheck(loginUser);
                 model.addAttribute("loginUser", loginUser);     //세션이 유지되면
             } catch (IllegalStateException ie) {                            //세션에 데이터 없으면
-                System.out.println(ie);
+                log.error(ie.getMessage());
                 loginResponse.setSc("fail");
             } finally {
                 System.out.println("loginResponse = " + loginResponse);
