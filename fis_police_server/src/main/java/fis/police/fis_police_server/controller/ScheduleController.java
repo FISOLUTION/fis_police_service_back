@@ -12,15 +12,15 @@ import java.time.LocalDate;
 public interface ScheduleController {
 
         // 현장요원 배치
-        void assignAgent(ScheduleSaveRequest scheduleSaveRequest, HttpServletRequest httpServletRequest);
+        void assignAgent(ScheduleSaveRequest scheduleSaveRequest, HttpServletRequest httpServletRequest, HttpServletResponse response);
 
         // 날짜 별 현장요원 일정 리스트
-        Result selectDate(LocalDate date);
+        Result selectDate(LocalDate date, HttpServletResponse response, HttpServletRequest httpServletRequest);
 
         // 일정 수정
-        void modifySchedule(ScheduleModifyRequest scheduleModifyRequest);
+        void modifySchedule(ScheduleModifyRequest scheduleModifyRequest, HttpServletResponse response, HttpServletRequest httpServletRequest);
 
         // 일정 취소
-        void cancelSchedule(Long schedule_id, HttpServletResponse response);
+        void cancelSchedule(Long schedule_id, HttpServletResponse response, HttpServletRequest httpServletRequest);
 }
 

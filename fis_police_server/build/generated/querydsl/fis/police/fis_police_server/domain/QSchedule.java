@@ -26,8 +26,6 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath agent_etc = createString("agent_etc");
 
-    public final BooleanPath announcement = createBoolean("announcement");
-
     public final StringPath call_check = createString("call_check");
 
     public final StringPath call_check_info = createString("call_check_info");
