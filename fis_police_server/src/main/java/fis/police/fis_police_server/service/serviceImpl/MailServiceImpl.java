@@ -113,6 +113,7 @@ public class MailServiceImpl implements MailService {
             response.setM_email(recentCall.getM_email());
             response.setStatus_code("메일 전송 오류");
             return response;
+
         }
     }
 

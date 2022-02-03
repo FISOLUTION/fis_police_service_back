@@ -17,7 +17,9 @@ spring:
           auth: true
           starttls:
             enable: true
-# 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로파서 include
+  #          ssl:
+  #            enable: true
+  # 작성자 이승범, 작성내용: naver map api secret key 숨기기위해 yml파일 새로파서 include
   profiles:
     include:
       - map
@@ -28,12 +30,11 @@ spring:
     properties:
       hibernate:
         #show_sql: true
-        format_sql: true
+        #format_sql: true
         default_batch_fetch_size: 100
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.Type: trace
-
 
 

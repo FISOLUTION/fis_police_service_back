@@ -1,7 +1,10 @@
 package fis.police.fis_police_server;
 
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.domain.enumType.*;
+import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.domain.enumType.InOut;
+import fis.police.fis_police_server.domain.enumType.Participation;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /*
@@ -103,7 +105,7 @@ public class initDb2 {
             Call call10 = new Call(center2, user2, "2022-01-20", "11:39:210", Participation.PARTICIPATION, InOut.IN, "담당자10", "010-1010-1010", "@naver", 20, "...", "...");
             em.persist(call10);
 
-            Call call11 = new Call(center2, user2, "2022-01-20", "11:39:211", Participation.PARTICIPATION, InOut.IN, "담당자11", "010-1111-1111", "@naver", 20, "...", "...");
+            Call call11 = new Call(center2, user2, "2022-01-20", "11:39:211", Participation.PARTICIPATION, InOut.IN, "담당자11", "010-1111-1111", "@naver", 20, "…", "…");
             em.persist(call11);
         }
     }

@@ -1,14 +1,13 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.List;
 
 /*
     작성날짜: 2022/01/10 10:56 AM
@@ -65,3 +64,6 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
 }
+
+
+//    select * from Agent where a_latitude < h and a_latitude > l and a_longitude < h and a_longitude > l and a_status = "WORK"

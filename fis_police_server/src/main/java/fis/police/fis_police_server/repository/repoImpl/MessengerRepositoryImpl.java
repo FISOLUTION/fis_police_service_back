@@ -31,11 +31,10 @@ public class MessengerRepositoryImpl implements MessengerRepository {
     }
 
     @Override
-    public void delete(Messenger messenger) {
-        Long id = messenger.getId();
-
-        em.createQuery("delete from Messenger where Messenger.id = :id")
-                .setParameter("id", id);
+    public void delete(Long id) {
+        em.createQuery("delete from Messenger messenger where messenger.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
@@ -47,8 +46,9 @@ public class MessengerRepositoryImpl implements MessengerRepository {
 
     @Override
     public List<Messenger> findByUser(User user) {
-        return em.createQuery("select messenger from Messenger messenger " +
-                "join fetch messenger.user on messenger.user.id = :id", Messenger.class)
+        return em.createQuery("select distinct messenger from Messenger messenger " +
+                "join fetch messenger.user " +
+                "where messenger.user.id = :id", Messenger.class)
                 .setParameter("id", user.getId())
                 .getResultList();
     }
