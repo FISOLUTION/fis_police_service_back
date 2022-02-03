@@ -65,8 +65,8 @@ public class Call {
     작성 내용: service 계층에서 받아온 api 스펙을 바탕으로 call 객체 생성하는 생성자와 메서드
 */
     public Call(Center center, User user, String date, String time, Participation participation, InOut in_out, String c_manager, String m_ph, String m_email, Integer num, String center_etc, String agent_etc) {
-        this.center = center;
-        this.user = user;
+        this.mappingCenter(center);
+        this.mappingUser(user);
         this.date = date;
         this.time = time;
         this.participation = participation;
@@ -85,6 +85,20 @@ public class Call {
                 request.getCenter_etc(), request.getAgent_etc());
 
         return call;
+    }
+/*
+    작성 날짜: 2022/02/03 3:25 오후
+    작성자: 고준영
+    작성 내용: 연관관계 메서드
+*/
+    public void mappingCenter(Center center) {
+        this.center = center;
+        center.getCallList().add(this);
+    }
+
+    public void mappingUser(User user) {
+        this.user = user;
+        center.getCallList().add(this);
     }
 
     /*
