@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
 
 @Service //이걸안써서 오류 내\? 후 조심합시디
@@ -32,13 +33,17 @@ public class CenterServiceImpl implements CenterService {
     public List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
        List<CenterSearchResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
        if(centerList.isEmpty())
-           throw new NoResultException("findBSearchCenterDTO  로직에서 발생됨 조건에 맞는 center가 존재하지 않습니다");
+           throw new NoResultException("조건에 맞는 center가 존재하지 않습니다");
        else return centerList;
     }
 
     @Override
-    public Center centerInfo(Long center_id) {
-       return centerRepository.findByIdAndFetchAll(center_id);
+    public Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException {
+       try {
+           return centerRepository.findByIdAndFetchAll(center_id);
+       } catch (NoResultException | NonUniqueResultException noResultException){
+           throw noResultException;
+       }
     }
 
     @Override
@@ -65,7 +70,9 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public Center findById(Long id) {
-        return centerRepository.findById(id);
+    public Center findById(Long id) throws NoResultException{
+        Center center = centerRepository.findById(id);
+        if(center == null) throw new NoResultException("center_id: " + id + "가 존재하지 않습니다");
+        return center;
     }
 }

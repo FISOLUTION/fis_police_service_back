@@ -3,7 +3,6 @@ package fis.police.fis_police_server.service.serviceImpl;
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.MapService;
@@ -22,8 +21,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.NoResultException;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -58,12 +55,12 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public List<Center> centerNearCenter(Center center) {
-        System.out.println("center.getId() = " + center.getId());
         List<Center> centerList = centerRepository.findNearCenter(center.getC_latitude(), center.getC_longitude());
         if(centerList.isEmpty()) throw new NoResultException("centerNearCenter에서 결과가 없음");
         else return centerList;
     }
 
+    @Override
     public Pair<Double, Double> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
             RestClientException {
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
@@ -80,6 +77,7 @@ public class MapServiceImpl implements MapService {
         return new Pair<Double, Double>(Double.parseDouble(addressResponse.get("x").toString()), Double.parseDouble(addressResponse.get("y").toString()));
     }
 
+    @Override
     public Double distance(double lat1, double lon1, double lat2, double lon2) {
 
         double theta = lon1 - lon2;
