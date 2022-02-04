@@ -37,14 +37,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public void assignAgent(ScheduleSaveRequest request, Long userId) {
+    public Schedule assignAgent(ScheduleSaveRequest request, Long userId) {
         Center findCenter =  centerRepository.findById(request.getCenter_id());
         User findUser = userRepository.findById(userId);
         Agent findAgent = agentRepository.findById(request.getAgent_id());
-        Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request.getReceipt_date(),
-                request.getVisit_date(), request.getVisit_time(), request.getEstimate_num(),
-                request.getCenter_etc(), request.getAgent_etc());
+        Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request);
         scheduleRepository.save(schedule);
+        return schedule;
     }
 /*
     작성날짜: 2022/01/13 5:54 PM
@@ -62,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 */
     @Override
     @Transactional
-    public void modifySchedule(ScheduleModifyRequest request) throws NullPointerException{
+    public Schedule modifySchedule(ScheduleModifyRequest request) throws NullPointerException{
         Schedule findSchedule = scheduleRepository.findById(request.getSchedule_id());
         List<Agent> findAgentList = agentRepository.findByA_code(request.getA_code());
         // 해당하는 현장요원이 존재하는지 검사
@@ -72,6 +71,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Agent findAgent = findAgentList.get(0);
         Center findCenter = centerRepository.findById(request.getCenter_id());
         findSchedule.modifySchedule(request, findAgent, findCenter);
+        return findSchedule;
     }
 
     /*

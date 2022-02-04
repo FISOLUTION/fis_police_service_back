@@ -121,6 +121,7 @@ class AgentServiceImplTest {
         assertThatThrownBy(() -> agentService.modifyAgent(agentModifyRequest))
                 .isInstanceOf(IllegalStateException.class);
     }
+
     @Test
     public void getAgents() throws Exception {
         // given
