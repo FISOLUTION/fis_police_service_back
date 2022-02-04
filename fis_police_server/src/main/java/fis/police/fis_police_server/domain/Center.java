@@ -1,14 +1,11 @@
 package fis.police.fis_police_server.domain;
 
 import com.mysema.commons.lang.Pair;
-import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
