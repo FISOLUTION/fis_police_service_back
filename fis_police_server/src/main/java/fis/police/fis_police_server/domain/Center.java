@@ -1,15 +1,11 @@
 package fis.police.fis_police_server.domain;
 
 import com.mysema.commons.lang.Pair;
-import com.sun.istack.NotNull;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,14 +158,5 @@ public class Center {
             .forEach(call -> this.callList.add(call));
         scheduleList.stream()
                 .forEach(schedule -> this.scheduleList.add(schedule));
-    }
-
-    /*
-        작성 날짜: 2022/02/04 3:48 오후
-        작성자: 고준영
-        작성 내용: update query 가 안날라가서 임시방편으로 마련한 해결책 ㅜㅜ
-    */
-    public void update_participation(Participation participation) {
-        this.participation = participation;
     }
 }

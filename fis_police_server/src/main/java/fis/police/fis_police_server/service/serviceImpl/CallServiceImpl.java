@@ -3,21 +3,14 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.dto.*;
+import fis.police.fis_police_server.dto.CallSaveRequest;
+import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImpl;
-import fis.police.fis_police_server.repository.repoImpl.UserRepositoryImpl;
 import fis.police.fis_police_server.service.CallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /*
     작성 날짜: 2022/01/10 1:17 오후
@@ -42,10 +35,10 @@ public class CallServiceImpl implements CallService {
         // 콜 저장 (콜 기록은 수정 불가)
         callRepository.save(call);
 
-//        centerRepository.update_participation(request.getCenter_id(), request.getParticipation());
+        centerRepository.update_participation(request.getCenter_id(), request.getParticipation());
 
         // 센터의 참여여부 즉시 업데이트
-        center.update_participation(request.getParticipation());
+//        center.update_participation(request.getParticipation());
 
 
         CallSaveResponse response = new CallSaveResponse();

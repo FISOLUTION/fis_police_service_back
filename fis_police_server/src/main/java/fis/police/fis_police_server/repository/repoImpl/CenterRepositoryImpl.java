@@ -4,7 +4,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.QCenter;
-import fis.police.fis_police_server.domain.QSchedule;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.repository.CenterRepository;
@@ -129,11 +128,9 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     @Override
     @Modifying
     public void update_participation(Long id, Participation participation) {
-//        em.createQuery("update Center center set center.participation = : participation where center.id = : id")
-//                .setParameter("id", id)
-//                .setParameter("participation", participation);
-        jpaQueryFactory.update(qCenter)
-                .set(qCenter.participation, participation)
-                .where(qCenter.id.eq(id));
+        em.createQuery("update Center center set center.participation = : participation where center.id = : id")
+                .setParameter("id", id)
+                .setParameter("participation", participation)
+                .executeUpdate();
     }
 }

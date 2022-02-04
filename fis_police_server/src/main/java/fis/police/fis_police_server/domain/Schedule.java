@@ -1,13 +1,10 @@
 package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,7 +13,6 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 @Getter
 public class Schedule {
-
 
     @Id
     @GeneratedValue
