@@ -6,7 +6,6 @@ import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,5 +159,4 @@ public class Center {
         scheduleList.stream()
                 .forEach(schedule -> this.scheduleList.add(schedule));
     }
-
 }
