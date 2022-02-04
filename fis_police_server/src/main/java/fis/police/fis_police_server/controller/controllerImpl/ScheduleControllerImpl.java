@@ -4,10 +4,9 @@ import fis.police.fis_police_server.controller.ScheduleController;
 import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
-import fis.police.fis_police_server.service.AnnounceService;
 import fis.police.fis_police_server.service.ScheduleService;
-import fis.police.fis_police_server.service.serviceImpl.MapConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Date;
 
 /*
     작성날짜: 2022/01/12 4:20 PM
@@ -24,6 +22,7 @@ import java.util.Date;
 */
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ScheduleControllerImpl implements ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -34,13 +33,16 @@ public class ScheduleControllerImpl implements ScheduleController {
 */
     @Override
     @PostMapping("/schedule")// 현장요원 배치
-    public void assignAgent(@RequestBody ScheduleSaveRequest request, HttpServletRequest httpServletRequest) {
+    public void assignAgent(
+            @RequestBody ScheduleSaveRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try{
             HttpSession session = httpServletRequest.getSession();
             Long userId = (Long) session.getAttribute("loginUser");
             scheduleService.assignAgent(request, userId);
         } catch (Exception e){
-            System.out.println(e);
+            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", e.getMessage());
+            response.setStatus(500);
         }
     }
 /*
@@ -51,14 +53,15 @@ public class ScheduleControllerImpl implements ScheduleController {
     @Override
     @GetMapping("/schedule")
     public Result selectDate(
-            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try{
             return new Result(scheduleService.selectDate(date));
         } catch (Exception e){
-            System.out.println(e);
+            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", e.getMessage());
+            response.setStatus(500);
             return null;
         }
-
     }
     /*
         작성날짜: 2022/01/14 4:33 PM
@@ -67,13 +70,17 @@ public class ScheduleControllerImpl implements ScheduleController {
     */
     @Override
     @PatchMapping("/schedule")
-    public void modifySchedule(@RequestBody ScheduleModifyRequest request) {
+    public void modifySchedule(@RequestBody ScheduleModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try{
             scheduleService.modifySchedule(request);
         } catch (NullPointerException ne){
-            System.out.println("존재하지 않는 요원 코드입니다.");
+            log.warn("[로그인 id 값 : {}] [url: {}] [존재하지 않는 요원 코드입니다. {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", ne.getMessage());
+            response.setStatus(400);
         } catch (Exception e){
-            System.out.println(e);
+            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", e.getMessage());
+            response.setStatus(500);
         }
     }
 
@@ -84,13 +91,17 @@ public class ScheduleControllerImpl implements ScheduleController {
     */
     @Override
     @GetMapping("/schedule/cancel")
-    public void cancelSchedule(@RequestParam("schedule_id") Long schedule_id, HttpServletResponse response) {
+    public void cancelSchedule(@RequestParam("schedule_id") Long schedule_id, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try{
             scheduleService.cancelSchedule(schedule_id);
         } catch(NullPointerException npe){
+            log.warn("[로그인 id값 : {}] [url: {}] [존재하지않는 스케쥴 id {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule/cancel", npe.getMessage());
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e){
-            System.out.println(e);
+            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule/cancel", e.getMessage());
+            response.setStatus(500);
         }
     }
 }

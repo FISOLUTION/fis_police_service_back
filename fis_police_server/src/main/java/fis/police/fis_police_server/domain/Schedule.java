@@ -15,7 +15,6 @@ import java.time.LocalTime;
 @Entity
 @RequiredArgsConstructor
 @Getter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
 
 
@@ -71,10 +70,6 @@ public class Schedule {
 
     @NotNull
     @Column
-    private boolean announcement;         // 카톡 공지 여부
-
-    @NotNull
-    @Column
     private boolean valid;                 // 스케줄 유효한지
 
     /*
@@ -105,7 +100,6 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
-        schedule.announcement = false;
         schedule.valid = true;
         return schedule;
     }
@@ -122,15 +116,6 @@ public class Schedule {
         this.total_etc = request.getTotal_etc();
         this.call_check = request.getCall_check();
         this.call_check_info = request.getCall_check_info();
-    }
-
-    /*
-        작성날짜: 2022/01/19 4:39 PM
-        작성자: 이승범
-        작성내용: 스케줄의 일정공지 여부와 유효성을 판단하기위 setter
-    */
-    public void afterAnnouncement() {
-        this.announcement = true;
     }
 
     public void cancel(){

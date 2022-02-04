@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocket;
 
-import fis.police.fis_police_server.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -16,6 +16,7 @@ import java.util.Map;
     작성내용 : HandshakeInterceptor 코드 작성
 */
 
+@Slf4j
 public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
     @Override
@@ -24,23 +25,15 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
         // 위의 파라미터 중, attributes 에 값을 저장하면 웹소켓 핸들러 클래스의 WebSocketSession에 전달된다
         try {
-            System.out.println("Before Handshake"+ '\n');
             ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-            System.out.println("ssreq.getHeaders().toString() = " + ssreq.getHeaders().toString() + '\n');
-            System.out.println("URI:"+request.getURI());
-
             HttpServletRequest req =  ssreq.getServletRequest();
-
-        /*String userId = req.getParameter("userid");
-        System.out.println("param, id:"+userId);
-        attributes.put("userId", userId);*/
             // HttpSession 에 저장된 이용자의 아이디를 추출하는 경우
             Long user_id = (Long) req.getSession().getAttribute("loginUser");
             attributes.put("loginUser", user_id);
-            System.out.println("HttpSession에 저장된 id:"+ user_id + '\n');
+            log.info("[Before Handshake] [요청 Userid: {}]", user_id);
             return super.beforeHandshake(request, response, wsHandler, attributes);
         } catch (Exception e) {
-            System.out.println("e = " + e + '\n');
+            log.error("[Before Handshake] [요청 Userid: {}] [오류: {}]", e.getMessage());
             return false;
         }
 
@@ -50,8 +43,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
     public void afterHandshake(ServerHttpRequest request,
                                ServerHttpResponse response, WebSocketHandler wsHandler,
                                Exception ex) {
-        System.out.println("After Handshake" + '\n');
-
+        ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
+        //형변환 필요 session 건드리기 위해서
+        HttpServletRequest req =  ssreq.getServletRequest();
+        Long user_id = (Long) req.getSession().getAttribute("loginUser");
+        log.info("[after Handshake] [요청 Userid: {}]", user_id);
         super.afterHandshake(request, response, wsHandler, ex);
     }
 
