@@ -42,6 +42,12 @@ public class CallServiceImpl implements CallService {
         // 콜 저장 (콜 기록은 수정 불가)
         callRepository.save(call);
 
+//        centerRepository.update_participation(request.getCenter_id(), request.getParticipation());
+
+        // 센터의 참여여부 즉시 업데이트
+        center.update_participation(request.getParticipation());
+
+
         CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
         response.setCall_id(call.getId());
