@@ -2,6 +2,7 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 
+import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
