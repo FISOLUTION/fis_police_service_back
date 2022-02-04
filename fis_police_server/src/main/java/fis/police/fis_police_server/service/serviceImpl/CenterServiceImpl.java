@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
 
 @Service //이걸안써서 오류 내\? 후 조심합시디
@@ -37,8 +38,12 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public Center centerInfo(Long center_id) {
-       return centerRepository.findByIdAndFetchAll(center_id);
+    public Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException {
+       try {
+           return centerRepository.findByIdAndFetchAll(center_id);
+       } catch (NoResultException | NonUniqueResultException noResultException){
+           throw noResultException;
+       }
     }
 
     @Override
