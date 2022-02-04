@@ -1,8 +1,9 @@
 package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
+
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Schedule {
 
@@ -96,6 +97,21 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
+        schedule.valid = true;
+        return schedule;
+    }
+
+    public static Schedule createSchedule(Center center, User user, Agent agent, ScheduleSaveRequest request) {
+        Schedule schedule = new Schedule();
+        schedule.mappingCenter(center);
+        schedule.mappingUser(user);
+        schedule.mappingAgent(agent);
+        schedule.receipt_date = request.getReceipt_date();
+        schedule.visit_date = request.getVisit_date();
+        schedule.visit_time = request.getVisit_time();
+        schedule.estimate_num = request.getEstimate_num();
+        schedule.center_etc = request.getCenter_etc();
+        schedule.agent_etc = request.getAgent_etc();
         schedule.valid = true;
         return schedule;
     }
