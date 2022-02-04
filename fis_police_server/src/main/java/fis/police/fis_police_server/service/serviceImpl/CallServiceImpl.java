@@ -31,7 +31,6 @@ public class CallServiceImpl implements CallService {
 
     private final CallRepositoryImpl callRepository;
     private final CenterRepositoryImpl centerRepository;
-    private final UserRepositoryImpl userRepository;
 
     @Transactional
     @Override
@@ -42,6 +41,11 @@ public class CallServiceImpl implements CallService {
         Call call = Call.createCall(request, center, user, date, time);
         // 콜 저장 (콜 기록은 수정 불가)
         callRepository.save(call);
+
+//        centerRepository.update_participation(request.getCenter_id(), request.getParticipation());
+
+        center.update_participation(request.getParticipation());
+
 
         CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
