@@ -37,19 +37,6 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         작성자: 이승범
         작성내용: findAllByDate 작성
     */
-//    @Override
-//    public List<Schedule> findAllByDate(LocalDate date) {
-//        return em.createQuery(
-//                "select s from Schedule s" +
-//                        " join fetch s.agent a" +
-//                        " join fetch s.user" +
-//                        " join fetch s.center" +
-//                        " where s.visit_date = :date" +
-//                        " order by a.a_name desc, s.visit_time desc", Schedule.class)
-//                .setParameter("date", date)
-//                .getResultList();
-//    }
-
     @Override
     public List<ScheduleByDateResponse> findAllByDate(LocalDate date){
         return em.createQuery(
@@ -61,7 +48,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                         " join s.user u" +
                         " join s.center c" +
                         " where s.visit_date = :date and s.valid = true" +
-                        " order by a.a_name desc, s.visit_time desc", ScheduleByDateResponse.class)
+                        " order by a.a_name desc, s.visit_time", ScheduleByDateResponse.class)
                 .setParameter("date", date)
                 .getResultList();
     }

@@ -2,10 +2,10 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
-import lombok.AccessLevel;
+import fis.police.fis_police_server.dto.AgentModifyRequest;
+import fis.police.fis_police_server.dto.AgentSaveRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@RequiredArgsConstructor
 @Getter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Agent {
 
     @Id
@@ -36,9 +35,8 @@ public class Agent {
     @Column(length = 100)
     private String a_ph;                               //'현장 요원 전화번호',
 
-    // 작성자 : 이승범  유니크 속성 걸어줘야 됨
     @NotBlank
-    @Column(length = 100)
+    @Column(length = 100, unique = true)
     private String a_code;                             //'현장 요원 코드'
 
     @NotBlank
@@ -86,6 +84,19 @@ public class Agent {
         return agent;
     }
 
+    public static Agent createAgent(AgentSaveRequest request, HasCar a_hasCar, Double a_longitude, Double a_latitude){
+        Agent agent = new Agent();
+        agent.a_name = request.getA_name();
+        agent.a_ph = request.getA_ph();
+        agent.a_code = request.getA_code();
+        agent.a_address = request.getA_address();
+        agent.a_hasCar = a_hasCar;
+        agent.a_longitude = a_longitude;
+        agent.a_latitude = a_latitude;
+        agent.a_status = AgentStatus.WORK;
+        return agent;
+    }
+
     // 현장요원 정보 수정을 위한 setter
     public void modifyAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar, String a_equipment,
                             LocalDate a_receiveDate, Double a_longitude, Double a_latitude, AgentStatus a_status){
@@ -99,5 +110,29 @@ public class Agent {
         this.a_latitude = a_latitude;
         this.a_longitude = a_longitude;
         this.a_status = a_status;
+    }
+
+    public void modifyAgent(AgentModifyRequest request, HasCar a_hasCar, Double a_longitude, Double a_latitude, AgentStatus a_status) {
+        this.a_name = request.getA_name();
+        this.a_ph = request.getA_ph();
+        this.a_code = request.getA_code();
+        this.a_address = request.getA_address();
+        this.a_equipment = request.getA_equipment();
+        this.a_receiveDate = request.getA_receiveDate();
+        this.a_hasCar = a_hasCar;
+        this.a_status = a_status;
+        this.a_longitude = a_longitude;
+        this.a_latitude = a_latitude;
+    }
+
+    /*
+        날짜 : 2022/02/04 10:33 오전
+        작성자 : 현승구
+        작성내용 : 테스트 위한 생성자
+    */
+
+    public Agent(String a_name, String a_code) {
+        this.a_name = a_name;
+        this.a_code = a_code;
     }
 }

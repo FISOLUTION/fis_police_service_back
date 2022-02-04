@@ -5,15 +5,16 @@ import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
 @Getter
+@NoArgsConstructor()
 @Table(name = "Calls")
 public class Call {
+
 
     @Id
     @GeneratedValue
@@ -100,6 +101,7 @@ public class Call {
         this.user = user;
         center.getCallList().add(this);
     }
+
 
     /*
         날짜 : 2022/01/11 5:22 오후

@@ -116,6 +116,7 @@ public class MailServiceImpl implements MailService {
             response.setStatus_code("메일 전송 오류");
             log.error("[로그인 id값: {}] [url: {}] [에러정보: {}]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail", "MailException 메일 전송 오류");
             return response;
+
         }
     }
 

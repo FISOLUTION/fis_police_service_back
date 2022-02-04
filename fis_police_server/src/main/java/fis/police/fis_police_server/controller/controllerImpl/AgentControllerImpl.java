@@ -16,8 +16,8 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,69 +35,80 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @PostMapping("/agent") // 현장요원 추가
-    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response) {
+    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try{
             agentService.saveAgent(request);
         } catch (IllegalStateException ie){ // 현장요원 코드 중복
-            System.out.println("현장요원 코드 중복");
-            System.out.println(ie);
+            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (RestClientException re){ // naver Map api 요청 에러
-            System.out.println("api 요청 에러");
-            System.out.println(re);
+            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
             response.setStatus(501);
         } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
-            System.out.println("api 응답 에러");
-            System.out.println(pe);
+            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
             response.setStatus(502);
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            System.out.println("잘못된 주소 입력");
-            System.out.println(oe);
+            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
             response.setStatus(403);
         } catch (TransactionSystemException tse){
-            System.out.println(tse);
-            System.out.println("요청 데이터가 불완전");
+            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
-
+        } catch (Exception e){
+            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
     }
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(@RequestBody AgentModifyRequest request, HttpServletResponse response) {
+    public void modifyAgent(@RequestBody AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try{
             agentService.modifyAgent(request);
         } catch (IllegalStateException ie){ // 현장요원 코드 중복
-            System.out.println("현장요원 코드 중복");
-            System.out.println(ie);
-            response.setStatus(400);
+            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (RestClientException re){ // naver Map api 요청 에러
-            System.out.println("api 요청 에러");
-            System.out.println(re);
+            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
             response.setStatus(501);
         } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
-            System.out.println("api 응답 에러");
-            System.out.println(pe);
+            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
             response.setStatus(502);
         } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            System.out.println("잘못된 주소 입력");
-            System.out.println(oe);
+            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
             response.setStatus(403);
         } catch (TransactionSystemException tse){
-            System.out.println(tse);
-            System.out.println("요청 데이터가 불완전");
+            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
-
+        } catch (Exception e){
+            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
     }
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
-    public AgentGetResult getAgent() {
-        List<Agent> AllAgentList = agentService.getAgents();
-        List<AgentGetResponse> collect = AllAgentList.stream()
-                .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
-                                HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
-                                AgentStatus.converter(a.getA_status()))
-                        ).collect(Collectors.toList());
-        return new AgentGetResult(collect);
+    public AgentGetResult getAgent(HttpServletRequest httpServletRequest, HttpServletResponse response) {
+        try{
+            List<Agent> AllAgentList = agentService.getAgents();
+            List<AgentGetResponse> collect = AllAgentList.stream()
+                    .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
+                            HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
+                            AgentStatus.converter(a.getA_status()))
+                    ).collect(Collectors.toList());
+            return new AgentGetResult(collect);
+        } catch (Exception e){
+            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+            response.setStatus(500);
+            return null;
+        }
     }
 }

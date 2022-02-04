@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class CenterSelectResponseDTO {
     private Double c_longitude;   // '경도',
     private Participation participation;
     private Visited visited;
-    private List<CenterSearchNearCenterDTO> ceterList = new ArrayList<>();
+    private List<CenterSearchNearCenterDTO> centerList = new ArrayList<>();
     private List<CallDTO> callList = new ArrayList<CallDTO>();
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
@@ -65,13 +64,16 @@ public class CenterSelectResponseDTO {
         this.c_longitude = center.getC_longitude();
         this.participation = center.getParticipation();
         this.visited = center.getVisited();
-        this.ceterList = centerSearchNearCenterDTOList;
+        this.centerList = centerSearchNearCenterDTOList;
         this.callList = center.getCallList().stream()
                 .map(call -> new CallDTO(call))
                 .collect(Collectors.toList());
-        this.scheduleList = center.getScheduleList().stream()
-                .map(schedule -> new ScheduleDTO(schedule))
-                .collect(Collectors.toList());
+        center.getScheduleList().stream()
+                .forEach(schedule -> {
+                    if(schedule.isValid()) {
+                        this.scheduleList.add(new ScheduleDTO(schedule));
+                    }
+                });
     }
 
     @Data
@@ -121,7 +123,7 @@ public class CenterSelectResponseDTO {
             this.schedule_id = schedule.getId();
             this.user = new UserDTO(schedule.getUser().getId(), schedule.getUser().getU_name());
             this.user_id = schedule.getUser().getId();
-            this.agent = new AgentDTO(schedule.getAgent().getId(), schedule.getAgent().getA_name());
+            this.agent = new AgentDTO(schedule.getAgent().getId(), schedule.getAgent().getA_name(), schedule.getAgent().getA_code());
             this.receipt_date = schedule.getReceipt_date();
             this.visit_date = schedule.getVisit_date();
             this.visit_time = schedule.getVisit_time();
@@ -144,5 +146,6 @@ public class CenterSelectResponseDTO {
     public static class AgentDTO{
         Long agent_id;
         String agent_name;
+        String agent_code;
     }
 }

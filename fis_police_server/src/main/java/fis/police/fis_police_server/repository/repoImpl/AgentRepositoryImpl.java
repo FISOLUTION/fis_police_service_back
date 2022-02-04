@@ -1,14 +1,13 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.List;
 
 /*
     작성날짜: 2022/01/10 10:56 AM
@@ -50,11 +49,7 @@ public class AgentRepositoryImpl implements AgentRepository {
         Double longitude_l = longitude - (0.009D * range);
         Double longitude_h = longitude + (0.009D * range);
         return em.createQuery
-//                ("select schedule from Schedule schedule join fetch schedule.agent join fetch schedule.center " +
-//                        "where schedule.agent.a_latitude < :latitude_h and schedule.agent.a_latitude > :latitude_l " +
-//                        "and schedule.agent.a_longitude < :longitude_h and schedule.agent.a_longitude > :longitude_l " +
-//                        "and schedule.visit_date = :visit_date and schedule.agent.a_status = :a_status", Schedule.class)
-                ("select agent from Agent agent " +
+                ("select distinct agent from Agent agent " +
                         "left join fetch agent.scheduleList as schedule " +
                         "left join fetch schedule.center " +
                         "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
@@ -69,3 +64,6 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
 }
+
+
+//    select * from Agent where a_latitude < h and a_latitude > l and a_longitude < h and a_longitude > l and a_status = "WORK"

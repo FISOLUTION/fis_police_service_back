@@ -24,8 +24,8 @@ public class MessengerServiceImpl implements MessengerService {
     }
 
     @Override
-    public void deleteMessenger(Messenger messenger) {
-        messengerRepository.delete(messenger);
+    public void deleteMessenger(Long id) {
+        messengerRepository.delete(id);
     }
 
     @Override

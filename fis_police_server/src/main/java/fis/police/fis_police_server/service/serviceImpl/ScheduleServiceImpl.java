@@ -37,7 +37,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public void assignAgent(ScheduleSaveRequest request, Long userId) throws Exception {
+    public void assignAgent(ScheduleSaveRequest request, Long userId) {
         Center findCenter =  centerRepository.findById(request.getCenter_id());
         User findUser = userRepository.findById(userId);
         Agent findAgent = agentRepository.findById(request.getAgent_id());
