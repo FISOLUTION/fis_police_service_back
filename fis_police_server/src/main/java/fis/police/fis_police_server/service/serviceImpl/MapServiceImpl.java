@@ -55,7 +55,6 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public List<Center> centerNearCenter(Center center) {
-        System.out.println("center.getId() = " + center.getId());
         List<Center> centerList = centerRepository.findNearCenter(center.getC_latitude(), center.getC_longitude());
         if(centerList.isEmpty()) throw new NoResultException("centerNearCenter에서 결과가 없음");
         else return centerList;

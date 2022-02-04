@@ -4,10 +4,8 @@ import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Agent {
 
     @Id
@@ -124,5 +123,16 @@ public class Agent {
         this.a_status = a_status;
         this.a_longitude = a_longitude;
         this.a_latitude = a_latitude;
+    }
+
+    /*
+        날짜 : 2022/02/04 10:33 오전
+        작성자 : 현승구
+        작성내용 : 테스트 위한 생성자
+    */
+
+    public Agent(String a_name, String a_code) {
+        this.a_name = a_name;
+        this.a_code = a_code;
     }
 }
