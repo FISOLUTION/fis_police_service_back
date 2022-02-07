@@ -38,8 +38,6 @@ public class CallControllerImpl implements CallController {
         String date = dateTime.substring(0, 10);
         String time = dateTime.substring(11);
 
-        log.info("asdlfjkdaslkjfasd");
-
         try{
             // 기관과 콜 직원을 찾는 과정에서 NullPointerException 발생 가능
             Center center = callService.findCenter(request);

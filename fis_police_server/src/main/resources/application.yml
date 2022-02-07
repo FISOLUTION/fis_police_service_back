@@ -40,7 +40,7 @@ spring:
         default_batch_fetch_size: 100
 #  작성자 이승범 graceful shutdown을 위한 설정
   lifecycle:
-    timeout-per-shutdown-phase: 10s
+    timeout-per-shutdown-phase: 20s
 
 logging:
   level:
