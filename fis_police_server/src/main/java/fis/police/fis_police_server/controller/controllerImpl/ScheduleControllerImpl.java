@@ -39,7 +39,19 @@ public class ScheduleControllerImpl implements ScheduleController {
             HttpSession session = httpServletRequest.getSession();
             Long userId = (Long) session.getAttribute("loginUser");
             scheduleService.assignAgent(request, userId);
-        } catch (Exception e){
+            System.out.println(request.getCenter_id());
+            System.out.println(request.getAgent_id());
+            System.out.println(request.getReceipt_date());
+            System.out.println(request.getVisit_date());
+            System.out.println(request.getVisit_time());
+            System.out.println(request.getEstimate_num());
+            System.out.println(request.getCenter_etc());
+            System.out.println(request.getAgent_etc());
+        } catch (NullPointerException npe){
+            log.warn("[로그인 id값 : {}] [url: {}] [식별되지않는 시설 or 현장요원 or 콜직원 {}]",
+                    httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", npe.getMessage());
+            response.setStatus(400);
+        }catch (Exception e){
             log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", e.getMessage());
             response.setStatus(500);
@@ -74,7 +86,7 @@ public class ScheduleControllerImpl implements ScheduleController {
         try{
             scheduleService.modifySchedule(request);
         } catch (NullPointerException ne){
-            log.warn("[로그인 id 값 : {}] [url: {}] [존재하지 않는 요원 코드입니다. {}]",
+            log.warn("[로그인 id 값 : {}] [url: {}] [존재하지 않는 코드 or id입니다. {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", ne.getMessage());
             response.setStatus(400);
         } catch (Exception e){

@@ -33,7 +33,11 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
             log.info("[Before Handshake] [요청 Userid: {}]", user_id);
             return super.beforeHandshake(request, response, wsHandler, attributes);
         } catch (Exception e) {
-            log.error("[Before Handshake] [요청 Userid: {}] [오류: {}]", e.getMessage());
+            ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
+            HttpServletRequest req =  ssreq.getServletRequest();
+            // HttpSession 에 저장된 이용자의 아이디를 추출하는 경우
+            Long user_id = (Long) req.getSession().getAttribute("loginUser");
+            log.error("[Before Handshake] [요청 Userid: {}] [오류: {}]", user_id ,e.getMessage());
             return false;
         }
 

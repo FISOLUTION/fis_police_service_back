@@ -33,8 +33,8 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     @Transactional // 현장요원 추가
-    public void saveAgent(AgentSaveRequest request) throws ParseException, RestClientException,
-            IllegalStateException, IndexOutOfBoundsException, ConstraintViolationException {
+    public Agent saveAgent(AgentSaveRequest request) throws ParseException, RestClientException,
+            IllegalStateException, IndexOutOfBoundsException {
 
         validateDuplicateAgent(request.getA_code()); // 현장요원 코드 중복 검사
 
@@ -44,12 +44,14 @@ public class AgentServiceImpl implements AgentService {
         Agent agent = Agent.createAgent(request, hasCar, pair.getFirst(), pair.getSecond());
 
         agentRepository.save(agent);
+        return agent;
+
     }
 
     @Override
     @Transactional // 현장요원 수정
     // 수정사항 없어도 update 쿼리 나가는 이슈있음
-    public void modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException,
+    public Agent modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException,
             IndexOutOfBoundsException, RestClientException {
 
         Agent findAgent = agentRepository.findById(request.getAgent_id());
@@ -69,6 +71,7 @@ public class AgentServiceImpl implements AgentService {
         } else { // 현장요원 주소는 안바뀐 경우
             findAgent.modifyAgent(request, hasCar, findAgent.getA_longitude(), findAgent.getA_latitude(), agentStatus);
         }
+        return findAgent;
     }
 
     @Override // 전체 현장요원 조회
@@ -83,25 +86,4 @@ public class AgentServiceImpl implements AgentService {
         }
     }
 
-//    // NaverMap api를 사용하여 도로명 주소로 위도경도 알아내는 로직
-//    public Pair<Double, Double> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
-//            RestClientException{
-//        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-//        factory.setConnectionRequestTimeout(5000); // 연결시간 초과 5초
-//        factory.setReadTimeout(5000);   // 읽기시간 초과 5초
-//        RestTemplate restTemplate = new RestTemplate(factory);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
-//        httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
-//        String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + address;
-//        ResponseEntity<String> responseEntity =
-//                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
-//        JSONParser jsonParser = new JSONParser();
-//        JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
-//        JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
-//        JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
-//        Double x = Double.parseDouble(addressResponse.get("x").toString());
-//        Double y = Double.parseDouble(addressResponse.get("y").toString());
-//        return new Pair<Double, Double>(x, y);
-//    }
 }

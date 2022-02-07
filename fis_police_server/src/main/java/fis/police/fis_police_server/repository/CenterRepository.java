@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface CenterRepository {
     List<Center> findNearCenter(double latitude, double longitude);
 
     List<Center> findNameAndPh(String c_name, String c_ph);
+
+    void update_participation(Long id, Participation participation);
 }
