@@ -63,6 +63,14 @@ public class Agent {
 
 
     /*
+        날짜 : 2022/02/10 4:30 오후
+        작성자 : 원보라
+        작성내용 : 앱 도메인 추가
+    */
+    @OneToMany(mappedBy = "agent")
+    private List<Confirm> confirmList = new ArrayList<Confirm>();
+
+    /*
         작성날짜: 2022/01/11 5:05 PM
         작성자: 이승범
         작성내용: AgentService 구현을 위한 연관관계 메서드 및 setter 구현

@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
@@ -69,6 +70,17 @@ public class Schedule {
     @NotNull
     @Column
     private boolean valid;                 // 스케줄 유효한지
+
+    /*
+        날짜 : 2022/02/10 4:08 오후
+        작성자 : 원보라
+        작성내용 : 앱 도메인 추가
+    */
+    @Enumerated(EnumType.STRING)
+    private Accept accept;  //현장요원 일정 수락 여부
+
+
+
 
     /*
         날짜 : 2022/01/11 5:24 오후
