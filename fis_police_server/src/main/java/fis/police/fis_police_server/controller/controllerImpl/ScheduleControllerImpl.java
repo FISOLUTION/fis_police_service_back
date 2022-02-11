@@ -5,6 +5,7 @@ import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,22 +111,22 @@ public class ScheduleControllerImpl implements ScheduleController {
 
 
     /*
-               날짜 : 2022/02/11 10:29 오전
-               작성자 : 원보라
-               작성내용 : 앱 schedule
-           */
+           날짜 : 2022/02/11 10:29 오전
+           작성자 : 원보라
+           작성내용 : 앱 schedule
+    */
     //시설에 띄워줄 예약내역 리스트
     @Override
     @GetMapping("/schedule/confirm")
-    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) {
-        return null;
+    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest,@RequestParam("center_id") Long center_id) {
+        return scheduleService.findByCenter(center_id, LocalDate.now());
     }
 
     //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
     @Override
     @GetMapping("/schedule/today")
-    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest) {
-        return null;
+    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest,@RequestParam("agent_id") Long agent_id) {
+        return scheduleService.findByAgent(agent_id, LocalDate.now());
     }
 
     //schedule 의 late_comment 컬럼 update
