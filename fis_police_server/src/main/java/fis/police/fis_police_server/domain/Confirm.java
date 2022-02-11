@@ -3,12 +3,13 @@ package fis.police.fis_police_server.domain;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Confirm {
 
@@ -40,12 +41,14 @@ public class Confirm {
     @Enumerated(EnumType.STRING)
     private Complete complete;  // 시설이 확인했는지 여부
 
-    public static Confirm createConfirm(ConfirmFromAgentRequest request, Agent agent, Center center) {
+
+    // 양방향 메서드 만들어야 하나?
+    public static Confirm createConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
         Confirm confirm = new Confirm();
-        confirm.agent = agent;
-        confirm.center = center;
-        confirm.visit_date = request.getVisit_date();
-        confirm.visit_time = request.getVisit_time();
+        confirm.agent = schedule.getAgent();
+        confirm.center = schedule.getCenter();
+        confirm.visit_date = String.valueOf(schedule.getVisit_date());   // schedule.getVisit_date(),time() 은 localDate 라서 안넣었음.
+        confirm.visit_time = String.valueOf(schedule.getVisit_time());
         confirm.new_child = request.getNew_child();
         confirm.old_child = request.getOld_child();
         confirm.senile = request.getSenile();
