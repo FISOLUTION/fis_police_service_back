@@ -76,6 +76,7 @@ public class Schedule {
         작성자 : 원보라
         작성내용 : 앱 도메인 추가
     */
+    //null 이면 아직 수락 거부 안한 상태
     @Enumerated(EnumType.STRING)
     private Accept accept;  //현장요원 일정 수락 여부
 
@@ -100,7 +101,7 @@ public class Schedule {
     */
     public static Schedule createSchedule(Center center, User user, Agent agent, LocalDate receipt_date,
                                           LocalDate visit_date, LocalTime visit_time, Integer estimate_num,
-                                          String center_etc, String agent_etc) {
+                                          String center_etc, String agent_etc,Accept accept, String late_comment) {
         Schedule schedule = new Schedule();
         schedule.mappingCenter(center);
         schedule.mappingUser(user);
@@ -112,6 +113,8 @@ public class Schedule {
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
         schedule.valid = true;
+        schedule.accept = accept;
+        schedule.late_comment = late_comment;
         return schedule;
     }
 

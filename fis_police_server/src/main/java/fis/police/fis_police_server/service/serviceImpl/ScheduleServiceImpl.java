@@ -4,9 +4,7 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import fis.police.fis_police_server.dto.ScheduleSaveRequest;
-import fis.police.fis_police_server.dto.ScheduleByDateResponse;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.ScheduleRepository;
@@ -85,4 +83,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule findSchedule = scheduleRepository.findById(schedule_id);
         findSchedule.cancel();
     }
+
+
+    /*
+        날짜 : 2022/02/11 1:38 오후
+        작성자 : 원보라
+        작성내용 : 앱
+    */
+    // 방문 예정 일정들 -center 화면
+    @Override
+    public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) {
+        return scheduleRepository.findByCenter(center_id,today);
+    }
+
+    //현장요원 - 오늘 방문 일정
+    @Override
+    public List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today) {
+        return scheduleRepository.findByAgent(agent_id, today);
+    }
+
+
 }

@@ -1,10 +1,7 @@
 package fis.police.fis_police_server;
 
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.domain.enumType.HasCar;
-import fis.police.fis_police_server.domain.enumType.InOut;
-import fis.police.fis_police_server.domain.enumType.Participation;
-import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.domain.enumType.*;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import lombok.RequiredArgsConstructor;
@@ -65,11 +62,25 @@ public class initDb2 {
                     LocalDate.now(), UserAuthority.ADMIN);
             em.persist(user3);
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
-                    LocalDate.now(), LocalTime.now(), 123, "111", "111");
+                    LocalDate.now(), LocalTime.now(), 111, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
-            Schedule schedule2 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
-                    LocalDate.now(), LocalTime.now(), 123, "222", "222");
+            Schedule schedule2 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
+                    LocalDate.now(), LocalTime.now(), 222, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule2);
+
+            Schedule schedule3 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
+                    LocalDate.parse("1999-09-09"), LocalTime.now(), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+            em.persist(schedule3);
+            Schedule schedule4 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
+                    LocalDate.now(),LocalTime.parse("10:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+            em.persist(schedule4);
+
+            Schedule schedule5 = Schedule.createSchedule(center3, user1, agent1, LocalDate.now(),
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("11:00:00"), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+            em.persist(schedule5);
+            Schedule schedule6 = Schedule.createSchedule(center3, user2, agent2, LocalDate.now(),
+                    LocalDate.parse("2022-09-08"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+            em.persist(schedule6);
 
 /*
     날짜 : 2022/01/17 4:39 오후
