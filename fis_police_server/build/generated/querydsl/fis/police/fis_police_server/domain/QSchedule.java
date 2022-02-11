@@ -22,6 +22,8 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public static final QSchedule schedule = new QSchedule("schedule");
 
+    public final EnumPath<fis.police.fis_police_server.domain.enumType.Accept> accept = createEnum("accept", fis.police.fis_police_server.domain.enumType.Accept.class);
+
     public final QAgent agent;
 
     public final StringPath agent_etc = createString("agent_etc");
@@ -37,6 +39,8 @@ public class QSchedule extends EntityPathBase<Schedule> {
     public final NumberPath<Integer> estimate_num = createNumber("estimate_num", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath late_comment = createString("late_comment");
 
     public final StringPath modified_info = createString("modified_info");
 

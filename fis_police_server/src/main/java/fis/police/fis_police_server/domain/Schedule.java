@@ -79,6 +79,7 @@ public class Schedule {
     @Enumerated(EnumType.STRING)
     private Accept accept;  //현장요원 일정 수락 여부
 
+    private String late_comment;    //늦는 사유 멘트 현장요원이 선택하면 시설에 띄워주기
 
 
 

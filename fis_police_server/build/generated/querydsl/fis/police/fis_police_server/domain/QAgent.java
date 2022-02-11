@@ -40,6 +40,8 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.AgentStatus> a_status = createEnum("a_status", fis.police.fis_police_server.domain.enumType.AgentStatus.class);
 
+    public final ListPath<Confirm, QConfirm> confirmList = this.<Confirm, QConfirm>createList("confirmList", Confirm.class, QConfirm.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<Schedule, QSchedule> scheduleList = this.<Schedule, QSchedule>createList("scheduleList", Schedule.class, QSchedule.class, PathInits.DIRECT2);
