@@ -123,6 +123,32 @@ public class Center {
         this.c_address = center.getC_address();
     }
 
+    /*
+        작성 날짜: 2022/02/11 10:32 오전
+        작성자: 고준영
+        작성 내용: center modify dto, center save dto 용 생성자 (confirm list가
+    */
+
+    public Center(Long id, String c_sido, String c_sigungu, String c_name, String c_type, String c_status, String c_address, String c_zipcode, String c_ph, String c_faxNum, String c_people, String c_hpAddress, Double c_latitude, Double c_longitude, Participation participation, Visited visited, List<Call> callList, List<Schedule> scheduleList) {
+        this.id = id;
+        this.c_sido = c_sido;
+        this.c_sigungu = c_sigungu;
+        this.c_name = c_name;
+        this.c_type = c_type;
+        this.c_status = c_status;
+        this.c_address = c_address;
+        this.c_zipcode = c_zipcode;
+        this.c_ph = c_ph;
+        this.c_faxNum = c_faxNum;
+        this.c_people = c_people;
+        this.c_hpAddress = c_hpAddress;
+        this.c_latitude = c_latitude;
+        this.c_longitude = c_longitude;
+        this.participation = participation;
+        this.visited = visited;
+        this.callList = callList;
+        this.scheduleList = scheduleList;
+    }
 
     @Override
     public String toString() {
