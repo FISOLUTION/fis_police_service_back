@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,17 +37,15 @@ public interface ScheduleController {
         List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest,Long agent_id);       //현장요원 id 꺼내야함
 
         //schedule 의 late_comment 컬럼 update
-        void updateLateComment(AppLateCommentRequest request,HttpServletRequest httpServletRequest);
+        public void updateLateComment(AppLateCommentRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response);
 
-        //아직 수락/거절이 정해지지않은 스케쥴 리스트
-        List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest);
+        //아직 수락/거절이 정해지지않은 스케줄 리스트
+        List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest, Long agent_id);
 
         //수락/거절 update
-        void updateAcceptSchedule(AppAcceptScheduleRequest request,HttpServletRequest httpServletRequest);
+        void updateAcceptSchedule(AppAcceptScheduleRequest request,HttpServletRequest httpServletRequest, HttpServletResponse response);
 
         //수락된 예정 일정 열람
-        List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest);
-
-
+        List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest, Long agent_id);
 }
 

@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class AppAcceptScheduleRequest {
+    private Long schedule_id;
     private Accept accept;
 }
