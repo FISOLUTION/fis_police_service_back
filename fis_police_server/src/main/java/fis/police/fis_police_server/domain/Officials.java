@@ -35,7 +35,7 @@ public class Officials {
     @JoinColumn(name = "center_id")
     private Center center;
 
-    @OneToMany(mappedBy = "hope")
+    @OneToMany(mappedBy = "officials")
     private List<Hope> hopeList = new ArrayList<Hope>();
 
 
