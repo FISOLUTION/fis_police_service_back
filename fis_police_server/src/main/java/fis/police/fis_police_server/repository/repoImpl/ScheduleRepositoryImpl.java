@@ -53,7 +53,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         return em.createQuery(
                 "select new fis.police.fis_police_server.dto.ScheduleByDateResponse(" +
                         "s.id, a.a_code, a.a_name, c.id, c.c_name, c.c_address, c.c_ph, s.estimate_num, s.visit_date, " +
-                        "s.visit_time, s.center_etc, s.agent_etc, s.modified_info, s.total_etc, s.call_check, s.call_check_info)" +
+                        "s.visit_time, s.center_etc, s.agent_etc, s.modified_info, s.total_etc, s.call_check, s.call_check_info, s.accept)" +
                         " from Schedule s " +
                         " join s.agent a" +
                         " join s.user u" +
