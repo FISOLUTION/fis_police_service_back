@@ -113,6 +113,11 @@ public class Schedule {
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
         schedule.valid = true;
+        /*
+            날짜 : 2022/02/11 3:45 오후
+            작성자 : 원보라
+            작성내용 : 앱 컬럼 추가
+        */
         schedule.accept = accept;
         schedule.late_comment = late_comment;
         return schedule;
@@ -146,6 +151,21 @@ public class Schedule {
         this.call_check = request.getCall_check();
         this.call_check_info = request.getCall_check_info();
     }
+
+    /*
+        날짜 : 2022/02/11 3:46 오후
+        작성자 : 원보라
+        작성내용 : updateLateComment, updateAccept
+    */
+    public void updateLateComment(String late_comment) {
+        this.late_comment = late_comment;
+    }
+
+    public void updateAccept(Accept accept) {
+        this.accept = accept;
+    }
+
+
 
     public void cancel(){
         this.valid = false;

@@ -85,6 +85,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
         날짜 : 2022/02/11 1:38 오후
         작성자 : 원보라
@@ -92,14 +94,46 @@ public class ScheduleServiceImpl implements ScheduleService {
     */
     // 방문 예정 일정들 -center 화면
     @Override
+    @Transactional
     public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) {
         return scheduleRepository.findByCenter(center_id,today);
     }
 
     //현장요원 - 오늘 방문 일정
     @Override
+    @Transactional
     public List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today) {
         return scheduleRepository.findByAgent(agent_id, today);
+    }
+
+    //현장요원 - 늦은 사유 업데이트
+    @Override
+    @Transactional
+    public Long updateLateComment(AppLateCommentRequest request) {
+        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
+        schedule.updateLateComment(request.getLate_comment());
+        return schedule.getId();
+    }
+
+    //현장요원 - 아직 수락/거절이 정해지지않은 스케줄 리스트
+    @Override
+    @Transactional
+    public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
+        return scheduleRepository.findByAgentIncompleteSchedule(agent_id);
+    }
+
+    //현장요원 - 수락/거절 버튼 누를 시 update
+    @Override
+    @Transactional
+    public void updateAccept(AppAcceptScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
+        schedule.updateAccept(request.getAccept());
+    }
+
+    //현장요원 - 확정된 예정 스케줄 리스트
+    @Override
+    public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today) {
+        return scheduleRepository.findByAgentAllSchedule(agent_id,today);
     }
 
 

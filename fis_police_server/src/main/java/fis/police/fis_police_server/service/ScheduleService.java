@@ -35,4 +35,16 @@ public interface ScheduleService {
 
     //현장요원 - 오늘 방문 일정
     List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today);
+
+    //현장요원 - 늦는 사유 update 기본값 null 스케쥴 id 반환
+    Long updateLateComment(AppLateCommentRequest request);
+
+    //현장요원 - 아직 수락/거절이 정해지지않은 스케줄 리스트
+    List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id);
+
+    //현장요원 - 수락/거절 버튼 누를 시 update
+    void updateAccept(AppAcceptScheduleRequest request);
+
+    //현장요원 - 확정된 예정 스케줄 리스트
+    List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today);
 }

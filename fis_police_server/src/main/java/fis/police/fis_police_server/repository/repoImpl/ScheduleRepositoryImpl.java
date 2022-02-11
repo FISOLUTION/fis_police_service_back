@@ -65,6 +65,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
         날짜 : 2022/02/11 11:47 오전
         작성자 : 원보라
@@ -105,6 +107,41 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                         .and(qSchedule.visit_date.eq(today))    //오늘 날짜에 해당하는 일정을 보여줌
                 )
                 .orderBy(qSchedule.visit_time.asc())//시간으로 정렬해서 주기
+                .fetch();
+    }
+
+    //현장요원 - 아직 수락/거절이 정해지지않은 스케쥴 리스트
+    @Override
+    public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
+        return jpaQueryFactory
+                .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                .from(qSchedule)
+                .leftJoin(qSchedule.center, qCenter)
+                .distinct()
+                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+                        .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
+                        .and(qSchedule.accept.isNull()) //현장요원이 수락|거부를 하지 않은 (accept 값이 null인 것들)
+                )
+                .orderBy(qSchedule.visit_date.asc(),qSchedule.visit_time.asc())// 방문 예쩡 날짜로 정렬해서 주기
+                .fetch();
+    }
+
+    //현장요원 - 확정된 예정 스케줄 리스트
+    @Override
+    public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id,LocalDate today) {
+        return jpaQueryFactory
+                .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                .from(qSchedule)
+                .leftJoin(qSchedule.center, qCenter)
+                .distinct()
+                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+                        .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
+                        .and(qSchedule.accept.eq(Accept.accept)) //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.visit_date.goe(today))    //오늘과 미래의 일정들
+                )
+                .orderBy(qSchedule.visit_date.asc(), qSchedule.visit_time.asc())//시간으로 정렬해서 주기
                 .fetch();
     }
 }

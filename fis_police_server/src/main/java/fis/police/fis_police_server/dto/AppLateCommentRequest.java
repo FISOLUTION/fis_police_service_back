@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class AppLateCommentRequest {
+    private Long schedule_id;
     private String late_comment;
 }

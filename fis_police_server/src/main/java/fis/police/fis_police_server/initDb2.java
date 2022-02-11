@@ -64,22 +64,22 @@ public class initDb2 {
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 111, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
-            Schedule schedule2 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
+            Schedule schedule2 = Schedule.createSchedule(center1, user2, agent1, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 222, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule2);
 
             Schedule schedule3 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
                     LocalDate.parse("1999-09-09"), LocalTime.now(), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule3);
-            Schedule schedule4 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
+            Schedule schedule4 = Schedule.createSchedule(center2, user2, agent1, LocalDate.now(),
                     LocalDate.now(),LocalTime.parse("10:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule4);
 
             Schedule schedule5 = Schedule.createSchedule(center3, user1, agent1, LocalDate.now(),
-                    LocalDate.parse("2022-09-09"),LocalTime.parse("11:00:00"), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("11:00:00"), 333, "특이사항 없음", "특이사항 없음", null,null);
             em.persist(schedule5);
-            Schedule schedule6 = Schedule.createSchedule(center3, user2, agent2, LocalDate.now(),
-                    LocalDate.parse("2022-09-08"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+            Schedule schedule6 = Schedule.createSchedule(center3, user2, agent1, LocalDate.now(),
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",null,"차가 막혀요");
             em.persist(schedule6);
 
 /*
