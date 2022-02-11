@@ -150,6 +150,7 @@ public class Schedule {
         this.total_etc = request.getTotal_etc();
         this.call_check = request.getCall_check();
         this.call_check_info = request.getCall_check_info();
+        this.accept = request.getAccept();
     }
 
     /*
