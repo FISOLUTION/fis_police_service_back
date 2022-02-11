@@ -1,9 +1,7 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.ScheduleController;
-import fis.police.fis_police_server.dto.Result;
-import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import fis.police.fis_police_server.dto.ScheduleSaveRequest;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.List;
 
 /*
     작성날짜: 2022/01/12 4:20 PM
@@ -107,5 +106,53 @@ public class ScheduleControllerImpl implements ScheduleController {
                     httpServletRequest.getSession().getAttribute("loginUser"), "/schedule/cancel", e.getMessage());
             response.setStatus(500);
         }
+    }
+
+
+    /*
+               날짜 : 2022/02/11 10:29 오전
+               작성자 : 원보라
+               작성내용 : 앱 schedule
+           */
+    //시설에 띄워줄 예약내역 리스트
+    @Override
+    @GetMapping("/schedule/confirm")
+    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) {
+        return null;
+    }
+
+    //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
+    @Override
+    @GetMapping("/schedule/today")
+    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest) {
+        return null;
+    }
+
+    //schedule 의 late_comment 컬럼 update
+    @Override
+    @PostMapping("/schedule/late")
+    public void updateLateComment(AppLateCommentRequest request, HttpServletRequest httpServletRequest) {
+
+    }
+
+    //아직 수락/거절이 정해지지않은 스케쥴 리스트
+    @Override
+    @GetMapping("/schedule/incomplete")
+    public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest) {
+        return null;
+    }
+
+    //수락/거절 update
+    @Override
+    @PostMapping("/schedule/accept")
+    public void updateAcceptSchedule(AppAcceptScheduleRequest request, HttpServletRequest httpServletRequest) {
+
+    }
+
+    //수락된 예정 일정 열람
+    @Override
+    @GetMapping("/schedule/agent")
+    public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest) {
+        return null;
     }
 }
