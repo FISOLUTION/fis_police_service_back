@@ -4,6 +4,11 @@ import lombok.Data;
 
 import java.util.List;
 
+/*
+    작성 날짜: 2022/02/14 11:40 오전
+    작성자: 고준영
+    작성 내용: 이게 뭐노? 아마 ... 확인서 결재 후 응답 같은데 모르겄네
+*/
 @Data
 public class ConfirmUpdateCompleteResponse {
 

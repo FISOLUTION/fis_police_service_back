@@ -6,6 +6,11 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    작성 날짜: 2022/02/14 11:39 오전
+    작성자: 고준영
+    작성 내용: 확인서 조회 시 보여줄 내용 (agent 여러명일 경우 list 로 합쳐서 보여줌)
+*/
 @Data
 public class ConfirmFormResponse {
 

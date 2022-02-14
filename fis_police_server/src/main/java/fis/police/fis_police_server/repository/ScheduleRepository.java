@@ -9,7 +9,6 @@ import fis.police.fis_police_server.dto.ScheduleByDateResponse;
 import java.time.LocalDate;
 import java.util.List;
 
-//고준영
 public interface ScheduleRepository {
 
     void save(Schedule schedule);

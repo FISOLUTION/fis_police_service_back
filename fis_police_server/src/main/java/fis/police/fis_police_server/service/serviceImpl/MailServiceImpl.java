@@ -4,8 +4,6 @@ import com.sun.mail.util.logging.MailHandler;
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.dto.MailDTO;
-import fis.police.fis_police_server.dto.MailSendRequest;
 import fis.police.fis_police_server.dto.MailSendResponse;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.UserRepository;
