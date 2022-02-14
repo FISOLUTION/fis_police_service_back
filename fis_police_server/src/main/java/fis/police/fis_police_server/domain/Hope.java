@@ -50,7 +50,7 @@ public class Hope {
         작성자: 고준영
         작성 내용: 신청서, 시설 묶기
     */
-    public static Hope createHope(HopeSaveRequest request, Officials officials) {
+    public static Hope createHope(HopeSaveRequest request, Officials officials, Center center) {
         Hope hope = new Hope();
         hope.accept = request.getAccept();
         hope.h_date = request.getH_date();
@@ -59,7 +59,7 @@ public class Hope {
         hope.h_mail = request.getH_mail();
         hope.h_ph = request.getH_ph();
         hope.officials = officials;
-
+        hope.center = center;
         return hope;
     }
 

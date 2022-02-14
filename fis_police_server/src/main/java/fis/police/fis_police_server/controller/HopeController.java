@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.HopeSaveRequest;
+import fis.police.fis_police_server.dto.Result;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,5 +16,8 @@ public interface HopeController {
     void saveHope(HttpServletRequest request, HopeSaveRequest hopeRequest);
 
     // 신청서 리스트
-    void getHope();
+    Result getHope();
+
+    // 신청서 -> 스케쥴 잡힘  complete 컬럼 업데이트
+    void updateComplete(@PathVariable Long hope_id);
 }

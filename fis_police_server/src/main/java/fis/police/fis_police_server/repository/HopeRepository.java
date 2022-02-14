@@ -1,6 +1,9 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Hope;
+import fis.police.fis_police_server.domain.enumType.Complete;
+
+import java.util.List;
 
 /*
     작성 날짜: 2022/02/14 11:45 오전
@@ -9,5 +12,7 @@ import fis.police.fis_police_server.domain.Hope;
 */
 public interface HopeRepository {
     void saveHope(Hope hope);
-    void listOfHope();
+    Hope findById(Long id);
+    List<Hope> listOfHope();
+    void updateHopeComplete(Long id, Complete complete);
 }
