@@ -1,22 +1,21 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import lombok.AccessLevel;
+
+import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Schedule {
-
 
     @Id
     @GeneratedValue
@@ -73,6 +72,19 @@ public class Schedule {
     private boolean valid;                 // 스케줄 유효한지
 
     /*
+        날짜 : 2022/02/10 4:08 오후
+        작성자 : 원보라
+        작성내용 : 앱 도메인 추가
+    */
+    //null 이면 아직 수락 거부 안한 상태
+    @Enumerated(EnumType.STRING)
+    private Accept accept;  //현장요원 일정 수락 여부
+
+    private String late_comment;    //늦는 사유 멘트 현장요원이 선택하면 시설에 띄워주기
+
+
+
+    /*
         날짜 : 2022/01/11 5:24 오후
         작성자 : 현승구
         작성내용 : test 코드를 위한 constructor
@@ -89,7 +101,7 @@ public class Schedule {
     */
     public static Schedule createSchedule(Center center, User user, Agent agent, LocalDate receipt_date,
                                           LocalDate visit_date, LocalTime visit_time, Integer estimate_num,
-                                          String center_etc, String agent_etc) {
+                                          String center_etc, String agent_etc,Accept accept, String late_comment) {
         Schedule schedule = new Schedule();
         schedule.mappingCenter(center);
         schedule.mappingUser(user);
@@ -100,6 +112,28 @@ public class Schedule {
         schedule.estimate_num = estimate_num;
         schedule.center_etc = center_etc;
         schedule.agent_etc = agent_etc;
+        schedule.valid = true;
+        /*
+            날짜 : 2022/02/11 3:45 오후
+            작성자 : 원보라
+            작성내용 : 앱 컬럼 추가
+        */
+        schedule.accept = accept;
+        schedule.late_comment = late_comment;
+        return schedule;
+    }
+
+    public static Schedule createSchedule(Center center, User user, Agent agent, ScheduleSaveRequest request) {
+        Schedule schedule = new Schedule();
+        schedule.mappingCenter(center);
+        schedule.mappingUser(user);
+        schedule.mappingAgent(agent);
+        schedule.receipt_date = request.getReceipt_date();
+        schedule.visit_date = request.getVisit_date();
+        schedule.visit_time = request.getVisit_time();
+        schedule.estimate_num = request.getEstimate_num();
+        schedule.center_etc = request.getCenter_etc();
+        schedule.agent_etc = request.getAgent_etc();
         schedule.valid = true;
         return schedule;
     }
@@ -116,7 +150,23 @@ public class Schedule {
         this.total_etc = request.getTotal_etc();
         this.call_check = request.getCall_check();
         this.call_check_info = request.getCall_check_info();
+        this.accept = request.getAccept();
     }
+
+    /*
+        날짜 : 2022/02/11 3:46 오후
+        작성자 : 원보라
+        작성내용 : updateLateComment, updateAccept
+    */
+    public void updateLateComment(String late_comment) {
+        this.late_comment = late_comment;
+    }
+
+    public void updateAccept(Accept accept) {
+        this.accept = accept;
+    }
+
+
 
     public void cancel(){
         this.valid = false;

@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface AgentService {
     // 현장요원 추기
-    void saveAgent(AgentSaveRequest agentSaveResponse) throws ParseException,
+    Agent saveAgent(AgentSaveRequest agentSaveResponse) throws ParseException,
             RestClientException, IllegalStateException, IndexOutOfBoundsException;
 
     // 현장요원 수정
-    void modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
+    Agent modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
 
     // 현장요원 조회
     List<Agent> getAgents();

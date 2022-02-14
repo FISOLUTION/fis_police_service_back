@@ -4,9 +4,7 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import fis.police.fis_police_server.dto.ScheduleSaveRequest;
-import fis.police.fis_police_server.dto.ScheduleByDateResponse;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.repository.ScheduleRepository;
@@ -37,14 +35,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public void assignAgent(ScheduleSaveRequest request, Long userId) {
+    public Schedule assignAgent(ScheduleSaveRequest request, Long userId) {
         Center findCenter =  centerRepository.findById(request.getCenter_id());
         User findUser = userRepository.findById(userId);
         Agent findAgent = agentRepository.findById(request.getAgent_id());
-        Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request.getReceipt_date(),
-                request.getVisit_date(), request.getVisit_time(), request.getEstimate_num(),
-                request.getCenter_etc(), request.getAgent_etc());
+        Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request);
         scheduleRepository.save(schedule);
+        return schedule;
     }
 /*
     작성날짜: 2022/01/13 5:54 PM
@@ -62,7 +59,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 */
     @Override
     @Transactional
-    public void modifySchedule(ScheduleModifyRequest request) throws NullPointerException{
+    public Schedule modifySchedule(ScheduleModifyRequest request) throws NullPointerException{
         Schedule findSchedule = scheduleRepository.findById(request.getSchedule_id());
         List<Agent> findAgentList = agentRepository.findByA_code(request.getA_code());
         // 해당하는 현장요원이 존재하는지 검사
@@ -72,6 +69,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         Agent findAgent = findAgentList.get(0);
         Center findCenter = centerRepository.findById(request.getCenter_id());
         findSchedule.modifySchedule(request, findAgent, findCenter);
+        return findSchedule;
     }
 
     /*
@@ -85,4 +83,58 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule findSchedule = scheduleRepository.findById(schedule_id);
         findSchedule.cancel();
     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+        날짜 : 2022/02/11 1:38 오후
+        작성자 : 원보라
+        작성내용 : 앱
+    */
+    // 방문 예정 일정들 -center 화면
+    @Override
+    @Transactional
+    public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) {
+        return scheduleRepository.findByCenter(center_id,today);
+    }
+
+    //현장요원 - 오늘 방문 일정
+    @Override
+    @Transactional
+    public List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today) {
+        return scheduleRepository.findByAgent(agent_id, today);
+    }
+
+    //현장요원 - 늦은 사유 업데이트
+    @Override
+    @Transactional
+    public Long updateLateComment(AppLateCommentRequest request) {
+        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
+        schedule.updateLateComment(request.getLate_comment());
+        return schedule.getId();
+    }
+
+    //현장요원 - 아직 수락/거절이 정해지지않은 스케줄 리스트
+    @Override
+    @Transactional
+    public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
+        return scheduleRepository.findByAgentIncompleteSchedule(agent_id);
+    }
+
+    //현장요원 - 수락/거절 버튼 누를 시 update
+    @Override
+    @Transactional
+    public void updateAccept(AppAcceptScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
+        schedule.updateAccept(request.getAccept());
+    }
+
+    //현장요원 - 확정된 예정 스케줄 리스트
+    @Override
+    public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today) {
+        return scheduleRepository.findByAgentAllSchedule(agent_id,today);
+    }
+
+
 }

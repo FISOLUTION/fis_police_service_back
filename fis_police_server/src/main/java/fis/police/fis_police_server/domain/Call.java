@@ -6,13 +6,12 @@ import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor()
 @Table(name = "Calls")
 public class Call {
 
@@ -112,5 +111,18 @@ public class Call {
 
     public Call(Center center) {
         this.center = center;
+    }
+
+    /*
+        작성 날짜: 2022/02/04 10:17 오전
+        작성자: 고준영
+        작성 내용: test code 위한 constructor
+    */
+
+    public Call(Center center, String date, String time, String m_email) {
+        this.center = center;
+        this.date = date;
+        this.time = time;
+        this.m_email = m_email;
     }
 }

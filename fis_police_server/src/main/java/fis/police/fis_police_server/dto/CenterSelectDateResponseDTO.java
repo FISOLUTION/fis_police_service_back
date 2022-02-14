@@ -28,7 +28,6 @@ public class CenterSelectDateResponseDTO {
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
 
     public CenterSelectDateResponseDTO(Agent agent, LocalDate visit_date){
-        System.out.println("selectDateResDTO 생성 ") ;
         this.agent_id = agent.getId();
         this.a_name = agent.getA_name();
         this.a_ph = agent.getA_ph();
@@ -62,8 +61,6 @@ public class CenterSelectDateResponseDTO {
         private String total_etc;               // 비고
 
         public ScheduleDTO(Schedule schedule) {
-            System.out.println("====================== ScheduleDTO 생성 ======================");
-            System.out.println("schedule.getId() = " + schedule.getId());
             this.schedule_id = schedule.getId();
             this.center = new CenterDTO(schedule.getCenter().getC_name(),schedule.getCenter().getC_latitude(),schedule.getCenter().getC_longitude());
             this.visit_date = schedule.getVisit_date();
@@ -72,7 +69,6 @@ public class CenterSelectDateResponseDTO {
             this.center_etc = schedule.getCenter_etc();
             this.agent_etc = schedule.getAgent_etc();
             this.total_etc = schedule.getTotal_etc();
-            System.out.println("====================== ScheduleDTO 생성 ======================");
         }
 
         @Override

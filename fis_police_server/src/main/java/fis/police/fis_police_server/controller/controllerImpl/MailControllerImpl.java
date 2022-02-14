@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 /*
     작성 날짜: 2022/01/10 2:07 오후
     작성자: 고준영
-    작성 내용:  프론트에서 직접 받아온 메일 주소를 서비스 계층으로 보냄
+    작성 내용:  시설 담당자에게 메일 전송
 */
 @RestController
 @RequiredArgsConstructor

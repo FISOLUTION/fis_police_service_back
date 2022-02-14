@@ -6,6 +6,7 @@ import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import org.json.simple.parser.ParseException;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
 
 public interface CenterService {
@@ -13,7 +14,7 @@ public interface CenterService {
     List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException;
 
     //  시설에 해당하는 콜정보, 스케줄정보, 시설정보 반환 로직
-    Center centerInfo(Long center_id);
+    Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException;
 
     // 시설 추기
     void saveCenter(Center center) throws ParseException, DuplicateSaveException;

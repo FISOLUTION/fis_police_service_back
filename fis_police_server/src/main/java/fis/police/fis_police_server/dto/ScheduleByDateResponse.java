@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,5 @@ public class ScheduleByDateResponse {
     private String total_etc;  // 스케쥴 특이사항
     private String call_check;    // 최근 통화 상태
     private String call_check_info;   // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
+    private Accept accept;//일정 수락 여부
 }
