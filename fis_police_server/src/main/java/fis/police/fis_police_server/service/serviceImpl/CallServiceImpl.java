@@ -37,6 +37,7 @@ public class CallServiceImpl implements CallService {
 
         centerRepository.update_participation(request.getCenter_id(), request.getParticipation());
 
+
         // 센터의 참여여부 즉시 업데이트
 //        center.update_participation(request.getParticipation());
 
