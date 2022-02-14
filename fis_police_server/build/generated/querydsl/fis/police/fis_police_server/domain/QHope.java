@@ -24,6 +24,8 @@ public class QHope extends EntityPathBase<Hope> {
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Accept> accept = createEnum("accept", fis.police.fis_police_server.domain.enumType.Accept.class);
 
+    public final QCenter center;
+
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Complete> complete = createEnum("complete", fis.police.fis_police_server.domain.enumType.Complete.class);
 
     public final StringPath h_date = createString("h_date");
@@ -56,6 +58,7 @@ public class QHope extends EntityPathBase<Hope> {
 
     public QHope(Class<? extends Hope> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
         this.officials = inits.isInitialized("officials") ? new QOfficials(forProperty("officials"), inits.get("officials")) : null;
     }
 
