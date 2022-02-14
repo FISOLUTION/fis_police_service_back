@@ -10,7 +10,11 @@ import fis.police.fis_police_server.dto.ConfirmListForCenterResponse;
 import fis.police.fis_police_server.dto.Result;
 
 import java.util.List;
-
+/*
+    작성 날짜: 2022/02/14 11:47 오전
+    작성자: 고준영
+    작성 내용: 확인서에 대한 서비스
+*/
 public interface ConfirmService {
 
     // 확인서 저장

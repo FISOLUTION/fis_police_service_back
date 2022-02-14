@@ -69,7 +69,13 @@ public class Center {
     @OneToMany(mappedBy = "center", cascade = CascadeType.PERSIST)
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
-
+    /*
+        작성 날짜: 2022/02/14 1:35 오후
+        작성자: 고준영
+        작성 내용: 신청서와 시설을 연결
+    */
+    @OneToMany(mappedBy = "center")
+    private List<Hope> hopeList = new ArrayList<Hope>();
     /*
         날짜 : 2022/02/10 4:40 오후
         작성자 : 원보라
