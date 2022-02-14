@@ -41,7 +41,11 @@ public class Confirm {
     @Enumerated(EnumType.STRING)
     private Complete complete;  // 시설이 확인했는지 여부
 
-
+    /*
+        작성 날짜: 2022/02/14 11:36 오전
+        작성자: 고준영
+        작성 내용: 확인서, 일정, 요원, 센터 묶기
+    */
     // 양방향 메서드 만들어야 하나?
     public static Confirm createConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
         Confirm confirm = new Confirm();

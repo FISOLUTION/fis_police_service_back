@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-// 고준앱
+/*
+    작성 날짜: 2022/02/14 11:32 오전
+    작성자: 고준영
+    작성 내용: 확인서 제출(저장), 확인서 조회, 확인서 결재
+*/
 public interface ConfirmController {
     // 현장요원이 확인서 작성하여 제출(인원에 대한 정보만 작성하여 제출하면 됨)
     // schedule_id 에서 agent, center, 방문날짜에 대한 저보 모두 열람 가능 (schedule 에는 날짜와 시간이 local 로 박혀있어, 우선은 프론트에서 복사하여 보내도록 설정해놓았음)

@@ -14,6 +14,11 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 
+/*
+    작성 날짜: 2022/02/14 11:46 오전
+    작성자: 고준영
+    작성 내용: 확인서 저장, 조회
+*/
 @Repository
 @RequiredArgsConstructor
 public class ConfirmRepositoryImpl implements ConfirmRepository {

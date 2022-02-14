@@ -2,6 +2,7 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.Complete;
+import fis.police.fis_police_server.dto.HopeSaveRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -34,5 +35,32 @@ public class Hope {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "official_id")
     private Officials officials;
+
+    /*
+        작성 날짜: 2022/02/14 \
+        작성자: 고준영
+        작성 내용: 신청서와 시설 연결
+    */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "center_id")
+    private Center center;
+
+    /*
+        작성 날짜: 2022/02/14 11:37 오전
+        작성자: 고준영
+        작성 내용: 신청서, 시설 묶기
+    */
+    public static Hope createHope(HopeSaveRequest request, Officials officials, Center center) {
+        Hope hope = new Hope();
+        hope.accept = request.getAccept();
+        hope.h_date = request.getH_date();
+        hope.h_time = request.getH_time();
+        // Officials 회원가입할 때 받은 이메일, 전화번호를 작성해야하는지,, 궁금
+        hope.h_mail = request.getH_mail();
+        hope.h_ph = request.getH_ph();
+        hope.officials = officials;
+        hope.center = center;
+        return hope;
+    }
 
 }
