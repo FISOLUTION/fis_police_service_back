@@ -6,6 +6,7 @@ import fis.police.fis_police_server.dto.ScheduleModifyRequest;
 import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@DynamicInsert
 public class Schedule {
 
     @Id
@@ -78,6 +80,7 @@ public class Schedule {
     */
     //null 이면 아직 수락 거부 안한 상태
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition="varchar(32) default 'TBD'")
     private Accept accept;  //현장요원 일정 수락 여부
 
     private String late_comment;    //늦는 사유 멘트 현장요원이 선택하면 시설에 띄워주기

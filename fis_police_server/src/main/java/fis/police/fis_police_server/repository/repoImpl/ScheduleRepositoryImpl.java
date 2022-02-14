@@ -76,7 +76,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today) {
         return jpaQueryFactory
-                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.c_latitude, qCenter.c_longitude, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
+                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.id, qCenter.c_latitude, qCenter.c_longitude, qAgent.id, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
                 .from(qSchedule)
                 .leftJoin(qSchedule.agent, qAgent)
 //                .fetchJoin() //querydsl 에서 dto 반환시 fetchjoin 대신 join
@@ -88,6 +88,24 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                         .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
                         .and(qSchedule.visit_date.goe(today))   //오늘 날짜 일정과 그 이후의 날짜에 예약된 일정을 보여줌
                 )
+                .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
+                .fetch();
+    }
+
+
+    public List<AppScheduleFilterDTO> findByCenterFilter(Long center_id,LocalDate today) {
+        return jpaQueryFactory
+                .select(new QAppScheduleFilterDTO(qSchedule.visit_date,qSchedule.visit_time, qCenter.id, qSchedule.count()))
+                .from(qSchedule)
+                .leftJoin(qSchedule.agent, qAgent)
+                .leftJoin(qSchedule.center, qCenter)
+                .distinct()
+                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+                        .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
+                        .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.visit_date.goe(today))   //오늘 날짜 일정과 그 이후의 날짜에 예약된 일정을 보여줌
+                )
+                .groupBy(qSchedule.visit_date, qSchedule.visit_time, qSchedule.center.id)
                 .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
                 .fetch();
     }

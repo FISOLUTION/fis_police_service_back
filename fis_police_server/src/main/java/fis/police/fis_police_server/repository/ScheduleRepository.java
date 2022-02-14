@@ -1,10 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.dto.AppScheduleAgentResponse;
-import fis.police.fis_police_server.dto.AppScheduleCenterResponse;
-import fis.police.fis_police_server.dto.AppScheduleResponse;
-import fis.police.fis_police_server.dto.ScheduleByDateResponse;
+import fis.police.fis_police_server.dto.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +24,7 @@ public interface ScheduleRepository {
     */
     //시설 - 방문 예정 일정들
     List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today);
+    List<AppScheduleFilterDTO> findByCenterFilter(Long center_id, LocalDate today);
 
     //현장요원 - 오늘 방문 일정
     List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today);
@@ -36,4 +34,6 @@ public interface ScheduleRepository {
 
     //현장요원 - 확정된 예정 스케줄 리스트
     List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today);
+
+
 }
