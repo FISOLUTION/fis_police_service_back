@@ -1,17 +1,12 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Confirm;
-import fis.police.fis_police_server.domain.Schedule;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Complete;
+import fis.police.fis_police_server.dto.ConfirmDTO;
 import fis.police.fis_police_server.dto.ConfirmFormResponse;
 import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
 import fis.police.fis_police_server.dto.Result;
-import fis.police.fis_police_server.repository.AgentRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.ConfirmRepository;
-import fis.police.fis_police_server.repository.ScheduleRepository;
+import fis.police.fis_police_server.repository.*;
 import fis.police.fis_police_server.service.ConfirmService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +26,7 @@ public class ConfirmServiceImpl implements ConfirmService {
     private final CenterRepository centerRepository;
     private final AgentRepository agentRepository;
     private final ScheduleRepository scheduleRepository;
+    private final OfficialsRepository officialsRepository;
 
     // 확인서 저장
     @Override
@@ -71,9 +67,9 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 결재하기
     @Override
-    public void updateConfirm(Long confirm_id) {
+    public void updateConfirm(Long confirm_id, String name) {
         Complete complete = Complete.complete;
-        confirmRepository.updateConfirmComplete(confirm_id, complete);
+        confirmRepository.updateConfirmComplete(confirm_id, complete, name);
     }
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)
@@ -87,22 +83,6 @@ public class ConfirmServiceImpl implements ConfirmService {
                         confirm.getEtc(), confirm.getComplete()))
                 .collect(Collectors.toList());
         return new Result(collect);
-    }
-    @Data
-    @AllArgsConstructor
-    static class ConfirmDTO {
-        private Long confirm_id;
-        private String visit_date;
-        private String visit_time;
-        private String center_name;
-        private String agent_name;  // list 로 바꿔야함.
-        private String new_child;
-        private String old_child;   // 기존 아동
-
-        private String senile;  // 치매 환자
-        private String disabled;    // 지적장애
-        private String etc;
-        private Complete complete;  // 시설이 확인했는지 여부
     }
 
     // 해당 스케쥴에 대한 확인서 열람 (시설, 현장요원 모두)
@@ -177,5 +157,10 @@ public class ConfirmServiceImpl implements ConfirmService {
     @Override
     public Schedule findSchedule(Long id) {
         return scheduleRepository.findById(id);
+    }
+
+    @Override
+    public Officials findOfficial(Long id) {
+        return officialsRepository.findById(id);
     }
 }

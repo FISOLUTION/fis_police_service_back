@@ -1,9 +1,6 @@
 package fis.police.fis_police_server.service;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Confirm;
-import fis.police.fis_police_server.domain.Schedule;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.dto.ConfirmFormResponse;
 import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
 import fis.police.fis_police_server.dto.ConfirmListForCenterResponse;
@@ -24,7 +21,7 @@ public interface ConfirmService {
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);
 
     // 확인서 결재하기
-    void updateConfirm(Long confirm_id);
+    void updateConfirm(Long confirm_id, String name);
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)
     Result confirmForCenter(Long center_id);
@@ -39,5 +36,6 @@ public interface ConfirmService {
     Agent findAgent(Long id);
     Center findCenter(Long id);
     Schedule findSchedule(Long id);
+    Officials findOfficial(Long id);
 
 }

@@ -21,7 +21,7 @@ public interface ConfirmRepository {
     List<Confirm> findSameCenterDate(Center center, String visit_date);
 
     // 시설 담당자의 확인서 결재 (확인서의 컬럼 값을 complete 로 바꿔주기)
-    void updateConfirmComplete(Long confirm_id, Complete complete);
+    void updateConfirmComplete(Long confirm_id, Complete complete, String name);
 
     // 과거 방문 이력 조회 (결재가 완료된 방문 이력을 모두 조회한다. 이때, 한 스케쥴을 2명 이상이 처리한 경우 하나의 confirm 으로 묶어주는 작업을 service 에서 진행)
     List<Confirm> findCompleteConfirmListForCenter(Center center);

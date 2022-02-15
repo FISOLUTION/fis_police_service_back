@@ -50,10 +50,11 @@ public class ConfirmRepositoryImpl implements ConfirmRepository {
     // 시설 담당자의 확인서 결재 (확인서의 컬럼 값을 complete 로 바꿔주기)
     @Override
     @Modifying
-    public void updateConfirmComplete(Long confirm_id, Complete complete) {
-        em.createQuery("update Confirm confirm set confirm.complete = : complete where confirm.id = : confirm_id")
+    public void updateConfirmComplete(Long confirm_id, Complete complete, String name) {
+        em.createQuery("update Confirm confirm set confirm.complete = : complete, confirm.center_manger =: name where confirm.id = : confirm_id")
                 .setParameter("confirm_id", confirm_id)
                 .setParameter("complete", complete)
+                .setParameter("name", name)
                 .executeUpdate();
     }
 

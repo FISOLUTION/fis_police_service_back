@@ -64,7 +64,7 @@ public class initDb2 {
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 111, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
-            Schedule schedule2 = Schedule.createSchedule(center1, user2, agent1, LocalDate.now(),
+            Schedule schedule2 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 222, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule2);
 

@@ -50,6 +50,8 @@ public class QCenter extends EntityPathBase<Center> {
 
     public final ListPath<Confirm, QConfirm> confirmList = this.<Confirm, QConfirm>createList("confirmList", Confirm.class, QConfirm.class, PathInits.DIRECT2);
 
+    public final ListPath<Hope, QHope> hopeList = this.<Hope, QHope>createList("hopeList", Hope.class, QHope.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Participation> participation = createEnum("participation", fis.police.fis_police_server.domain.enumType.Participation.class);
