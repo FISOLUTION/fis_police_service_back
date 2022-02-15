@@ -4,7 +4,9 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.Complete;
+import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
@@ -22,7 +24,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
     작성날짜: 2022/01/12 4:42 PM
@@ -103,9 +107,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional
     public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) {
         List<AppScheduleCenterResponse> allList =scheduleRepository.findByCenter(center_id,today);
-        List<AppScheduleFilterDTO> filterDTOList = scheduleRepository.findByCenterFilter(center_id,today);
-        System.out.println("allList = " + allList);
-        System.out.println("filterDTOList = " + filterDTOList);
+//        List<AppScheduleFilterDTO> filterDTOList = scheduleRepository.findByCenterFilter(center_id,today);
+//        System.out.println("allList = " + allList);
+//        System.out.println("filterDTOList = " + filterDTOList);
+//        for (AppScheduleFilterDTO filterDTO : filterDTOList) {
+////            if(filterDTO.getCount() >= 2){
+//                List<Agent> agents = scheduleRepository.findBySameSchedule(filterDTO.getVisit_date(),filterDTO.getVisit_time(),filterDTO.getCenter_id());
+//                List<AppCombineResponse.AgentList> collect = agents.stream()
+//                        .map(a -> new AppCombineResponse.AgentList(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code()))
+//                        .collect(Collectors.toList());
+//            for (AppCombineResponse.AgentList agentList : collect) {
+//                System.out.println("agentList.getA_name() = " + agentList.getA_name());
+//            }
+////            }
+//
+//
+//        }
         return allList;
     }
 
