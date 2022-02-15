@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class HopeListResponse {
-
+    private Long hope_id;
     // 시설과 신청자 정보 (그냥 이름으로 줘야하나?)
     private Long center_id;
     private Long official_id;

@@ -4,6 +4,7 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.*;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public interface ConfirmController {
     ConfirmFormResponse confirmForCenter(HttpServletRequest request, @PathVariable Long schedule_id, @RequestParam Long center_id, @RequestParam String visit_date);
 
     // /confirm/check -> 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
-    void updateConfirmComplete(@PathVariable  Long confirm_id); // param 을 따로 dto 로 묶을 필요가 있음
+    void updateConfirmComplete(@RequestBody UpdateRequest request); // param 을 따로 dto 로 묶을 필요가 있음
 
     // /confirm -> 시설용 과거 방문 이력들
     Result confirmListForCenter(HttpServletRequest request, @PathVariable Long center_id);  // request 에서 로그인한 사용자 정보(시설 담당자 id) 꺼내와서 그 사람의 시설 id로 confirm list 찾기
