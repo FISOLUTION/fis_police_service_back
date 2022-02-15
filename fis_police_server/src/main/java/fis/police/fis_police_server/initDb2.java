@@ -62,14 +62,14 @@ public class initDb2 {
                     LocalDate.now(), UserAuthority.ADMIN);
             em.persist(user3);
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
-                    LocalDate.now(), LocalTime.now(), 111, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
             Schedule schedule2 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
-                    LocalDate.now(), LocalTime.now(), 222, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule2);
 
             Schedule schedule3 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
-                    LocalDate.parse("1999-09-09"), LocalTime.now(), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.parse("2023-09-09"), LocalTime.now(), 333, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule3);
             Schedule schedule4 = Schedule.createSchedule(center2, user2, agent1, LocalDate.now(),
                     LocalDate.now(),LocalTime.parse("10:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
