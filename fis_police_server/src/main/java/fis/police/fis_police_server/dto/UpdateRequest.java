@@ -17,4 +17,5 @@ import java.util.List;
 public class UpdateRequest {
 
     private List<Long> confirm_id;
+    private Long official_id;
 }

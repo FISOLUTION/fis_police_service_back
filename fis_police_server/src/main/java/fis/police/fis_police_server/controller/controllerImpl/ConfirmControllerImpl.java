@@ -3,6 +3,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 import fis.police.fis_police_server.controller.ConfirmController;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.ConfirmService;
@@ -52,18 +53,17 @@ public class ConfirmControllerImpl implements ConfirmController {
     // confirm_id 는 리스트로 올 수 있도록 해야함, 시설에 여러 현장요원이 갔을 경우, 각 현장요원이 작성한 확인서의 컬ㄹ럼을 모두 업데이트 해주어야하기 때문
     // 아니면 스케쥴 아이디만 받아와서 뭐 어떻게 처리해도 되고...
     @Override
-    @PostMapping("/confirm/check/{confirm_id}")
-    public void updateConfirmComplete(@PathVariable Long confirm_id) {
-        confirmService.updateConfirm(confirm_id);
-    }
-    public void updateConfirmComplete(UpdateRequest request) {
+    @PostMapping("/confirm/check")
+    public void updateConfirmComplete(@RequestBody UpdateRequest request) {
+        Officials official = confirmService.findOfficial(request.getOfficial_id());
         List<Long> confirm_id = request.getConfirm_id();
         for (Long aLong : confirm_id) {
-            System.out.println("aLong = " + aLong);
+            confirmService.updateConfirm(aLong, official.getO_name());
         }
     }
 
     // /confirm -> 시설용 과거 방문 이력들
+    // todo (0214 적음) 같은 시설, 같은 날짜에 방문한 정보들을 하나로 통합해야함 ㅜㅜ
     @Override
     @GetMapping("/confirm/center/{center_id}")
     public Result confirmListForCenter(HttpServletRequest request, @PathVariable Long center_id) {

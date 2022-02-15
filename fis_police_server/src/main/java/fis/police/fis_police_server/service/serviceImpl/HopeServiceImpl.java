@@ -37,7 +37,7 @@ public class HopeServiceImpl implements HopeService {
     public Result listHope() {
         List<Hope> hopes = hopeRepository.listOfHope();
         List<HopeListResponse> collect = hopes.stream()
-                .map(hope -> new HopeListResponse(hope.getCenter().getId(), hope.getOfficials().getId(), hope.getAccept(),
+                .map(hope -> new HopeListResponse(hope.getId(), hope.getCenter().getId(), hope.getOfficials().getId(), hope.getAccept(),
                         hope.getComplete(), hope.getH_date(), hope.getH_time(), hope.getH_mail(), hope.getH_ph()))
                 .collect(Collectors.toList());
         return new Result(collect);

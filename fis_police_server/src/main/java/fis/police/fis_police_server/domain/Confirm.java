@@ -41,6 +41,8 @@ public class Confirm {
     @Enumerated(EnumType.STRING)
     private Complete complete;  // 시설이 확인했는지 여부
 
+    private String center_manger;   // 시설 담당자 이름 (시설 담당자랑 테이블을 엮어야할까? 하는 고민도 있었지만 그러기는 좀 투머치 한 것 같아서 이름만 저장하는걸로)
+
     /*
         작성 날짜: 2022/02/14 11:36 오전
         작성자: 고준영
