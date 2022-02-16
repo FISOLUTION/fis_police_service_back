@@ -4,10 +4,7 @@ import fis.police.fis_police_server.controller.AgentController;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
-import fis.police.fis_police_server.dto.AgentGetResponse;
-import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.dto.AgentGetResult;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.AgentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +12,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -111,4 +109,19 @@ public class AgentControllerImpl implements AgentController {
             return null;
         }
     }
+
+
+    /*
+        날짜 : 2022/02/15 1:27 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 추가
+    */
+    @Override
+    @PostMapping("/agent/picture")
+    //프론트가 보내주는거랑 이름 맞는지 나중에 확인하자
+    public void updatePicture(@RequestBody AgentPictureDTO agentPictureDTO, @RequestParam("file") MultipartFile multipartFile) {
+        agentService.updatePicture(agentPictureDTO, multipartFile);
+    }
 }
+
+

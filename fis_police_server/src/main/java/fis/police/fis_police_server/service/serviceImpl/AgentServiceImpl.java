@@ -5,17 +5,25 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
+import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.MapService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolationException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /*
@@ -86,4 +94,35 @@ public class AgentServiceImpl implements AgentService {
         }
     }
 
+
+    /*
+        날짜 : 2022/02/15 1:37 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 추가
+    */
+    @Value("${profileImg.path}")
+    private String uploadFolder;
+
+    @Override
+    @Transactional
+    public void updatePicture(AgentPictureDTO agentPictureDTO, MultipartFile multipartFile) {
+        Agent agent = agentRepository.findById(agentPictureDTO.getAgent_id());
+        String imageFileName = agent.getId() + "_" + multipartFile.getOriginalFilename();
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+
+        if (multipartFile.getSize() != 0) { //파일이 업로드 되었는지 확인
+            try {
+                if (agent.getA_pictureUrl() != null) { // 이미 프로필 사진이 있을경우
+                    File file = new File(uploadFolder + agent.getA_pictureUrl()); // 경로 + 유저 프로필사진 이름을 가져와서
+                    file.delete(); // 원래파일 삭제
+                }
+                Files.write(imageFilePath, multipartFile.getBytes());
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+            }
+            //TODO 내일 할거임 ~~~ 사진 업로드
+            //agent.setA_pictureUrl(imageFileName);  agent set 없으니까 업데이트 하는거 다시 내일 할거임~~~~
+            agent.uploadPicture(imageFileName);
+        }
+    }
 }
