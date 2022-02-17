@@ -8,6 +8,7 @@ import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.repository.HopeRepository;
 import fis.police.fis_police_server.service.HopeService;
+import fis.police.fis_police_server.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +24,14 @@ import javax.servlet.http.HttpServletRequest;
 public class HopeControllerImpl implements HopeController {
 
     private final HopeService hopeService;
-    private final HopeRepository hopeRepository;
+    private final TokenService tokenService;
 
     @Override
-    @PostMapping("/hope")
+    @PostMapping("/app/hope")
     public void saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
-        Officials officials = hopeService.findOfficials(hopeRequest.getO_id());
-        Center center = hopeService.findCenter(officials.getCenter().getId());
-        hopeService.saveHope(hopeRequest, center, officials);
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(request);
+        Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
+        hopeService.saveHope(hopeRequest, center, officialFromRequest);
     }
 
     @Override
@@ -42,6 +43,6 @@ public class HopeControllerImpl implements HopeController {
     @Override
     @PostMapping("/hope/{hope_id}")
     public void updateComplete(@PathVariable Long hope_id) {
-        hopeRepository.updateHopeComplete(hope_id, Complete.complete);
+        hopeService.updateHopeComplete(hope_id);
     }
 }

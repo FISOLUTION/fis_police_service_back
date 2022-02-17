@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.Data;
 
 /*
@@ -15,4 +16,5 @@ public class OfficialSaveRequest {
     private String o_pwd;
     private String o_ph;
     private String o_email;
+    private UserAuthority u_auth;
 }

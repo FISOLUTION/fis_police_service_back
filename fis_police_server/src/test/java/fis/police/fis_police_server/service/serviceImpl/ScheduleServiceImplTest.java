@@ -51,7 +51,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         // when
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(center.getId(), agent.getId(),
@@ -71,7 +71,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         // when
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(5123412L, 512342L,
@@ -90,7 +90,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(center.getId(), agent.getId(),
                 LocalDate.now(), LocalDate.now(), LocalTime.now(), 123, "", "");
@@ -112,7 +112,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(center1.getId(), agent.getId(),
                 LocalDate.now(), LocalDate.now(), LocalTime.now(), 123, "", "");
@@ -138,7 +138,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(center1.getId(), agent.getId(),
                 LocalDate.now(), LocalDate.now(), LocalTime.now(), 123, "", "");
@@ -164,7 +164,7 @@ class ScheduleServiceImplTest {
                 LocalDate.now(), UserAuthority.USER);
         userRepository.save(user);
         Agent agent = Agent.createAgent("asd", "123", "12312", "분당구 불정로 6", HasCar.CAR,
-                "", LocalDate.now(), 123D, 123D);
+                "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
         agentRepository.save(agent);
         ScheduleSaveRequest scheduleSaveRequest = new ScheduleSaveRequest(center1.getId(), agent.getId(),
                 LocalDate.now(), LocalDate.now(), LocalTime.now(), 123, "", "");
