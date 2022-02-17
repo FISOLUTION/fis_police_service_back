@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Hope;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.HopeListResponse;
 import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
@@ -41,6 +42,12 @@ public class HopeServiceImpl implements HopeService {
                         hope.getComplete(), hope.getH_date(), hope.getH_time(), hope.getH_mail(), hope.getH_ph()))
                 .collect(Collectors.toList());
         return new Result(collect);
+    }
+
+    @Override
+    public void updateHopeComplete(Long id) {
+        Complete complete = Complete.complete;
+        hopeRepository.updateHopeComplete(id, complete);
     }
 
     @Override

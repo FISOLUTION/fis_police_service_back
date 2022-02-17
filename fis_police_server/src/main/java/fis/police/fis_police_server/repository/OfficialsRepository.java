@@ -14,4 +14,5 @@ public interface OfficialsRepository {
     void saveOfficials(Officials officials);
     Officials findById(Long id);
     List<Officials> findAll();
+    List<Officials> findByNickname(String nickname);
 }

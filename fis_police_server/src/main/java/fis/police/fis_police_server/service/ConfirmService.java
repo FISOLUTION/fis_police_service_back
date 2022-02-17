@@ -27,10 +27,10 @@ public interface ConfirmService {
     Result confirmForCenter(Long center_id);
 
     // 해당 스케쥴에 대한 확인서 열람 (시설, 현장요원 모두)
-    ConfirmFormResponse showConfirm(Long schedule_id, Long center_id, String visit_date);
+    ConfirmFormResponse showConfirm(Center center, String visit_date);
 
     // [방문이력 조회] 요원별 확인서 조회 (모두)
-    Result confirmForAgent(Long agent_id);
+    Result confirmForAgent(Agent agent);
 
     // 시설, 현장요원, 스케쥴 찾기
     Agent findAgent(Long id);

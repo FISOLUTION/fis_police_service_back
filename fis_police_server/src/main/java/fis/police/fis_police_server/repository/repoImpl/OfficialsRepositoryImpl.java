@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.repository.OfficialsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,13 @@ public class OfficialsRepositoryImpl implements OfficialsRepository {
     @Override
     public List<Officials> findAll() {
         return em.createQuery("select o from Officials o", Officials.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Officials> findByNickname(String nickname) {
+        return em.createQuery("select o from Officials o where o.o_nickname = :nickname", Officials.class)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 }
