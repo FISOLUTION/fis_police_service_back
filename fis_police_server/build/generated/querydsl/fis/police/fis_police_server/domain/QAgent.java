@@ -36,7 +36,7 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final StringPath a_ph = createString("a_ph");
 
-    public final StringPath a_pictureUrl = createString("a_pictureUrl");
+    public final StringPath a_picture = createString("a_picture");
 
     public final DatePath<java.time.LocalDate> a_receiveDate = createDate("a_receiveDate", java.time.LocalDate.class);
 

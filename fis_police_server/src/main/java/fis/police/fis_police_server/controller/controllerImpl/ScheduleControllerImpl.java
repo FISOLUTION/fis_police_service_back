@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -120,8 +122,9 @@ public class ScheduleControllerImpl implements ScheduleController {
     */
     //시설에 띄워줄 예약내역 리스트
     @Override
-    @GetMapping("/schedule/confirm")
-    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest, @RequestParam("center_id") Long center_id) {
+    @GetMapping(value = "/schedule/confirm")
+//            , produces = MediaType.IMAGE_JPEG_VALUE)
+    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest, @RequestParam("center_id") Long center_id) throws IOException {
         return scheduleService.findByCenter(center_id, LocalDate.now());
     }
 

@@ -16,10 +16,21 @@ import fis.police.fis_police_server.service.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -103,30 +114,31 @@ public class ScheduleServiceImpl implements ScheduleService {
         작성내용 : 앱
     */
     // 방문 예정 일정들 -center 화면
+    @Value("${profileImg.path}")
+    private String uploadFolder;
+
     @Override
     @Transactional
-    public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) {
+    public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) throws IOException {
         List<AppScheduleCenterResponse> allList =scheduleRepository.findByCenter(center_id,today);
-//        List<AppScheduleFilterDTO> filterDTOList = scheduleRepository.findByCenterFilter(center_id,today);
-//        System.out.println("allList = " + allList);
-//        System.out.println("filterDTOList = " + filterDTOList);
-//        for (AppScheduleFilterDTO filterDTO : filterDTOList) {
-////            if(filterDTO.getCount() >= 2){
-//                List<Agent> agents = scheduleRepository.findBySameSchedule(filterDTO.getVisit_date(),filterDTO.getVisit_time(),filterDTO.getCenter_id());
-//                List<AppCombineResponse.AgentList> collect = agents.stream()
-//                        .map(a -> new AppCombineResponse.AgentList(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code()))
-//                        .collect(Collectors.toList());
-//            for (AppCombineResponse.AgentList agentList : collect) {
-//                System.out.println("agentList.getA_name() = " + agentList.getA_name());
-//            }
-////            }
-//
-//
-//        }
+
+        for (AppScheduleCenterResponse appScheduleCenterResponse : allList) {
+            Long agent_id = appScheduleCenterResponse.getAgent_id();
+            Agent agent = agentRepository.findById(agent_id);
+            String a_picture = agent.getA_picture();
+
+            if (a_picture !=null) {
+                InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
+                byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+                imageStream.close();
+
+                String encodedImage = Base64.encodeBase64String(imageByteArray); //Base64로 인코딩
+//            ResponseEntity<byte[]> byte_picture = new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+                appScheduleCenterResponse.setA_picture(encodedImage);
+            }
+        }
         return allList;
     }
-
-
 
     //현장요원 - 오늘 방문 일정
     @Override

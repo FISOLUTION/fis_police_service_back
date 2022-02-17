@@ -5,12 +5,15 @@ import fis.police.fis_police_server.domain.enumType.Accept;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppScheduleCenterResponse {
     private Long schedule_id;
     private LocalDate visit_date;   //방문 날짜
@@ -30,6 +33,8 @@ public class AppScheduleCenterResponse {
     private String a_name;          //현장 요원 이름
     private String a_ph;            //현장 요원 전화번호
     private String a_code;          //현장 요원 코드
+//    private ResponseEntity<byte[]> a_picture;
+    private String a_picture;
 
     @QueryProjection
 
