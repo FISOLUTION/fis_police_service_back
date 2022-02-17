@@ -14,7 +14,7 @@ public interface HopeService {
 
     void saveHope(HopeSaveRequest request, Center center, Officials officials);
     Result listHope();
-
+    void updateHopeComplete(Long id);
     Officials findOfficials(Long id);
     Center findCenter(Long id);
 

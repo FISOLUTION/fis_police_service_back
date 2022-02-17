@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Hope;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.HopeListResponse;
 import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
@@ -37,10 +38,16 @@ public class HopeServiceImpl implements HopeService {
     public Result listHope() {
         List<Hope> hopes = hopeRepository.listOfHope();
         List<HopeListResponse> collect = hopes.stream()
-                .map(hope -> new HopeListResponse(hope.getCenter().getId(), hope.getOfficials().getId(), hope.getAccept(),
+                .map(hope -> new HopeListResponse(hope.getId(), hope.getCenter().getId(), hope.getOfficials().getId(), hope.getAccept(),
                         hope.getComplete(), hope.getH_date(), hope.getH_time(), hope.getH_mail(), hope.getH_ph()))
                 .collect(Collectors.toList());
         return new Result(collect);
+    }
+
+    @Override
+    public void updateHopeComplete(Long id) {
+        Complete complete = Complete.complete;
+        hopeRepository.updateHopeComplete(id, complete);
     }
 
     @Override

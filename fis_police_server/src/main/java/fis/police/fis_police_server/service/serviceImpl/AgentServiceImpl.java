@@ -5,17 +5,26 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
+import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.MapService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintViolationException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /*
@@ -86,4 +95,40 @@ public class AgentServiceImpl implements AgentService {
         }
     }
 
+
+    /*
+        날짜 : 2022/02/15 1:37 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 추가
+    */
+    @Value("${profileImg.path}")
+    private String uploadFolder;
+
+    @Override
+    @Transactional
+    public void updatePicture(Long Agent_id, MultipartFile multipartFile) {
+        Agent agent = agentRepository.findById(Agent_id);
+        String originalFileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        String imageFileName = agent.getId() + "." + originalFileExtension;
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+        if (multipartFile.getSize() != 0) { //파일이 업로드 되었는지 확인
+            try {
+                if (agent.getA_picture() != null) { // 이미 프로필 사진이 있을경우
+                    File file = new File(uploadFolder + agent.getA_picture()); // 경로 + 유저 프로필사진 이름을 가져와서
+                    file.delete(); // 원래파일 삭제
+                }
+                Files.createDirectories(Paths.get(uploadFolder));//이미 존재하는 경우 directory 새로 안만듦 , 상위 directory 없는 경우 생성
+                Files.write(imageFilePath, multipartFile.getBytes());
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+            }
+            agent.uploadPicture(imageFileName);
+        }
+    }
+
+    @Override
+    public String getPicture(Long agent_id) {
+        Agent agent = agentRepository.findById(agent_id);
+        return agent.getA_picture();
+    }
 }

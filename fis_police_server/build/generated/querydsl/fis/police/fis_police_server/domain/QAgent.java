@@ -36,6 +36,8 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final StringPath a_ph = createString("a_ph");
 
+    public final StringPath a_picture = createString("a_picture");
+
     public final DatePath<java.time.LocalDate> a_receiveDate = createDate("a_receiveDate", java.time.LocalDate.class);
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.AgentStatus> a_status = createEnum("a_status", fis.police.fis_police_server.domain.enumType.AgentStatus.class);
