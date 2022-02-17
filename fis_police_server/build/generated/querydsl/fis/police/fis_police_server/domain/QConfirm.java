@@ -26,6 +26,8 @@ public class QConfirm extends EntityPathBase<Confirm> {
 
     public final QCenter center;
 
+    public final StringPath center_manger = createString("center_manger");
+
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Complete> complete = createEnum("complete", fis.police.fis_police_server.domain.enumType.Complete.class);
 
     public final StringPath disabled = createString("disabled");
