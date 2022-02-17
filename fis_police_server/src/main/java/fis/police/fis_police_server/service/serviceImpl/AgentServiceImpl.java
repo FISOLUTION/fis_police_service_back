@@ -127,8 +127,15 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
+    @Transactional
     public String getPicture(Long agent_id) {
         Agent agent = agentRepository.findById(agent_id);
         return agent.getA_picture();
+    }
+
+    @Override
+    @Transactional
+    public void deletePicture(Long agent_id) {
+        agentRepository.deletePicture(agent_id);
     }
 }

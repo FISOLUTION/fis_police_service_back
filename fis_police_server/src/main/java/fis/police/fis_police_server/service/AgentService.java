@@ -30,4 +30,6 @@ public interface AgentService {
     void updatePicture(Long agent_id, MultipartFile multipartFile);
 
     String getPicture(Long agent_id);
+
+    void deletePicture(Long agent_id);
 }
