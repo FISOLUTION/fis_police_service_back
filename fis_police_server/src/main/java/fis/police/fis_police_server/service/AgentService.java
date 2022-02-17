@@ -27,5 +27,7 @@ public interface AgentService {
         작성자 : 원보라
         작성내용 : 현장요원 사진 추가
     */
-    void updatePicture(AgentPictureDTO agentPictureDTO, MultipartFile multipartFile);
+    void updatePicture(Long agent_id, MultipartFile multipartFile);
+
+    String getPicture(Long agent_id);
 }

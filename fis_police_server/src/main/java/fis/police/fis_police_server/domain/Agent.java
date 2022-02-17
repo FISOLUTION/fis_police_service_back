@@ -71,7 +71,7 @@ public class Agent {
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
 
-    private String a_pictureUrl;   //현장요원 사진
+    private String a_picture;   //현장요원 사진
 
 
 
@@ -145,7 +145,7 @@ public class Agent {
         작성자 : 원보라
         작성내용 : 현장요원 사진 업로드
     */
-    public void uploadPicture(String a_pictureUrl){
-        this.a_pictureUrl = a_pictureUrl;
+    public void uploadPicture(String a_picture){
+        this.a_picture = a_picture;
     }
 }

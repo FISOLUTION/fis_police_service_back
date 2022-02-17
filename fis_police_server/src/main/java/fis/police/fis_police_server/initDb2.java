@@ -37,13 +37,13 @@ public class initDb2 {
         private final EntityManager em;
 
         public void dbInit() {
-            Agent agent1 = Agent.createAgent("agent1", "123", "a1", "분당구 불정로 6", HasCar.CAR,
+            Agent agent1 = Agent.createAgent("원보라", "123", "a1", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDate.now(), 123D, 123D);
             em.persist(agent1);
-            Agent agent2 = Agent.createAgent("agent2", "123", "a2", "분당구 불정로 6", HasCar.CAR,
+            Agent agent2 = Agent.createAgent("홍길동", "123", "a2", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDate.now(), 123D, 123D);
             em.persist(agent2);
-            Agent agent3 = Agent.createAgent("agent3", "123", "a3", "분당구 불정로 6", HasCar.CAR,
+            Agent agent3 = Agent.createAgent("아무개", "123", "a3", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDate.now(), 123D, 123D);
             em.persist(agent3);
             Center center1 = new Center("111", "분당구 불정로 6", "123", 123D, 123D);

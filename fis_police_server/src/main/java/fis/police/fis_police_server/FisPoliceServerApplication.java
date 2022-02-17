@@ -24,13 +24,11 @@ public class FisPoliceServerApplication {
 	public class WebConfig implements WebMvcConfigurer {
         @Value("${profileImg.path}")
         private String profileUploadFolder;
-
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             WebMvcConfigurer.super.addResourceHandlers(registry);
-
             registry.addResourceHandler("/agent/picture/**")
-                    .addResourceLocations("file:/" + profileUploadFolder)
+                    .addResourceLocations(profileUploadFolder)
                     .setCachePeriod(60 * 10 * 6)
                     .resourceChain(true)
                     .addResolver(new PathResourceResolver());

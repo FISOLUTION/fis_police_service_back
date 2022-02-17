@@ -30,5 +30,5 @@ public interface AgentController {
         작성자 : 원보라
         작성내용 : 현장요원 사진 추가
     */
-    void updatePicture(AgentPictureDTO agentPictureDTO, MultipartFile multipartFile);
+    void updatePicture(Long Agent_id, MultipartFile multipartFile);
 }

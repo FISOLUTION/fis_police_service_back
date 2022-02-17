@@ -8,7 +8,13 @@ import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.AgentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+//import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
@@ -16,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -119,8 +128,26 @@ public class AgentControllerImpl implements AgentController {
     @Override
     @PostMapping("/agent/picture")
     //프론트가 보내주는거랑 이름 맞는지 나중에 확인하자
-    public void updatePicture(@RequestBody AgentPictureDTO agentPictureDTO, @RequestParam("file") MultipartFile multipartFile) {
-        agentService.updatePicture(agentPictureDTO, multipartFile);
+    public void updatePicture(@RequestParam("agent_id") Long Agent_id, @RequestParam("file") MultipartFile multipartFile) {
+        agentService.updatePicture(Agent_id, multipartFile);
+    }
+
+
+
+    @Value("${profileImg.path}")
+    private String uploadFolder;
+    /*
+        날짜 : 2022/02/17 10:39 오전
+        작성자 : 원보라
+        작성내용 : 저장된 사진 보내주기
+    */
+    @GetMapping(value = "/agent/show", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> showPicture(@RequestParam("agent_id") Long Agent_id) throws IOException {
+        String a_picture = agentService.getPicture(Agent_id);
+        InputStream imageStream = new FileInputStream(uploadFolder+ a_picture);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 }
 
