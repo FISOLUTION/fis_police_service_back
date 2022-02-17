@@ -11,6 +11,7 @@ import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.MapService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -106,11 +107,10 @@ public class AgentServiceImpl implements AgentService {
     @Override
     @Transactional
     public void updatePicture(Long Agent_id, MultipartFile multipartFile) {
-//        Agent agent = agentRepository.findById(agentPictureDTO.getAgent_id());
         Agent agent = agentRepository.findById(Agent_id);
-        String imageFileName = agent.getId() + "_" +multipartFile.getOriginalFilename();
+        String originalFileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        String imageFileName = agent.getId() + "." + originalFileExtension;
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-
         if (multipartFile.getSize() != 0) { //파일이 업로드 되었는지 확인
             try {
                 if (agent.getA_picture() != null) { // 이미 프로필 사진이 있을경우

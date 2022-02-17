@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface ScheduleController {
             작성내용 : 앱 schedule
         */
         //시설에 띄워줄 예약내역 리스트
-        List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest,Long center_id); //시설 담당자의 시설 정보를 꺼내와야함
+        List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest,Long center_id) throws IOException; //시설 담당자의 시설 정보를 꺼내와야함
 
         //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
         List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest,Long agent_id);       //현장요원 id 꺼내야함

@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.dto.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface ScheduleService {
         작성내용 : 앱 schedule
     */
     //시설 - 방문 예정 일정들
-    List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today);
+    List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today) throws IOException;
 
     //현장요원 - 오늘 방문 일정
     List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today);
