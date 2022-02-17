@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,13 @@ public class AgentRepositoryImpl implements AgentRepository {
                     .setParameter("longitude_h", longitude_h)
                     .setParameter("a_status", AgentStatus.WORK)
                     .getResultList();
+    }
+
+    @Override
+    public List<Agent> findByNickname(String nickname) {
+        return em.createQuery("select a from Agent a where a.a_nickname = :nickname", Agent.class)
+                .setParameter("nickname", nickname)
+                .getResultList();
     }
 
 }

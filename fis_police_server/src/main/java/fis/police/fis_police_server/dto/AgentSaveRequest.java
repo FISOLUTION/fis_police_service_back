@@ -2,6 +2,7 @@ package fis.police.fis_police_server.dto;
 
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,5 @@ public class AgentSaveRequest {
     private boolean a_hasCar;               //'자차 여부'
     private String a_equipment;             //'장비 번호'
     private LocalDate a_receiveDate;    //'장비 수령 날짜'
+    private UserAuthority u_auth;
 }

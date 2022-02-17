@@ -18,7 +18,4 @@ public class HopeSaveRequest {
     // 담당자 전화번호, 이메일
     private String h_ph;
     private String h_mail;
-
-    // 추후에 삭제 해야함. HttpServletRequest 에서 꺼내올 것이기 때문
-    private Long o_id;
 }

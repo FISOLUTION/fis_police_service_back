@@ -38,29 +38,49 @@ public class initDb2 {
 
         public void dbInit() {
             Agent agent1 = Agent.createAgent("agent1", "123", "a1", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDate.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT, "agent_id1", "1234");
             em.persist(agent1);
             Agent agent2 = Agent.createAgent("agent2", "123", "a2", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDate.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT, "agent_id2", "5678");
             em.persist(agent2);
             Agent agent3 = Agent.createAgent("agent3", "123", "a3", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDate.now(), 123D, 123D);
+                    "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT, "agent_id3", "1357");
             em.persist(agent3);
+
+
+            User user1 = new User("user_id1", "111", "111", "111",
+                    LocalDate.now(), UserAuthority.USER);
+            em.persist(user1);
+            User user2 = new User("user_id2", "222", "222", "222",
+                    LocalDate.now(), UserAuthority.ADMIN);
+            em.persist(user2);
+            User user3 = new User("user_id3", "333", "333", "333",
+                    LocalDate.now(), UserAuthority.USER);
+            em.persist(user3);
+
+
+
+
             Center center1 = new Center("111", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center1);
             Center center2 = new Center("123", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center2);
             Center center3 = new Center("234", "분당구 불정로 6", "123", 123D, 123D);
             em.persist(center3);
-            User user1 = new User("111", "111", "111", "111",
-                    LocalDate.now(), UserAuthority.USER);
-            em.persist(user1);
-            User user2 = new User("222", "222", "222", "222",
-                    LocalDate.now(), UserAuthority.ADMIN);
-            em.persist(user2);
-            User user3 = new User("333", "333", "333", "333",
-                    LocalDate.now(), UserAuthority.ADMIN);
-            em.persist(user3);
+
+
+            Officials official1 = new Officials(null,"official1", "01012341234", "mail@mail.com", "official_id1", "1234", center1, null, UserAuthority.OFFICIAL);
+            em.persist(official1);
+            Officials official2 = new Officials(null,"official2", "01012341234", "mail@mail.com", "official_id2", "3564", center2, null, UserAuthority.OFFICIAL);
+            em.persist(official2);
+            Officials official3 = new Officials(null,"official3", "01012341234", "mail@mail.com", "official_id3", "2345", center3, null, UserAuthority.OFFICIAL);
+            em.persist(official3);
+            Officials official4 = new Officials(null,"official4", "01012341234", "mail@mail.com", "official_id4", "8567", center1, null, UserAuthority.OFFICIAL);
+            em.persist(official4);
+            Officials official5 = new Officials(null,"official5", "01012341234", "mail@mail.com", "official_id5", "1243", center2, null, UserAuthority.OFFICIAL);
+            em.persist(official5);
+
+
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
@@ -71,8 +91,6 @@ public class initDb2 {
             Schedule schedule3 = Schedule.createSchedule(center1, user1, agent3, LocalDate.now(),
                     LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule3);
-
-
             Schedule schedule4 = Schedule.createSchedule(center1, user2, agent1, LocalDate.now(),
                     LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule4);
