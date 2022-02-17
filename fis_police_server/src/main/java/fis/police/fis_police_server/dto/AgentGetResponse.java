@@ -25,4 +25,6 @@ public class AgentGetResponse {
     private String a_equipment;             //'장비 번호'
     private LocalDate a_receiveDate;    //'장비 수령 날짜'
     private boolean a_status;               //'퇴사 여부'
+
+    private String a_picture;  //현장요원 사진 업로드 null 일때 업로드 안된거임
 }

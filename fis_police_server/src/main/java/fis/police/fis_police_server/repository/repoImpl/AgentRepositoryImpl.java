@@ -71,6 +71,18 @@ public class AgentRepositoryImpl implements AgentRepository {
                 .getResultList();
     }
 
+    /*
+        날짜 : 2022/02/17 5:15 오후
+        작성자 : 원보라
+        작성내용 : 프로필 사진 삭제 (null 로 바꿈)
+    */
+    @Override
+    public void deletePicture(Long agent_id) {
+            em.createQuery("update Agent a set a.a_picture=null where a.id= :agent_id")
+                    .setParameter("agent_id", agent_id)
+                    .executeUpdate();
+    }
+
 }
 
 
