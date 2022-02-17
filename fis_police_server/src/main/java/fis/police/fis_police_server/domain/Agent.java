@@ -88,6 +88,14 @@ public class Agent {
     @OneToMany(mappedBy = "agent")
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
+
+    private String a_picture;   //현장요원 사진
+
+
+
+
+
+
     /*
         작성날짜: 2022/01/11 5:05 PM
         작성자: 이승범
@@ -151,5 +159,15 @@ public class Agent {
     public Agent(String a_name, String a_code) {
         this.a_name = a_name;
         this.a_code = a_code;
+    }
+
+
+    /*
+        날짜 : 2022/02/16 10:35 오전
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 업로드
+    */
+    public void uploadPicture(String a_picture){
+        this.a_picture = a_picture;
     }
 }

@@ -1,8 +1,10 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.AgentModifyRequest;
+import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.dto.AgentGetResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,4 +24,11 @@ public interface AgentController {
 
     // 현장요원 조회
     AgentGetResult getAgent(HttpServletRequest httpServletRequest, HttpServletResponse response);
+
+    /*
+        날짜 : 2022/02/15 1:22 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 추가
+    */
+    void updatePicture(Long Agent_id, MultipartFile multipartFile);
 }
