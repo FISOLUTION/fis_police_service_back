@@ -72,11 +72,11 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
 
-    @NotBlank
+//    @NotBlank
     @Column(length = 100)
     private String a_nickname;              // "현장요원 id"
 
-    @NotBlank
+//    @NotBlank
     @Column(length = 100)
     private String a_pwd;                   // '현장요원 비밀번호',
 
@@ -133,7 +133,7 @@ public class Agent {
         agent.a_longitude = a_longitude;
         agent.a_latitude = a_latitude;
         agent.a_status = AgentStatus.WORK;
-        agent.u_auth = request.getU_auth();
+        agent.u_auth = UserAuthority.AGENT;
         return agent;
     }
 
