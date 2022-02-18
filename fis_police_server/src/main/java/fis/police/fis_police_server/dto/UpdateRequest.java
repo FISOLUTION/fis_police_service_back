@@ -15,6 +15,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateRequest {
-
     private List<Long> confirm_id;
 }

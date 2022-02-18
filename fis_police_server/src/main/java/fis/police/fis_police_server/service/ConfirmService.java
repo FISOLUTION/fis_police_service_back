@@ -15,7 +15,7 @@ import java.util.List;
 public interface ConfirmService {
 
     // 확인서 저장
-    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule);
+    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
 
     // 확인서 하나로 묶기
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);

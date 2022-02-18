@@ -6,10 +6,7 @@ import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.OfficialsRepository;
 import fis.police.fis_police_server.service.TokenService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,9 +28,6 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Agent getAgentFromRequest(HttpServletRequest request) {
         Claims token = parseJwtToken(request);
-        System.out.println("token.get(\"role\") = " + token.get("role"));
-        System.out.println("token.get(\"id\").getClass() = " + token.get("id").getClass());
-        System.out.println("token.get(\"id\").toString() = " + token.get("id").toString());
         Long agent_id = Long.valueOf(token.get("id").toString());
         Agent agent = agentRepository.findById(agent_id);
         return agent;
@@ -54,17 +48,20 @@ public class TokenServiceImpl implements TokenService {
             throw new IllegalStateException();
         }
         String token = authorizationHeader.substring("Bearer ".length());
-        Claims secret = Jwts.parser()
-                .setSigningKey("secret")
-                .parseClaimsJws(token)
-                .getBody();
-        return secret;
+        try {
+            return Jwts.parser()
+                    .setSigningKey("secret")
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e) {
+            throw new JwtException("만료된 토큰입니다.");
+        }
     }
 
     @Override
     public String makeToken(Long loginUserId, LoginResponse loginResponse) {
         Date now = new Date();
-        String compact = Jwts.builder()
+        return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer("fresh")
                 .setIssuedAt(now)
@@ -74,6 +71,5 @@ public class TokenServiceImpl implements TokenService {
                 .claim("role", loginResponse.getU_auth())
                 .signWith(SignatureAlgorithm.HS256, "secret")
                 .compact();
-        return compact;
     }
 }
