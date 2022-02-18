@@ -6,7 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+/*
+    작성 날짜: 2022/02/18 5:48 오후
+    작성자: 고준영
+    작성 내용: 앱 로그인 예외 처리
+*/
 @RestControllerAdvice
 @Slf4j
 public class AppLoginAdvice {

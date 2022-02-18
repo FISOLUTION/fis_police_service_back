@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-
+/*
+    작성 날짜: 2022/02/18 5:49 오후
+    작성자: 고준영
+    작성 내용: 메일 전송 예외처리
+*/
 @Slf4j
 @RestControllerAdvice(assignableTypes = MailControllerImpl.class)
 public class MailControllerAdvice {

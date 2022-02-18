@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+/*
+    작성 날짜: 2022/02/18 5:49 오후
+    작성자: 고준영
+    작성 내용: 시설별 지문등록 신청 예외처리
+*/
 @Slf4j
 @RestControllerAdvice(assignableTypes = HopeControllerImpl.class)
 public class HopeControllerAdvice {
