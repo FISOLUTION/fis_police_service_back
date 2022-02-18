@@ -26,24 +26,21 @@ public class TokenServiceImpl implements TokenService {
     private final OfficialsRepository officialsRepository;
 
     @Override
-    public Agent getAgentFromRequest(HttpServletRequest request) {
-        Claims token = parseJwtToken(request);
+    public Agent getAgentFromRequest(String authorization) {
+        Claims token = parseJwtToken(authorization);
         Long agent_id = Long.valueOf(token.get("id").toString());
-        Agent agent = agentRepository.findById(agent_id);
-        return agent;
+        return agentRepository.findById(agent_id);
     }
 
     @Override
-    public Officials getOfficialFromRequest(HttpServletRequest request) {
-        Claims token = parseJwtToken(request);
+    public Officials getOfficialFromRequest(String authorization) {
+        Claims token = parseJwtToken(authorization);
         Long official_id = Long.valueOf(token.get("id").toString());
-        Officials official = officialsRepository.findById(official_id);
-        return official;
+        return officialsRepository.findById(official_id);
     }
 
     @Override
-    public Claims parseJwtToken(HttpServletRequest request) {
-        String authorizationHeader = request.getHeader("Authorization");
+    public Claims parseJwtToken(String authorizationHeader) {
         if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             throw new IllegalStateException();
         }

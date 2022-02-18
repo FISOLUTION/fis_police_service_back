@@ -15,6 +15,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 
@@ -38,14 +39,17 @@ public class ConfirmControllerImpl implements ConfirmController {
     @PostMapping("/confirm/write/{schedule_id}")
     public void postConfirm(@RequestBody ConfirmFromAgentRequest formRequest, HttpServletRequest request, @PathVariable Long schedule_id) {
         try {
-            Agent agent = tokenService.getAgentFromRequest(request);
+            String authorizationHeader = request.getHeader("Authorization");
+            Agent agent = tokenService.getAgentFromRequest(authorizationHeader);
             Schedule schedule = confirmService.findSchedule(schedule_id);
             String date = String.valueOf(schedule.getVisit_date());
             log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 저장]", agent.getId(), "/confirm/write/" + schedule_id);
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(request).get("role"));
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             confirmService.saveConfirm(formRequest, schedule);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("현장요원 정보 없음");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("일정 정보 없음.");
         }
     }
 
@@ -54,12 +58,13 @@ public class ConfirmControllerImpl implements ConfirmController {
     @GetMapping("/confirm/{schedule_id}")
     public ConfirmFormResponse confirmBySchedule(HttpServletRequest request, @PathVariable Long schedule_id) {
         try {
+            String authorizationHeader = request.getHeader("Authorization");
             Schedule schedule = confirmService.findSchedule(schedule_id);
             Center center = schedule.getCenter();
             String visit_date = String.valueOf(schedule.getVisit_date());
-            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getAgentFromRequest(request).getId(), "/confirm/" + schedule_id);
-//        log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getOfficialFromRequest(request).getId(), "/confirm/" + schedule_id);
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(request).get("role"));
+            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
+//        log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             return confirmService.showConfirm(center, visit_date);
         } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException("확인서 없음.");
@@ -74,10 +79,11 @@ public class ConfirmControllerImpl implements ConfirmController {
     public void updateConfirmComplete(@RequestBody UpdateRequest request, HttpServletRequest servletRequest) {
 
         try {
-            Officials officialFromRequest = tokenService.getOfficialFromRequest(servletRequest);
+            String authorizationHeader = servletRequest.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
             List<Long> confirm_id = request.getConfirm_id();
-            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 결재]", tokenService.getOfficialFromRequest(servletRequest).getId(), "/confirm/check");
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(servletRequest).get("role"));
+            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 결재]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/check");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             for (Long aLong : confirm_id) {
                 log.info("[확인서 id값: {} [url: {}] [요청: 확인서 결재]", aLong, "/confirm/check");
                 confirmService.updateConfirm(aLong, officialFromRequest.getO_name());
@@ -104,9 +110,10 @@ public class ConfirmControllerImpl implements ConfirmController {
     @GetMapping("confirm/calendar")
     public Result confirmDate(HttpServletRequest request) {
         try {
-            Agent agentFromRequest = tokenService.getAgentFromRequest(request);
-            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 근무일자 조회]", tokenService.getAgentFromRequest(request).getId(), "/confirm/calendar");
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(request).get("role"));
+            String authorizationHeader = request.getHeader("Authorization");
+            Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 근무일자 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/calendar");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             return confirmService.confirmForAgent(agentFromRequest);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("현장요원 정보 없음.");

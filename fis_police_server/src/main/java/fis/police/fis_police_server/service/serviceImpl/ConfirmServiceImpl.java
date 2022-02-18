@@ -28,9 +28,6 @@ public class ConfirmServiceImpl implements ConfirmService {
     // 확인서 저장
     @Override
     public void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
-        if (schedule == null) {
-            throw new NullPointerException("일정 정보 없음");
-        }
         Confirm confirm = Confirm.createConfirm(request, schedule);
         confirmRepository.save(confirm);
     }

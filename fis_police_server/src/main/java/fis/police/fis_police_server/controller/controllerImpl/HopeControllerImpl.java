@@ -29,9 +29,16 @@ public class HopeControllerImpl implements HopeController {
     @Override
     @PostMapping("/app/hope")
     public void saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
-        Officials officialFromRequest = tokenService.getOfficialFromRequest(request);
-        Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
-        hopeService.saveHope(hopeRequest, center, officialFromRequest);
+        try {
+            String authorizationHeader = request.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+            Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
+            hopeService.saveHope(hopeRequest, center, officialFromRequest);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("시설 담당자 정보 없음.");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("담당 시설 정보 없음.");
+        }
     }
 
     @Override

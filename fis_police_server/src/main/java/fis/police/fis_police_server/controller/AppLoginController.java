@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface AppLoginController {
 
-    LoginResponse login(LoginRequest loginRequest, HttpServletRequest request);
+    LoginResponse login(LoginRequest loginRequest);
     String logout(HttpServletRequest request);
 
 }
