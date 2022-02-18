@@ -35,8 +35,14 @@ public class CallControllerImpl implements CallController {
 
         // dateTime = 날짜와 시간이므로 date 부분과 time 부분을 자름 (날짜별 통화건수 등을 알아내기 위해 날짜와 시간을 분리함)
         String dateTime = request.getDateTime();
-        String date = dateTime.substring(0, 10);
-        String time = dateTime.substring(11);
+        String date;
+        String time;
+        try {
+            date = dateTime.substring(0, 10);
+            time = dateTime.substring(11);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("시간 정보가 없음.");
+        }
 
         try{
             // 기관과 콜 직원을 찾는 과정에서 NullPointerException 발생 가능
@@ -47,11 +53,7 @@ public class CallControllerImpl implements CallController {
             log.info("[로그인 id값: {}] [url: {}] [요청: 콜기록 저장]", req.getSession().getAttribute("loginUser"), "/call");
             return callService.saveCall(request, center, user, date, time);
         } catch (NullPointerException e) {
-            CallSaveResponse callSaveResponse = new CallSaveResponse();
-            callSaveResponse.setCenter_id(request.getCenter_id());
-            callSaveResponse.setStatus_code("center 혹은 user 존재하지 않음");
-            log.error("[로그인 id값: {}] [url: {}] [에러정보: {}]", req.getSession().getAttribute("loginUser"), "/call", "존재하지 않는 center 혹은 user");
-            return callSaveResponse;
+            throw new NullPointerException("사용자 혹은 시설 존재하지 않음.");
         }
     }
 

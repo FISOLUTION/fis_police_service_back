@@ -29,7 +29,6 @@ public class AppLoginServiceImpl implements AppLoginService {
         String nickname = request.getU_nickname();
         String pwd = request.getU_pwd();
         return getPrimaryKey(nickname, pwd);
-
     }
 
     @Override
@@ -41,8 +40,6 @@ public class AppLoginServiceImpl implements AppLoginService {
 
         List<User> user = userRepository.findByNickname(nickname);
         List<Agent> agent = agentRepository.findByNickname(nickname);
-        System.out.println("nickname = " + nickname);
-        System.out.println("agent.size() = " + agent.size());
         List<Officials> officials = officialsRepository.findByNickname(nickname);
 
         if (user.size() + agent.size() + officials.size() != 0) {

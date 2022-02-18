@@ -48,4 +48,14 @@ public class CenterSaveDTO {
                 ,new ArrayList<Call>()
                 ,new ArrayList<Schedule>());
     }
+
+    public CenterSaveDTO(Long center_id, String c_name, String c_address, String c_ph, Double c_latitude, Double c_longitude) {
+        this.center_id = center_id;
+        this.c_name = c_name;
+        this.c_address = c_address;
+        this.c_ph = c_ph;
+        this.c_hpAddress = c_hpAddress;
+        this.c_latitude = c_latitude;
+        this.c_longitude = c_longitude;
+    }
 }
