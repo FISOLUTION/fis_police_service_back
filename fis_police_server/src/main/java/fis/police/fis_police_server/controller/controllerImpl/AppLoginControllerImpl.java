@@ -23,20 +23,19 @@ public class AppLoginControllerImpl implements AppLoginController {
 
     @Override
     @PostMapping("/app/login")
-    public LoginResponse login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = appLoginService.loginRes(loginRequest);
         Long loginUserId = appLoginService.loginUserId(loginRequest);
 
         //로그인 실패
         if (!loginResponse.getSc().equals("success")) {
             log.error("[로그인 id값: {}] [url: {}] [로그인 실패]",loginUserId,"/app/login");
-            return loginResponse;
+            throw new NullPointerException("ID Fail");
         }
 
         // 토큰 생성
         String token = tokenService.makeToken(loginUserId, loginResponse);
         loginResponse.setToken(token);
-//        session.setAttribute("token", token);
 
         return loginResponse;
     }

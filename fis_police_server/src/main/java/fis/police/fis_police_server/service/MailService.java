@@ -11,5 +11,5 @@ import javax.servlet.http.HttpServletRequest;
     작성 내용: 메일 서비스
 */
 public interface MailService {
-    MailSendResponse sendMail(Long center_id, HttpServletRequest request) throws MessagingException;
+    MailSendResponse sendMail(Long center_id) throws MessagingException;
 }

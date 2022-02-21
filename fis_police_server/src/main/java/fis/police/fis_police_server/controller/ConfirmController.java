@@ -29,6 +29,6 @@ public interface ConfirmController {
     Result confirmListForCenter(HttpServletRequest request, @PathVariable Long center_id);  // request 에서 로그인한 사용자 정보(시설 담당자 id) 꺼내와서 그 사람의 시설 id로 confirm list 찾기
 
     // /confirm/calendar -> 현장요원별 확인서가 제출된 날짜만 출력? 이건 아직 미정
-    Result confirmDate(HttpServletRequest request, @PathVariable Long agent_id);
+    Result confirmDate(HttpServletRequest request);
 
 }
