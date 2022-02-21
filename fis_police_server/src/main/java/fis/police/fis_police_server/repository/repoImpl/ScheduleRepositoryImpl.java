@@ -154,7 +154,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.isNull()) //현장요원이 수락|거부를 하지 않은 (accept 값이 null인 것들)
+                        .and(qSchedule.accept.eq(Accept.TBD)) //현장요원이 수락|거부를 하지 않은 (accept 값이 TBD인 것들)
                 )
                 .orderBy(qSchedule.visit_date.asc(),qSchedule.visit_time.asc())// 방문 예쩡 날짜로 정렬해서 주기
                 .fetch();
