@@ -36,6 +36,8 @@ public class QSchedule extends EntityPathBase<Schedule> {
 
     public final StringPath center_etc = createString("center_etc");
 
+    public final EnumPath<fis.police.fis_police_server.domain.enumType.Complete> complete = createEnum("complete", fis.police.fis_police_server.domain.enumType.Complete.class);
+
     public final NumberPath<Integer> estimate_num = createNumber("estimate_num", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
