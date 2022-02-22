@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class AppAcceptScheduleRequest {
-    private Long schedule_id;
+    private List<Long> schedule_id;
     private Accept accept;
 }
