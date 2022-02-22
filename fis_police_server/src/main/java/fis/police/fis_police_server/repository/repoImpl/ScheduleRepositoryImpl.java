@@ -150,7 +150,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
@@ -167,7 +167,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id,LocalDate today) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
