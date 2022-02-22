@@ -75,8 +75,8 @@ public class ConfirmControllerImpl implements ConfirmController {
 
     // 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
     @Override
-    @PostMapping("/confirm/check")
-    public void updateConfirmComplete(@RequestBody UpdateRequest request, HttpServletRequest servletRequest) {
+    @PostMapping("/confirm/check/{schedule_id}")
+    public void updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) {
 
         try {
             String authorizationHeader = servletRequest.getHeader("Authorization");
@@ -86,7 +86,7 @@ public class ConfirmControllerImpl implements ConfirmController {
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             for (Long aLong : confirm_id) {
                 log.info("[확인서 id값: {} [url: {}] [요청: 확인서 결재]", aLong, "/confirm/check");
-                confirmService.updateConfirm(aLong, officialFromRequest.getO_name());
+                confirmService.updateConfirm(schedule_id, aLong, officialFromRequest.getO_name());
             }
         } catch (IllegalStateException e) {
             throw new IllegalStateException("시설 담당자 정보 없음.");
