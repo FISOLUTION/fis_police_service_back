@@ -2,6 +2,7 @@ package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Schedule;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
 
 import java.time.LocalDate;
@@ -11,7 +12,9 @@ import java.util.List;
 public interface ScheduleRepository {
 
     void save(Schedule schedule);
+
     Schedule findById(Long id);
+
     /*
         작성날짜: 2022/01/13 4:13 PM
         작성자: 이승범
@@ -38,5 +41,6 @@ public interface ScheduleRepository {
     //현장요원 - 확정된 예정 스케줄 리스트
     List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today);
 
-
+    void updateScheduleComplete(Long schedule_id, Complete complete);
+    void updateScheduleWaiting(Long schedule_id, Complete complete);
 }

@@ -3,9 +3,11 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -176,5 +178,25 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 )
                 .orderBy(qSchedule.visit_date.asc(), qSchedule.visit_time.asc())//시간으로 정렬해서 주기
                 .fetch();
+    }
+
+
+    // 시설 담당자의 확인서 결재 (확인서의 컬럼 값을 complete 로 바꿔주기)
+    @Override
+    @Modifying
+    public void updateScheduleComplete(Long schedule_id, Complete complete) {
+        em.createQuery("update Schedule schedule set schedule.complete = : complete where schedule.id = : schedule_id")
+                .setParameter("schedule_id", schedule_id)
+                .setParameter("complete", complete)
+                .executeUpdate();
+    }
+
+    @Override
+    @Modifying
+    public void updateScheduleWaiting(Long schedule_id, Complete complete) {
+        em.createQuery("update Schedule s set s.complete = : complete where s.id = : schedule_id")
+                .setParameter("schedule_id", schedule_id)
+                .setParameter("complete", complete)
+                .executeUpdate();
     }
 }
