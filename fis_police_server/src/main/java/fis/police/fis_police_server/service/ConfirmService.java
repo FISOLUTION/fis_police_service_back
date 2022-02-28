@@ -15,13 +15,13 @@ import java.util.List;
 public interface ConfirmService {
 
     // 확인서 저장
-    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule);
+    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
 
     // 확인서 하나로 묶기
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);
 
     // 확인서 결재하기
-    void updateConfirm(Long confirm_id, String name);
+    void updateConfirm(Long confirm_id, Long schedule_id, String name);
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)
     Result confirmForCenter(Long center_id);

@@ -133,7 +133,7 @@ public class Agent {
         agent.a_longitude = a_longitude;
         agent.a_latitude = a_latitude;
         agent.a_status = AgentStatus.WORK;
-        agent.u_auth = request.getU_auth();
+        agent.u_auth = UserAuthority.AGENT;
         return agent;
     }
 

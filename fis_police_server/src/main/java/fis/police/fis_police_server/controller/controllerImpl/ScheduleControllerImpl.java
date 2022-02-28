@@ -1,8 +1,11 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.ScheduleController;
+import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.ScheduleService;
+import fis.police.fis_police_server.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
@@ -28,6 +31,8 @@ import java.util.List;
 public class ScheduleControllerImpl implements ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final TokenService tokenService;
+
 
     /*
         작성날짜: 2022/01/13 1:40 PM
@@ -122,25 +127,34 @@ public class ScheduleControllerImpl implements ScheduleController {
     */
     //시설에 띄워줄 예약내역 리스트
     @Override
-    @GetMapping(value = "/schedule/confirm")
-//            , produces = MediaType.IMAGE_JPEG_VALUE)
-    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest, @RequestParam("center_id") Long center_id) throws IOException {
+    @GetMapping(value = "/app/schedule/confirm")
+    public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) throws IOException {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+        Long center_id = officialFromRequest.getCenter().getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByCenter(center_id, LocalDate.now());
     }
 
     //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
     @Override
-    @GetMapping("/schedule/today")
-    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest, @RequestParam("agent_id") Long agent_id) {
+    @GetMapping("/app/schedule/today")
+    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest){
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 오늘 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/today");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgent(agent_id, LocalDate.now());
     }
 
     //schedule 의 late_comment 컬럼 update
     @Override
-    @PostMapping("/schedule/late")
+    @PostMapping("/app/schedule/late")
     public void updateLateComment(@RequestBody AppLateCommentRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try {
             //성공시 200 ok
+            log.info("늦는 사유 update");
             scheduleService.updateLateComment(request);
         } catch (NullPointerException ne) {
             log.warn("[로그인 id값 : 보류] [url: /schedule/late] [존재하지않는 스케쥴 id {}]", ne.getMessage());
@@ -153,31 +167,40 @@ public class ScheduleControllerImpl implements ScheduleController {
 
     //아직 수락/거절이 정해지지않은 스케쥴 리스트
     @Override
-    @GetMapping("/schedule/incomplete")
-    public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest, @RequestParam("agent_id") Long agent_id) {
+    @GetMapping("/app/schedule/incomplete")
+    public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest){
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 TBD인 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/incomplete");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgentIncompleteSchedule(agent_id);
     }
 
     //수락/거절 update
     @Override
-    @PostMapping("/schedule/accept")
+    @PostMapping("/app/schedule/accept")
     public void updateAcceptSchedule(@RequestBody AppAcceptScheduleRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try {
             //성공시 200 ok
+            log.info("일정 수락/거절 update");
             scheduleService.updateAccept(request);
         } catch (NullPointerException ne) {
-            log.warn("[로그인 id값 : 보류] [url: /schedule/late] [존재하지않는 스케쥴 id {}]", ne.getMessage());
+            log.warn("[url: app/schedule/accept] [존재하지않는 스케쥴 id {}]", ne.getMessage());
             response.setStatus(400);
         } catch (Exception e) {
-            log.error("[로그인 id값 : 보류] [url: /schedule/late] [예상치못한 에러 {}]", e.getMessage());
+            log.error("[url: app/schedule/accept] [예상치못한 에러 {}]", e.getMessage());
             response.setStatus(500);
         }
     }
 
     //수락된 예정 일정 열람
     @Override
-    @GetMapping("/schedule/agent")
-    public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest, @RequestParam("agent_id") Long agent_id) {
+    @GetMapping("/app/schedule/agent")
+    public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest){
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 수락한 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgentAllSchedule(agent_id, LocalDate.now());
     }
 }

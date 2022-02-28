@@ -108,7 +108,7 @@ public class AgentControllerImpl implements AgentController {
             List<AgentGetResponse> collect = AllAgentList.stream()
                     .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
                             HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
-                            AgentStatus.converter(a.getA_status()))
+                            AgentStatus.converter(a.getA_status()),a.getA_picture())
                     ).collect(Collectors.toList());
             return new AgentGetResult(collect);
         } catch (Exception e){
@@ -148,6 +148,17 @@ public class AgentControllerImpl implements AgentController {
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
+    //사진 삭제
+    @GetMapping("/agent/picture/delete")
+    public void deletePicture(@RequestParam("agent_id") Long agent_id, HttpServletResponse response){
+        try {
+            agentService.deletePicture(agent_id);
+            response.setStatus(200);
+        } catch (Exception e){
+            response.setStatus(500);
+        }
     }
 }
 

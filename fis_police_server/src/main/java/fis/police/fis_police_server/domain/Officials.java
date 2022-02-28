@@ -67,7 +67,7 @@ public class Officials {
         officials.o_nickname = request.getO_nickname();
         officials.o_pwd = request.getO_pwd();
         officials.center = center;
-        officials.u_auth = request.getU_auth();
+        officials.u_auth = UserAuthority.OFFICIAL;
         return officials;
     }
 }

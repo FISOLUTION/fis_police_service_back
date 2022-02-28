@@ -30,6 +30,7 @@ public class ConfirmServiceImpl implements ConfirmService {
     public void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
         Confirm confirm = Confirm.createConfirm(request, schedule);
         confirmRepository.save(confirm);
+        scheduleRepository.updateScheduleWaiting(schedule.getId(), Complete.waiting);
     }
 
     // 확인서 하나로 묶기
@@ -60,9 +61,10 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 결재하기
     @Override
-    public void updateConfirm(Long confirm_id, String name) {
+    public void updateConfirm(Long confirm_id, Long schedule_id, String name) {
         Complete complete = Complete.complete;
         confirmRepository.updateConfirmComplete(confirm_id, complete, name);
+        scheduleRepository.updateScheduleComplete(schedule_id, complete);
     }
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)

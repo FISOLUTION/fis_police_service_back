@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface TokenService {
-    Agent getAgentFromRequest(HttpServletRequest request);
-    Officials getOfficialFromRequest(HttpServletRequest request);
-    Claims parseJwtToken(HttpServletRequest request);
+    Agent getAgentFromRequest(String authorization);
+    Officials getOfficialFromRequest(String authorization);
+    Claims parseJwtToken(String authorization);
     String makeToken(Long loginUserId, LoginResponse loginResponse);
 }

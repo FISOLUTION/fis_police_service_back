@@ -90,7 +90,7 @@ class CenterServiceImplTest {
         center.setLocation(location);
         User user = new User("테스트", "test", "1234", "010-xxxx-xxxx", LocalDate.now(), UserAuthority.USER);
         AgentSaveRequest agent1 = new AgentSaveRequest("이승범", "010-6715-0071", "555",
-                "구로구 벚꽃로 68길 10", false, "", null);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
         agentService.saveAgent(agent1);
         Agent agent = agentRepository.findByA_code("555").get(0);
 

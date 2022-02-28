@@ -127,8 +127,22 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
+    @Transactional
     public String getPicture(Long agent_id) {
         Agent agent = agentRepository.findById(agent_id);
         return agent.getA_picture();
+    }
+
+    @Override
+    @Transactional
+    public void deletePicture(Long agent_id) {
+        Agent agent = agentRepository.findById(agent_id);
+        //진짜 사진 파일을 삭제
+        if (agent.getA_picture() != null) { // 이미 프로필 사진이 있을경우
+            File file = new File(uploadFolder + agent.getA_picture()); // 경로 + 유저 프로필사진 이름을 가져와서
+            file.delete(); // 원래파일 삭제
+        }
+        //디비에 사진 이름 삭제
+        agentRepository.deletePicture(agent_id);
     }
 }

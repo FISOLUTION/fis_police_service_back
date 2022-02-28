@@ -6,7 +6,8 @@ import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.Data;
 
 @Data
-public class CenterSearchNearCenterDTO {
+public class
+CenterSearchNearCenterDTO {
     private Long center_id;
     private String c_name;
     private String c_people;
