@@ -39,6 +39,7 @@ public class AgentServiceImpl implements AgentService {
 
     private final AgentRepository agentRepository;
     private final MapService mapService;
+    private final CheckNicknameService nicknameService;
 
     @Override
     @Transactional // 현장요원 추가
@@ -46,6 +47,7 @@ public class AgentServiceImpl implements AgentService {
             IllegalStateException, IndexOutOfBoundsException {
 
         validateDuplicateAgent(request.getA_code()); // 현장요원 코드 중복 검사
+        nicknameService.CheckNicknameOverlap(request.getNickname());
 
         Pair<Double, Double> pair = mapService.addressToLocation(request.getA_address());
         HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
