@@ -32,21 +32,21 @@ public interface ScheduleController {
             작성내용 : 앱 schedule
         */
         //시설에 띄워줄 예약내역 리스트
-        List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest,Long center_id) throws IOException; //시설 담당자의 시설 정보를 꺼내와야함
+        List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) throws IOException; //시설 담당자의 시설 정보를 꺼내와야함
 
         //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
-        List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest,Long agent_id);       //현장요원 id 꺼내야함
+        List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest);       //현장요원 id 꺼내야함
 
         //schedule 의 late_comment 컬럼 update
         public void updateLateComment(AppLateCommentRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response);
 
         //아직 수락/거절이 정해지지않은 스케줄 리스트
-        List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest, Long agent_id);
+        List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest);
 
         //수락/거절 update
         void updateAcceptSchedule(AppAcceptScheduleRequest request,HttpServletRequest httpServletRequest, HttpServletResponse response);
 
         //수락된 예정 일정 열람
-        List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest, Long agent_id);
+        List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest);
 }
 
