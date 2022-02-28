@@ -3,13 +3,16 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /*
@@ -76,7 +79,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today) {
         return jpaQueryFactory
-                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.c_latitude, qCenter.c_longitude, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
+                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.id, qCenter.c_latitude, qCenter.c_longitude, qAgent.id, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
                 .from(qSchedule)
                 .leftJoin(qSchedule.agent, qAgent)
 //                .fetchJoin() //querydsl 에서 dto 반환시 fetchjoin 대신 join
@@ -91,6 +94,38 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
                 .fetch();
     }
+
+
+//    public List<AppScheduleFilterDTO> findByCenterFilter(Long center_id,LocalDate today) {
+//        return jpaQueryFactory
+//                .select(new QAppScheduleFilterDTO(qSchedule.visit_date,qSchedule.visit_time, qCenter.id, qSchedule.count()))
+//                .from(qSchedule)
+//                .leftJoin(qSchedule.agent, qAgent)
+//                .leftJoin(qSchedule.center, qCenter)
+//                .distinct()
+//                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+//                        .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
+//                        .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
+//                        .and(qSchedule.visit_date.goe(today))   //오늘 날짜 일정과 그 이후의 날짜에 예약된 일정을 보여줌
+//                )
+//                .groupBy(qSchedule.visit_date, qSchedule.visit_time, qSchedule.center.id)
+//                .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
+//                .fetch();
+//    }
+//
+//    public List<Agent> findBySameSchedule(LocalDate visit_date, LocalTime visit_time, Long center_id){
+//        return jpaQueryFactory
+//                .select(qAgent)
+//                .from(qSchedule)
+//                .leftJoin(qSchedule.agent, qAgent)
+//                .distinct()
+//                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+//                        .and(qSchedule.visit_date.eq(visit_date))
+//                        .and(qSchedule.visit_time.eq(visit_time))
+//                        .and(qSchedule.center.id.eq(center_id)) //해당 하는 같은 스케줄의 agent 뽑기
+//                )
+//                .fetch();
+//    }
 
     //현장요원 - 오늘 방문 일정
     @Override
@@ -115,13 +150,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.isNull()) //현장요원이 수락|거부를 하지 않은 (accept 값이 null인 것들)
+                        .and(qSchedule.accept.eq(Accept.TBD)) //현장요원이 수락|거부를 하지 않은 (accept 값이 TBD인 것들)
                 )
                 .orderBy(qSchedule.visit_date.asc(),qSchedule.visit_time.asc())// 방문 예쩡 날짜로 정렬해서 주기
                 .fetch();
@@ -132,7 +167,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id,LocalDate today) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
@@ -143,5 +178,25 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 )
                 .orderBy(qSchedule.visit_date.asc(), qSchedule.visit_time.asc())//시간으로 정렬해서 주기
                 .fetch();
+    }
+
+
+    // 시설 담당자의 확인서 결재 (확인서의 컬럼 값을 complete 로 바꿔주기)
+    @Override
+    @Modifying
+    public void updateScheduleComplete(Long schedule_id, Complete complete) {
+        em.createQuery("update Schedule schedule set schedule.complete = : complete where schedule.id = : schedule_id")
+                .setParameter("schedule_id", schedule_id)
+                .setParameter("complete", complete)
+                .executeUpdate();
+    }
+
+    @Override
+    @Modifying
+    public void updateScheduleWaiting(Long schedule_id, Complete complete) {
+        em.createQuery("update Schedule s set s.complete = : complete where s.id = : schedule_id")
+                .setParameter("schedule_id", schedule_id)
+                .setParameter("complete", complete)
+                .executeUpdate();
     }
 }

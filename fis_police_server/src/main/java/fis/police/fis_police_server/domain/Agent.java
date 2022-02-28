@@ -2,6 +2,7 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import lombok.Getter;
@@ -61,6 +62,23 @@ public class Agent {
     @Enumerated(EnumType.STRING)
     private AgentStatus a_status;                       //'퇴사 여부'
 
+    /*
+        작성 날짜: 2022/02/16 4:20 오후
+        작성자: 고준영
+        작성 내용: 요원 권한 -> AGENT, 요원아이디&비번
+    */
+    @NotNull // enum 때문에 notblank 안됨
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserAuthority u_auth;                  // '권한'
+
+//    @NotBlank
+    @Column(length = 100)
+    private String a_nickname;              // "현장요원 id"
+
+//    @NotBlank
+    @Column(length = 100)
+    private String a_pwd;                   // '현장요원 비밀번호',
 
     /*
         날짜 : 2022/02/10 4:30 오후
@@ -70,6 +88,14 @@ public class Agent {
     @OneToMany(mappedBy = "agent")
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
+
+    private String a_picture;   //현장요원 사진
+
+
+
+
+
+
     /*
         작성날짜: 2022/01/11 5:05 PM
         작성자: 이승범
@@ -77,7 +103,7 @@ public class Agent {
     */
     // 생성 메서드
     public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
-                             String a_equipment, LocalDate a_receiveDate, Double a_longitude, Double a_latitude) {
+                             String a_equipment, LocalDate a_receiveDate, Double a_longitude, Double a_latitude, UserAuthority u_auth, String nickname, String pwd) {
         Agent agent = new Agent();
         agent.a_name = a_name;
         agent.a_ph = a_ph;
@@ -89,6 +115,9 @@ public class Agent {
         agent.a_latitude = a_latitude;
         agent.a_longitude = a_longitude;
         agent.a_status = AgentStatus.WORK;
+        agent.u_auth = u_auth;
+        agent.a_nickname = nickname;
+        agent.a_pwd = pwd;
         return agent;
     }
 
@@ -104,6 +133,7 @@ public class Agent {
         agent.a_longitude = a_longitude;
         agent.a_latitude = a_latitude;
         agent.a_status = AgentStatus.WORK;
+        agent.u_auth = UserAuthority.AGENT;
         return agent;
     }
 
@@ -129,5 +159,15 @@ public class Agent {
     public Agent(String a_name, String a_code) {
         this.a_name = a_name;
         this.a_code = a_code;
+    }
+
+
+    /*
+        날짜 : 2022/02/16 10:35 오전
+        작성자 : 원보라
+        작성내용 : 현장요원 사진 업로드
+    */
+    public void uploadPicture(String a_picture){
+        this.a_picture = a_picture;
     }
 }

@@ -34,7 +34,13 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final StringPath a_name = createString("a_name");
 
+    public final StringPath a_nickname = createString("a_nickname");
+
     public final StringPath a_ph = createString("a_ph");
+
+    public final StringPath a_picture = createString("a_picture");
+
+    public final StringPath a_pwd = createString("a_pwd");
 
     public final DatePath<java.time.LocalDate> a_receiveDate = createDate("a_receiveDate", java.time.LocalDate.class);
 
@@ -45,6 +51,8 @@ public class QAgent extends EntityPathBase<Agent> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<Schedule, QSchedule> scheduleList = this.<Schedule, QSchedule>createList("scheduleList", Schedule.class, QSchedule.class, PathInits.DIRECT2);
+
+    public final EnumPath<fis.police.fis_police_server.domain.enumType.UserAuthority> u_auth = createEnum("u_auth", fis.police.fis_police_server.domain.enumType.UserAuthority.class);
 
     public QAgent(String variable) {
         super(Agent.class, forVariable(variable));

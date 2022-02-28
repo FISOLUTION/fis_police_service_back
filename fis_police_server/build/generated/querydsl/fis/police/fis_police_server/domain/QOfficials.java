@@ -38,6 +38,8 @@ public class QOfficials extends EntityPathBase<Officials> {
 
     public final StringPath o_pwd = createString("o_pwd");
 
+    public final EnumPath<fis.police.fis_police_server.domain.enumType.UserAuthority> u_auth = createEnum("u_auth", fis.police.fis_police_server.domain.enumType.UserAuthority.class);
+
     public QOfficials(String variable) {
         this(Officials.class, forVariable(variable), INITS);
     }

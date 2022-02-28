@@ -20,4 +20,11 @@ public class LoginResponse {
     private String u_name;
     private UserAuthority u_auth;
     private String sc; //status code
+
+    /*
+        작성 날짜: 2022/02/15 3:45 오후
+        작성자: 고준영
+        작성 내용: 토큰
+    */
+    private String token;
 }

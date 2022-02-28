@@ -15,4 +15,8 @@ public interface AgentRepository {
     void save(Agent agent);
 
     List<Agent> findNearAgent(Double latitude, Double longitude, Long range);
+
+    List<Agent> findByNickname(String nickname);
+
+    void deletePicture(Long agent_id);
 }
