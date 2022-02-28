@@ -24,4 +24,8 @@ public class AgentModifyRequest {
     private String a_equipment;             //'장비 번호'
     private LocalDate a_receiveDate;        //'장비 수령 날짜'
     private boolean a_status;               //'퇴사 여부'
+
+    // 고준영
+    private String nickname;
+    private String pwd;
 }

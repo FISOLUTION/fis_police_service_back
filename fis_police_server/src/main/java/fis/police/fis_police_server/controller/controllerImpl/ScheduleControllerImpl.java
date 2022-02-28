@@ -132,6 +132,8 @@ public class ScheduleControllerImpl implements ScheduleController {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
         Long center_id = officialFromRequest.getCenter().getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByCenter(center_id, LocalDate.now());
     }
 
@@ -141,6 +143,8 @@ public class ScheduleControllerImpl implements ScheduleController {
     public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest){
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 오늘 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/today");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgent(agent_id, LocalDate.now());
     }
 
@@ -150,6 +154,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     public void updateLateComment(@RequestBody AppLateCommentRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try {
             //성공시 200 ok
+            log.info("늦는 사유 update");
             scheduleService.updateLateComment(request);
         } catch (NullPointerException ne) {
             log.warn("[로그인 id값 : 보류] [url: /schedule/late] [존재하지않는 스케쥴 id {}]", ne.getMessage());
@@ -166,6 +171,8 @@ public class ScheduleControllerImpl implements ScheduleController {
     public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest){
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 TBD인 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/incomplete");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgentIncompleteSchedule(agent_id);
     }
 
@@ -175,12 +182,13 @@ public class ScheduleControllerImpl implements ScheduleController {
     public void updateAcceptSchedule(@RequestBody AppAcceptScheduleRequest request, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         try {
             //성공시 200 ok
+            log.info("일정 수락/거절 update");
             scheduleService.updateAccept(request);
         } catch (NullPointerException ne) {
-            log.warn("[로그인 id값 : 보류] [url: /schedule/late] [존재하지않는 스케쥴 id {}]", ne.getMessage());
+            log.warn("[url: app/schedule/accept] [존재하지않는 스케쥴 id {}]", ne.getMessage());
             response.setStatus(400);
         } catch (Exception e) {
-            log.error("[로그인 id값 : 보류] [url: /schedule/late] [예상치못한 에러 {}]", e.getMessage());
+            log.error("[url: app/schedule/accept] [예상치못한 에러 {}]", e.getMessage());
             response.setStatus(500);
         }
     }
@@ -191,6 +199,8 @@ public class ScheduleControllerImpl implements ScheduleController {
     public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest){
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 수락한 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgentAllSchedule(agent_id, LocalDate.now());
     }
 }
