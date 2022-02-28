@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
+import fis.police.fis_police_server.domain.enumType.Complete;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,10 @@ public class AppScheduleResponse {
     private String c_ph;
     private String c_faxNum;
 
+    private Complete complete; //확인서 작성 여부
 
     @QueryProjection
-    public AppScheduleResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Long center_id, String c_name, String c_address, String c_zipcode, String c_ph, String c_faxNum) {
+    public AppScheduleResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Long center_id, String c_name, String c_address, String c_zipcode, String c_ph, String c_faxNum, Complete complete) {
         this.schedule_id = schedule_id;
         this.visit_date = visit_date;
         this.visit_time = visit_time;
@@ -42,5 +44,6 @@ public class AppScheduleResponse {
         this.c_zipcode = c_zipcode;
         this.c_ph = c_ph;
         this.c_faxNum = c_faxNum;
+        this.complete = complete;
     }
 }

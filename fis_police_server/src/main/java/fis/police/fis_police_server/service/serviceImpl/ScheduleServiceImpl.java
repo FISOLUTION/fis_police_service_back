@@ -167,8 +167,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public void updateAccept(AppAcceptScheduleRequest request) {
-        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
-        schedule.updateAccept(request.getAccept());
+//        Schedule schedule = scheduleRepository.findById(request.getSchedule_id());
+//        schedule.updateAccept(request.getAccept());
+        request.getSchedule_id().stream().forEach(id -> (scheduleRepository.findById(id)).updateAccept(request.getAccept()));
     }
 
     //현장요원 - 확정된 예정 스케줄 리스트
