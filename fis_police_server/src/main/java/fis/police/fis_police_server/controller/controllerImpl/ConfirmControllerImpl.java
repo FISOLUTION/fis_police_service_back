@@ -98,7 +98,7 @@ public class ConfirmControllerImpl implements ConfirmController {
     }
 
     // /confirm -> 시설용 과거 방문 이력들
-    // todo (0214 적음) 같은 시설, 같은 날짜에 방문한 정보들을 하나로 통합해야함 ㅜㅜ
+    // todo (0214 적음) 같은 시설, 같은 날짜에 방문한 정보들을 하나로 통합해야함
     @Override
     @GetMapping("/confirm/center/{center_id}")
     public Result confirmListForCenter(HttpServletRequest request, @PathVariable Long center_id) {
