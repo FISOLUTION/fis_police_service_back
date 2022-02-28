@@ -100,9 +100,16 @@ public class ConfirmControllerImpl implements ConfirmController {
     // /confirm -> 시설용 과거 방문 이력들
     // todo (0214 적음) 같은 시설, 같은 날짜에 방문한 정보들을 하나로 통합해야함
     @Override
-    @GetMapping("/confirm/center/{center_id}")
-    public Result confirmListForCenter(HttpServletRequest request, @PathVariable Long center_id) {
-        return confirmService.confirmForCenter(center_id);
+    @GetMapping("/confirm/center")
+    public Result confirmListForCenter(HttpServletRequest request) {
+        try {
+            String authorization = request.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
+            Long center_id = officialFromRequest.getCenter().getId();
+            return confirmService.confirmForCenter(center_id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("방문 정보 없음.");
+        }
     }
 
     // /confirm/calendar -> 현장요원별 확인서가 제출된 날짜만 출력? 이건 아직 미정
