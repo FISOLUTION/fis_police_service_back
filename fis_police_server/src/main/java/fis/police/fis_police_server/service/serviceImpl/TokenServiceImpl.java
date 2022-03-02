@@ -62,7 +62,7 @@ public class TokenServiceImpl implements TokenService {
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer("fresh")
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(5).toMillis()))
+                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
 
                 .claim("id", loginUserId)
                 .claim("role", loginResponse.getU_auth())
