@@ -28,6 +28,15 @@ public class OfficialsControllerImpl implements OfficialsController {
     @Override
     @PostMapping("/officials")
     public void saveOfficials(@RequestBody OfficialSaveRequest request) {
+
+        System.out.println("==========================================");
+        System.out.println("request.getCenter_id() = " + request.getCenter_id());
+        System.out.println("==========================================");
+        System.out.println("request = " + request);
+        System.out.println("==========================================");
+
+
+
         Center center = officialService.findCenter(request.getCenter_id());
         officialService.saveOfficials(request, center);
 
