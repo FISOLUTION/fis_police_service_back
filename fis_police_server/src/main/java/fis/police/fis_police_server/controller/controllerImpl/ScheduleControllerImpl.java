@@ -207,7 +207,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     //현장요원 완료된 일정
     @Override
     @GetMapping("/app/schedule/old")
-    public List<AppAgentOldSche> agentOldSchedule(HttpServletRequest httpServletRequest) {
+    public List<AppScheduleResponse> agentOldSchedule(HttpServletRequest httpServletRequest) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
         log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");

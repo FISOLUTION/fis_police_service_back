@@ -179,20 +179,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<AppAgentOldSche> findByAgentOldSchedule(Long agent_id, LocalDate today) {
-        List<AppScheduleResponse> list = scheduleRepository.findByAgentOldSchedule(agent_id, today);
-        List<LocalDate> date = list.stream().map(s -> s.getVisit_date()).collect(Collectors.toList());
-        Set<LocalDate> dateSet = new HashSet<>(date);
-        List<LocalDate> dateList = new ArrayList<>(dateSet);
-        Collections.sort(dateList, Collections.reverseOrder()); //최신 일정이 위로오게
-        List<AppAgentOldSche> CombineScheduleList = new ArrayList<AppAgentOldSche>();
-        for (LocalDate visit_date : dateList) { //같은 날짜 일정 묶기
-            List<AppScheduleResponse> date_list = list.stream().filter(s ->s.getVisit_date().isEqual(visit_date)).collect(Collectors.toList());
-            AppAgentOldSche sche = new AppAgentOldSche();
-            sche.setList(date_list);
-            sche.setVisit_date(visit_date);
-            CombineScheduleList.add(sche);
-        }
-        return CombineScheduleList;
+    public List<AppScheduleResponse> findByAgentOldSchedule(Long agent_id, LocalDate today) {
+        // 내노력의 시간 안뇽,,,, 담에 참고할거니까 안지울거임 ㅜㅜㅠㅜ
+//        List<AppScheduleResponse> list = scheduleRepository.findByAgentOldSchedule(agent_id, today);
+//        List<LocalDate> date = list.stream().map(s -> s.getVisit_date()).collect(Collectors.toList());
+//        Set<LocalDate> dateSet = new HashSet<>(date);
+//        List<LocalDate> dateList = new ArrayList<>(dateSet);
+//        Collections.sort(dateList, Collections.reverseOrder()); //최신 일정이 위로오게
+//        List<AppAgentOldSche> CombineScheduleList = new ArrayList<AppAgentOldSche>();
+//        for (LocalDate visit_date : dateList) { //같은 날짜 일정 묶기
+//            List<AppScheduleResponse> date_list = list.stream().filter(s ->s.getVisit_date().isEqual(visit_date)).collect(Collectors.toList());
+//            AppAgentOldSche sche = new AppAgentOldSche();
+//            sche.setList(date_list);
+//            sche.setVisit_date(visit_date);
+//            CombineScheduleList.add(sche);
+//        }
+//        return CombineScheduleList;
+        return scheduleRepository.findByAgentOldSchedule(agent_id, today);
     }
 }
