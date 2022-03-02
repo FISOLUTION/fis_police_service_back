@@ -50,6 +50,6 @@ public interface ScheduleController {
         List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest);
 
         //현장요원 과거 일정
-        List<AppAgentOldSche> agentOldSchedule(HttpServletRequest httpServletRequest);
+        List<AppScheduleResponse> agentOldSchedule(HttpServletRequest httpServletRequest);
 }
 
