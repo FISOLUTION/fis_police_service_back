@@ -108,7 +108,7 @@ public class AgentControllerImpl implements AgentController {
             List<AgentGetResponse> collect = AllAgentList.stream()
                     .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
                             HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
-                            AgentStatus.converter(a.getA_status()),a.getA_picture())
+                            AgentStatus.converter(a.getA_status()),a.getA_picture(), a.getA_nickname(), a.getA_pwd())
                     ).collect(Collectors.toList());
             return new AgentGetResult(collect);
         } catch (Exception e){

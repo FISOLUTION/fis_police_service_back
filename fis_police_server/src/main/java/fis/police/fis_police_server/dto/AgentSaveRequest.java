@@ -28,4 +28,8 @@ public class AgentSaveRequest {
     private String a_equipment;             //'장비 번호'
     private LocalDate a_receiveDate;    //'장비 수령 날짜'
     private UserAuthority u_auth;
+
+    // 고준영
+    private String nickname;
+    private String pwd;
 }
