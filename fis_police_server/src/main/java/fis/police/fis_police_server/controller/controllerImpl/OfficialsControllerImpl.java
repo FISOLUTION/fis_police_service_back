@@ -9,6 +9,7 @@ import fis.police.fis_police_server.service.OfficialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/app")
 public class OfficialsControllerImpl implements OfficialsController {
 
     private final OfficialService officialService;
@@ -26,6 +28,15 @@ public class OfficialsControllerImpl implements OfficialsController {
     @Override
     @PostMapping("/officials")
     public void saveOfficials(@RequestBody OfficialSaveRequest request) {
+
+        System.out.println("==========================================");
+        System.out.println("request.getCenter_id() = " + request.getCenter_id());
+        System.out.println("==========================================");
+        System.out.println("request = " + request);
+        System.out.println("==========================================");
+
+
+
         Center center = officialService.findCenter(request.getCenter_id());
         officialService.saveOfficials(request, center);
 

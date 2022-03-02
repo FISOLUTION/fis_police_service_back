@@ -27,4 +27,6 @@ public class AgentGetResponse {
     private boolean a_status;               //'퇴사 여부'
 
     private String a_picture;  //현장요원 사진 업로드 null 일때 업로드 안된거임
+    private String a_nickname;
+    private String a_pwd;
 }

@@ -134,6 +134,8 @@ public class Agent {
         agent.a_latitude = a_latitude;
         agent.a_status = AgentStatus.WORK;
         agent.u_auth = UserAuthority.AGENT;
+        agent.a_nickname = request.getNickname();
+        agent.a_pwd = request.getPwd();
         return agent;
     }
 
@@ -149,6 +151,8 @@ public class Agent {
         this.a_status = a_status;
         this.a_longitude = a_longitude;
         this.a_latitude = a_latitude;
+        this.a_nickname = request.getNickname();
+        this.a_pwd = request.getPwd();
     }
 
     /*
