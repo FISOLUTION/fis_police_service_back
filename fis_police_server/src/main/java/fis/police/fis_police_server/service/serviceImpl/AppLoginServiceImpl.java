@@ -3,6 +3,8 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.dto.AppLoginRequest;
 import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.AgentRepository;
@@ -10,6 +12,7 @@ import fis.police.fis_police_server.repository.OfficialsRepository;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.AppLoginService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AppLoginServiceImpl implements AppLoginService {
 
     private final UserRepository userRepository;
@@ -25,35 +29,42 @@ public class AppLoginServiceImpl implements AppLoginService {
     private final OfficialsRepository officialsRepository;
 
     @Override
-    public Long loginUserId(LoginRequest request) {
+    public Long loginUserId(AppLoginRequest request) {
         String nickname = request.getU_nickname();
         String pwd = request.getU_pwd();
         return getPrimaryKey(nickname, pwd);
     }
 
     @Override
-    public LoginResponse loginRes(LoginRequest request) {
+    public LoginResponse login(AppLoginRequest request) {
         LoginResponse loginResponse = new LoginResponse();
 
         String nickname = request.getU_nickname();
         String pwd = request.getU_pwd();
+        UserAuthority role = request.getRole();
 
-        List<User> user = userRepository.findByNickname(nickname);
-        List<Agent> agent = agentRepository.findByNickname(nickname);
-        List<Officials> officials = officialsRepository.findByNickname(nickname);
-
-        if (user.size() + agent.size() + officials.size() != 0) {
-            if (user.size() != 0) {
-                return authenticateUser(user, loginResponse, pwd);
-            } else if (agent.size() != 0) {
+        if (role == UserAuthority.AGENT) {
+            log.info("[로그인 요청 역할 {}]", role);
+            List<Agent> agent = agentRepository.findByNickname(nickname);
+            if (!agent.isEmpty()) {
                 return authenticateAgent(agent, loginResponse, pwd);
             } else {
+                loginFail(loginResponse, "idFail");
+                return loginResponse;
+            }
+        } else if (role == UserAuthority.OFFICIAL) {
+            log.info("[로그인 요청 역할 {}]", role);
+            List<Officials> officials = officialsRepository.findByNickname(nickname);
+            if (!officials.isEmpty()) {
                 return authenticateOfficial(officials, loginResponse, pwd);
+            } else {
+                loginFail(loginResponse, "idFail");
+                return loginResponse;
             }
         } else {
-            loginFail(loginResponse, "idFail");
-            return loginResponse;
+            throw new IllegalArgumentException("role 정보 오류");
         }
+
     }
 
     @Override

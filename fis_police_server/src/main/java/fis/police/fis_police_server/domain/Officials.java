@@ -70,4 +70,14 @@ public class Officials {
         officials.u_auth = UserAuthority.OFFICIAL;
         return officials;
     }
+
+    public void modifyOfficial(OfficialSaveRequest request, Center center) {
+        this.o_name = request.getO_name();
+        this.o_nickname = request.getO_nickname();
+        this.o_pwd = request.getO_pwd();
+        this.o_ph = request.getO_ph();
+        this.o_email = request.getO_email();
+        this.center = center;
+    }
+
 }
