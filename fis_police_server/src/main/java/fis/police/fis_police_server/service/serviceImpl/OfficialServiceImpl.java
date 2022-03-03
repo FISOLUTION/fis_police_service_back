@@ -29,6 +29,12 @@ public class OfficialServiceImpl implements OfficialService {
     }
 
     @Override
+    public void modifyOfficials(Officials officialFromRequest, OfficialSaveRequest request, Center center) {
+//        nicknameService.CheckNicknameOverlap(request.getO_nickname());
+        officialFromRequest.modifyOfficial(request, center);
+    }
+
+    @Override
     public Center findCenter(Long id) {
         return centerRepository.findById(id);
     }

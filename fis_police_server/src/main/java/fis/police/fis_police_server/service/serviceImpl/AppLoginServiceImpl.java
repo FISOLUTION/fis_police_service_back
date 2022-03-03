@@ -3,6 +3,8 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.dto.AppLoginRequest;
 import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.AgentRepository;
@@ -37,6 +39,7 @@ public class AppLoginServiceImpl implements AppLoginService {
 
         String nickname = request.getU_nickname();
         String pwd = request.getU_pwd();
+
 
         List<User> user = userRepository.findByNickname(nickname);
         List<Agent> agent = agentRepository.findByNickname(nickname);

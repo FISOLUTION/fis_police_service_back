@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SettingOfficialDTO {
-
+    private Long official_id;
     private String center_name;
     private String o_name;
     private String o_ph;

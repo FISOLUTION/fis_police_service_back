@@ -31,7 +31,7 @@ public class SettingControllerImpl implements SettingController {
             String authorizationHeader = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
             Officials official = settingService.getOfficial(officialFromRequest.getId());
-            return new SettingOfficialDTO(official.getCenter().getC_name(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
+            return new SettingOfficialDTO(official.getId(), official.getCenter().getC_name(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
         } catch (NullPointerException e) {
             throw new NullPointerException("사용자 정보 없음.");
         }
@@ -49,6 +49,5 @@ public class SettingControllerImpl implements SettingController {
             throw new NullPointerException("사용자 정보 없음.");
         }
     }
-
 
 }
