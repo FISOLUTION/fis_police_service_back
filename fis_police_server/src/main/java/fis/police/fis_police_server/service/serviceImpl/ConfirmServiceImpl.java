@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 결재하기
     @Override
-    public void updateConfirm(Long confirm_id, Long schedule_id, String name) {
+    public void updateConfirm(Long schedule_id, Long confirm_id, String name) {
         Complete complete = Complete.complete;
         confirmRepository.updateConfirmComplete(confirm_id, complete, name);
         scheduleRepository.updateScheduleComplete(schedule_id, complete);
@@ -98,6 +99,22 @@ public class ConfirmServiceImpl implements ConfirmService {
                         confirm.getVisit_date(), confirm.getComplete()))
                 .collect(Collectors.toList());
         return new Result(collect);
+    }
+
+    @Override
+    public CalendarResponse completeDayForAgent(Agent agent) {
+        Complete complete = Complete.complete;
+        List<Confirm> completeConfirmListForAgent = confirmRepository.findCompleteConfirmListForAgent(complete, agent);
+        List<AppScheduleResponse> byAgentAllSchedule = scheduleRepository.findByAgentAllSchedule(agent.getId(), LocalDate.now());
+        CalendarResponse response = new CalendarResponse();
+        response.setAgent_name(agent.getA_name());
+        for (Confirm confirm : completeConfirmListForAgent) {
+            response.getVisited_date().add(confirm.getVisit_date());
+        }
+        for (AppScheduleResponse appScheduleResponse : byAgentAllSchedule) {
+            response.getWill_go_date().add(appScheduleResponse.getVisit_date().toString());
+        }
+        return response;
     }
 
     @Override

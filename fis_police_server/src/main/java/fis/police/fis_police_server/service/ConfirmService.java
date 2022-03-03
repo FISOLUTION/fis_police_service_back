@@ -28,6 +28,7 @@ public interface ConfirmService {
 
     // [방문이력 조회] 요원별 확인서 조회 (모두)
     Result confirmForAgent(Agent agent);
+    CalendarResponse completeDayForAgent(Agent agent);
 
     // 시설, 현장요원, 스케쥴 찾기
     Agent findAgent(Long id);
