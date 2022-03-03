@@ -22,4 +22,11 @@ public class AppLoginAdvice {
         log.error("[NullPointerExHandler] ex", e);
         return new ErrorResult("400", e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResult illegalArgExHandler(IllegalArgumentException e) {
+        log.error("[IllegalArgExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
 }
