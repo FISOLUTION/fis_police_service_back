@@ -27,9 +27,10 @@ public class HopeServiceImpl implements HopeService {
 
 
     @Override
-    public void saveHope(HopeSaveRequest request, Center center, Officials officials) {
+    public WellSaveResponse saveHope(HopeSaveRequest request, Center center, Officials officials) {
         Hope hope = Hope.createHope(request, officials, center);
         hopeRepository.saveHope(hope);
+        return new WellSaveResponse("200", "created");
     }
 
     @Override
@@ -46,9 +47,10 @@ public class HopeServiceImpl implements HopeService {
     }
 
     @Override
-    public void updateHopeComplete(Long id) {
+    public WellSaveResponse updateHopeComplete(Long id) {
         Complete complete = Complete.complete;
         hopeRepository.updateHopeComplete(id, complete);
+        return new WellSaveResponse("200", "updated");
     }
 
     @Override

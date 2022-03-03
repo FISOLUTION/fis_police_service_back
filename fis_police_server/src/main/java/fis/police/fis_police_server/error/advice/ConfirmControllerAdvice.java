@@ -22,41 +22,41 @@ public class ConfirmControllerAdvice {
     @ExceptionHandler(NullPointerException.class)
     public ErrorResult nullExHandler (NullPointerException e) {
         log.error("[nullExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IndexOutOfBoundsException.class)
     public ErrorResult indexOutExHandler (IndexOutOfBoundsException e) {
         log.error("[IndexOutOfBoundsExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResult illegalStateExHandler (IllegalStateException e) {
         log.error("[IllegalStateExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NumberFormatException.class)
     public ErrorResult numFormatExHandler (NumberFormatException e) {
         log.error("[NumberFormatException] ex", e);
-        return new ErrorResult("??", e.getMessage());
+        return new ErrorResult("500", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResult httpMessageNotReadableExHandler(HttpMessageNotReadableException e) {
         log.error("[HttpMessageNotReadableExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {
         log.error("[exceptionHandle] ex", e);
-        return new ErrorResult("EX", "내부 오류");
+        return new ErrorResult("500", "내부 오류");
     }
 }

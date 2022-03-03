@@ -27,10 +27,12 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 저장
     @Override
-    public void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
+    public WellSaveResponse saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
         Confirm confirm = Confirm.createConfirm(request, schedule);
         confirmRepository.save(confirm);
         scheduleRepository.updateScheduleWaiting(schedule.getId(), Complete.waiting);
+        WellSaveResponse response = new WellSaveResponse("200", "created");
+        return response;
     }
 
     // 확인서 하나로 묶기
