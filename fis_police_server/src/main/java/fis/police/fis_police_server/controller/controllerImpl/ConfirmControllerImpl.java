@@ -107,6 +107,8 @@ public class ConfirmControllerImpl implements ConfirmController {
             String authorization = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
             Long center_id = officialFromRequest.getCenter().getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 시설용 과거 방문 일정 조회]", tokenService.getOfficialFromRequest(authorization).getId(), "/confirm/center");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorization).get("role"));
             return confirmService.confirmForCenter(center_id);
         } catch (NullPointerException e) {
             throw new NullPointerException("방문 정보 없음.");
