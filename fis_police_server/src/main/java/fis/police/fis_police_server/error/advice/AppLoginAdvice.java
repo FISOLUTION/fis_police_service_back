@@ -19,6 +19,6 @@ public class AppLoginAdvice {
     @ExceptionHandler(NullPointerException.class)
     public ErrorResult nullExHandler(NullPointerException e) {
         log.error("[NullPointerExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 }

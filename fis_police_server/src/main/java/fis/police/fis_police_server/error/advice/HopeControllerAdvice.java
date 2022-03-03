@@ -20,20 +20,20 @@ public class HopeControllerAdvice {
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResult illegalStateExHandler(IllegalStateException e) {
         log.error("[IllegalStateExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NullPointerException.class)
     public ErrorResult nullExHandler(NullPointerException e) {
         log.error("[NullPointerExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {
-        log.error("[ExceptionHanlder] ex", e);
-        return new ErrorResult("EX", "내부 오류");
+        log.error("[ExceptionHandler] ex", e);
+        return new ErrorResult("500", "내부 오류");
     }
 }

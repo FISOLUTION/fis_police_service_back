@@ -16,6 +16,13 @@ public class OfficialControllerAdvice {
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResult illegalStateHandler(IllegalStateException e) {
         log.error("[IllegalStateExHandler] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ErrorResult exHandler(Exception e) {
+        log.error("[exceptionHandle] ex", e);
+        return new ErrorResult("500", "내부 오류");
     }
 }
