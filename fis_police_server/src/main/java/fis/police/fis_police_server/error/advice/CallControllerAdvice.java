@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.error.advice;
 
 import fis.police.fis_police_server.error.error_result.ErrorResult;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,13 @@ public class CallControllerAdvice {
     @ExceptionHandler(NullPointerException.class)
     public ErrorResult nullExHandler(NullPointerException e) {
         log.error("[NullPointerExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(JwtException.class)
+    public ErrorResult jwtExHandler(JwtException e) {
+        log.error("[JwtExHandler] ex", e);
         return new ErrorResult("400", e.getMessage());
     }
 

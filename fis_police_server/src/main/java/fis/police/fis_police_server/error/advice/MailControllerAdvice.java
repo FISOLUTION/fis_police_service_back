@@ -2,6 +2,7 @@ package fis.police.fis_police_server.error.advice;
 
 import fis.police.fis_police_server.controller.controllerImpl.MailControllerImpl;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
@@ -19,6 +20,13 @@ import javax.mail.internet.AddressException;
 @Slf4j
 @RestControllerAdvice(assignableTypes = MailControllerImpl.class)
 public class MailControllerAdvice {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(JwtException.class)
+    public ErrorResult jwtExHandler(JwtException e) {
+        log.error("[JwtExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AddressException.class)

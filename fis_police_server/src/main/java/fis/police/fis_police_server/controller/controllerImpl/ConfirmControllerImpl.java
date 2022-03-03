@@ -113,19 +113,15 @@ public class ConfirmControllerImpl implements ConfirmController {
         }
     }
 
-    // /confirm/calendar -> 현장요원별 확인서가 제출된 날짜만 출력? 이건 아직 미정
+    // /confirm/calendar ->현장요원별 확인서 제출완료 날짜 + 근무 예정 날짜
     @Override
     @GetMapping("confirm/calendar")
-    public Result confirmDate(HttpServletRequest request) {
-        try {
-            String authorizationHeader = request.getHeader("Authorization");
-            Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
-            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 근무일자 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/calendar");
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-            return confirmService.confirmForAgent(agentFromRequest);
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("현장요원 정보 없음.");
-        }
+    public CalendarResponse confirmDay(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 근무일자 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/calendar");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+        return confirmService.completeDayForAgent(agentFromRequest);
     }
 }
 

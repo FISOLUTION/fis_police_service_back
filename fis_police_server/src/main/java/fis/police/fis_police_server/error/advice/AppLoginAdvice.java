@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.error.advice;
 
+import fis.police.fis_police_server.controller.AppLoginController;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
     작성자: 고준영
     작성 내용: 앱 로그인 예외 처리
 */
-@RestControllerAdvice
+@RestControllerAdvice(assignableTypes = AppLoginController.class)
 @Slf4j
 public class AppLoginAdvice {
 
