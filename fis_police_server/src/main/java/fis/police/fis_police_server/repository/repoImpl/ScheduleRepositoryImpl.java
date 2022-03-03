@@ -180,6 +180,24 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .fetch();
     }
 
+    @Override
+    public List<AppScheduleResponse> findByAgentOldSchedule(Long agent_id, LocalDate today) {
+        return jpaQueryFactory
+                .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
+                .from(qSchedule)
+                .leftJoin(qSchedule.center, qCenter)
+                .distinct()
+                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+                        .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
+                        .and(qSchedule.accept.eq(Accept.accept)) //현장요원이 수락한 즉 성립된 일정인
+//                        .and(qSchedule.complete.eq(Complete.complete)) //확인서작성 완료한 (근데 혹시 확인서 당일에 못썼을 수 있으니까 주석처리 ....)
+                        .and(qSchedule.visit_date.lt(today))    //과거 일정들
+                )
+                .orderBy(qSchedule.visit_date.desc(), qSchedule.visit_time.asc())//시간으로 정렬해서 주기
+                .fetch();
+    }
+
 
     // 시설 담당자의 확인서 결재 (확인서의 컬럼 값을 complete 로 바꿔주기)
     @Override

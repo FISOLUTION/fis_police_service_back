@@ -48,5 +48,8 @@ public interface ScheduleController {
 
         //수락된 예정 일정 열람
         List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest);
+
+        //현장요원 과거 일정
+        List<AppScheduleResponse> agentOldSchedule(HttpServletRequest httpServletRequest);
 }
 

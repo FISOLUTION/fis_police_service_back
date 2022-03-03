@@ -1,10 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.dto.ConfirmFormResponse;
-import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
-import fis.police.fis_police_server.dto.ConfirmListForCenterResponse;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.*;
 
 import java.util.List;
 /*
@@ -15,7 +12,7 @@ import java.util.List;
 public interface ConfirmService {
 
     // 확인서 저장
-    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
+    WellSaveResponse saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
 
     // 확인서 하나로 묶기
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);

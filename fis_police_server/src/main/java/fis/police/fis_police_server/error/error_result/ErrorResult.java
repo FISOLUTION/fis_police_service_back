@@ -12,6 +12,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ErrorResult {
 //    private Long id;
-    private String error_code;
+    private String status_code;
     private String message;
 }

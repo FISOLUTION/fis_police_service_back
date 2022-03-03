@@ -48,4 +48,7 @@ public interface ScheduleService {
 
     //현장요원 - 확정된 예정 스케줄 리스트
     List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today);
+
+    //현장요원 - 완료된 과거 스케줄 리스트
+    List<AppScheduleResponse> findByAgentOldSchedule(Long agent_id, LocalDate today);
 }

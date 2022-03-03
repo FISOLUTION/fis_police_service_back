@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import ch.qos.logback.core.spi.PreSerializationTransformer;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
@@ -27,16 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.print.attribute.standard.PresentationDirection;
 import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -57,34 +56,36 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public Schedule assignAgent(ScheduleSaveRequest request, Long userId) {
-        Center findCenter =  centerRepository.findById(request.getCenter_id());
+        Center findCenter = centerRepository.findById(request.getCenter_id());
         User findUser = userRepository.findById(userId);
         Agent findAgent = agentRepository.findById(request.getAgent_id());
         Schedule schedule = Schedule.createSchedule(findCenter, findUser, findAgent, request);
         scheduleRepository.save(schedule);
         return schedule;
     }
-/*
-    작성날짜: 2022/01/13 5:54 PM
-    작성자: 이승범
-    작성내용: 날짜별 현장요원 스케줄 가져오기 구현
-*/
+
+    /*
+        작성날짜: 2022/01/13 5:54 PM
+        작성자: 이승범
+        작성내용: 날짜별 현장요원 스케줄 가져오기 구현
+    */
     @Override
     public List<ScheduleByDateResponse> selectDate(LocalDate date) {
         return scheduleRepository.findAllByDate(date);
     }
-/*
-    작성날짜: 2022/01/14 4:40 PM
-    작성자: 이승범
-    작성내용: modifySchedule 작성
-*/
+
+    /*
+        작성날짜: 2022/01/14 4:40 PM
+        작성자: 이승범
+        작성내용: modifySchedule 작성
+    */
     @Override
     @Transactional
-    public Schedule modifySchedule(ScheduleModifyRequest request) throws NullPointerException{
+    public Schedule modifySchedule(ScheduleModifyRequest request) throws NullPointerException {
         Schedule findSchedule = scheduleRepository.findById(request.getSchedule_id());
         List<Agent> findAgentList = agentRepository.findByA_code(request.getA_code());
         // 해당하는 현장요원이 존재하는지 검사
-        if(findAgentList.isEmpty()){
+        if (findAgentList.isEmpty()) {
             throw new NullPointerException();
         }
         Agent findAgent = findAgentList.get(0);
@@ -106,8 +107,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
         날짜 : 2022/02/11 1:38 오후
         작성자 : 원보라
@@ -120,14 +120,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) throws IOException {
-        List<AppScheduleCenterResponse> allList =scheduleRepository.findByCenter(center_id,today);
+        List<AppScheduleCenterResponse> allList = scheduleRepository.findByCenter(center_id, today);
 
         for (AppScheduleCenterResponse appScheduleCenterResponse : allList) {
             Long agent_id = appScheduleCenterResponse.getAgent_id();
             Agent agent = agentRepository.findById(agent_id);
             String a_picture = agent.getA_picture();
 
-            if (a_picture !=null) {
+            if (a_picture != null) {
                 InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
                 byte[] imageByteArray = IOUtils.toByteArray(imageStream);
                 imageStream.close();
@@ -175,8 +175,26 @@ public class ScheduleServiceImpl implements ScheduleService {
     //현장요원 - 확정된 예정 스케줄 리스트
     @Override
     public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id, LocalDate today) {
-        return scheduleRepository.findByAgentAllSchedule(agent_id,today);
+        return scheduleRepository.findByAgentAllSchedule(agent_id, today);
     }
 
-
+    @Override
+    public List<AppScheduleResponse> findByAgentOldSchedule(Long agent_id, LocalDate today) {
+        // 내노력의 시간 안뇽,,,, 담에 참고할거니까 안지울거임 ㅜㅜㅠㅜ
+//        List<AppScheduleResponse> list = scheduleRepository.findByAgentOldSchedule(agent_id, today);
+//        List<LocalDate> date = list.stream().map(s -> s.getVisit_date()).collect(Collectors.toList());
+//        Set<LocalDate> dateSet = new HashSet<>(date);
+//        List<LocalDate> dateList = new ArrayList<>(dateSet);
+//        Collections.sort(dateList, Collections.reverseOrder()); //최신 일정이 위로오게
+//        List<AppAgentOldSche> CombineScheduleList = new ArrayList<AppAgentOldSche>();
+//        for (LocalDate visit_date : dateList) { //같은 날짜 일정 묶기
+//            List<AppScheduleResponse> date_list = list.stream().filter(s ->s.getVisit_date().isEqual(visit_date)).collect(Collectors.toList());
+//            AppAgentOldSche sche = new AppAgentOldSche();
+//            sche.setList(date_list);
+//            sche.setVisit_date(visit_date);
+//            CombineScheduleList.add(sche);
+//        }
+//        return CombineScheduleList;
+        return scheduleRepository.findByAgentOldSchedule(agent_id, today);
+    }
 }

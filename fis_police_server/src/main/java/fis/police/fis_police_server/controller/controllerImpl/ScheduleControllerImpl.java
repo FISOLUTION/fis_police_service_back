@@ -203,4 +203,15 @@ public class ScheduleControllerImpl implements ScheduleController {
         log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
         return scheduleService.findByAgentAllSchedule(agent_id, LocalDate.now());
     }
+
+    //현장요원 완료된 일정
+    @Override
+    @GetMapping("/app/schedule/old")
+    public List<AppScheduleResponse> agentOldSchedule(HttpServletRequest httpServletRequest) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+        return scheduleService.findByAgentOldSchedule(agent_id, LocalDate.now());
+    }
 }
