@@ -6,6 +6,7 @@ import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.WellSaveResponse;
 import fis.police.fis_police_server.repository.HopeRepository;
 import fis.police.fis_police_server.service.HopeService;
 import fis.police.fis_police_server.service.TokenService;
@@ -28,12 +29,12 @@ public class HopeControllerImpl implements HopeController {
 
     @Override
     @PostMapping("/app/hope")
-    public void saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
+    public WellSaveResponse saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
             Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
-            hopeService.saveHope(hopeRequest, center, officialFromRequest);
+            return hopeService.saveHope(hopeRequest, center, officialFromRequest);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("시설 담당자 정보 없음.");
         } catch (NullPointerException e) {
@@ -49,7 +50,7 @@ public class HopeControllerImpl implements HopeController {
 
     @Override
     @PostMapping("/hope/{hope_id}")
-    public void updateComplete(@PathVariable Long hope_id) {
-        hopeService.updateHopeComplete(hope_id);
+    public WellSaveResponse updateComplete(@PathVariable Long hope_id) {
+         return hopeService.updateHopeComplete(hope_id);
     }
 }

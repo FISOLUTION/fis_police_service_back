@@ -98,7 +98,7 @@ public class MailServiceImpl implements MailService {
 
         response.setCenter_id(recentCall.getCenter().getId());
         response.setM_email(recentCall.getM_email());
-        response.setStatus_code("메일 전송 완료");
+        response.setStatus_code("200");
 //            checkMail(recentCall.getCenter().getId(), recentCall.getUser().getId(), request.getM_email());
     }
 

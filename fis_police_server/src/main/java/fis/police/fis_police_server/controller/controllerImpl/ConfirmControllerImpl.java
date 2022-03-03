@@ -37,7 +37,7 @@ public class ConfirmControllerImpl implements ConfirmController {
     // 현장요원이 확인서 작성하여 제출 (확인서 정보 + 현장요원 정보) 현장요원 별 하나씩
     @Override
     @PostMapping("/confirm/write/{schedule_id}")
-    public void postConfirm(@RequestBody ConfirmFromAgentRequest formRequest, HttpServletRequest request, @PathVariable Long schedule_id) {
+    public WellSaveResponse postConfirm(@RequestBody ConfirmFromAgentRequest formRequest, HttpServletRequest request, @PathVariable Long schedule_id) {
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Agent agent = tokenService.getAgentFromRequest(authorizationHeader);
@@ -45,7 +45,7 @@ public class ConfirmControllerImpl implements ConfirmController {
             String date = String.valueOf(schedule.getVisit_date());
             log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 저장]", agent.getId(), "/confirm/write/" + schedule_id);
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-            confirmService.saveConfirm(formRequest, schedule);
+            return confirmService.saveConfirm(formRequest, schedule);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("현장요원 정보 없음");
         } catch (NullPointerException e) {
@@ -76,7 +76,7 @@ public class ConfirmControllerImpl implements ConfirmController {
     // 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
     @Override
     @PostMapping("/confirm/check/{schedule_id}")
-    public void updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) {
+    public WellSaveResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) {
 
         try {
             String authorizationHeader = servletRequest.getHeader("Authorization");
@@ -88,6 +88,7 @@ public class ConfirmControllerImpl implements ConfirmController {
                 log.info("[확인서 id값: {} [url: {}] [요청: 확인서 결재]", aLong, "/confirm/check");
                 confirmService.updateConfirm(schedule_id, aLong, officialFromRequest.getO_name());
             }
+            return new WellSaveResponse("200", "updated");
         } catch (IllegalStateException e) {
             throw new IllegalStateException("시설 담당자 정보 없음.");
         } catch (HttpMessageNotReadableException e) {
