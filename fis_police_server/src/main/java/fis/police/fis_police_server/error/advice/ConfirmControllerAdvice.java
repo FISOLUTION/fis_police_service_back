@@ -2,6 +2,7 @@ package fis.police.fis_police_server.error.advice;
 
 import fis.police.fis_police_server.controller.controllerImpl.ConfirmControllerImpl;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,6 +18,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice(assignableTypes = ConfirmControllerImpl.class)
 public class ConfirmControllerAdvice {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(JwtException.class)
+    public ErrorResult jwtExHandler(JwtException e) {
+        log.error("[JwtExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NullPointerException.class)

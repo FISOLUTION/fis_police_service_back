@@ -1,0 +1,19 @@
+package fis.police.fis_police_server.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SettingOfficialDTO {
+
+    private String center_name;
+    private String o_name;
+    private String o_ph;
+    private String o_email;
+    private String o_nickname;
+    private String o_pwd;
+}
