@@ -45,7 +45,7 @@ public class CallServiceImpl implements CallService {
         CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
         response.setCall_id(call.getId());
-        response.setStatus_code("201");
+        response.setStatus_code("200");
 
         return response;
     }
