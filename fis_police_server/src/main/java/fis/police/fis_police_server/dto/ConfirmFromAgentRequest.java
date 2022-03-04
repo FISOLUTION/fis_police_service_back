@@ -20,6 +20,4 @@ public class ConfirmFromAgentRequest {
     private String senile;
     private String disabled;
     private String etc;
-
-    private Complete complete;
 }

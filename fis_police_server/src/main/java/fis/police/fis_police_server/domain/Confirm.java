@@ -60,7 +60,7 @@ public class Confirm {
         confirm.senile = request.getSenile();
         confirm.disabled = request.getDisabled();
         confirm.etc = request.getEtc();
-        confirm.complete = request.getComplete();
+        confirm.complete = Complete.waiting;
 
         return confirm;
     }
