@@ -32,8 +32,7 @@ public class ConfirmServiceImpl implements ConfirmService {
         Confirm confirm = Confirm.createConfirm(request, schedule);
         confirmRepository.save(confirm);
         scheduleRepository.updateScheduleWaiting(schedule.getId(), Complete.waiting);
-        WellSaveResponse response = new WellSaveResponse("200", "created");
-        return response;
+        return new WellSaveResponse("200", "created");
     }
 
     // 확인서 하나로 묶기

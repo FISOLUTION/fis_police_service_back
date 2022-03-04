@@ -2,6 +2,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.SettingController;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.SettingAgentDTO;
 import fis.police.fis_police_server.dto.SettingOfficialDTO;
@@ -31,7 +32,8 @@ public class SettingControllerImpl implements SettingController {
             String authorizationHeader = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
             Officials official = settingService.getOfficial(officialFromRequest.getId());
-            return new SettingOfficialDTO(official.getId(), official.getCenter().getC_name(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
+            Center center = official.getCenter();
+            return new SettingOfficialDTO(official.getId(), center.getId(), center.getC_name(), center.getC_address(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
         } catch (NullPointerException e) {
             throw new NullPointerException("사용자 정보 없음.");
         }
