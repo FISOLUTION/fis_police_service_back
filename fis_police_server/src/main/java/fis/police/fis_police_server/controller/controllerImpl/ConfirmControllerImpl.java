@@ -57,6 +57,14 @@ public class ConfirmControllerImpl implements ConfirmController {
     @Override
     @GetMapping("/confirm/{schedule_id}")
     public ConfirmFormResponse confirmBySchedule(HttpServletRequest request, @PathVariable Long schedule_id) {
+
+        System.out.println("==================================================================");
+        System.out.println("==================================================================");
+        System.out.println("schedule_id = " + schedule_id);
+        System.out.println("==================================================================");
+        System.out.println("==================================================================");
+
+
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Schedule schedule = confirmService.findSchedule(schedule_id);
