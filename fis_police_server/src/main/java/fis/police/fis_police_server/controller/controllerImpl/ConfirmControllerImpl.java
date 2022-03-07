@@ -70,7 +70,7 @@ public class ConfirmControllerImpl implements ConfirmController {
             Schedule schedule = confirmService.findSchedule(schedule_id);
             Center center = schedule.getCenter();
             String visit_date = String.valueOf(schedule.getVisit_date());
-            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
+//            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
 //        log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             return confirmService.showConfirm(center, visit_date);
