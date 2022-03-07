@@ -38,6 +38,7 @@ public class AppLoginControllerImpl implements AppLoginController {
         }
 
         log.info("[로그인 id값: {}] [url: {}] [로그인 성공]", loginUserId, "/app/login");
+        log.info("[로그인 역할: {}]", loginRequest.getRole());
 
         // 토큰 생성
         String token = tokenService.makeToken(loginUserId, loginResponse);
