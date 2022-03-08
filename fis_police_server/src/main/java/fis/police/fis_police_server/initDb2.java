@@ -82,10 +82,10 @@ public class initDb2 {
 
 
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
-                    LocalDate.parse("2021-01-01"),LocalTime.parse("09:00:00"), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.now(),LocalTime.parse("09:00:00"), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule1);
             Schedule schedule2 = Schedule.createSchedule(center1, user2, agent1, LocalDate.now(),
-                    LocalDate.parse("2021-01-01"),LocalTime.parse("10:00:00"), 500, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2099-01-01"),LocalTime.parse("10:00:00"), 500, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule2);
 
             Schedule schedule3 = Schedule.createSchedule(center1, user1, agent3, LocalDate.now(),
