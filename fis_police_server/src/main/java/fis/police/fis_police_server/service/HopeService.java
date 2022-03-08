@@ -4,6 +4,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.WellSaveResponse;
 
 /*
     작성 날짜: 2022/02/14 11:47 오전
@@ -12,9 +13,9 @@ import fis.police.fis_police_server.dto.Result;
 */
 public interface HopeService {
 
-    void saveHope(HopeSaveRequest request, Center center, Officials officials);
+    WellSaveResponse saveHope(HopeSaveRequest request, Center center, Officials officials);
     Result listHope();
-    void updateHopeComplete(Long id);
+    WellSaveResponse updateHopeComplete(Long id);
     Officials findOfficials(Long id);
     Center findCenter(Long id);
 

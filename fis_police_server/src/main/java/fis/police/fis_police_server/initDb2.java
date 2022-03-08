@@ -92,17 +92,17 @@ public class initDb2 {
                     LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
             em.persist(schedule3);
             Schedule schedule4 = Schedule.createSchedule(center1, user2, agent1, LocalDate.now(),
-                    LocalDate.parse("2011-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule4);
 
             Schedule schedule5 = Schedule.createSchedule(center1, user1, agent3, LocalDate.now(),
                     LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음", Accept.TBD,null);
             em.persist(schedule5);
             Schedule schedule6 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
-                    LocalDate.parse("2022-10-10"),LocalTime.parse("10:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.TBD,"차가 막혀요");
+                    LocalDate.parse("2022-10-10"),LocalTime.parse("10:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule6);
             Schedule schedule7 = Schedule.createSchedule(center1, user2, agent2, LocalDate.now(),
-                    LocalDate.parse("2022-03-11"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.TBD,"차가 막혀요");
+                    LocalDate.parse("2022-03-11"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
             em.persist(schedule7);
 
 /*
