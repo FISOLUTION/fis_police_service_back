@@ -20,6 +20,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice(assignableTypes = ConfirmControllerImpl.class)
 public class ConfirmControllerAdvice {
 
+    // 토큰 만료 됐을 때
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {
@@ -27,6 +28,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // 디비에 정보가 없을 때
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NullPointerException.class)
     public ErrorResult nullExHandler (NullPointerException e) {
@@ -34,6 +36,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // 확인서 없을 때 발생하는 걸로 해놓긴 했는데, 잘 모르겄음
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IndexOutOfBoundsException.class)
     public ErrorResult indexOutExHandler (IndexOutOfBoundsException e) {
@@ -41,6 +44,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // 토큰을 보내지 않았을 때
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResult illegalStateExHandler (IllegalStateException e) {
@@ -48,6 +52,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // request body 에 아무것도 없을 때
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResult httpMessageNotReadableExHandler(HttpMessageNotReadableException e) {
@@ -55,6 +60,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // 이미 확인서 결재 됐을 때
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalAccessException.class)
     public ErrorResult illegalAccessExHandler (IllegalAccessException e) {
@@ -62,6 +68,7 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    // 타입이 맞지 않을 때 (ex. want Long type but come String type)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NumberFormatException.class)
     public ErrorResult numFormatExHandler (NumberFormatException e) {
