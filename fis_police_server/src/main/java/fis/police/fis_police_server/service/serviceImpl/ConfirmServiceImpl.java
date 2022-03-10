@@ -63,8 +63,12 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 결재하기
     @Override
-    public void updateConfirm(Long schedule_id, Long confirm_id, String name) {
+    public void updateConfirm(Long schedule_id, Long confirm_id, String name) throws IllegalAccessException {
         Complete complete = Complete.complete;
+        Confirm confirm = confirmRepository.findById(confirm_id);
+        if (confirm.getComplete() == Complete.complete) {
+            throw new IllegalAccessException("AlreadyCompleted");
+        }
         confirmRepository.updateConfirmComplete(confirm_id, complete, name);
         scheduleRepository.updateScheduleComplete(schedule_id, complete);
     }
