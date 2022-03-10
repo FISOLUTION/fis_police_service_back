@@ -75,7 +75,6 @@ public class ConfirmControllerImpl implements ConfirmController {
     }
 
     // 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
-    // todo 한 시설에 두명 이상의 담당자가 근무 시, 이미 결재된 확인서에 대해서는 결재할 수 없도록 해야한다.
     @Override
     @PostMapping("/confirm/check/{schedule_id}")
     public WellSaveResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) throws IllegalAccessException {
