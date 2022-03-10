@@ -42,6 +42,6 @@ public class HopeControllerAdvice {
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {
         log.error("[ExceptionHandler] ex", e);
-        return new ErrorResult("500", "내부 오류");
+        return new ErrorResult("500", "ServerError");
     }
 }

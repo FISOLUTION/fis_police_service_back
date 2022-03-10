@@ -145,8 +145,6 @@ public class initDb2 {
             em.persist(call11);
 
 
-            Confirm confirm = new Confirm();
-            em.persist(confirm);
         }
     }
 }

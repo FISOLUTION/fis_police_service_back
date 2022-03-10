@@ -1,4 +1,4 @@
-package fis.police.fis_police_server;
+package fis.police.fis_police_server.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

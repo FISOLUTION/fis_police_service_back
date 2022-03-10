@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /*
     작성 날짜: 2022/02/18 2:47 오후
@@ -47,13 +48,6 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(NumberFormatException.class)
-    public ErrorResult numFormatExHandler (NumberFormatException e) {
-        log.error("[NumberFormatException] ex", e);
-        return new ErrorResult("500", e.getMessage());
-    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResult httpMessageNotReadableExHandler(HttpMessageNotReadableException e) {
@@ -61,10 +55,31 @@ public class ConfirmControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalAccessException.class)
+    public ErrorResult illegalAccessExHandler (IllegalAccessException e) {
+        log.error("[IllegalAccessExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ErrorResult numFormatExHandler (NumberFormatException e) {
+        log.error("[NumberFormatExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ErrorResult methodArgTypeMismatchExHandler (MethodArgumentTypeMismatchException e) {
+        log.error("[MethodArgTypeMismatchExHandler] ex", e);
+        return new ErrorResult("400", "NoScheduleId");
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {
         log.error("[exceptionHandle] ex", e);
-        return new ErrorResult("500", "내부 오류");
+        return new ErrorResult("500", "ServerError");
     }
 }
