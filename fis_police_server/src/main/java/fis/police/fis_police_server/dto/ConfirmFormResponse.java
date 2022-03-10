@@ -17,6 +17,7 @@ public class ConfirmFormResponse {
     private String center_name;
     private String center_address;
     private String center_ph;   // 시설 담당자 전화번호 혹은 시설 전화번호
+    private String manager_name;
     private String visit_date;  // schedule 에서 뽑아와야함
     private String visit_time;  // schedule 에서 뽑아와야함
     private String new_child;

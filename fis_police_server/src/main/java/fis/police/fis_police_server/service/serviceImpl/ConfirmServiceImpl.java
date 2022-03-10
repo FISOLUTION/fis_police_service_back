@@ -44,6 +44,7 @@ public class ConfirmServiceImpl implements ConfirmService {
         response.setCenter_name(dupleList.get(0).getCenter().getC_name());
         response.setCenter_address(dupleList.get(0).getCenter().getC_address());
         response.setCenter_ph(dupleList.get(0).getCenter().getC_ph());
+        response.setManager_name(dupleList.get(0).getCenter_manger());
         response.setVisit_date(dupleList.get(0).getVisit_date());
         response.setVisit_time(dupleList.get(0).getVisit_time());
         response.setNew_child(dupleList.get(0).getNew_child());
