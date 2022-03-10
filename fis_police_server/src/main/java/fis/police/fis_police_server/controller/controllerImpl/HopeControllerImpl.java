@@ -36,9 +36,9 @@ public class HopeControllerImpl implements HopeController {
             Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
             return hopeService.saveHope(hopeRequest, center, officialFromRequest);
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("시설 담당자 정보 없음.");
+            throw new IllegalStateException("NoOfficial");
         } catch (NullPointerException e) {
-            throw new NullPointerException("담당 시설 정보 없음.");
+            throw new NullPointerException("NoOfficial");
         }
     }
 

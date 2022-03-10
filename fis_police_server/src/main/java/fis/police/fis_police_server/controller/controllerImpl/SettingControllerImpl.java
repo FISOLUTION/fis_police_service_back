@@ -35,7 +35,7 @@ public class SettingControllerImpl implements SettingController {
             Center center = official.getCenter();
             return new SettingOfficialDTO(official.getId(), center.getId(), center.getC_name(), center.getC_address(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
         } catch (NullPointerException e) {
-            throw new NullPointerException("사용자 정보 없음.");
+            throw new NullPointerException("NoOfficial");
         }
     }
 
@@ -48,7 +48,7 @@ public class SettingControllerImpl implements SettingController {
             Agent agent = settingService.getAgent(agentFromRequest.getId());
             return new SettingAgentDTO(agent.getA_name(), agent.getA_nickname(), agent.getA_pwd(), agent.getA_ph());
         } catch (NullPointerException e) {
-            throw new NullPointerException("사용자 정보 없음.");
+            throw new NullPointerException("NoAgent");
         }
     }
 

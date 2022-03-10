@@ -18,7 +18,7 @@ public interface ConfirmService {
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);
 
     // 확인서 결재하기
-    void updateConfirm(Long confirm_id, Long schedule_id, String name);
+    void updateConfirm(Long confirm_id, Long schedule_id, String name) throws IllegalAccessException;
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)
     Result confirmForCenter(Long center_id);

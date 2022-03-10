@@ -17,6 +17,8 @@ public interface ConfirmRepository {
     // 확인서 제출 후 저장 (요원별로 저장)
     void save(Confirm confirm);
 
+    Confirm findById(Long id);
+
     // 해당 스케쥴에 대한 확인서(결재 상관 없이 일단 뽑음) 조회 (만약 해당 스케쥴을 2명 이상이 수행하여, 확인서가 2개 이상 나오기 때문에 list 처리. service 에서 하나로 봉합해야함)
     List<Confirm> findSameCenterDate(Center center, String visit_date);
 

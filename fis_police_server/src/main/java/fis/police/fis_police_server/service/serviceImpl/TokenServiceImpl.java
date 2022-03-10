@@ -42,7 +42,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Claims parseJwtToken(String authorizationHeader) {
         if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("NoToken");
         }
         String token = authorizationHeader.substring("Bearer ".length());
         try {
@@ -51,7 +51,7 @@ public class TokenServiceImpl implements TokenService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (JwtException e) {
-            throw new JwtException("만료된 토큰입니다.");
+            throw new JwtException("ExpiredToken");
         }
     }
 
@@ -65,8 +65,11 @@ public class TokenServiceImpl implements TokenService {
                 .setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
 
                 .claim("id", loginUserId)
+                .claim("username", loginResponse.getU_name())
                 .claim("role", loginResponse.getU_auth())
                 .signWith(SignatureAlgorithm.HS256, "secret")
                 .compact();
     }
+
+//    public Authentica
 }
