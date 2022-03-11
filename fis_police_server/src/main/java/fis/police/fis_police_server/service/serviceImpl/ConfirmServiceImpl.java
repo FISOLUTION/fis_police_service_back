@@ -44,6 +44,7 @@ public class ConfirmServiceImpl implements ConfirmService {
         response.setCenter_name(dupleList.get(0).getCenter().getC_name());
         response.setCenter_address(dupleList.get(0).getCenter().getC_address());
         response.setCenter_ph(dupleList.get(0).getCenter().getC_ph());
+        response.setManager_name(dupleList.get(0).getCenter_manger());
         response.setVisit_date(dupleList.get(0).getVisit_date());
         response.setVisit_time(dupleList.get(0).getVisit_time());
         response.setNew_child(dupleList.get(0).getNew_child());
@@ -63,8 +64,12 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 결재하기
     @Override
-    public void updateConfirm(Long schedule_id, Long confirm_id, String name) {
+    public void updateConfirm(Long schedule_id, Long confirm_id, String name) throws IllegalAccessException {
         Complete complete = Complete.complete;
+        Confirm confirm = confirmRepository.findById(confirm_id);
+        if (confirm.getComplete() == Complete.complete) {
+            throw new IllegalAccessException("AlreadyCompleted");
+        }
         confirmRepository.updateConfirmComplete(confirm_id, complete, name);
         scheduleRepository.updateScheduleComplete(schedule_id, complete);
     }

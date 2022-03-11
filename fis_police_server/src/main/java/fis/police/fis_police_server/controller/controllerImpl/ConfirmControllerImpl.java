@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Null;
@@ -47,9 +48,9 @@ public class ConfirmControllerImpl implements ConfirmController {
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             return confirmService.saveConfirm(formRequest, schedule);
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("현장요원 정보 없음");
+            throw new IllegalStateException("NoToken");
         } catch (NullPointerException e) {
-            throw new NullPointerException("일정 정보 없음.");
+            throw new NullPointerException("NoSchedule");
         }
     }
 
@@ -57,34 +58,26 @@ public class ConfirmControllerImpl implements ConfirmController {
     @Override
     @GetMapping("/confirm/{schedule_id}")
     public ConfirmFormResponse confirmBySchedule(HttpServletRequest request, @PathVariable Long schedule_id) {
-
-        System.out.println("==================================================================");
-        System.out.println("==================================================================");
-        System.out.println("schedule_id = " + schedule_id);
-        System.out.println("==================================================================");
-        System.out.println("==================================================================");
-
-
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Schedule schedule = confirmService.findSchedule(schedule_id);
             Center center = schedule.getCenter();
             String visit_date = String.valueOf(schedule.getVisit_date());
 //            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
-//        log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
+//            log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 조회]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/" + schedule_id);
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             return confirmService.showConfirm(center, visit_date);
         } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException("확인서 없음.");
+            throw new IndexOutOfBoundsException("NoConfirm");
         } catch (NullPointerException e){
-            throw new NullPointerException("없어 진째루~");
+            throw new NullPointerException("NoConfirm");
         }
     }
 
     // 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
     @Override
     @PostMapping("/confirm/check/{schedule_id}")
-    public WellSaveResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) {
+    public WellSaveResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) throws IllegalAccessException {
 
         try {
             String authorizationHeader = servletRequest.getHeader("Authorization");
@@ -98,11 +91,11 @@ public class ConfirmControllerImpl implements ConfirmController {
             }
             return new WellSaveResponse("200", "updated");
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("시설 담당자 정보 없음.");
+            throw new IllegalStateException("NoToken");
         } catch (HttpMessageNotReadableException e) {
-            throw new HttpMessageNotReadableException("확인서 정보 없음.", (HttpInputMessage) request);
+            throw new HttpMessageNotReadableException("NoConfirm", (HttpInputMessage) request);
         } catch (NullPointerException e) {
-            throw new NullPointerException("없어 없어 그냥 없어;");
+            throw new NullPointerException("NoConfirm");
         }
     }
 
@@ -119,7 +112,7 @@ public class ConfirmControllerImpl implements ConfirmController {
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorization).get("role"));
             return confirmService.confirmForCenter(center_id);
         } catch (NullPointerException e) {
-            throw new NullPointerException("방문 정보 없음.");
+            throw new NullPointerException("NoVisited");
         }
     }
 
