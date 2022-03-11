@@ -34,6 +34,9 @@ public interface ScheduleController {
         //시설에 띄워줄 예약내역 리스트
         List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) throws IOException; //시설 담당자의 시설 정보를 꺼내와야함
 
+        //시설 - 방문 예정 현장요원 위도 경도
+        List<AgentLocation> findAgentLocation(HttpServletRequest httpServletRequest);
+
         //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
         List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest);       //현장요원 id 꺼내야함
 

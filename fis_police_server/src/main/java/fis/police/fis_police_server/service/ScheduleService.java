@@ -34,6 +34,10 @@ public interface ScheduleService {
     //시설 - 방문 예정 일정들
     List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today) throws IOException;
 
+    //시설 - 방문 예정 현장요원 위도 경도
+    List<AgentLocation> findAgentLocation(Long center_id, LocalDate today);
+
+
     //현장요원 - 오늘 방문 일정
     List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today);
 

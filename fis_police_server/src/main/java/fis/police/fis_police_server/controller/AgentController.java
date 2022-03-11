@@ -1,9 +1,6 @@
 package fis.police.fis_police_server.controller;
 
-import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentPictureDTO;
-import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.dto.AgentGetResult;
+import fis.police.fis_police_server.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,4 +28,6 @@ public interface AgentController {
         작성내용 : 현장요원 사진 추가
     */
     void updatePicture(Long Agent_id, MultipartFile multipartFile);
+
+    void saveCurrentLocation(AgentLocation request, HttpServletResponse response, HttpServletRequest req);
 }
