@@ -1,10 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.dto.ConfirmFormResponse;
-import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
-import fis.police.fis_police_server.dto.ConfirmListForCenterResponse;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.*;
 
 import java.util.List;
 /*
@@ -15,13 +12,13 @@ import java.util.List;
 public interface ConfirmService {
 
     // 확인서 저장
-    void saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
+    WellSaveResponse saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) throws NullPointerException;
 
     // 확인서 하나로 묶기
     ConfirmFormResponse combineConfirm(List<Confirm> dupleList);
 
     // 확인서 결재하기
-    void updateConfirm(Long confirm_id, Long schedule_id, String name);
+    void updateConfirm(Long confirm_id, Long schedule_id, String name) throws IllegalAccessException;
 
     // [방문이력 조회] 시설별 확인서 조회 (모두)
     Result confirmForCenter(Long center_id);
@@ -31,6 +28,7 @@ public interface ConfirmService {
 
     // [방문이력 조회] 요원별 확인서 조회 (모두)
     Result confirmForAgent(Agent agent);
+    CalendarResponse completeDayForAgent(Agent agent);
 
     // 시설, 현장요원, 스케쥴 찾기
     Agent findAgent(Long id);

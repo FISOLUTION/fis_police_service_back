@@ -91,7 +91,14 @@ public class Agent {
 
     private String a_picture;   //현장요원 사진
 
+    /*
+        날짜 : 2022/03/11 1:42 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 현재 위치
+    */
 
+    private String a_cur_lat;                          //'현장 요원 현재 위도',
+    private String a_cur_long;                         //'현장 요원 현재 경도',
 
 
 
@@ -174,4 +181,17 @@ public class Agent {
     public void uploadPicture(String a_picture){
         this.a_picture = a_picture;
     }
+
+
+    /*
+        날짜 : 2022/03/11 1:55 오후
+        작성자 : 원보라
+        작성내용 : 현장요원 현재 위치 저장
+    */
+    public void saveCurLocation(String a_cur_lat, String a_cur_long){
+        this.a_cur_lat=a_cur_lat;
+        this.a_cur_long = a_cur_long;
+    }
 }
+
+

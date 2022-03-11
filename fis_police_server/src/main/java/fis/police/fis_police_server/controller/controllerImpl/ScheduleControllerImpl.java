@@ -129,23 +129,55 @@ public class ScheduleControllerImpl implements ScheduleController {
     @Override
     @GetMapping(value = "/app/schedule/confirm")
     public List<AppScheduleCenterResponse> confirmSchedule(HttpServletRequest httpServletRequest) throws IOException {
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
-        Long center_id = officialFromRequest.getCenter().getId();
-        log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
-        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-        return scheduleService.findByCenter(center_id, LocalDate.now());
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+            Long center_id = officialFromRequest.getCenter().getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findByCenter(center_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoOfficial");
+        }
     }
+
+
+    //시설 - 방문 예정 현장요원 위도 경도
+    @Override
+    @GetMapping(value = "/app/schedule/location")
+    public List<AgentLocation> findAgentLocation(HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+            Long center_id = officialFromRequest.getCenter().getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findAgentLocation(center_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoOfficial");
+        }
+    }
+
 
     //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
     @Override
     @GetMapping("/app/schedule/today")
-    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest){
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
-        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 오늘 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/today");
-        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-        return scheduleService.findByAgent(agent_id, LocalDate.now());
+    public List<AppScheduleAgentResponse> agentTodaySchedule(HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 오늘 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/today");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findByAgent(agent_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoAgent");
+        }
     }
 
     //schedule 의 late_comment 컬럼 update
@@ -168,12 +200,18 @@ public class ScheduleControllerImpl implements ScheduleController {
     //아직 수락/거절이 정해지지않은 스케쥴 리스트
     @Override
     @GetMapping("/app/schedule/incomplete")
-    public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest){
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
-        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 TBD인 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/incomplete");
-        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-        return scheduleService.findByAgentIncompleteSchedule(agent_id);
+    public List<AppScheduleResponse> incompleteSchedule(HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 TBD인 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/incomplete");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findByAgentIncompleteSchedule(agent_id);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoAgent");
+        }
     }
 
     //수락/거절 update
@@ -196,22 +234,34 @@ public class ScheduleControllerImpl implements ScheduleController {
     //수락된 예정 일정 열람
     @Override
     @GetMapping("/app/schedule/agent")
-    public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest){
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
-        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 수락한 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
-        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-        return scheduleService.findByAgentAllSchedule(agent_id, LocalDate.now());
+    public List<AppScheduleResponse> agentSchedule(HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 수락한 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findByAgentAllSchedule(agent_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoAgent");
+        }
     }
 
     //현장요원 완료된 일정
     @Override
     @GetMapping("/app/schedule/old")
     public List<AppScheduleResponse> agentOldSchedule(HttpServletRequest httpServletRequest) {
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
-        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
-        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-        return scheduleService.findByAgentOldSchedule(agent_id, LocalDate.now());
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findByAgentOldSchedule(agent_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoAgent");
+        }
     }
 }

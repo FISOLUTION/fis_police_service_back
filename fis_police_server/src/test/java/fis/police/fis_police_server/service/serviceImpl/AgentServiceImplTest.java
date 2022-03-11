@@ -45,7 +45,7 @@ class AgentServiceImplTest {
     public void saveAgent() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         // when
         Agent saveAgent= agentService.saveAgent(agentSaveRequest);
         // then
@@ -56,9 +56,9 @@ class AgentServiceImplTest {
     void saveAgent_현장요원_코드중복() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest1 = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         AgentSaveRequest agentSaveRequest2 = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         agentService.saveAgent(agentSaveRequest1);
         // when
 
@@ -71,7 +71,7 @@ class AgentServiceImplTest {
     public void saveAgent_잘못된주소입력() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest = new AgentSaveRequest("이승범", "123", "12312312",
-                "ㅁㄴㅇ", true, "", null, UserAuthority.AGENT);
+                "ㅁㄴㅇ", true, "", null, UserAuthority.AGENT, null, null);
         // when
 
         // then
@@ -95,11 +95,11 @@ class AgentServiceImplTest {
     public void modifyAgent() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         Agent saveAgent= agentService.saveAgent(agentSaveRequest);
         // when
         AgentModifyRequest agentModifyRequest = new AgentModifyRequest(saveAgent.getId(), "이승범", "010-6715-0071", "123",
-                "구로구 벚꽃로 68길 10", false, "", null, false);
+                "구로구 벚꽃로 68길 10", false, "", null, false, null, null);
         Agent modifiedAgent = agentService.modifyAgent(agentModifyRequest);
         // then
         Agent findAgent = agentRepository.findById(modifiedAgent.getId());
@@ -110,14 +110,14 @@ class AgentServiceImplTest {
     public void modifyAgent_현장요원코드중복() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest1 = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         AgentSaveRequest agentSaveRequest2 = new AgentSaveRequest("이승범", "010-6715-0071", "123",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         agentService.saveAgent(agentSaveRequest1);
         Agent saveAgent = agentService.saveAgent(agentSaveRequest2);
         // when
         AgentModifyRequest agentModifyRequest = new AgentModifyRequest(saveAgent.getId(), "이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, false);
+                "구로구 벚꽃로 68길 10", false, "", null, false, null, null);
         // then
         assertThatThrownBy(() -> agentService.modifyAgent(agentModifyRequest))
                 .isInstanceOf(IllegalStateException.class);
@@ -127,9 +127,9 @@ class AgentServiceImplTest {
     public void getAgents() throws Exception {
         // given
         AgentSaveRequest agentSaveRequest1 = new AgentSaveRequest("이승범", "010-6715-0071", "321",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         AgentSaveRequest agentSaveRequest2 = new AgentSaveRequest("이승범", "010-6715-0071", "123",
-                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         Agent saveAgent1 = agentService.saveAgent(agentSaveRequest1);
         Agent saveAgent2 = agentService.saveAgent(agentSaveRequest2);
         em.flush();

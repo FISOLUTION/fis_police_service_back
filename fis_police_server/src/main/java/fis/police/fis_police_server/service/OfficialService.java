@@ -14,6 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface OfficialService {
 
     void saveOfficials(OfficialSaveRequest request, Center center);
-
+    void modifyOfficials(Officials officialFromRequest, OfficialSaveRequest request, Center center);
     Center findCenter(Long id);
 }

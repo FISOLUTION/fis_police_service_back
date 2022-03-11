@@ -4,8 +4,8 @@ import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.dto.AgentLocation;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.service.AgentService;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintViolationException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,7 +46,8 @@ public class AgentServiceImpl implements AgentService {
             IllegalStateException, IndexOutOfBoundsException {
 
         validateDuplicateAgent(request.getA_code()); // 현장요원 코드 중복 검사
-        nicknameService.CheckNicknameOverlap(request.getNickname());
+//        nicknameService.CheckNicknameOverlap(request.getNickname());
+        checkDuplicateByNickname(request.getNickname());
 
         Pair<Double, Double> pair = mapService.addressToLocation(request.getA_address());
         HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
@@ -94,6 +94,12 @@ public class AgentServiceImpl implements AgentService {
         List<Agent> findAgentList = agentRepository.findByA_code(a_code);
         if (!findAgentList.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 현장요원 코드입니다.");
+        }
+    }
+    private void checkDuplicateByNickname(String nickname) {
+        List<Agent> byNickname = agentRepository.findByNickname(nickname);
+        if (!byNickname.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
         }
     }
 
@@ -146,5 +152,12 @@ public class AgentServiceImpl implements AgentService {
         }
         //디비에 사진 이름 삭제
         agentRepository.deletePicture(agent_id);
+    }
+
+    @Override
+    @Transactional
+    public void saveCurrentLocation(Long agent_id, AgentLocation agentLocation) {
+        Agent agent = agentRepository.findById(agent_id);
+        agent.saveCurLocation(agentLocation.getA_cur_lat(), agentLocation.getA_cur_lat());
     }
 }

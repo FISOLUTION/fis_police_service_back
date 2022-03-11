@@ -31,6 +31,11 @@ public class ConfirmRepositoryImpl implements ConfirmRepository {
         em.persist(confirm);
     }
 
+    @Override
+    public Confirm findById(Long id) {
+        return em.find(Confirm.class, id);
+    }
+
     // 해당 스케쥴에 대한 확인서(결재 상관 없이 일단 뽑음) 조회
     // (만약 해당 스케쥴을 2명 이상이 수행하여, 확인서가 2개 이상 나오기 때문에 list 처리. service 에서 하나로 봉합해야함)
     @Override
@@ -58,8 +63,7 @@ public class ConfirmRepositoryImpl implements ConfirmRepository {
                 .executeUpdate();
     }
 
-    // 과거 방문 이력 조회 => 시설에 대한 모든 확인서 (결재 완료인)
-    // (결재가 완료된 방문 이력을 모두 조회한다. 이때, 한 스케쥴을 2명 이상이 처리한 경우 하나의 confirm 으로 묶어주는 작업을 service 에서 진행)
+    // 과거 방문 이력 조회 => 시설에 대한 모든 확인서
     @Override
     public List<Confirm> findCompleteConfirmListForCenter(Center center) {
         return em.createQuery("select c from Confirm c where c.center = : center", Confirm.class)

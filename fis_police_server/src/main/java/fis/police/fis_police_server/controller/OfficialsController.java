@@ -2,6 +2,8 @@ package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
+import fis.police.fis_police_server.dto.WellSaveResponse;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface OfficialsController {
 
     // 시설 담당자 추가 (회원 가입)
-    void saveOfficials(OfficialSaveRequest request);
-
+    WellSaveResponse saveOfficials(OfficialSaveRequest request);
+    WellSaveResponse modifyOfficials(OfficialSaveRequest request, HttpServletRequest httpServletRequest);
 }

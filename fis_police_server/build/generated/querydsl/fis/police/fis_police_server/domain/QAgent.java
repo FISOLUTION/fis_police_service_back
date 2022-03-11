@@ -24,6 +24,10 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final StringPath a_code = createString("a_code");
 
+    public final StringPath a_cur_lat = createString("a_cur_lat");
+
+    public final StringPath a_cur_long = createString("a_cur_long");
+
     public final StringPath a_equipment = createString("a_equipment");
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.HasCar> a_hasCar = createEnum("a_hasCar", fis.police.fis_police_server.domain.enumType.HasCar.class);
