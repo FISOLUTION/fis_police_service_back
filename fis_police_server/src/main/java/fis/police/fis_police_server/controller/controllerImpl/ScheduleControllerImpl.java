@@ -143,6 +143,26 @@ public class ScheduleControllerImpl implements ScheduleController {
         }
     }
 
+
+    //시설 - 방문 예정 현장요원 위도 경도
+    @Override
+    @GetMapping(value = "/app/schedule/location")
+    public List<AgentLocation> findAgentLocation(HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+            Long center_id = officialFromRequest.getCenter().getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            return scheduleService.findAgentLocation(center_id, LocalDate.now());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoOfficial");
+        }
+    }
+
+
     //현장요원 앱 메인화면에 띄워줄 오늘의 스케쥴 일정
     @Override
     @GetMapping("/app/schedule/today")

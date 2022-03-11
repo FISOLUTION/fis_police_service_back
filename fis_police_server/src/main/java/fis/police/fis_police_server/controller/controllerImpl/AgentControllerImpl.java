@@ -173,7 +173,7 @@ public class AgentControllerImpl implements AgentController {
     */
     @Override
     @PostMapping("/app/agent/currentLocation")
-    public void saveCurrentLocation(@RequestBody AgentLocationRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    public void saveCurrentLocation(@RequestBody AgentLocation request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try {
             String authorizationHeader = httpServletRequest.getHeader("Authorization");
             Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();

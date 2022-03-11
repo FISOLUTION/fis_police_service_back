@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,16 @@ import lombok.NoArgsConstructor;
 */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class AgentLocationRequest {
+public class AgentLocation {
+    private Long agent_id;
     private String a_cur_lat;                          //현장 요원 현재 위도
     private String a_cur_long;                         //현장 요원 현재 경도
+
+
+    @QueryProjection
+    public AgentLocation(Long agent_id, String a_cur_lat, String a_cur_long) {
+        this.agent_id = agent_id;
+        this.a_cur_lat = a_cur_lat;
+        this.a_cur_long = a_cur_long;
+    }
 }

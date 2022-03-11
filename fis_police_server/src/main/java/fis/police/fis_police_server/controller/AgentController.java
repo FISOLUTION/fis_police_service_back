@@ -1,7 +1,6 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.*;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,5 +29,5 @@ public interface AgentController {
     */
     void updatePicture(Long Agent_id, MultipartFile multipartFile);
 
-    void saveCurrentLocation(AgentLocationRequest request, HttpServletResponse response, HttpServletRequest req);
+    void saveCurrentLocation(AgentLocation request, HttpServletResponse response, HttpServletRequest req);
 }

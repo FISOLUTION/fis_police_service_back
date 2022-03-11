@@ -140,6 +140,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         return allList;
     }
 
+    //시설 - 방문 예정 현장요원 위도 경도
+    @Override
+    @Transactional
+    public List<AgentLocation> findAgentLocation(Long center_id, LocalDate today) {
+        return scheduleRepository.findAgentLocation(center_id, today);
+    }
+
+
     //현장요원 - 오늘 방문 일정
     @Override
     @Transactional
