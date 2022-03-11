@@ -4,6 +4,7 @@ import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.dto.AgentLocationRequest;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
@@ -153,5 +154,12 @@ public class AgentServiceImpl implements AgentService {
         }
         //디비에 사진 이름 삭제
         agentRepository.deletePicture(agent_id);
+    }
+
+    @Override
+    @Transactional
+    public void saveCurrentLocation(Long agent_id, AgentLocationRequest agentLocationRequest) {
+        Agent agent = agentRepository.findById(agent_id);
+        agent.saveCurLocation(agentLocationRequest.getA_cur_lat(), agentLocationRequest.getA_cur_lat());
     }
 }

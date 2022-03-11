@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentLocationRequest;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
@@ -32,4 +33,6 @@ public interface AgentService {
     String getPicture(Long agent_id);
 
     void deletePicture(Long agent_id);
+
+    void saveCurrentLocation(Long agent_id, AgentLocationRequest agentLocationRequest);
 }
