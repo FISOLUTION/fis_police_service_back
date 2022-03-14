@@ -75,8 +75,9 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(@RequestBody AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try {
+            agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
         } catch (IllegalStateException ie) { // 현장요원 코드 중복
             log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
@@ -99,6 +100,7 @@ public class AgentControllerImpl implements AgentController {
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
         } catch (Exception e) {
+            System.out.println("e = " + e);
             log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
