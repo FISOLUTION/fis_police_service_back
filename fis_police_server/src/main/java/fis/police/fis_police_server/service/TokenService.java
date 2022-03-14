@@ -12,5 +12,6 @@ public interface TokenService {
     Agent getAgentFromRequest(String authorization);
     Officials getOfficialFromRequest(String authorization);
     Claims parseJwtToken(String authorization);
-    String makeToken(Long loginUserId, LoginResponse loginResponse);
+    String makeToken(Long loginUserId, LoginResponse loginResponse, String type);
+    boolean validateToken(String token);
 }
