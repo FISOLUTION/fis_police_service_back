@@ -45,7 +45,7 @@ public class ScheduleControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(FileNotFoundException.class)
     public ErrorResult fileNotFoundException (FileNotFoundException e) {
-        log.error("[FileNotFoundException] ex", e);
+         log.error("[FileNotFoundException] ex", e);
         return new ErrorResult("500", e.getMessage());
     }
 
