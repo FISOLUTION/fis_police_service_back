@@ -27,5 +27,4 @@ public class LoginResponse {
         작성 내용: 토큰
     */
     private String token;
-    private String refreshToken;
 }

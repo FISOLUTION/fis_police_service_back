@@ -1,6 +1,5 @@
 package fis.police.fis_police_server.dto;
 
-import fis.police.fis_police_server.domain.Confirm;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import lombok.Data;
 
@@ -32,21 +31,4 @@ public class ConfirmFormResponse {
 
     private Complete complete;  // 결재 여부
 //    private String center_manager;  // 결재 당시 시설 담당자
-
-
-    public ConfirmFormResponse(Confirm confirm) {
-        this.center_name = confirm.getCenter().getC_name();
-        this.center_address = confirm.getCenter().getC_address();
-        this.center_ph = confirm.getCenter().getC_ph();
-        this.manager_name = confirm.getCenter_manger();
-        this.visit_date = confirm.getVisit_date();
-        this.visit_time = confirm.getVisit_time();
-        this.new_child = confirm.getNew_child();
-        this.old_child = confirm.getOld_child();
-        this.senile = confirm.getSenile();
-        this.disabled = confirm.getDisabled();
-        this.etc = confirm.getEtc();
-        this.complete = confirm.getComplete();
-
-    }
 }
