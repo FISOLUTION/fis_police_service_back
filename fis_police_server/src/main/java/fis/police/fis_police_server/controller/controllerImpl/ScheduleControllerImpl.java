@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -140,6 +141,9 @@ public class ScheduleControllerImpl implements ScheduleController {
             throw new IllegalStateException("NoToken");
         } catch (NullPointerException e) {
             throw new NullPointerException("NoOfficial");
+        } catch (FileNotFoundException e){
+            log.error(e.getMessage());
+            throw new FileNotFoundException("NoSuchFile");
         }
     }
 
