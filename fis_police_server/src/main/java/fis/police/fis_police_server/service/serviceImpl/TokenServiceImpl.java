@@ -2,6 +2,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.OfficialsRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -56,20 +58,44 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String makeToken(Long loginUserId, LoginResponse loginResponse) {
+    public String makeToken(Long loginUserId, LoginResponse loginResponse, String type) {
         Date now = new Date();
-        return Jwts.builder()
+        JwtBuilder jwtBuilder = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setIssuer("fresh")
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
-
                 .claim("id", loginUserId)
                 .claim("username", loginResponse.getU_name())
                 .claim("role", loginResponse.getU_auth())
-                .signWith(SignatureAlgorithm.HS256, "secret")
-                .compact();
+                .signWith(SignatureAlgorithm.HS256, "secret");
+
+        if (Objects.equals(type, "access")) {
+            return this.accessToken(type, jwtBuilder).compact();
+        } else if (Objects.equals(type, "refresh")) {
+            return this.refreshToken(type, jwtBuilder).compact();
+        } return null;
     }
 
-//    public Authentica
+    private JwtBuilder accessToken(String access, JwtBuilder jwtBuilder) {
+        Date now = new Date();
+        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
+                .setIssuer(access);
+    }
+
+    private JwtBuilder refreshToken(String refresh, JwtBuilder jwtBuilder) {
+        Date now = new Date();
+        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofDays(7).toMillis()))
+                .setIssuer(refresh);
+    }
+
+
+    // ExpiredException? 발생
+    @Override
+    public boolean validateToken(String token) {
+        token = token.substring("Bearer ".length());
+
+        return !Jwts.parser()
+                .setSigningKey("secret")
+                .parseClaimsJws(token)
+                .getBody().getExpiration().before(new Date());
+    }
 }
