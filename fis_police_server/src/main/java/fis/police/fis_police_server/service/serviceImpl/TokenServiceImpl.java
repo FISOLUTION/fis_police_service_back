@@ -87,7 +87,6 @@ public class TokenServiceImpl implements TokenService {
                 .setIssuer(refresh);
     }
 
-
     // ExpiredException? 발생
     @Override
     public boolean validateToken(String token) {
