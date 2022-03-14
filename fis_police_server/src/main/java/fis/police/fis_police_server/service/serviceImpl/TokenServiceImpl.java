@@ -75,12 +75,14 @@ public class TokenServiceImpl implements TokenService {
         } return null;
     }
 
+    // access token 생성 (1시간)
     private JwtBuilder accessToken(String access, JwtBuilder jwtBuilder) {
         Date now = new Date();
         return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
                 .setIssuer(access);
     }
 
+    // refresh token 생성 (1주일)
     private JwtBuilder refreshToken(String refresh, JwtBuilder jwtBuilder) {
         Date now = new Date();
         return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofDays(7).toMillis()))
