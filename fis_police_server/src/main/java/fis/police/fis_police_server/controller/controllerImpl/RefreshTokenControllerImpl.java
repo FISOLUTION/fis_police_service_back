@@ -31,7 +31,7 @@ public class RefreshTokenControllerImpl implements RefreshTokenController {
         String refreshToken = request.getHeader("RefreshToken");
 
         boolean validateToken = tokenService.validateToken(refreshToken);
-        // todo db 에 있는지도 조사해야한다고 함. 이것까지 포함해서 조건문 작성
+        // todo db 에 있는지도 조사해야한다고 함. 이것까지 포함해서 조건문 작성 03/14
         if(validateToken) {
             Long id = Long.valueOf(tokenService.parseJwtToken(refreshToken).get("id").toString());
             String username = tokenService.parseJwtToken(refreshToken).get("username").toString();
