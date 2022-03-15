@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 /*
@@ -94,6 +93,23 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
                 .fetch();
     }
+
+    @Override
+    public List<AgentLocation> findAgentLocation(Long center_id, LocalDate today) {
+        return jpaQueryFactory
+                .select(new QAgentLocation(qAgent.id, qAgent.a_cur_lat, qAgent.a_cur_long))
+                .from(qSchedule)
+                .leftJoin(qSchedule.agent, qAgent)
+                .leftJoin(qSchedule.center, qCenter)
+                .distinct()
+                .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
+                        .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
+                        .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.visit_date.eq(today))   //오늘 날짜 일정
+                )
+                .fetch();
+    }
+
 
 
 //    public List<AppScheduleFilterDTO> findByCenterFilter(Long center_id,LocalDate today) {

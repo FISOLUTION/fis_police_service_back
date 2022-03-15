@@ -6,6 +6,7 @@ import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.AgentService;
+import fis.police.fis_police_server.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -39,21 +40,22 @@ import java.util.stream.Collectors;
 public class AgentControllerImpl implements AgentController {
 
     private final AgentService agentService;
+    private final TokenService tokenService;
 
     @Override
     @PostMapping("/agent") // 현장요원 추가
     public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
-        try{
+        try {
             agentService.saveAgent(request);
-        } catch (IllegalStateException ie){ // 현장요원 코드 중복
+        } catch (IllegalStateException ie) { // 현장요원 코드 중복
             log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re){ // naver Map api 요청 에러
+        } catch (RestClientException re) { // naver Map api 요청 에러
             log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
             response.setStatus(501);
-        } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
+        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
             log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
             response.setStatus(502);
@@ -61,29 +63,31 @@ public class AgentControllerImpl implements AgentController {
             log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
             response.setStatus(403);
-        } catch (TransactionSystemException tse){
+        } catch (TransactionSystemException tse) {
             log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
     }
+
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(@RequestBody AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
-        try{
+    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        try {
+            agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
-        } catch (IllegalStateException ie){ // 현장요원 코드 중복
+        } catch (IllegalStateException ie) { // 현장요원 코드 중복
             log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re){ // naver Map api 요청 에러
+        } catch (RestClientException re) { // naver Map api 요청 에러
             log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
             response.setStatus(501);
-        } catch (ParseException pe){ // naver Map api 파싱 에러(예외처리 필수)
+        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
             log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
             response.setStatus(502);
@@ -91,27 +95,33 @@ public class AgentControllerImpl implements AgentController {
             log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
             response.setStatus(403);
-        } catch (TransactionSystemException tse){
+        } catch (TransactionSystemException tse) {
             log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
+<<<<<<< HEAD
         } catch (Exception e){
+=======
+        } catch (Exception e) {
+>>>>>>> 2c94355c13355e4d19b65314fa17fd8a88867824
+            System.out.println("e = " + e);
             log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
     }
+
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
     public AgentGetResult getAgent(HttpServletRequest httpServletRequest, HttpServletResponse response) {
-        try{
+        try {
             List<Agent> AllAgentList = agentService.getAgents();
             List<AgentGetResponse> collect = AllAgentList.stream()
                     .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
-                            HasCar.converter(a.getA_hasCar()),a.getA_equipment(),a.getA_receiveDate(),
-                            AgentStatus.converter(a.getA_status()),a.getA_picture(), a.getA_nickname(), a.getA_pwd())
+                            HasCar.converter(a.getA_hasCar()), a.getA_equipment(), a.getA_receiveDate(),
+                            AgentStatus.converter(a.getA_status()), a.getA_picture(), a.getA_nickname(), a.getA_pwd())
                     ).collect(Collectors.toList());
             return new AgentGetResult(collect);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
             response.setStatus(500);
@@ -133,9 +143,9 @@ public class AgentControllerImpl implements AgentController {
     }
 
 
-
     @Value("${profileImg.path}")
     private String uploadFolder;
+
     /*
         날짜 : 2022/02/17 10:39 오전
         작성자 : 원보라
@@ -144,7 +154,7 @@ public class AgentControllerImpl implements AgentController {
     @GetMapping(value = "/agent/show", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> showPicture(@RequestParam("agent_id") Long Agent_id) throws IOException {
         String a_picture = agentService.getPicture(Agent_id);
-        InputStream imageStream = new FileInputStream(uploadFolder+ a_picture);
+        InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
@@ -152,12 +162,34 @@ public class AgentControllerImpl implements AgentController {
 
     //사진 삭제
     @GetMapping("/agent/picture/delete")
-    public void deletePicture(@RequestParam("agent_id") Long agent_id, HttpServletResponse response){
+    public void deletePicture(@RequestParam("agent_id") Long agent_id, HttpServletResponse response) {
         try {
             agentService.deletePicture(agent_id);
             response.setStatus(200);
-        } catch (Exception e){
+        } catch (Exception e) {
             response.setStatus(500);
+        }
+    }
+
+
+    /*
+        날짜 : 2022/03/11 1:47 오후
+        작성자 : 원보라
+        작성내용 : APP 현장요원 위치 받아오기
+    */
+    @Override
+    @PostMapping("/app/agent/currentLocation")
+    public void saveCurrentLocation(@RequestBody AgentLocation request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+            agentService.saveCurrentLocation(agent_id, request);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("NoAGENT");
         }
     }
 }
