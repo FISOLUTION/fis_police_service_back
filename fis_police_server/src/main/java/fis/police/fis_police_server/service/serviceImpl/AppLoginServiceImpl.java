@@ -29,11 +29,25 @@ public class AppLoginServiceImpl implements AppLoginService {
     private final OfficialsRepository officialsRepository;
 
     @Override
-    public Long loginUserId(AppLoginRequest request) {
-        String nickname = request.getU_nickname();
-        String pwd = request.getU_pwd();
-        UserAuthority role = request.getRole();
-        return getPrimaryKey(nickname, pwd, role);
+    public Long getPrimaryKey(AppLoginRequest request) {
+        if (request.getRole() == UserAuthority.AGENT) {
+            List<Agent> agent = agentRepository.findByNickname(request.getU_nickname());
+            if (agent.size() != 0) {
+                if (agent.get(0).getA_pwd().equals(request.getU_pwd())) {
+                    return agent.get(0).getId();
+                }
+            }
+        } else if (request.getRole() == UserAuthority.OFFICIAL) {
+            List<Officials> officials = officialsRepository.findByNickname(request.getU_nickname());
+            if (officials.size() != 0) {
+                if (officials.get(0).getO_pwd().equals(request.getU_pwd())) {
+                    return officials.get(0).getId();
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("role 정보 오류");
+        }
+        return null;
     }
 
     @Override
@@ -95,24 +109,4 @@ public class AppLoginServiceImpl implements AppLoginService {
         response.setU_auth(null);
     }
 
-    private Long getPrimaryKey(String nickname, String pwd, UserAuthority role) {
-        if (role == UserAuthority.AGENT) {
-            List<Agent> agent = agentRepository.findByNickname(nickname);
-            if (agent.size() != 0) {
-                if (agent.get(0).getA_pwd().equals(pwd)) {
-                    return agent.get(0).getId();
-                }
-            }
-        } else if (role == UserAuthority.OFFICIAL) {
-            List<Officials> officials = officialsRepository.findByNickname(nickname);
-            if (officials.size() != 0) {
-                if (officials.get(0).getO_pwd().equals(pwd)) {
-                    return officials.get(0).getId();
-                }
-            }
-        } else {
-            throw new IllegalArgumentException("role 정보 오류");
-        }
-        return null;
-    }
 }

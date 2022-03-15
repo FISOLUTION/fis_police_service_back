@@ -38,8 +38,8 @@ public class RefreshTokenControllerImpl implements RefreshTokenController {
             UserAuthority role = UserAuthority.valueOf(tokenService.parseJwtToken(refreshToken).get("role").toString());
             loginResponse.setU_name(username);
             loginResponse.setU_auth(role);
-            String AccessToken = tokenService.makeToken(id, loginResponse, "access");// 새로운 accessToken 생성
-            String RefreshToken = tokenService.makeToken(id, loginResponse, "refresh");// 새로운 refreshToken 생성
+            String AccessToken = tokenService.createToken(id, loginResponse, "access");// 새로운 accessToken 생성
+            String RefreshToken = tokenService.createToken(id, loginResponse, "refresh");// 새로운 refreshToken 생성
             return new TokenSet(AccessToken, RefreshToken);
         } else {
             throw new JwtException("Logout Plz");

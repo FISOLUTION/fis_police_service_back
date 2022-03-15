@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(assignableTypes = RefreshTokenControllerImpl.class)
 public class RefreshTokenControllerAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
     public ErrorResult expiredJwtExHandler(ExpiredJwtException e) {
         log.error("[ExpiredJwtExHandler] ex", e);
-        return new ErrorResult("400", "logout plz");
+        return new ErrorResult("401", "logout plz");
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {
         log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("400", e.getMessage());
+        return new ErrorResult("401", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

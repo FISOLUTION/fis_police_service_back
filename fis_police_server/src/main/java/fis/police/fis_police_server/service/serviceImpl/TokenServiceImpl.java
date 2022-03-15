@@ -58,13 +58,13 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String makeToken(Long loginUserId, LoginResponse loginResponse, String type) {
+    public String createToken(Long primaryKey, LoginResponse loginResponse, String type) {
         // 공통
         Date now = new Date();
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuedAt(now)
-                .claim("id", loginUserId)
+                .claim("id", primaryKey)
                 .claim("username", loginResponse.getU_name())
                 .claim("role", loginResponse.getU_auth())
                 .signWith(SignatureAlgorithm.HS256, "secret");
@@ -79,14 +79,14 @@ public class TokenServiceImpl implements TokenService {
     // access token 생성 (1시간)
     private JwtBuilder accessToken(String access, JwtBuilder jwtBuilder) {
         Date now = new Date();
-        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
+        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(1).toMillis()))
                 .setIssuer(access);
     }
 
     // refresh token 생성 (1주일)
     private JwtBuilder refreshToken(String refresh, JwtBuilder jwtBuilder) {
         Date now = new Date();
-        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofDays(7).toMillis()))
+        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofDays(2).toMillis()))
                 .setIssuer(refresh);
     }
 

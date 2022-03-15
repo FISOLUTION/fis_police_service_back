@@ -5,6 +5,6 @@ import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
 
 public interface AppLoginService {
-    Long loginUserId(AppLoginRequest request);
+    Long getPrimaryKey(AppLoginRequest request);
     LoginResponse login(AppLoginRequest request);
 }

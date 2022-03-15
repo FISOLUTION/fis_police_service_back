@@ -26,23 +26,23 @@ public class AppLoginControllerImpl implements AppLoginController {
     @PostMapping("/app/login")
     public LoginResponse login(@RequestBody AppLoginRequest loginRequest) {
         LoginResponse loginResponse = appLoginService.login(loginRequest);
-        Long loginUserId = appLoginService.loginUserId(loginRequest);
+        Long primaryKey = appLoginService.getPrimaryKey(loginRequest);
 
-        //로그인 실패
         if (loginResponse.getSc().equals("idFail")) {
-            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]",loginUserId,"/app/login");
+            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]",primaryKey,"/app/login");
             throw new NullPointerException("ID Fail");
         } else if (loginResponse.getSc().equals("pwdFail")) {
-            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]", loginUserId, "/app/login");
+            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]", primaryKey, "/app/login");
             throw new NullPointerException("Password Fail");
         }
 
-        log.info("[로그인 id값: {}] [url: {}] [로그인 성공]", loginUserId, "/app/login");
+        log.info("[로그인 id값: {}] [url: {}] [로그인 성공]", primaryKey, "/app/login");
         log.info("[로그인 역할: {}]", loginRequest.getRole());
 
         // 토큰 생성
-        String token = tokenService.makeToken(loginUserId, loginResponse, "access");  // accessToken 생성 (유효시간 30분)
-        String refreshToken = tokenService.makeToken(loginUserId, loginResponse, "refresh");   // refreshToken 생성 (유효시간 7일)
+        String token = tokenService.createToken(primaryKey, loginResponse, "access");  // accessToken 생성 (유효시간 30분)
+        String refreshToken = tokenService.createToken(primaryKey, loginResponse, "refresh");   // refreshToken 생성 (유효시간 7일)
+
         loginResponse.setToken(token);
         loginResponse.setRefreshToken(refreshToken);
 

@@ -21,11 +21,11 @@ import javax.mail.internet.AddressException;
 @RestControllerAdvice(assignableTypes = MailControllerImpl.class)
 public class MailControllerAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {
         log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("400", e.getMessage());
+        return new ErrorResult("401", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
