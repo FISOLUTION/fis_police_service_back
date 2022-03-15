@@ -99,12 +99,7 @@ public class AgentControllerImpl implements AgentController {
             log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
-<<<<<<< HEAD
-        } catch (Exception e){
-=======
         } catch (Exception e) {
->>>>>>> 2c94355c13355e4d19b65314fa17fd8a88867824
-            System.out.println("e = " + e);
             log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }
