@@ -29,4 +29,11 @@ public class AppLoginAdvice {
         log.error("[IllegalArgExHandler] ex", e);
         return new ErrorResult("400", e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ErrorResult exHandler(Exception e) {
+        log.error("[ExceptionHandler] ex", e);
+        return new ErrorResult("500", "ServerError");
+    }
 }

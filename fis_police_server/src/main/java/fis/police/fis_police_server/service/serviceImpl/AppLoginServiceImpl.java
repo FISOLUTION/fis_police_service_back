@@ -29,10 +29,25 @@ public class AppLoginServiceImpl implements AppLoginService {
     private final OfficialsRepository officialsRepository;
 
     @Override
-    public Long loginUserId(AppLoginRequest request) {
-        String nickname = request.getU_nickname();
-        String pwd = request.getU_pwd();
-        return getPrimaryKey(nickname, pwd);
+    public Long getPrimaryKey(AppLoginRequest request) {
+        if (request.getRole() == UserAuthority.AGENT) {
+            List<Agent> agent = agentRepository.findByNickname(request.getU_nickname());
+            if (agent.size() != 0) {
+                if (agent.get(0).getA_pwd().equals(request.getU_pwd())) {
+                    return agent.get(0).getId();
+                }
+            }
+        } else if (request.getRole() == UserAuthority.OFFICIAL) {
+            List<Officials> officials = officialsRepository.findByNickname(request.getU_nickname());
+            if (officials.size() != 0) {
+                if (officials.get(0).getO_pwd().equals(request.getU_pwd())) {
+                    return officials.get(0).getId();
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("role 정보 오류");
+        }
+        return null;
     }
 
     @Override
@@ -67,23 +82,6 @@ public class AppLoginServiceImpl implements AppLoginService {
 
     }
 
-    @Override
-    public LoginResponse loginCheck(Long loginUser) {
-        return null;
-    }
-
-
-
-    private LoginResponse authenticateUser(List<User> user, LoginResponse loginResponse, String pwd) {
-        if(!user.get(0).getU_pwd().equals(pwd)) {
-            loginFail(loginResponse, "pwdFail");
-        } else {
-            loginResponse.setSc("success");
-            loginResponse.setU_name(user.get(0).getU_name());
-            loginResponse.setU_auth(user.get(0).getU_auth());
-        }
-        return loginResponse;
-    }
     private LoginResponse authenticateAgent(List<Agent> agent, LoginResponse loginResponse, String pwd) {
         if(!agent.get(0).getA_pwd().equals(pwd)) {
             loginFail(loginResponse, "pwdFail");
@@ -111,23 +109,4 @@ public class AppLoginServiceImpl implements AppLoginService {
         response.setU_auth(null);
     }
 
-    private Long getPrimaryKey(String nickname, String pwd) {
-        List<User> user = userRepository.findByNickname(nickname);
-        List<Agent> agent = agentRepository.findByNickname(nickname);
-        List<Officials> officials = officialsRepository.findByNickname(nickname);
-        if (user.size() != 0) {
-            if (user.get(0).getU_pwd().equals(pwd)) {
-                return user.get(0).getId();
-            }
-        } else if (agent.size() != 0) {
-            if (agent.get(0).getA_pwd().equals(pwd)) {
-                return agent.get(0).getId();
-            }
-        } else if (officials.size() != 0){
-            if (officials.get(0).getO_pwd().equals(pwd)) {
-                return officials.get(0).getId();
-            }
-        }
-        return null;
-    }
 }
