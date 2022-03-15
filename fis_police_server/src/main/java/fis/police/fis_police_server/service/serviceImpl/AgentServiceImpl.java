@@ -4,8 +4,8 @@ import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
+import fis.police.fis_police_server.dto.AgentLocation;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentPictureDTO;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.service.AgentService;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintViolationException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -117,6 +116,9 @@ public class AgentServiceImpl implements AgentService {
     @Transactional
     public void updatePicture(Long Agent_id, MultipartFile multipartFile) {
         Agent agent = agentRepository.findById(Agent_id);
+        if (multipartFile.isEmpty()) {
+            deletePicture(agent.getId());
+        }
         String originalFileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String imageFileName = agent.getId() + "." + originalFileExtension;
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);
@@ -153,5 +155,12 @@ public class AgentServiceImpl implements AgentService {
         }
         //디비에 사진 이름 삭제
         agentRepository.deletePicture(agent_id);
+    }
+
+    @Override
+    @Transactional
+    public void saveCurrentLocation(Long agent_id, AgentLocation agentLocation) {
+        Agent agent = agentRepository.findById(agent_id);
+        agent.saveCurLocation(agentLocation.getA_cur_lat(), agentLocation.getA_cur_lat());
     }
 }

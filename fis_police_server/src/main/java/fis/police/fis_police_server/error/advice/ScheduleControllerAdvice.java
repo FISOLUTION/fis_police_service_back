@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.FileNotFoundException;
+
 @Slf4j
 @RestControllerAdvice(assignableTypes = ScheduleControllerImpl.class)
 public class ScheduleControllerAdvice {
@@ -32,6 +34,21 @@ public class ScheduleControllerAdvice {
         log.error("[IllegalStateExHandler] ex", e);
         return new ErrorResult("400", e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NullPointerException.class)
+    public ErrorResult nullExHandler (NullPointerException e) {
+        log.error("[nullExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(FileNotFoundException.class)
+    public ErrorResult fileNotFoundException (FileNotFoundException e) {
+         log.error("[FileNotFoundException] ex", e);
+        return new ErrorResult("500", e.getMessage());
+    }
+
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler

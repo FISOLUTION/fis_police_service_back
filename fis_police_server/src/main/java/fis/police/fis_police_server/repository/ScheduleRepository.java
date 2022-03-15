@@ -31,6 +31,8 @@ public interface ScheduleRepository {
     List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today);
 //    List<AppScheduleFilterDTO> findByCenterFilter(Long center_id, LocalDate today);
 //    List<Agent> findBySameSchedule(LocalDate visit_date, LocalTime visit_time, Long center_id);
+    //시설화면 - 오늘방문하는 현장요원 위도 경도 리스트 넘겨줌
+    List<AgentLocation> findAgentLocation(Long center_id, LocalDate today);
 
     //현장요원 - 오늘 방문 일정
     List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today);
@@ -46,4 +48,6 @@ public interface ScheduleRepository {
 
     void updateScheduleComplete(Long schedule_id, Complete complete);
     void updateScheduleWaiting(Long schedule_id, Complete complete);
+
+
 }
