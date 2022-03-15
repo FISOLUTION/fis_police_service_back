@@ -96,6 +96,7 @@ public class AgentControllerImpl implements AgentController {
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
             response.setStatus(402);
         } catch (Exception e){
+            System.out.println("e = " + e);
             log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
         }

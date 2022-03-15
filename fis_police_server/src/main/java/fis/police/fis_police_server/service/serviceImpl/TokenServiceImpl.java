@@ -59,6 +59,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String makeToken(Long loginUserId, LoginResponse loginResponse, String type) {
+        // 공통
         Date now = new Date();
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -89,7 +90,6 @@ public class TokenServiceImpl implements TokenService {
                 .setIssuer(refresh);
     }
 
-    // ExpiredException? 발생
     @Override
     public boolean validateToken(String token) {
         token = token.substring("Bearer ".length());

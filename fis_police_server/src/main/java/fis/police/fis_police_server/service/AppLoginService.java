@@ -7,5 +7,4 @@ import fis.police.fis_police_server.dto.LoginResponse;
 public interface AppLoginService {
     Long loginUserId(AppLoginRequest request);
     LoginResponse login(AppLoginRequest request);
-    LoginResponse loginCheck(Long loginUser);
 }
