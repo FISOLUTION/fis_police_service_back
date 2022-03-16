@@ -50,7 +50,7 @@ public class AgentControllerAdvice {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(IndexOutOfBoundsException.class)
     public ErrorResult indexOutOfBoundsExHandler(IndexOutOfBoundsException e) {
-        log.error("[address uncorrect error] ex", e);
+        log.error("[address incorrect error] ex", e);
         return new ErrorResult("403", e.getMessage());
     }
 
