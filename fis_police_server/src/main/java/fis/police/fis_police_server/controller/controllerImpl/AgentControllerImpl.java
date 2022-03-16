@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -75,7 +76,7 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    public void modifyAgent(AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
         try {
             agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
@@ -147,12 +148,17 @@ public class AgentControllerImpl implements AgentController {
         작성내용 : 저장된 사진 보내주기
     */
     @GetMapping(value = "/agent/show", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> showPicture(@RequestParam("agent_id") Long Agent_id) throws IOException {
-        String a_picture = agentService.getPicture(Agent_id);
-        InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    public Object showPicture(@RequestParam("agent_id") Long Agent_id, @RequestParam("time") String time) throws IOException {
+        try {
+            String a_picture = agentService.getPicture(Agent_id);
+            InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+            return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+        }  catch (FileNotFoundException e){
+            log.error(e.getMessage());
+            throw new FileNotFoundException("NoSuchFile");
+        }
     }
 
     //사진 삭제
