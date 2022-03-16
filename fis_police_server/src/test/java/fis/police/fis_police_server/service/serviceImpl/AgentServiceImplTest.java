@@ -98,7 +98,7 @@ class AgentServiceImplTest {
                 "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         Agent saveAgent= agentService.saveAgent(agentSaveRequest);
         // when
-        AgentModifyRequest agentModifyRequest = new AgentModifyRequest(saveAgent.getId(), "이승범", "010-6715-0071", "123",
+        AgentModifyRequest agentModifyRequest = new AgentModifyRequest(null, saveAgent.getId(), "이승범", "010-6715-0071", "123",
                 "구로구 벚꽃로 68길 10", false, "", null, false, null, null);
         Agent modifiedAgent = agentService.modifyAgent(agentModifyRequest);
         // then
@@ -116,7 +116,7 @@ class AgentServiceImplTest {
         agentService.saveAgent(agentSaveRequest1);
         Agent saveAgent = agentService.saveAgent(agentSaveRequest2);
         // when
-        AgentModifyRequest agentModifyRequest = new AgentModifyRequest(saveAgent.getId(), "이승범", "010-6715-0071", "321",
+        AgentModifyRequest agentModifyRequest = new AgentModifyRequest(null, saveAgent.getId(), "이승범", "010-6715-0071", "321",
                 "구로구 벚꽃로 68길 10", false, "", null, false, null, null);
         // then
         assertThatThrownBy(() -> agentService.modifyAgent(agentModifyRequest))
