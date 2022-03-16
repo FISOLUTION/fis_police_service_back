@@ -161,6 +161,6 @@ public class AgentServiceImpl implements AgentService {
     @Transactional
     public void saveCurrentLocation(Long agent_id, AgentLocation agentLocation) {
         Agent agent = agentRepository.findById(agent_id);
-        agent.saveCurLocation(agentLocation.getA_cur_lat(), agentLocation.getA_cur_lat());
+        agent.saveCurLocation(agentLocation.getA_cur_lat(), agentLocation.getA_cur_long());
     }
 }
