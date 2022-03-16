@@ -20,7 +20,6 @@ public class OfficialServiceImpl implements OfficialService {
 
     private final OfficialsRepository officialsRepository;
     private final CenterRepository centerRepository;
-    private final CheckNicknameService nicknameService;
 
     @Override
     public void saveOfficials(OfficialSaveRequest request, Center center) {

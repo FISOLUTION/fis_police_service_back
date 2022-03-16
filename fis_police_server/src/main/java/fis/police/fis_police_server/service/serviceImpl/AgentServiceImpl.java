@@ -38,7 +38,6 @@ public class AgentServiceImpl implements AgentService {
 
     private final AgentRepository agentRepository;
     private final MapService mapService;
-    private final CheckNicknameService nicknameService;
 
     @Override
     @Transactional // 현장요원 추가
@@ -46,7 +45,6 @@ public class AgentServiceImpl implements AgentService {
             IllegalStateException, IndexOutOfBoundsException {
 
         validateDuplicateAgent(request.getA_code()); // 현장요원 코드 중복 검사
-//        nicknameService.CheckNicknameOverlap(request.getNickname());
         checkDuplicateByNickname(request.getNickname());
 
         Pair<Double, Double> pair = mapService.addressToLocation(request.getA_address());
@@ -71,6 +69,9 @@ public class AgentServiceImpl implements AgentService {
         if (!findAgent.getA_code().equals(request.getA_code())) {
             validateDuplicateAgent(request.getA_code());
         }
+        if (!findAgent.getA_nickname().equals(request.getNickname())) {
+            checkDuplicateByNickname(request.getNickname());
+        }
 
         HasCar hasCar = request.isA_hasCar() ? HasCar.CAR : HasCar.WALK;
         AgentStatus agentStatus = request.isA_status() ? AgentStatus.WORK : AgentStatus.FIRED;
@@ -90,12 +91,14 @@ public class AgentServiceImpl implements AgentService {
         return agentRepository.findAll();
     }
 
+    // 현장요원 코드 중복 검사
     private void validateDuplicateAgent(String a_code) {
         List<Agent> findAgentList = agentRepository.findByA_code(a_code);
         if (!findAgentList.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 현장요원 코드입니다.");
         }
     }
+    // 현장요원 nickname(id) 중복 검사
     private void checkDuplicateByNickname(String nickname) {
         List<Agent> byNickname = agentRepository.findByNickname(nickname);
         if (!byNickname.isEmpty()) {

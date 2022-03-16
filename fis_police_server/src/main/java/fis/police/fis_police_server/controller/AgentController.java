@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.*;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 // 이승범
 public interface AgentController {
     // 현장요원 추기
-    void saveAgent(AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest);
+    void saveAgent(AgentSaveRequest request, HttpServletRequest httpServletRequest) throws ParseException;
 
     // 현장요원 수정
-    void modifyAgent(AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest);
+    void modifyAgent(AgentModifyRequest request, HttpServletRequest httpServletRequest) throws ParseException;
 
     // 현장요원 조회
     AgentGetResult getAgent(HttpServletRequest httpServletRequest, HttpServletResponse response);
