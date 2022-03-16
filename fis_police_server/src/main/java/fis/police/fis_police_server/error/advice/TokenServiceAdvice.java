@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(assignableTypes = TokenServiceImpl.class)
 public class TokenServiceAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {
         log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("400", e.getMessage());
+        return new ErrorResult("401", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

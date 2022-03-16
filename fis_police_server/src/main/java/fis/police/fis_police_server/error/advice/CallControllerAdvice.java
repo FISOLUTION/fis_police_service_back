@@ -23,13 +23,6 @@ public class CallControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(JwtException.class)
-    public ErrorResult jwtExHandler(JwtException e) {
-        log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("400", e.getMessage());
-    }
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {

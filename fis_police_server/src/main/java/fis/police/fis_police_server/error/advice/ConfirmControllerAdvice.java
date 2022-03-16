@@ -21,11 +21,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class ConfirmControllerAdvice {
 
     // 토큰 만료 됐을 때
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {
         log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("400", e.getMessage());
+        return new ErrorResult("401", e.getMessage());
     }
 
     // 디비에 정보가 없을 때

@@ -151,7 +151,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     //시설 - 방문 예정 현장요원 위도 경도
     @Override
     @GetMapping(value = "/app/schedule/location")
-    public List<AgentLocation> findAgentLocation(HttpServletRequest httpServletRequest) {
+    public List<AgentLocation> findAgentLocation(HttpServletRequest   httpServletRequest) {
         try {
             String authorizationHeader = httpServletRequest.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
