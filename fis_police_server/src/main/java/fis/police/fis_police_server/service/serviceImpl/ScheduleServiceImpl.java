@@ -94,6 +94,15 @@ public class ScheduleServiceImpl implements ScheduleService {
         return findSchedule;
     }
 
+    @Override
+    public Schedule findById(Long id) {
+        try {
+            return scheduleRepository.findById(id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("해당 스케쥴 없음.");
+        }
+    }
+
     /*
         작성날짜: 2022/01/19 4:39 PM
         작성자: 이승범

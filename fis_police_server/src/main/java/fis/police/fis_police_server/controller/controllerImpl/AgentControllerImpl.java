@@ -51,10 +51,10 @@ public class AgentControllerImpl implements AgentController {
     @Override
     @PostMapping("/agent")
     public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletRequest servletRequest) throws ParseException {
+        log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 추가]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
         try {
-            log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 추가]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
             agentService.saveAgent(request);
-        }  catch (RestClientException e) {
+        } catch (RestClientException e) {
             throw new RestClientException("naver map api 요청 에러");
         } catch (ParseException e) {
             throw new ParseException(502);
@@ -68,7 +68,7 @@ public class AgentControllerImpl implements AgentController {
     @Override
     @PatchMapping("/agent")
     public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException {
-
+        log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 수정]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
         try {
             agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
@@ -83,24 +83,17 @@ public class AgentControllerImpl implements AgentController {
         }
     }
 
-
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
     public AgentGetResult getAgent(HttpServletRequest httpServletRequest, HttpServletResponse response) {
-        try {
-            List<Agent> AllAgentList = agentService.getAgents();
-            List<AgentGetResponse> collect = AllAgentList.stream()
-                    .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
-                            HasCar.converter(a.getA_hasCar()), a.getA_equipment(), a.getA_receiveDate(),
-                            AgentStatus.converter(a.getA_status()), a.getA_picture(), a.getA_nickname(), a.getA_pwd())
-                    ).collect(Collectors.toList());
-            return new AgentGetResult(collect);
-        } catch (Exception e) {
-            log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
-            response.setStatus(500);
-            return null;
-        }
+        log.info("[로그인 id값 : {}] [url : {}] [요청 : 현장요원 조회]", httpServletRequest.getSession().getAttribute("loginUser"), "/agent");
+        List<Agent> AllAgentList = agentService.getAgents();
+        List<AgentGetResponse> collect = AllAgentList.stream()
+                .map(a -> new AgentGetResponse(a.getId(), a.getA_name(), a.getA_ph(), a.getA_code(), a.getA_address(),
+                        HasCar.converter(a.getA_hasCar()), a.getA_equipment(), a.getA_receiveDate(),
+                        AgentStatus.converter(a.getA_status()), a.getA_picture(), a.getA_nickname(), a.getA_pwd())
+                ).collect(Collectors.toList());
+        return new AgentGetResult(collect);
     }
 
 
@@ -127,6 +120,7 @@ public class AgentControllerImpl implements AgentController {
     */
     @GetMapping(value = "/agent/show", produces = MediaType.IMAGE_JPEG_VALUE)
     public Object showPicture(@RequestParam("agent_id") Long Agent_id, @RequestParam("time") String time) throws IOException {
+        log.info("[url : {}] [요청 : 저장된 사진 보내주기]", "/agent/show?agent_id=" + Agent_id + "&time=" + time);
         try {
             String a_picture = agentService.getPicture(Agent_id);
             InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
@@ -142,6 +136,7 @@ public class AgentControllerImpl implements AgentController {
     //사진 삭제
     @GetMapping("/agent/picture/delete")
     public void deletePicture(@RequestParam("agent_id") Long agent_id, HttpServletResponse response) {
+        log.info("[url : {}] [요청 : 사진 삭제]", "/agent/picture/delete?agent_id=" + agent_id);
         try {
             agentService.deletePicture(agent_id);
             response.setStatus(200);
@@ -159,11 +154,12 @@ public class AgentControllerImpl implements AgentController {
     @Override
     @PostMapping("/app/agent/currentLocation")
     public void saveCurrentLocation(@RequestBody AgentLocation request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
+        log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
+        log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
+
         try {
-            String authorizationHeader = httpServletRequest.getHeader("Authorization");
-            Long agent_id = tokenService.getAgentFromRequest(authorizationHeader).getId();
-            log.info("[로그인 id값: {}] [url: {}] [요청: 한장요원 완료된 일정 조회]", tokenService.getAgentFromRequest(authorizationHeader).getId(), "/app/schedule/agent");
-            log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
             agentService.saveCurrentLocation(agent_id, request);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");
@@ -171,6 +167,71 @@ public class AgentControllerImpl implements AgentController {
             throw new NullPointerException("NoAGENT");
         }
     }
+
+//    @Override
+//    @PostMapping("/agent") // 현장요원 추가
+//    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+//        try {
+//            agentService.saveAgent(request);
+//        } catch (IllegalStateException ie) { // 현장요원 코드 중복
+//            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            throw ie;
+//        } catch (RestClientException re) { // naver Map api 요청 에러
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
+//            response.setStatus(501);
+//        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
+//            response.setStatus(502);
+//        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
+//            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
+//            response.setStatus(403);
+//        } catch (TransactionSystemException tse) {
+//            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
+//            response.setStatus(402);
+//        } catch (Exception e) {
+//            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+//        }
+//    }
+
+
+//    @Override
+//    @PatchMapping("/agent") // 현장요원 정보 수정
+//    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
+//        try {
+//            agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
+//            agentService.modifyAgent(request);
+//        } catch (IllegalStateException ie) { // 현장요원 코드 중복
+//            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//        } catch (RestClientException re) { // naver Map api 요청 에러
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
+//            response.setStatus(501);
+//        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
+//            response.setStatus(502);
+//        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
+//            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
+//            response.setStatus(403);
+//        } catch (TransactionSystemException tse) {
+//            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
+//            response.setStatus(402);
+//        } catch (Exception e) {
+//            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+//        }
+//    }
 }
 
 

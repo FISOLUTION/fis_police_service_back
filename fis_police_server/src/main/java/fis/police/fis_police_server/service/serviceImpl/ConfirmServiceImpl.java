@@ -4,7 +4,10 @@ import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.*;
+import fis.police.fis_police_server.service.AgentService;
+import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.ConfirmService;
+import fis.police.fis_police_server.service.OfficialService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +24,10 @@ import java.util.stream.Collectors;
 public class ConfirmServiceImpl implements ConfirmService {
 
     private final ConfirmRepository confirmRepository;
-    private final CenterRepository centerRepository;
-    private final AgentRepository agentRepository;
+    private final CenterService centerService;
+    private final AgentService agentService;
     private final ScheduleRepository scheduleRepository;
-    private final OfficialsRepository officialsRepository;
+    private final OfficialService officialService;
 
     // 확인서 저장
     @Override
@@ -77,7 +80,7 @@ public class ConfirmServiceImpl implements ConfirmService {
     // [방문이력 조회] 시설별 확인서 조회 (모두)
     @Override
     public Result confirmForCenter(Long center_id) {
-        Center center = findCenter(center_id);
+        Center center = centerService.findById(center_id);
         List<Confirm> completeConfirmListForCenter = confirmRepository.findCompleteConfirmListForCenter(center);
         List<ConfirmDTO> collect = completeConfirmListForCenter.stream()
                 .map(confirm -> new ConfirmDTO(confirm.getId(), confirm.getVisit_date(), confirm.getVisit_time(), confirm.getCenter().getC_name(),
@@ -121,23 +124,4 @@ public class ConfirmServiceImpl implements ConfirmService {
         return response;
     }
 
-    @Override
-    public Agent findAgent(Long id) {
-        return agentRepository.findById(id);
-    }
-
-    @Override
-    public Center findCenter(Long id) {
-        return centerRepository.findById(id);
-    }
-
-    @Override
-    public Schedule findSchedule(Long id) {
-        return scheduleRepository.findById(id);
-    }
-
-    @Override
-    public Officials findOfficial(Long id) {
-        return officialsRepository.findById(id);
-    }
 }
