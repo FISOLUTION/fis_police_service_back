@@ -184,7 +184,7 @@ public class AgentControllerImpl implements AgentController {
     private String uploadFolder;
 
     /*
-        날짜 : 2022/02/17 10:39 오전
+        날짜 :  2022/02/17 10:39 오전
         작성자 : 원보라
         작성내용 : 저장된 사진 보내주기
     */

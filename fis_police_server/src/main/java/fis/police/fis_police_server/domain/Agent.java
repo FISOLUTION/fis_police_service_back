@@ -67,7 +67,7 @@ public class Agent {
         작성자: 고준영
         작성 내용: 요원 권한 -> AGENT, 요원아이디&비번
     */
-    @NotNull // enum 때문에 notblank 안됨
+//    @NotNull // enum 때문에 notblank 안됨
     @Column
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
