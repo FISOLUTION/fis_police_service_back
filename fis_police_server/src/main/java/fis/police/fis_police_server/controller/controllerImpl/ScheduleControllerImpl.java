@@ -53,6 +53,7 @@ public class ScheduleControllerImpl implements ScheduleController {
                     httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", npe.getMessage());
             response.setStatus(400);
         } catch (Exception e) {
+            System.out.println("e====================== " + e);
             log.error("[로그인 id값 : {}] [url: {}] [예상치못한 에러 {}]",
                     httpServletRequest.getSession().getAttribute("loginUser"), "/schedule", e.getMessage());
             response.setStatus(500);
