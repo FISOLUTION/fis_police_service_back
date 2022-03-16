@@ -141,7 +141,7 @@ public class ScheduleControllerImpl implements ScheduleController {
             throw new IllegalStateException("NoToken");
         } catch (NullPointerException e) {
             throw new NullPointerException("NoOfficial");
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             log.error(e.getMessage());
             throw new FileNotFoundException("NoSuchFile");
         }
@@ -151,14 +151,20 @@ public class ScheduleControllerImpl implements ScheduleController {
     //시설 - 방문 예정 현장요원 위도 경도
     @Override
     @GetMapping(value = "/app/schedule/location")
-    public List<AgentLocation> findAgentLocation(HttpServletRequest   httpServletRequest) {
+    public List<AgentLocation> findAgentLocation(HttpServletRequest httpServletRequest) {
         try {
             String authorizationHeader = httpServletRequest.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
             Long center_id = officialFromRequest.getCenter().getId();
-            log.info("[로그인 id값: {}] [url: {}] [요청: 시설 예약 내역 조회 ]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/confirm");
+            log.info("[로그인 id값: {}] [url: {}] [요청: 방문 예정 현장요원 위도 경도]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/app/schedule/location");
             log.info("[로그인 역할: {}]", (String) tokenService.parseJwtToken(authorizationHeader).get("role"));
-            return scheduleService.findAgentLocation(center_id, LocalDate.now());
+            List<AgentLocation> list = scheduleService.findAgentLocation(center_id, LocalDate.now());
+            if (!list.isEmpty()) {
+                for (AgentLocation agentLocation : list) {
+                    log.info("방문 예정 현장요원 id ====={} 위도====={} 경도 ====={}", agentLocation.getAgent_id(), agentLocation.getA_cur_lat(), agentLocation.getA_cur_long());
+                }
+            }
+            return list;
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");
         } catch (NullPointerException e) {
