@@ -43,68 +43,46 @@ public class AgentControllerImpl implements AgentController {
     private final AgentService agentService;
     private final TokenService tokenService;
 
+    /*
+        작성 날짜: 2022/03/15 4:58 오후
+        작성자: 고준영
+        작성 내용: 리팩토링
+    */
     @Override
-    @PostMapping("/agent") // 현장요원 추가
-    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    @PostMapping("/agent")
+    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletRequest servletRequest) throws ParseException {
         try {
+            log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 추가]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
             agentService.saveAgent(request);
-        } catch (IllegalStateException ie) { // 현장요원 코드 중복
-            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re) { // naver Map api 요청 에러
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
-            response.setStatus(501);
-        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
-            response.setStatus(502);
-        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
-            response.setStatus(403);
-        } catch (TransactionSystemException tse) {
-            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
-            response.setStatus(402);
-        } catch (Exception e) {
-            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+        }  catch (RestClientException e) {
+            throw new RestClientException("naver map api 요청 에러");
+        } catch (ParseException e) {
+            throw new ParseException(502);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("잘못된 주소 입력");
+        } catch (TransactionSystemException e) {
+            throw new TransactionSystemException("요청 데이터 불완전");
         }
     }
 
     @Override
-    @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(AgentModifyRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    @PatchMapping("/agent")
+    public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException {
+
         try {
             agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
-        } catch (IllegalStateException ie) { // 현장요원 코드 중복
-            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re) { // naver Map api 요청 에러
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
-            response.setStatus(501);
-        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
-            response.setStatus(502);
-        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
-            response.setStatus(403);
-        } catch (TransactionSystemException tse) {
-            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
-            response.setStatus(402);
-        } catch (Exception e) {
-            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+        } catch (RestClientException e) {
+            throw new RestClientException("naver map api 요청 에러");
+        } catch (ParseException e) {
+            throw new ParseException(502);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("잘못된 주소 입력");
+        } catch (TransactionSystemException e) {
+            throw new TransactionSystemException("요청 데이터 불완전");
         }
     }
+
 
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
