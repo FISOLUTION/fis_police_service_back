@@ -17,6 +17,8 @@ public interface ScheduleService {
     // 일정 수정
     Schedule modifySchedule(ScheduleModifyRequest request);
 
+    Schedule findById(Long id);
+
     /*
         작성날짜: 2022/01/19 4:31 PM
         작성자: 이승범

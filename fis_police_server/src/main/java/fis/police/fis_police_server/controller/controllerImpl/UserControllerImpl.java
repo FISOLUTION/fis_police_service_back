@@ -33,20 +33,19 @@ public class UserControllerImpl implements UserController {
     @Override
     @PostMapping("/user")
     public void saveUser(@RequestBody UserSaveRequest request, HttpServletResponse response, HttpServletRequest req) {
+        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 콜직원 추가 및 수정]", req.getSession().getAttribute("loginUser"), "/user");
         if (request.getUser_id() == null) { // 새로운 회원
             try {
                  userService.saveUser(request);//회원 가입
             } catch (IllegalStateException ie) { // 로그인 닉네임 중복 검사
-                log.warn("[로그인 id값: {}] [url: {}] [{}]",req.getSession().getAttribute("loginUser"),"/user",ie.getMessage());
-                response.setStatus(402);
+                throw new IllegalStateException("닉네임 중복");
             }
 
         } else { //기존 회원일 경우 업데이트
             try {
                  userService.modifyUser(request);//회원 정보 수정
             } catch (IllegalStateException ie) { // 로그인 닉네임 중복 검사
-                log.warn("[로그인 id값: {}] [url: {}] [{}]",req.getSession().getAttribute("loginUser"),"/user",ie.getMessage());
-                response.setStatus(402);
+                throw new IllegalStateException("닉네임 중복");
             }
         }
     }
@@ -59,18 +58,18 @@ public class UserControllerImpl implements UserController {
         List<UserInfoResponse> collect = userService.getUser();
         List<CallTodayDTO> callTodayList = userService.todayCallNum(now);
         List<CallAvgDTO> callAvgList = userService.totalCallNum();
-        for (int i = 0; i < collect.size(); i++) {
-            for (int j = 0; j < callTodayList.size(); j++) {
-                if (collect.get(i).getUser_id().equals(callTodayList.get(j).getUser_id())) {
-                    Long number = callTodayList.get(j).getCall_num();
-                    collect.get(i).setToday_call_num(Math.toIntExact(number));
+        for (UserInfoResponse userInfoResponse : collect) {
+            for (CallTodayDTO callTodayDTO : callTodayList) {
+                if (userInfoResponse.getUser_id().equals(callTodayDTO.getUser_id())) {
+                    Long number = callTodayDTO.getCall_num();
+                    userInfoResponse.setToday_call_num(Math.toIntExact(number));
                 }
             }
-            for (int k = 0; k < callAvgList.size(); k++) {
-                if (collect.get(i).getUser_id().equals(callAvgList.get(k).getUser_id())) {
-                    Double number = callAvgList.get(k).getCall_avg_num();
+            for (CallAvgDTO callAvgDTO : callAvgList) {
+                if (userInfoResponse.getUser_id().equals(callAvgDTO.getUser_id())) {
+                    Double number = callAvgDTO.getCall_avg_num();
                     number = Math.round(number * 10) / 10.0;
-                    collect.get(i).setAverage_call(number);
+                    userInfoResponse.setAverage_call(number);
                 }
             }
         }

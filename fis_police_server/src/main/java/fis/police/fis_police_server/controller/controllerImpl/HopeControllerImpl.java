@@ -8,6 +8,7 @@ import fis.police.fis_police_server.dto.HopeSaveRequest;
 import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.dto.WellSaveResponse;
 import fis.police.fis_police_server.repository.HopeRepository;
+import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.HopeService;
 import fis.police.fis_police_server.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class HopeControllerImpl implements HopeController {
 
     private final HopeService hopeService;
     private final TokenService tokenService;
+    private final CenterService centerService;
 
     @Override
     @PostMapping("/app/hope")
@@ -33,7 +35,7 @@ public class HopeControllerImpl implements HopeController {
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
-            Center center = hopeService.findCenter(officialFromRequest.getCenter().getId());
+            Center center = centerService.findById(officialFromRequest.getCenter().getId());
             return hopeService.saveHope(hopeRequest, center, officialFromRequest);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoOfficial");

@@ -86,6 +86,15 @@ public class AgentServiceImpl implements AgentService {
         return findAgent;
     }
 
+    @Override
+    public Agent findById(Long id) {
+        try {
+            return agentRepository.findById(id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("해당 현장요원 정보 없음.");
+        }
+    }
+
     @Override // 전체 현장요원 조회
     public List<Agent> getAgents() {
         return agentRepository.findAll();
@@ -119,9 +128,9 @@ public class AgentServiceImpl implements AgentService {
     @Transactional
     public void updatePicture(Long Agent_id, MultipartFile multipartFile) {
         Agent agent = agentRepository.findById(Agent_id);
-        if (multipartFile.isEmpty()) {
-            deletePicture(agent.getId());
-        }
+//        if (multipartFile.isEmpty()) {
+//            deletePicture(agent.getId());
+//        }
         String originalFileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
         String imageFileName = agent.getId() + "." + originalFileExtension;
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);

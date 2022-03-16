@@ -50,10 +50,4 @@ public class CallServiceImpl implements CallService {
         return response;
     }
 
-    // 콜 기록에 저장될 기관 찾기
-    public Center findCenter(CallSaveRequest request) {
-        Center findCenter = centerRepository.findById(request.getCenter_id());
-        return findCenter;
-    }
-
 }

@@ -30,16 +30,8 @@ public class MailControllerImpl implements MailController {
     @GetMapping("/center/{center_id}/sendmail")
     @Override
     public MailSendResponse sendMail(@PathVariable Long center_id, HttpServletRequest request) throws MessagingException {
-        try {
-            log.info("[로그인 id값: {}] [url: {}] [요청: 성공]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail");
-            return mailService.sendMail(center_id);
-        } catch (AddressException e) {
-            log.warn("[로그인 id값: {}] [url: {}] [에러정보: {}]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail", "AddressException 올바르지 않은 메일 형식");
-            throw e;
-        } catch (MailException e) {
-            log.error("[로그인 id값: {}] [url: {}] [에러정보: {}]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail", "MailException 메일 전송 오류");
-            throw e;
-        }
+        log.info("[로그인 id값: {}] [url: {}] [요청: 메일 전송]", request.getSession().getAttribute("loginUser"), "/center/" + center_id + "/sendmail");
+        return mailService.sendMail(center_id);
     }
 
 }
