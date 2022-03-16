@@ -18,6 +18,8 @@ public interface AgentService {
     // 현장요원 수정
     Agent modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
 
+    Agent findById(Long id);
+
     // 현장요원 조회
     List<Agent> getAgents();
 

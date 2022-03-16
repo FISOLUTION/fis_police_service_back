@@ -26,6 +26,7 @@ public class RefreshTokenControllerImpl implements RefreshTokenController {
     @GetMapping("/refreshToken")
     @Override
     public TokenSet createAccessToken(HttpServletRequest request) {
+        log.info("[요청 : 새로운 토큰 발금]");
 
         LoginResponse loginResponse = new LoginResponse();
         String refreshToken = request.getHeader("RefreshToken");

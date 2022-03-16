@@ -27,6 +27,13 @@ public class OfficialControllerAdvice {
         return new ErrorResult("400", e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NullPointerException.class)
+    public ErrorResult nullPointerExHandler(NullPointerException e) {
+        log.error("[NullPointerExHandler] ex", e);
+        return new ErrorResult("400", e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {

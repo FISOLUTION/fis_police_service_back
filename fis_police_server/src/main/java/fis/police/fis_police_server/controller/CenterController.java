@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.controller;
 
 import fis.police.fis_police_server.dto.*;
+import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public interface CenterController {
     Result searchNearCenter(Long center_id, HttpServletRequest request);
 
     // 시설 추가
-    void saveCenter(CenterSaveDTO centerSaveDTO, HttpServletResponse response, HttpServletRequest request);
+    void saveCenter(CenterSaveDTO centerSaveDTO, HttpServletResponse response, HttpServletRequest request) throws DuplicateSaveException;
 
     // 시설 수정
     void modifyCenter(CenterModifyDTO centerModifyDTO, HttpServletRequest request);

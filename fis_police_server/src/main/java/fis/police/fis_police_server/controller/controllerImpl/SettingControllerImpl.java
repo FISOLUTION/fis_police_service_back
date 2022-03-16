@@ -6,8 +6,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.SettingAgentDTO;
 import fis.police.fis_police_server.dto.SettingOfficialDTO;
-import fis.police.fis_police_server.service.SettingService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +22,16 @@ import java.util.Objects;
 @RequestMapping("/app")
 public class SettingControllerImpl implements SettingController {
     private final TokenService tokenService;
-    private final SettingService settingService;
-
+    private final OfficialService officialService;
+    private final AgentService agentService;
     @Override
     @GetMapping("/official/setting")
     public Object basicOfficialInfo(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 담당자 기본 정보]", officialFromRequest.getId(), "/official/setting");
         try {
-            String authorizationHeader = request.getHeader("Authorization");
-            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
-            Officials official = settingService.getOfficial(officialFromRequest.getId());
+            Officials official = officialService.findById(officialFromRequest.getId());
             Center center = official.getCenter();
             return new SettingOfficialDTO(official.getId(), center.getId(), center.getC_name(), center.getC_address(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getO_nickname(), official.getO_pwd());
         } catch (NullPointerException e) {
@@ -42,10 +42,11 @@ public class SettingControllerImpl implements SettingController {
     @Override
     @GetMapping("/agent/setting")
     public Object basicAgentInfo(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
+        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 담당자 기본 정보]", agentFromRequest.getId(), "/agent/setting");
         try {
-            String authorizationHeader = request.getHeader("Authorization");
-            Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
-            Agent agent = settingService.getAgent(agentFromRequest.getId());
+            Agent agent = agentService.findById(agentFromRequest.getId());
             return new SettingAgentDTO(agent.getA_name(), agent.getA_nickname(), agent.getA_pwd(), agent.getA_ph());
         } catch (NullPointerException e) {
             throw new NullPointerException("NoAgent");

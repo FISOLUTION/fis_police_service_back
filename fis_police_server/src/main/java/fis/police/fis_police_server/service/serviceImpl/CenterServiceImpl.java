@@ -33,17 +33,13 @@ public class CenterServiceImpl implements CenterService {
     public List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
        List<CenterSearchResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
        if(centerList.isEmpty())
-           throw new NoResultException("조건에 맞는 center가 존재하지 않습니다");
+           throw new NoResultException("조건에 맞는 center 가 존재하지 않습니다");
        else return centerList;
     }
 
     @Override
     public Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException {
-       try {
-           return centerRepository.findByIdAndFetchAll(center_id);
-       } catch (NoResultException | NonUniqueResultException noResultException){
-           throw noResultException;
-       }
+        return centerRepository.findByIdAndFetchAll(center_id);
     }
 
     @Override
@@ -71,8 +67,12 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public Center findById(Long id) throws NoResultException{
-        Center center = centerRepository.findById(id);
-        if(center == null) throw new NoResultException("center_id: " + id + "가 존재하지 않습니다");
-        return center;
+       try {
+           return centerRepository.findById(id);
+       } catch (NullPointerException e) {
+           throw new NullPointerException("관련 시설이 존재하지 않음.");
+       } catch (NoResultException e) {
+           throw new NoResultException("시설 id 존재하지 않음.");
+       }
     }
 }

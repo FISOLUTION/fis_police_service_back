@@ -16,7 +16,5 @@ public interface HopeService {
     WellSaveResponse saveHope(HopeSaveRequest request, Center center, Officials officials);
     Result listHope();
     WellSaveResponse updateHopeComplete(Long id);
-    Officials findOfficials(Long id);
-    Center findCenter(Long id);
 
 }
