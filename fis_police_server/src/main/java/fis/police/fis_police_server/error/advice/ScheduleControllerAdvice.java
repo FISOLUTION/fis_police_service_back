@@ -46,7 +46,7 @@ public class ScheduleControllerAdvice {
     @ExceptionHandler(FileNotFoundException.class)
     public ErrorResult fileNotFoundException (FileNotFoundException e) {
          log.error("[FileNotFoundException] ex", e);
-        return new ErrorResult("500", e.getMessage());
+        return new ErrorResult("400", e.getMessage());
     }
 
 
