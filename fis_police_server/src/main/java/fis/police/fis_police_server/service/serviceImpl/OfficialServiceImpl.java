@@ -36,8 +36,12 @@ public class OfficialServiceImpl implements OfficialService {
     }
 
     @Override
-    public Center findCenter(Long id) {
-        return centerRepository.findById(id);
+    public Officials findById(Long id) {
+        try {
+            return officialsRepository.findById(id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("해당 시설 관계자 정보 없음.");
+        }
     }
 
     private void checkDuplicateByNickname(String nickname) {

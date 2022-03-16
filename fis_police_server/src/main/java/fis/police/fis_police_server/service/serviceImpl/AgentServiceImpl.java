@@ -86,6 +86,15 @@ public class AgentServiceImpl implements AgentService {
         return findAgent;
     }
 
+    @Override
+    public Agent findById(Long id) {
+        try {
+            return agentRepository.findById(id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("해당 현장요원 정보 없음.");
+        }
+    }
+
     @Override // 전체 현장요원 조회
     public List<Agent> getAgents() {
         return agentRepository.findAll();

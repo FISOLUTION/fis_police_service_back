@@ -53,13 +53,4 @@ public class HopeServiceImpl implements HopeService {
         return new WellSaveResponse("200", "updated");
     }
 
-    @Override
-    public Officials findOfficials(Long id) {
-        return officialsRepository.findById(id);
-    }
-
-    @Override
-    public Center findCenter(Long id) {
-        return centerRepository.findById(id);
-    }
 }

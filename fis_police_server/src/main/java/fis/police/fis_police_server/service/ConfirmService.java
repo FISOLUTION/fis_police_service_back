@@ -30,10 +30,6 @@ public interface ConfirmService {
     Result confirmForAgent(Agent agent);
     CalendarResponse completeDayForAgent(Agent agent);
 
-    // 시설, 현장요원, 스케쥴 찾기
-    Agent findAgent(Long id);
-    Center findCenter(Long id);
-    Schedule findSchedule(Long id);
-    Officials findOfficial(Long id);
+
 
 }
