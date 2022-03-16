@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -42,68 +43,109 @@ public class AgentControllerImpl implements AgentController {
     private final AgentService agentService;
     private final TokenService tokenService;
 
+//    @Override
+//    @PostMapping("/agent") // 현장요원 추가
+//    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+//        try {
+//            agentService.saveAgent(request);
+//        } catch (IllegalStateException ie) { // 현장요원 코드 중복
+//            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            throw ie;
+//        } catch (RestClientException re) { // naver Map api 요청 에러
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
+//            response.setStatus(501);
+//        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
+//            response.setStatus(502);
+//        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
+//            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
+//            response.setStatus(403);
+//        } catch (TransactionSystemException tse) {
+//            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
+//            response.setStatus(402);
+//        } catch (Exception e) {
+//            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+//        }
+//    }
+
+    /*
+        작성 날짜: 2022/03/15 4:58 오후
+        작성자: 고준영
+        작성 내용: 리팩토링
+    */
     @Override
-    @PostMapping("/agent") // 현장요원 추가
-    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    @PostMapping("/agent")
+    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletRequest servletRequest) throws ParseException {
         try {
+            log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 추가]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
             agentService.saveAgent(request);
-        } catch (IllegalStateException ie) { // 현장요원 코드 중복
-            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re) { // naver Map api 요청 에러
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
-            response.setStatus(501);
-        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
-            response.setStatus(502);
-        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
-            response.setStatus(403);
-        } catch (TransactionSystemException tse) {
-            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
-            response.setStatus(402);
-        } catch (Exception e) {
-            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+        }  catch (RestClientException e) {
+            throw new RestClientException("naver map api 요청 에러");
+        } catch (ParseException e) {
+            throw new ParseException(502);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("잘못된 주소 입력");
+        } catch (TransactionSystemException e) {
+            throw new TransactionSystemException("요청 데이터 불완전");
         }
     }
 
     @Override
-    @PatchMapping("/agent") // 현장요원 정보 수정
-    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
+    @PatchMapping("/agent")
+    public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException {
+
         try {
             agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
-        } catch (IllegalStateException ie) { // 현장요원 코드 중복
-            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } catch (RestClientException re) { // naver Map api 요청 에러
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
-            response.setStatus(501);
-        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
-            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
-            response.setStatus(502);
-        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
-            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
-            response.setStatus(403);
-        } catch (TransactionSystemException tse) {
-            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
-            response.setStatus(402);
-        } catch (Exception e) {
-            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
-                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+        } catch (RestClientException e) {
+            throw new RestClientException("naver map api 요청 에러");
+        } catch (ParseException e) {
+            throw new ParseException(502);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("잘못된 주소 입력");
+        } catch (TransactionSystemException e) {
+            throw new TransactionSystemException("요청 데이터 불완전");
         }
     }
+
+//    @Override
+//    @PatchMapping("/agent") // 현장요원 정보 수정
+//    public void modifyAgent(AgentModifyRequest request,HttpServletResponse response, HttpServletRequest httpServletRequest) {
+//        try {
+//            agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
+//            agentService.modifyAgent(request);
+//        } catch (IllegalStateException ie) { // 현장요원 코드 중복
+//            log.warn("[로그인 id값 : {}] [url: {}] [현장요원코드 중복 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", ie.getMessage());
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//        } catch (RestClientException re) { // naver Map api 요청 에러
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 요청 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", re.getMessage());
+//            response.setStatus(501);
+//        } catch (ParseException pe) { // naver Map api 파싱 에러(예외처리 필수)
+//            log.warn("[로그인 id값 : {}] [url: {}] [naver Map API 파싱 에러(예외처리 구현 필수) {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", pe.getMessage());
+//            response.setStatus(502);
+//        } catch (IndexOutOfBoundsException oe) { // 잘못된 주소 입력
+//            log.warn("[로그인 id값 : {}] [url: {}] [잘못된 주소 입력 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", oe.getMessage());
+//            response.setStatus(403);
+//        } catch (TransactionSystemException tse) {
+//            log.warn("[로그인 id값 : {}] [url: {}] [요청 데이터 불완전 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", tse.getMessage());
+//            response.setStatus(402);
+//        } catch (Exception e) {
+//            log.error("[로그인 id값 : {}] [url:{}] [예상치못한 에러 {}]",
+//                    httpServletRequest.getSession().getAttribute("loginUser"), "/agent", e.getMessage());
+//        }
+//    }
 
     @Override
     @GetMapping("/agent") // 전체 현장요원 리스트 조회
@@ -147,12 +189,17 @@ public class AgentControllerImpl implements AgentController {
         작성내용 : 저장된 사진 보내주기
     */
     @GetMapping(value = "/agent/show", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> showPicture(@RequestParam("agent_id") Long Agent_id) throws IOException {
-        String a_picture = agentService.getPicture(Agent_id);
-        InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    public Object showPicture(@RequestParam("agent_id") Long Agent_id, @RequestParam("time") String time) throws IOException {
+        try {
+            String a_picture = agentService.getPicture(Agent_id);
+            InputStream imageStream = new FileInputStream(uploadFolder + a_picture);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+            return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+        }  catch (FileNotFoundException e){
+            log.error(e.getMessage());
+            throw new FileNotFoundException("NoSuchFile");
+        }
     }
 
     //사진 삭제
