@@ -21,13 +21,6 @@ import javax.mail.internet.AddressException;
 @RestControllerAdvice(assignableTypes = MailControllerImpl.class)
 public class MailControllerAdvice {
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(JwtException.class)
-    public ErrorResult jwtExHandler(JwtException e) {
-        log.error("[JwtExHandler] ex", e);
-        return new ErrorResult("401", e.getMessage());
-    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AddressException.class)
     public ErrorResult addrExHandler(AddressException e) {

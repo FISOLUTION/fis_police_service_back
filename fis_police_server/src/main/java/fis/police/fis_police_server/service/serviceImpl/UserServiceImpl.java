@@ -65,7 +65,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findOneUser(Long id) {
-        return userRepository.findById(id);
+        try {
+            return userRepository.findById(id);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("담당 콜직원 정보 존재하지 않음.");
+        }
     }
 
     //== 콜직원 전체 조회 ==//

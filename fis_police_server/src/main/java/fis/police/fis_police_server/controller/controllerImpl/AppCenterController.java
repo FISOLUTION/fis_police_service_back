@@ -23,21 +23,20 @@ public class AppCenterController {
 
     private final CenterService centerService;
 
+    // 여기서 만약 오류가 생긴다면, Result<어쩌구> 이거 지우고 그냥 Result 로 하셈
     @GetMapping("app/center/search")
-    public Result searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph, HttpServletRequest request){
+    public Result<List<CenterSearchResponseDTO>> searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph){
+        log.info("[url : {}] [요청 : 시설 검색]", "/app/center/search");
         try {
             CenterSearchDTO centerSearchDTO = new CenterSearchDTO(c_name, c_address, c_ph);
-            String name = centerSearchDTO.getC_name();
-            String address = centerSearchDTO.getC_address();
-            String ph = centerSearchDTO.getC_ph();
-            List<CenterSearchResponseDTO> results = centerService.findCenterList(name, address, ph);
-//            logging(request, "/center/search", "", true);
-            return new Result(results);
+            List<CenterSearchResponseDTO> results = centerService.findCenterList(c_name, c_address, c_ph);
+            return new Result<>(results);
         } catch (NoResultException noResultException){
-//            logging(request, "/center/search", noResultException.getMessage(), false);
-            return new Result(new ArrayList<CenterSearchResponseDTO>());
+            return new Result<>(new ArrayList<CenterSearchResponseDTO>());
+//            throw new NoResultException(noResultException.getMessage());
         } catch (NullPointerException nullPointerException){
 //            logging(request, "/center/search", "null pointer exception 발생", false);
+//            throw new NullPointerException("null pointer exception 발생");
             return null;
         }
     }

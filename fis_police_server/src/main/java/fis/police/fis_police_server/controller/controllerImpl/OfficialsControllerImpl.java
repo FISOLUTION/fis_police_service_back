@@ -6,6 +6,7 @@ import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import fis.police.fis_police_server.dto.WellSaveResponse;
 import fis.police.fis_police_server.repository.CenterRepository;
+import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.OfficialService;
 import fis.police.fis_police_server.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +28,14 @@ public class OfficialsControllerImpl implements OfficialsController {
 
     private final OfficialService officialService;
     private final TokenService tokenService;
+    private final CenterService centerService;
 
     @Override
     @PostMapping("/officials")
     public WellSaveResponse saveOfficials(@RequestBody OfficialSaveRequest request) {
-        Center center = officialService.findCenter(request.getCenter_id());
-        officialService.saveOfficials(request, center);
         log.info("[url: {}] [요청: 시설 담당자 회원가입]", "/officials");
+        Center center = centerService.findById(request.getCenter_id());
+        officialService.saveOfficials(request, center);
         return new WellSaveResponse("200", "created");
     }
 
@@ -41,10 +43,10 @@ public class OfficialsControllerImpl implements OfficialsController {
     @PatchMapping("/officials")
     public WellSaveResponse modifyOfficials(@RequestBody OfficialSaveRequest request, HttpServletRequest httpServletRequest) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
-        Center center = officialService.findCenter(request.getCenter_id());
-        officialService.modifyOfficials(officialFromRequest, request, center);
         log.info("[로그인 id값: {}] [url: {}] [요청: 시설 담당자 정보 수정]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/officials");
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
+        Center center = centerService.findById(request.getCenter_id());
+        officialService.modifyOfficials(officialFromRequest, request, center);
         return new WellSaveResponse("200", "updated");
     }
 }
