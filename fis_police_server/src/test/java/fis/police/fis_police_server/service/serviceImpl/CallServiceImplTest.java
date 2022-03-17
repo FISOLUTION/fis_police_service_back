@@ -75,5 +75,4 @@ class CallServiceImplTest {
         assertThat(savedCall.getM_email()).isEqualTo(testCall.getM_email());
 
     }
-
 }

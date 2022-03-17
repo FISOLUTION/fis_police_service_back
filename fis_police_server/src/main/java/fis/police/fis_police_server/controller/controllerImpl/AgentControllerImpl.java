@@ -70,6 +70,7 @@ public class AgentControllerImpl implements AgentController {
     public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException {
         log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 수정]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
         try {
+            log.info("현장요원 agent_id ===============[{}]", request.getAgent_id());
             agentService.updatePicture(request.getAgent_id(), request.getA_picture()); //사진 저장 원보라
             agentService.modifyAgent(request);
         } catch (RestClientException e) {

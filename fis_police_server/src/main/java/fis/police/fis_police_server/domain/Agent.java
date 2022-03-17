@@ -128,6 +128,23 @@ public class Agent {
         return agent;
     }
 
+    public static Agent createAgent(String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar,
+                                    String a_equipment, LocalDate a_receiveDate, Double a_longitude, Double a_latitude, UserAuthority u_auth) {
+        Agent agent = new Agent();
+        agent.a_name = a_name;
+        agent.a_ph = a_ph;
+        agent.a_code = a_code;
+        agent.a_address = a_address;
+        agent.a_hasCar = a_hasCar;
+        agent.a_equipment = a_equipment;
+        agent.a_receiveDate = a_receiveDate;
+        agent.a_latitude = a_latitude;
+        agent.a_longitude = a_longitude;
+        agent.a_status = AgentStatus.WORK;
+        agent.u_auth = u_auth;
+        return agent;
+    }
+
     public static Agent createAgent(AgentSaveRequest request, HasCar a_hasCar, Double a_longitude, Double a_latitude){
         Agent agent = new Agent();
         agent.a_name = request.getA_name();
