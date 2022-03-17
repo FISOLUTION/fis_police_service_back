@@ -3,6 +3,7 @@ package fis.police.fis_police_server.domain;
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
+import fis.police.fis_police_server.dto.ExcelCenterDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +85,24 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
-
+    /*
+        작성 날짜: 2022/03/17 1:13 오후
+        작성자: 고준영
+        작성 내용: excel 용 생성자
+    */
+    public Center(String c_sido, String c_sigungu, String c_name, String c_type, String c_status, String c_address, String c_zipcode, String c_ph, String c_faxNum, String c_people, String c_hpAddress) {
+        this.c_sido = c_sido;
+        this.c_sigungu = c_sigungu;
+        this.c_name = c_name;
+        this.c_type = c_type;
+        this.c_status = c_status;
+        this.c_address = c_address;
+        this.c_zipcode = c_zipcode;
+        this.c_ph = c_ph;
+        this.c_faxNum = c_faxNum;
+        this.c_people = c_people;
+        this.c_hpAddress = c_hpAddress;
+    }
 
     /*
         날짜 : 2022/01/13 3:51 오후
@@ -113,7 +131,6 @@ public class Center {
         작성 내용: confirm test 용 생성자
     */
     public Center(String c_name, String c_ph, String c_people, Participation participation) {
-        this.c_name = c_name;
         this.c_ph = c_ph;
         this.c_people = c_people;
         this.participation = participation;
