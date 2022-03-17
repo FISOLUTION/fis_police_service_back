@@ -84,25 +84,39 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
+
+
     /*
         날짜 : 2022/01/13 3:51 오후
         작성자 : 현승구
         작성내용 : 위도 경도 설정자
     */
+
     public void setLocation(Pair<Double, Double> location){
         this.c_longitude = location.getFirst();
         this.c_latitude = location.getSecond();
     }
-
     /*
         날짜 : 2022/01/11 1:27 오후
         작성자 : 현승구
         작성내용 : 테스트용 생성자
     */
+
     public Center(String c_name, String c_address, String c_ph){
         this.c_name = c_name;
         this.c_address = c_address;
         this.c_ph = c_ph;
+    }
+    /*
+        작성 날짜: 2022/03/17 10:08 오전
+        작성자: 고준영
+        작성 내용: confirm test 용 생성자
+    */
+    public Center(String c_name, String c_ph, String c_people, Participation participation) {
+        this.c_name = c_name;
+        this.c_ph = c_ph;
+        this.c_people = c_people;
+        this.participation = participation;
     }
 
     public Center(String c_name, String c_address, String c_ph, Double c_latitude, Double c_longitude) {

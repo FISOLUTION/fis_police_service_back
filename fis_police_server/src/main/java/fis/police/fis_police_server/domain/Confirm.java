@@ -2,6 +2,7 @@ package fis.police.fis_police_server.domain;
 
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.ConfirmFromAgentRequest;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Confirm {
 
