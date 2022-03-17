@@ -59,6 +59,10 @@ dependencies {
 
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation 'commons-io:commons-io:2.11.0' //이미지 내보내기
+
+
+	compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'        // HSSFWorkbook 사용가능
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'  // XSSFWorkbook 사용가능
 }
 
 test {
