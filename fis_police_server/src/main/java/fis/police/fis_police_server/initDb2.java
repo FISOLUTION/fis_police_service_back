@@ -38,7 +38,7 @@ public class initDb2 {
 
         public void dbInit() {
             Agent agent1 = Agent.createAgent("agent1", "123", "a1", "분당구 불정로 6", HasCar.CAR,
-                    "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT, "agent_id1", "1234");
+                    "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT);
             em.persist(agent1);
             Agent agent2 = Agent.createAgent("agent2", "123", "a2", "분당구 불정로 6", HasCar.CAR,
                     "", LocalDate.now(), 123D, 123D, UserAuthority.AGENT, "agent_id2", "5678");

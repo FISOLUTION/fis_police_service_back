@@ -69,7 +69,8 @@ public class AgentServiceImpl implements AgentService {
         if (!findAgent.getA_code().equals(request.getA_code())) {
             validateDuplicateAgent(request.getA_code());
         }
-        if (!findAgent.getA_nickname().equals(request.getNickname())) {
+        //닉네임과 비밀번호 처음부터 없을 경우 오류 남 --> 비어있을때는 중복검사 안함
+        if (findAgent.getA_nickname() != null && !findAgent.getA_nickname().equals(request.getNickname())) {
             checkDuplicateByNickname(request.getNickname());
         }
 
