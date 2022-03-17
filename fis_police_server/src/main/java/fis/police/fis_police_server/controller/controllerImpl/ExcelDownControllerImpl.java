@@ -34,7 +34,18 @@ public class ExcelDownControllerImpl implements ExcelDownController {
         List<ScheduleByDateResponse> list = scheduleService.selectDate(date);
 
         Workbook wb = new XSSFWorkbook();
-        Sheet sheet = wb.createSheet("첫번째 시트");
+        Sheet sheet = wb.createSheet(date+" 스케줄");
+
+
+
+        for (int i=0; i<=9; i++){
+            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i))+(short)1024);
+        }
+
+
+
+
         Row row = null;
         Cell cell = null;
         int rowNum = 0;
@@ -87,8 +98,6 @@ public class ExcelDownControllerImpl implements ExcelDownController {
             cell = row.createCell(9);
             cell.setCellValue(res.getCall_check());
         }
-
-
 
 
 
