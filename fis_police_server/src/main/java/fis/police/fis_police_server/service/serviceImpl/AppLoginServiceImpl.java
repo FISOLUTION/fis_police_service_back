@@ -24,7 +24,6 @@ import java.util.List;
 @Slf4j
 public class AppLoginServiceImpl implements AppLoginService {
 
-    private final UserRepository userRepository;
     private final AgentRepository agentRepository;
     private final OfficialsRepository officialsRepository;
 
@@ -79,7 +78,6 @@ public class AppLoginServiceImpl implements AppLoginService {
         } else {
             throw new IllegalArgumentException("role 정보 오류");
         }
-
     }
 
     private LoginResponse authenticateAgent(List<Agent> agent, LoginResponse loginResponse, String pwd) {
