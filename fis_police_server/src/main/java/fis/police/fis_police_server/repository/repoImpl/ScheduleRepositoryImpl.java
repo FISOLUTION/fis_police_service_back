@@ -45,6 +45,14 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         return findScheduleById;
     }
 
+    @Override
+    public List<Schedule> findSameSchedule(String c_name, LocalDate visit_date) {
+        return em.createQuery("select s from Schedule s where s.center.c_name = : c_name and s.visit_date = :visit_date", Schedule.class)
+                .setParameter("c_name", c_name)
+                .setParameter("visit_date", visit_date)
+                .getResultList();
+    }
+
     /*
         작성날짜: 2022/01/13 4:18 PM
         작성자: 이승범
