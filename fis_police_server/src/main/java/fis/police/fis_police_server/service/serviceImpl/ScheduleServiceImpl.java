@@ -122,6 +122,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    @Transactional
     public void updateSchedule(Long schedule_id) {
         scheduleRepository.updateScheduleComplete(schedule_id, Complete.complete);
     }
