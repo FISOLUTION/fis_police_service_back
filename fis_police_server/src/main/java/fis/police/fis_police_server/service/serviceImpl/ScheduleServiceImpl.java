@@ -103,6 +103,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     }
 
+    @Override
+    public List<Schedule> findSameSchedule(Long schedule_id) {
+        Schedule schedule = scheduleRepository.findById(schedule_id);
+        return scheduleRepository.findSameSchedule(schedule.getCenter().getC_name(), schedule.getVisit_date());
+    }
+
     /*
         작성날짜: 2022/01/19 4:39 PM
         작성자: 이승범
@@ -113,6 +119,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void cancelSchedule(Long schedule_id) {
         Schedule findSchedule = scheduleRepository.findById(schedule_id);
         findSchedule.cancel();
+    }
+
+    @Override
+    public void updateSchedule(Long schedule_id) {
+        scheduleRepository.updateScheduleComplete(schedule_id, Complete.complete);
     }
 
 

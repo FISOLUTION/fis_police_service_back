@@ -14,7 +14,7 @@ public interface ScheduleRepository {
     void save(Schedule schedule);
 
     Schedule findById(Long id);
-
+    List<Schedule> findSameSchedule(String c_name, LocalDate visit_date);
     /*
         작성날짜: 2022/01/13 4:13 PM
         작성자: 이승범
