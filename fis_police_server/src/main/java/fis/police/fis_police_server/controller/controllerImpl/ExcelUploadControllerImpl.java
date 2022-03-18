@@ -33,7 +33,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
     private final ExcelService excelService;
 
     @Override
-    @PostMapping("app/excel/read")
+    @PostMapping("excel/read")
     public Object readExcel(@ModelAttribute MultipartFile excelFile) throws IOException, NoSuchMethodException {
         List<Object> object = excelService.excelToJson(excelFile, ExcelCenterDTO.class);
         object.stream().forEach(center -> {
