@@ -18,6 +18,7 @@ public interface ScheduleService {
     Schedule modifySchedule(ScheduleModifyRequest request);
 
     Schedule findById(Long id);
+    List<Schedule> findSameSchedule(Long schedule_id);
 
     /*
         작성날짜: 2022/01/19 4:31 PM
@@ -26,6 +27,7 @@ public interface ScheduleService {
     */
     // 일정 취소
     void cancelSchedule(Long schedule_id);
+    void updateSchedule(Long schedule_id);
 
 
     /*

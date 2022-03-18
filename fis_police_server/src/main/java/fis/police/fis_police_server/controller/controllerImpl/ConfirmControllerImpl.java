@@ -91,6 +91,10 @@ public class ConfirmControllerImpl implements ConfirmController {
                 log.info("[확인서 id값: {} [url: {}] [요청: 확인서 결재]", aLong, "/confirm/check");
                 confirmService.updateConfirm(schedule_id, aLong, officialFromRequest.getO_name());
             }
+            List<Schedule> sameSchedule = scheduleService.findSameSchedule(schedule_id);
+            for (Schedule schedule : sameSchedule) {
+                scheduleService.updateSchedule(schedule.getId());
+            }
             return new WellSaveResponse("200", "updated");
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");
