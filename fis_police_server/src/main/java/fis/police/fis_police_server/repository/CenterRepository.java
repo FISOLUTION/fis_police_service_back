@@ -3,6 +3,7 @@ package fis.police.fis_police_server.repository;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
+import fis.police.fis_police_server.dto.ExcelCenterDTO;
 
 import java.util.List;
 
