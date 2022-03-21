@@ -4,7 +4,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/github-action/
+    destination: /home/ubuntu/app/
     overwrite: yes
     
 permission:
