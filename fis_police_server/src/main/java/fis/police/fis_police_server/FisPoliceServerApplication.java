@@ -37,7 +37,7 @@ public class FisPoliceServerApplication {
 		@Override
 		public void addCorsMappings(CorsRegistry registry){
 			registry.addMapping("/**")
-					.allowedOriginPatterns("*", "http://34.239.0.189/*")
+					.allowedOriginPatterns("*", "http://3.35.135.214/*")
 					.allowCredentials(true)
                     .allowedHeaders("*")
 					.allowedMethods("*");
