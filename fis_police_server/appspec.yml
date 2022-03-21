@@ -1,0 +1,25 @@
+# appspec.yml
+
+version: 0.0
+os: linux
+files:
+  - source: /
+#    destination: /home/ec2-user/github-action/
+    destination: /home/ubuntu/app/
+    overwrite: yes
+    
+permission:
+  - object: /
+    pattern: "**"
+#    owner: ec2-user
+#    group: ec2-user
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
+  ApplicationStart:
+    - location: fis_police_server/scripts/deploy.sh
+      timeout: 180
+#      runs: ec2-user
+      runs: ubuntu
+
