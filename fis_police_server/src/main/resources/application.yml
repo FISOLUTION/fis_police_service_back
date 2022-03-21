@@ -2,7 +2,7 @@ server:
   shutdown: graceful
 spring:
   datasource:
-    url:  jdbc:mysql://54.175.8.114:3306/test
+    url:  jdbc:mysql://34.239.0.189:3306/test
     username: fistest
     password: fistest1207
     driver-class-name: com.mysql.cj.jdbc.Driver
