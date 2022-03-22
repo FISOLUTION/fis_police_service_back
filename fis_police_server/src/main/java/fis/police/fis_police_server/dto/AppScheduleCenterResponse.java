@@ -25,7 +25,9 @@ public class AppScheduleCenterResponse {
     private Accept accept;          //현장요원 일정 수락 여부
     private String late_comment;    //늦는 사유 멘트 현장요원이 선택하면 시설에 띄워주기
 
+
     private Long center_id;
+    private String c_name;
     private Double c_latitude;      //위도
     private Double c_longitude;     //경도
 
@@ -37,8 +39,7 @@ public class AppScheduleCenterResponse {
     private String a_picture;
 
     @QueryProjection
-
-    public AppScheduleCenterResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Accept accept, String late_comment, Long center_id, Double c_latitude, Double c_longitude, Long agent_id, String a_name, String a_ph, String a_code) {
+    public AppScheduleCenterResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Accept accept, String late_comment, Long center_id, String c_name, Double c_latitude, Double c_longitude, Long agent_id, String a_name, String a_ph, String a_code) {
         this.schedule_id = schedule_id;
         this.visit_date = visit_date;
         this.visit_time = visit_time;
@@ -49,6 +50,7 @@ public class AppScheduleCenterResponse {
         this.accept = accept;
         this.late_comment = late_comment;
         this.center_id = center_id;
+        this.c_name = c_name;
         this.c_latitude = c_latitude;
         this.c_longitude = c_longitude;
         this.agent_id = agent_id;
