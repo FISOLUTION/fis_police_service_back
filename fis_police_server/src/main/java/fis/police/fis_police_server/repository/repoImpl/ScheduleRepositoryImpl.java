@@ -86,7 +86,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public List<AppScheduleCenterResponse> findByCenter(Long center_id,LocalDate today) {
         return jpaQueryFactory
-                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.id, qCenter.c_latitude, qCenter.c_longitude, qAgent.id, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
+                .select(new QAppScheduleCenterResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment, qCenter.id, qCenter.c_name, qCenter.c_latitude, qCenter.c_longitude, qAgent.id, qAgent.a_name, qAgent.a_ph, qAgent.a_code))
                 .from(qSchedule)
                 .leftJoin(qSchedule.agent, qAgent)
 //                .fetchJoin() //querydsl 에서 dto 반환시 fetchjoin 대신 join
