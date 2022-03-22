@@ -18,3 +18,4 @@ hooks:
     - location: fis_police_server/scripts/deploy.sh
       timeout: 180
       runs: ubuntu
+
