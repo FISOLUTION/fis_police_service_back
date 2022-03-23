@@ -17,7 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+/*
+    작성 날짜: 2022/03/23 2:38 오후
+    작성자: 고준영
+    작성 내용: 앱 로그인
+*/
 @Service
 @Transactional
 @RequiredArgsConstructor

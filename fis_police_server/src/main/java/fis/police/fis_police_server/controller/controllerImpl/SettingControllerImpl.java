@@ -44,7 +44,7 @@ public class SettingControllerImpl implements SettingController {
     public Object basicAgentInfo(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         Agent agentFromRequest = tokenService.getAgentFromRequest(authorizationHeader);
-        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 담당자 기본 정보]", agentFromRequest.getId(), "/agent/setting");
+        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 현장요원 기본 정보]", agentFromRequest.getId(), "/agent/setting");
         try {
             Agent agent = agentService.findById(agentFromRequest.getId());
             return new SettingAgentDTO(agent.getA_name(), agent.getA_nickname(), agent.getA_pwd(), agent.getA_ph());
