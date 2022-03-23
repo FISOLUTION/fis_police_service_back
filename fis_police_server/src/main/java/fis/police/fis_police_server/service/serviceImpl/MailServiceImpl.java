@@ -51,6 +51,7 @@ public class MailServiceImpl implements MailService {
             sendMail(message, response, recentCall);
             return response;
         } catch (AddressException e) {
+//            checkMail(center_id, recentCall.getUser().getId(), recentCall.getM_email());
             throw new AddressException("올바르지 않은 메일 형식");
         } catch (NullPointerException e) {
             throw new NullPointerException("통화 기록이 존재하지 않아 메일을 찾을 수 없습니다.");

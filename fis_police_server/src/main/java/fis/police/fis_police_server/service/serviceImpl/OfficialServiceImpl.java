@@ -19,7 +19,6 @@ import java.util.List;
 public class OfficialServiceImpl implements OfficialService {
 
     private final OfficialsRepository officialsRepository;
-    private final CenterRepository centerRepository;
 
     @Override
     public void saveOfficials(OfficialSaveRequest request, Center center) {

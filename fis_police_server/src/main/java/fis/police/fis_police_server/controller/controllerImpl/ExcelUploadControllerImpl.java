@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-//@Transactional
 @RequiredArgsConstructor
 public class ExcelUploadControllerImpl implements ExcelUploadController {
 
