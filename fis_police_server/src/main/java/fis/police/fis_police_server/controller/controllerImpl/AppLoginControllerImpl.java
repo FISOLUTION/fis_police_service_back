@@ -28,14 +28,16 @@ public class AppLoginControllerImpl implements AppLoginController {
         LoginResponse loginResponse = appLoginService.login(loginRequest);
         Long primaryKey = appLoginService.getPrimaryKey(loginRequest);
 
+        // 로그인 실패
         if (loginResponse.getSc().equals("idFail")) {
-            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]",primaryKey,"/app/login");
+            log.error("[로그인 id값: {}] [url: {}] [로그인 실패 (ID 존재하지 않음.)]",primaryKey,"/app/login");
             throw new NullPointerException("ID Fail");
         } else if (loginResponse.getSc().equals("pwdFail")) {
-            log.error("[로그인 id값: {}] [url: {}] [로그인 실패]", primaryKey, "/app/login");
+            log.error("[로그인 id값: {}] [url: {}] [로그인 실패 (PWD 일치하지 않음.)]", primaryKey, "/app/login");
             throw new NullPointerException("Password Fail");
         }
 
+        // 로그인 성공
         log.info("[로그인 id값: {}] [url: {}] [로그인 성공]", primaryKey, "/app/login");
         log.info("[로그인 역할: {}]", loginRequest.getRole());
 
@@ -49,6 +51,7 @@ public class AppLoginControllerImpl implements AppLoginController {
         return loginResponse;
     }
 
+    // 프론트에서 토큰을 삭제하는 것으로 해결
     @Override
     public String logout(HttpServletRequest request) {
         return null;

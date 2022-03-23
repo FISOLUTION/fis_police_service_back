@@ -121,6 +121,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         findSchedule.cancel();
     }
 
+    /*
+        작성 날짜: 2022/03/23 2:47 오후
+        작성자: 고준영
+        작성 내용: 해당 스케쥴 방문 완료
+    */
     @Override
     @Transactional
     public void updateSchedule(Long schedule_id) {

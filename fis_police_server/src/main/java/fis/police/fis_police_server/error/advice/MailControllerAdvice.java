@@ -31,6 +31,7 @@ public class MailControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(MailException.class)
     public ErrorResult mailExHandler(MailException e) {
+        log.error("메일 설정을 확인하세요. POP3/IMAP 모두 '사용으로 설정되어 있는지 확인하세요.");
         log.error("[MailExHandler] ex", e);
         return new ErrorResult("500", "메일 전송 오류");   // mail exception is abstract; cannot be instatied? 뭐임?> 이게?
     }
