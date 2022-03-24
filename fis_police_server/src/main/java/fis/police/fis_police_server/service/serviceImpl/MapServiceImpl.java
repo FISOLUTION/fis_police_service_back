@@ -50,6 +50,13 @@ public class MapServiceImpl implements MapService {
             agentList = agentRepository.findNearAgent(latitude, longitude, range);
         }
         agentList.stream().forEach(agent -> System.out.println("agent.getId() = " + agent.getId()));
+
+        /**
+         * 원보라 : 거리안에서 가까운 순서대로 리스트 반환
+         */
+        System.out.println("agentList ======================================== " + agentList);
+
+
         return agentList;
     }
 
