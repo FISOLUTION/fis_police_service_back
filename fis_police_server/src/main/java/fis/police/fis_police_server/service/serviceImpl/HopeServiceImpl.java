@@ -53,4 +53,17 @@ public class HopeServiceImpl implements HopeService {
         return new WellSaveResponse("200", "updated");
     }
 
+
+    @Override
+    public Result findHopeStatusByCenter(Center center) {
+        List<Hope> hopes = hopeRepository.findHopesByCenter(center.getId());
+        if (hopes.isEmpty()) {
+            throw new NullPointerException("신청현황이 없습니다.");
+        }
+        List<HopeStatusResponse> collect = hopes.stream()
+                .map(hope -> new HopeStatusResponse(hope.getCenter().getC_name(), hope.getCenter().getC_address(), hope.getAccept(), hope.getH_date(), hope.getH_time(), hope.getNow_date(), hope.getOfficials().getO_name(), hope.getH_ph(), hope.getH_mail()))
+                .collect(Collectors.toList());
+        return new Result(collect);
+    }
+
 }

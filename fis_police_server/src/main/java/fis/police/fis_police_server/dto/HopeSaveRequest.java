@@ -15,6 +15,8 @@ public class HopeSaveRequest {
     // 지문등록 희망 날짜, 시간
     private String h_date;
     private String h_time;
+    // 신청 날짜
+    private String now_date;
     // 담당자 전화번호, 이메일
     private String h_ph;
     private String h_mail;

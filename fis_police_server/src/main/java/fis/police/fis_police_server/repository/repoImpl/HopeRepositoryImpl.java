@@ -45,4 +45,11 @@ public class HopeRepositoryImpl implements HopeRepository {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+
+    @Override
+    public List<Hope> findHopesByCenter(Long id) {
+        return em.createQuery("select h from Hope h where h.center.id =: id", Hope.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
 }
