@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface AgentRepository {
 
     void save(Agent agent);
 
-    List<Agent> findNearAgent(Double latitude, Double longitude, Long range);
+    List<CenterSelectDateResponseDTO> findNearAgent(Double latitude, Double longitude, Long range);
 
     List<Agent> findByNickname(String nickname);
 
