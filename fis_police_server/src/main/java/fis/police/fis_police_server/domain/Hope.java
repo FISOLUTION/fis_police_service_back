@@ -28,6 +28,8 @@ public class Hope {
     private String h_mail;
     private String h_ph;
 
+    private String now_date;
+
     // 일정 잡기 완료/미완료
     @Enumerated(EnumType.STRING)
     private Complete complete;
@@ -58,6 +60,7 @@ public class Hope {
         // Officials 회원가입할 때 받은 이메일, 전화번호를 작성해야하는지,, 궁금
         hope.h_mail = request.getH_mail();
         hope.h_ph = request.getH_ph();
+        hope.now_date = request.getNow_date();
         hope.officials = officials;
         hope.center = center;
         return hope;
