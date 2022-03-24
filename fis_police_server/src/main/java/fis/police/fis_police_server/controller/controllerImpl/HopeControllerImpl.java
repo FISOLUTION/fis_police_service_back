@@ -57,6 +57,7 @@ public class HopeControllerImpl implements HopeController {
          return hopeService.updateHopeComplete(hope_id);
     }
 
+    @Override
     @GetMapping("/app/hope/status")
     public Result currentSituation(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");

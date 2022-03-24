@@ -21,4 +21,6 @@ public interface HopeController {
 
     // 신청서 -> 스케쥴 잡힘  complete 컬럼 업데이트
     WellSaveResponse updateComplete(@PathVariable Long hope_id);
+
+    Result currentSituation(HttpServletRequest request);
 }
