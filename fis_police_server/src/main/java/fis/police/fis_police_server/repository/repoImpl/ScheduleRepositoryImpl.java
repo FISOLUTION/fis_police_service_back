@@ -95,7 +95,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
-                        .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.accept.in(Accept.TBD , Accept.accept))    //현장요원이 수락하거나 미정인것들
                         .and(qSchedule.visit_date.goe(today))   //오늘 날짜 일정과 그 이후의 날짜에 예약된 일정을 보여줌
                 )
                 .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
