@@ -1,8 +1,8 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import com.mysema.commons.lang.Pair;
-import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.MapService;
@@ -21,6 +21,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.NoResultException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -39,18 +41,45 @@ public class MapServiceImpl implements MapService {
     private final HttpComponentsClientHttpRequestFactory httpRequestFactory;
 
     @Override
-    public List<Agent> agentNearCenter(Center center, Long range) {
+    public List<CenterSelectDateResponseDTO> agentNearCenter(Center center, Long range) {
         Center target = centerRepository.findById(center.getId());
         Double latitude = target.getC_latitude();
         Double longitude = target.getC_longitude();
 
-        List<Agent> agentList = agentRepository.findNearAgent(latitude, longitude, range);
+        List<CenterSelectDateResponseDTO> agentList = agentRepository.findNearAgent(latitude, longitude, range);
         while(agentList.size() <= 5 && range < 30) {
             range = range + 2;
             agentList = agentRepository.findNearAgent(latitude, longitude, range);
         }
-        agentList.stream().forEach(agent -> System.out.println("agent.getId() = " + agent.getId()));
-        return agentList;
+        agentList.stream().forEach(agent -> System.out.println("agent.getId() = " + agent.getAgent_id()));
+
+        /**
+         * 원보라 : 거리안에서 가까운 순서대로 리스트 반환
+         */
+        List<CenterSelectDateResponseDTO> agentDto =agentList;
+
+        for (CenterSelectDateResponseDTO centerSelectDateResponseDTO : agentDto) {
+            Double dist = distance(centerSelectDateResponseDTO.getA_latitude(), centerSelectDateResponseDTO.getA_longitude(), center.getC_latitude(), center.getC_longitude());
+            centerSelectDateResponseDTO.setDistance(dist);
+        }
+
+        //시설과 가까운 거리 순 정렬
+        Comparator<CenterSelectDateResponseDTO> cp = new Comparator<CenterSelectDateResponseDTO>() {
+            @Override
+            public int compare(CenterSelectDateResponseDTO o1, CenterSelectDateResponseDTO o2) {
+                Double a = o1.getDistance();
+                Double b = o2.getDistance();
+
+                if (a > b) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        };
+        Collections.sort(agentDto, cp);
+
+        return agentDto;
     }
 
     @Override
