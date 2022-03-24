@@ -3,6 +3,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 import fis.police.fis_police_server.controller.CenterController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.*;
+import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
@@ -29,6 +30,7 @@ public class CenterControllerImpl implements CenterController {
 
     private final CenterService centerService;
     private final MapServiceImpl mapService;
+    private final AgentService agentService;
 
     @GetMapping("/center/search")
     @Override
@@ -80,7 +82,7 @@ public class CenterControllerImpl implements CenterController {
         Center center = centerService.findById(center_id);
         LocalDate visit_date = LocalDate.parse(date);
         return new Result(mapService.agentNearCenter(center, 2L).stream()
-                .map(e -> new CenterSelectDateResponseDTO(e, visit_date))
+                .map(e -> new CenterSelectDateResponseDTO(agentService.findById(e.getAgent_id()),visit_date))
                 .collect(Collectors.toList()));
     }
 

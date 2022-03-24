@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.HasCar;
@@ -25,7 +26,22 @@ public class CenterSelectDateResponseDTO {
     private LocalDate a_receiveDate;                //'장비 수령 날짜'
     private Double a_latitude;                          //'현장 요원 위도',
     private Double a_longitude;                         //'현장 요원 경도',
+    private Double distance; //2022-03-24 가까운 거리 계산 위해 추가
     private List<ScheduleDTO> scheduleList = new ArrayList<ScheduleDTO>();
+
+    @QueryProjection
+    public CenterSelectDateResponseDTO(Long agent_id, String a_name, String a_ph, String a_code, String a_address, HasCar a_hasCar, String a_equipment, LocalDate a_receiveDate, Double a_latitude, Double a_longitude) {
+        this.agent_id = agent_id;
+        this.a_name = a_name;
+        this.a_ph = a_ph;
+        this.a_code = a_code;
+        this.a_address = a_address;
+        this.a_hasCar = a_hasCar;
+        this.a_equipment = a_equipment;
+        this.a_receiveDate = a_receiveDate;
+        this.a_latitude = a_latitude;
+        this.a_longitude = a_longitude;
+    }
 
     public CenterSelectDateResponseDTO(Agent agent, LocalDate visit_date){
         this.agent_id = agent.getId();
@@ -38,6 +54,7 @@ public class CenterSelectDateResponseDTO {
         this.a_receiveDate = agent.getA_receiveDate();
         this.a_latitude = agent.getA_latitude();
         this.a_longitude = agent.getA_longitude();
+
         agent.getScheduleList().stream()
                 .forEach(schedule -> {
                     if(schedule.getVisit_date().equals(visit_date) && schedule.isValid()){
@@ -48,6 +65,7 @@ public class CenterSelectDateResponseDTO {
         Collections.sort(this.scheduleList);
         // 이부분 성능 최적화가 헬
     }
+
 
     @Data
     private static class ScheduleDTO implements Comparable<ScheduleDTO>{

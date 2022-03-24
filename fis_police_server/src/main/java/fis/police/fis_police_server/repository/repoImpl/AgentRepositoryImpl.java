@@ -1,8 +1,12 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.User;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import fis.police.fis_police_server.domain.*;
+import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
+import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
+import fis.police.fis_police_server.dto.QAgentLocation;
+import fis.police.fis_police_server.dto.QCenterSelectDateResponseDTO;
 import fis.police.fis_police_server.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,6 +24,14 @@ import java.util.List;
 public class AgentRepositoryImpl implements AgentRepository {
 
     private final EntityManager em;
+
+    private final JPAQueryFactory jpaQueryFactory;
+    QSchedule qSchedule =QSchedule.schedule;
+    QCenter qCenter = QCenter.center;
+    QAgent qAgent = QAgent.agent;
+
+
+
 
     @Override
     public Agent findById(Long id) {
@@ -44,24 +56,36 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> findNearAgent(Double latitude, Double longitude, Long range) {
+    public List<CenterSelectDateResponseDTO> findNearAgent(Double latitude, Double longitude, Long range) {
         Double latitude_l = latitude - (0.009D * range);
         Double latitude_h = latitude + (0.009D * range);
         Double longitude_l = longitude - (0.009D * range);
         Double longitude_h = longitude + (0.009D * range);
-        return em.createQuery
-                ("select distinct agent from Agent agent " +
-                        "left join fetch agent.scheduleList as schedule " +
-                        "left join fetch schedule.center " +
-                        "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
-                        "and agent.a_longitude < :longitude_h and agent.a_longitude > :longitude_l " +
-                        "and agent.a_status = :a_status", Agent.class)
-                    .setParameter("latitude_h", latitude_h)
-                    .setParameter("latitude_l", latitude_l)
-                    .setParameter("longitude_l", longitude_l)
-                    .setParameter("longitude_h", longitude_h)
-                    .setParameter("a_status", AgentStatus.WORK)
-                    .getResultList();
+//        return em.createQuery
+//                ("select distinct agent from Agent agent " +
+//                        "left join fetch agent.scheduleList as schedule " +
+//                        "left join fetch schedule.center " +
+//                        "where agent.a_latitude < :latitude_h and agent.a_latitude > :latitude_l " +
+//                        "and agent.a_longitude < :longitude_h and agent.a_longitude > :longitude_l " +
+//                        "and agent.a_status = :a_status", Agent.class)
+//                    .setParameter("latitude_h", latitude_h)
+//                    .setParameter("latitude_l", latitude_l)
+//                    .setParameter("longitude_l", longitude_l)
+//                    .setParameter("longitude_h", longitude_h)
+//                    .setParameter("a_status", AgentStatus.WORK)
+//                    .getResultList();
+        return jpaQueryFactory
+                .select(new QCenterSelectDateResponseDTO(qAgent.agent.id, qAgent.a_name, qAgent.a_ph, qAgent.a_code, qAgent.a_address, qAgent.a_hasCar, qAgent.a_equipment, qAgent.a_receiveDate, qAgent.a_latitude, qAgent.a_longitude))
+                .from(qAgent)
+                .leftJoin(qAgent.scheduleList, qSchedule)
+                .distinct()
+                .where((qAgent.a_status.eq(AgentStatus.WORK))
+                        .and(qAgent.a_latitude.lt(latitude_h))
+                        .and(qAgent.a_latitude.gt(latitude_l))
+                        .and(qAgent.a_longitude.lt(longitude_h))
+                        .and(qAgent.a_longitude.gt(longitude_l))
+                )
+                .fetch();
     }
 
     @Override
