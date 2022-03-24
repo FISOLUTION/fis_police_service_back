@@ -52,8 +52,6 @@ public class QAgent extends EntityPathBase<Agent> {
 
     public final ListPath<Confirm, QConfirm> confirmList = this.<Confirm, QConfirm>createList("confirmList", Confirm.class, QConfirm.class, PathInits.DIRECT2);
 
-    public final NumberPath<Double> distance = createNumber("distance", Double.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<Schedule, QSchedule> scheduleList = this.<Schedule, QSchedule>createList("scheduleList", Schedule.class, QSchedule.class, PathInits.DIRECT2);
