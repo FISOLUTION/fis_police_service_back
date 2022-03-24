@@ -82,7 +82,7 @@ public class CenterControllerImpl implements CenterController {
         Center center = centerService.findById(center_id);
         LocalDate visit_date = LocalDate.parse(date);
         return new Result(mapService.agentNearCenter(center, 2L).stream()
-                .map(e -> new CenterSelectDateResponseDTO(agentService.findById(e.getAgent_id()),visit_date))
+                .map(e -> new CenterSelectDateResponseDTO(agentService.findById(e.getAgent_id()),visit_date))  // 2022-03-24 원보라 바꿈
                 .collect(Collectors.toList()));
     }
 

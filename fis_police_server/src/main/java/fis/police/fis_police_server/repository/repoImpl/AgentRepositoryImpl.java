@@ -102,9 +102,9 @@ public class AgentRepositoryImpl implements AgentRepository {
     */
     @Override
     public void deletePicture(Long agent_id) {
-            em.createQuery("update Agent a set a.a_picture=null where a.id= :agent_id")
-                    .setParameter("agent_id", agent_id)
-                    .executeUpdate();
+        em.createQuery("update Agent a set a.a_picture=null where a.id= :agent_id")
+                .setParameter("agent_id", agent_id)
+                .executeUpdate();
     }
 
 }

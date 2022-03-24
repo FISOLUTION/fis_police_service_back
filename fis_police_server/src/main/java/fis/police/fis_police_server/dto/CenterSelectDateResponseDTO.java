@@ -108,6 +108,4 @@ public class CenterSelectDateResponseDTO {
         private Double a_latitude;                          //'현장 요원 위도',
         private Double a_longitude;                         //'현장 요원 경도',
     }
-
-
 }

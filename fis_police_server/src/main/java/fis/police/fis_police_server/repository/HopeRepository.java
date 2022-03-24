@@ -15,4 +15,5 @@ public interface HopeRepository {
     Hope findById(Long id);
     List<Hope> listOfHope();
     void updateHopeComplete(Long id, Complete complete);
+    List<Hope> findHopesByCenter(Long id);
 }
