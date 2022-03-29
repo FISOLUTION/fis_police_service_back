@@ -1,7 +1,7 @@
 package fis.police.fis_police_server.domain.enumType;
 
 public enum UserAuthority {
-    ADMIN, USER, FIRED, OFFICIAL, AGENT
+    ADMIN, USER, FIRED, OFFICIAL, TEACHER, AGENT, CHILD
 
 //    private String userAuthority;
 //

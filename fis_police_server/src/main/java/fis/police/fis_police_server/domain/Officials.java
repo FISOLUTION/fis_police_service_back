@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import lombok.AllArgsConstructor;
@@ -49,9 +50,24 @@ public class Officials {
         작성 내용: 시설관리자 권한 -> OFFICIAL
     */
     @NotNull // enum 때문에 notblank 안됨
-    @Column
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
+
+    // 작성 글
+    @OneToMany(mappedBy = "officials")
+    private List<Board> boardList = new ArrayList<Board>();
+    // 작성 일정
+    @OneToMany(mappedBy = "officials")
+    private List<Calendar> calendarList = new ArrayList<Calendar>();
+
+    @OneToMany(mappedBy = "officials")
+    private List<Announce> announceList = new ArrayList<Announce>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Aclass aclass;
+
+    // 교사 승인 여부
+    private Accept accept;
 
 
     /*
@@ -67,7 +83,7 @@ public class Officials {
         officials.o_nickname = request.getO_nickname();
         officials.o_pwd = request.getO_pwd();
         officials.center = center;
-        officials.u_auth = UserAuthority.OFFICIAL;
+        officials.u_auth = request.getU_auth();
         return officials;
     }
 

@@ -69,15 +69,15 @@ public class initDb2 {
             em.persist(center3);
 
 
-            Officials official1 = new Officials(null,"official1", "01012341234", "mail@mail.com", "official_id1", "1234", center1, null, UserAuthority.OFFICIAL);
+            Officials official1 = new Officials(null,"official1", "01012341234", "mail@mail.com", "official_id1", "1234", center1, null, UserAuthority.OFFICIAL, null, null, null, null, null);
             em.persist(official1);
-            Officials official2 = new Officials(null,"official2", "01012341234", "mail@mail.com", "official_id2", "3564", center2, null, UserAuthority.OFFICIAL);
+            Officials official2 = new Officials(null,"official2", "01012341234", "mail@mail.com", "official_id2", "3564", center2, null, UserAuthority.OFFICIAL, null, null, null, null, null);
             em.persist(official2);
-            Officials official3 = new Officials(null,"official3", "01012341234", "mail@mail.com", "official_id3", "2345", center3, null, UserAuthority.OFFICIAL);
+            Officials official3 = new Officials(null,"official3", "01012341234", "mail@mail.com", "official_id3", "2345", center3, null, UserAuthority.OFFICIAL, null, null, null, null, null);
             em.persist(official3);
-            Officials official4 = new Officials(null,"official4", "01012341234", "mail@mail.com", "official_id4", "8567", center1, null, UserAuthority.OFFICIAL);
+            Officials official4 = new Officials(null,"official4", "01012341234", "mail@mail.com", "official_id4", "8567", center1, null, UserAuthority.OFFICIAL, null, null, null, null, null);
             em.persist(official4);
-            Officials official5 = new Officials(null,"official5", "01012341234", "mail@mail.com", "official_id5", "1243", center2, null, UserAuthority.OFFICIAL);
+            Officials official5 = new Officials(null,"official5", "01012341234", "mail@mail.com", "official_id5", "1243", center2, null, UserAuthority.OFFICIAL, null, null, null, null, null);
             em.persist(official5);
 
 

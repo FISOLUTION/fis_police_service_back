@@ -85,6 +85,9 @@ public class Center {
     @OneToMany(mappedBy = "center")
     private List<Confirm> confirmList = new ArrayList<Confirm>();
 
+    @OneToMany(mappedBy = "center")
+    private List<Aclass> aclassList = new ArrayList<Aclass>();
+
     /*
         작성 날짜: 2022/03/17 1:13 오후
         작성자: 고준영
