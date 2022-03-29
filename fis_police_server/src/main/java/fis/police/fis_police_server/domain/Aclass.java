@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aclass {
@@ -20,6 +22,7 @@ public class Aclass {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "center_id")
     private Center center;
 
     @OneToMany(mappedBy = "aclass")
