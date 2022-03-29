@@ -16,7 +16,6 @@ import javax.persistence.Lob;
 @AllArgsConstructor
 @Data
 public class BoardSaveRequest {
-    private Long official_id;
     private Long aclass_id;
 
     private String title;               //글 제목

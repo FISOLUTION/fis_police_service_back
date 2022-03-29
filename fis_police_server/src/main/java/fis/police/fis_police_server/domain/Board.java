@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.dto.BoardDeleteRequest;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 import lombok.AllArgsConstructor;
@@ -63,7 +64,7 @@ public class Board {
         aclass.getBoardList().add(this);
     }
 
-
+    //알림장 게시글 저장
     public static Board createBoard(Officials officials, Aclass aclass, BoardSaveRequest boardSaveRequest) {
         Board board = new Board();
         board.mappingOfficials(officials);
@@ -76,15 +77,19 @@ public class Board {
         return board;
     }
 
-
+    //알림장 게시글 수정
     public void updateBoard(Aclass aclass, BoardModifyRequest boardModifyRequest) {
         this.mappingAclass(aclass);
-        this.title=title;
-        this.content=content;
-        this.file=file;
-        this.modify_date=modify_date;
-        this.modify_time=modify_time;
-        this.delete_date=delete_date;
-        this.delete_time=delete_time;
+        this.title=boardModifyRequest.getTitle();
+        this.content=boardModifyRequest.getContent();
+        this.file=boardModifyRequest.getFile();
+        this.modify_date=boardModifyRequest.getModify_date();
+        this.modify_time=boardModifyRequest.getModify_time();
+    }
+
+    //알림장 게시글 삭제
+    public void deleteBoard(BoardDeleteRequest boardDeleteRequest){
+        this.delete_date=boardDeleteRequest.getDelete_date();
+        this.delete_time=boardDeleteRequest.getDelete_time();
     }
 }

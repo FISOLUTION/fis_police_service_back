@@ -39,4 +39,11 @@ public class Aclass {
 
     @OneToMany(mappedBy = "aclass")
     private List<Announce> announceList = new ArrayList<Announce>();
+
+
+    //init_Db test
+    public Aclass(String name, Center center) {
+        this.name = name;
+        this.center = center;
+    }
 }

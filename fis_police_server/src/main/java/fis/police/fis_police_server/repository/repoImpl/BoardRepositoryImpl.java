@@ -31,6 +31,7 @@ public class BoardRepositoryImpl implements BoardRepository {
 
     @Override
     public List<Board> findAll() {
-        return null;
+        return em.createQuery("select b from Board b", Board.class)
+                .getResultList();
     }
 }

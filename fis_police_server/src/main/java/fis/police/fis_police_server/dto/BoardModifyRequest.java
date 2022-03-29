@@ -18,7 +18,4 @@ public class BoardModifyRequest {
 
     private String modify_date;         //수정 날짜
     private String modify_time;         //수정 시간
-
-    private String delete_date;         //삭제 날짜
-    private String delete_time;         //삭제 시간
 }

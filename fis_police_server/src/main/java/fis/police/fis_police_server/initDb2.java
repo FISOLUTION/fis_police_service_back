@@ -145,6 +145,8 @@ public class initDb2 {
             em.persist(call11);
 
 
+            Aclass aclass = new Aclass("햇님반", center2);
+            em.persist(aclass);
         }
     }
 }
