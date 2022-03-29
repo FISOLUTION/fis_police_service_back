@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Board;
+import fis.police.fis_police_server.dto.BoardSaveRequest;
 
 import java.util.List;
 
@@ -21,5 +22,4 @@ public interface BoardService {
 
     //알림장 전체 조회
     List<Board> getBoard();
-
 }
