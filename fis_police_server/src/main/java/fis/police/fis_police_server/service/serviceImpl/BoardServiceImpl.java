@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.dto.BoardDeleteRequest;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 import fis.police.fis_police_server.repository.AclassRepository;
@@ -32,10 +33,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Board saveBoard(BoardSaveRequest boardSaveRequest) {
-        Officials findOfficial = officialsRepository.findById(boardSaveRequest.getOfficial_id());
+    public Board saveBoard(Officials officials, BoardSaveRequest boardSaveRequest) {
         Aclass findAclass = aclassRepository.findById(boardSaveRequest.getAclass_id());
-        Board board = Board.createBoard(findOfficial, findAclass, boardSaveRequest);
+        Board board = Board.createBoard(officials, findAclass, boardSaveRequest);
         boardRepository.save(board);
         return board;
     }
@@ -47,7 +47,14 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(boardModifyRequest.getBoard_id());
         Aclass findAclass = aclassRepository.findById(boardModifyRequest.getAclass_id());
         board.updateBoard(findAclass, boardModifyRequest);
-        boardRepository.save(board);
+        return board;
+    }
+
+    @Override
+    @Transactional
+    public Board deleteBoard(BoardDeleteRequest boardDeleteRequest) {
+        Board board = boardRepository.findById(boardDeleteRequest.getBoard_id());
+        board.deleteBoard(boardDeleteRequest); //디비에는 남아있고 삭제날짜와 시간만 업데이트
         return board;
     }
 
