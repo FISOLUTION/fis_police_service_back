@@ -27,8 +27,10 @@ public class Calendar {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "official_id")
     private Officials officials;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aclass_id")
     private Aclass aclass;
 }
