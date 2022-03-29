@@ -64,6 +64,7 @@ public class Officials {
     private List<Announce> announceList = new ArrayList<Announce>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aclass_id")
     private Aclass aclass;
 
     // 교사 승인 여부
