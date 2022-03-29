@@ -1,5 +1,7 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.dto.BoardModifyRequest;
+import fis.police.fis_police_server.dto.BoardSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class Board {
 
     @Lob
     private String content;
+
     private String file;
 
     private String registration_date;
@@ -48,6 +51,7 @@ public class Board {
     private List<Child> childList = new ArrayList<Child>();
 
 
+
     //연관관계 매소드
     public void mappingOfficials(Officials officials) {
         this.officials = officials;
@@ -60,4 +64,27 @@ public class Board {
     }
 
 
+    public static Board createBoard(Officials officials, Aclass aclass, BoardSaveRequest boardSaveRequest) {
+        Board board = new Board();
+        board.mappingOfficials(officials);
+        board.mappingAclass(aclass);
+        board.title = boardSaveRequest.getTitle();
+        board.content = boardSaveRequest.getContent();
+        board.file = boardSaveRequest.getFile();
+        board.registration_date = boardSaveRequest.getRegistration_date();
+        board.registration_time = boardSaveRequest.getRegistration_time();
+        return board;
+    }
+
+
+    public void updateBoard(Aclass aclass, BoardModifyRequest boardModifyRequest) {
+        this.mappingAclass(aclass);
+        this.title=title;
+        this.content=content;
+        this.file=file;
+        this.modify_date=modify_date;
+        this.modify_time=modify_time;
+        this.delete_date=delete_date;
+        this.delete_time=delete_time;
+    }
 }

@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Board;
+import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface BoardService {
     Board saveBoard(BoardSaveRequest boardSaveRequest);
 
     //알림장 게시물 수정
-    Board modifyBoard(BoardSaveRequest boardSaveRequest);
+    Board modifyBoard(BoardModifyRequest boardModifyRequest);
 
     //알림장 하나 조회
     Board findById(Long id);

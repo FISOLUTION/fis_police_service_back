@@ -1,8 +1,13 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Board;
+import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
+import fis.police.fis_police_server.repository.AclassRepository;
 import fis.police.fis_police_server.repository.BoardRepository;
+import fis.police.fis_police_server.repository.OfficialsRepository;
 import fis.police.fis_police_server.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,28 +26,38 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final OfficialsRepository officialsRepository;
+    private final AclassRepository aclassRepository;
 
 
     @Override
     @Transactional
     public Board saveBoard(BoardSaveRequest boardSaveRequest) {
-        return null;
+        Officials findOfficial = officialsRepository.findById(boardSaveRequest.getOfficial_id());
+        Aclass findAclass = aclassRepository.findById(boardSaveRequest.getAclass_id());
+        Board board = Board.createBoard(findOfficial, findAclass, boardSaveRequest);
+        boardRepository.save(board);
+        return board;
     }
 
     @Override
     @Transactional
     //수정 날짜랑 시간 있으면 수정된겨
-    public Board modifyBoard(BoardSaveRequest boardSaveRequest) {
-        return null;
+    public Board modifyBoard(BoardModifyRequest boardModifyRequest) {
+        Board board = boardRepository.findById(boardModifyRequest.getBoard_id());
+        Aclass findAclass = aclassRepository.findById(boardModifyRequest.getAclass_id());
+        board.updateBoard(findAclass, boardModifyRequest);
+        boardRepository.save(board);
+        return board;
     }
 
     @Override
     public Board findById(Long id) {
-        return null;
+        return boardRepository.findById(id);
     }
 
     @Override
     public List<Board> getBoard() {
-        return null;
+        return boardRepository.findAll();
     }
 }
