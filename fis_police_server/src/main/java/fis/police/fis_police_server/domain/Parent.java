@@ -10,21 +10,16 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Announce {
+public class Parent {
 
     @Id
     @GeneratedValue
-    @Column(name = "announce_id")
-    private Long id;
+    @Column(name = "parent_id")
+    public Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "official_id")
-    private Officials officials;
+    public String p_nickname;
+    public String p_pwd;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aclass_id")
-    private Aclass aclass;
-
-    @OneToMany(mappedBy = "announce")
+    @OneToMany(mappedBy = "parent")
     private List<Child> childList = new ArrayList<Child>();
 }

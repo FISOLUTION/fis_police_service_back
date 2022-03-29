@@ -16,26 +16,28 @@ public class Child {
     @Column(name = "child_id")
     private Long id;
 
-    // 로그인 정보
-    private String c_nickname;
-    private String c_pwd;
-
     // 아이 정보
     private String name;
     private String birthday;
-    private String parent;
 
     // 승인 여부
     private Accept accept;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aclass_id")
     private Aclass aclass;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "announce_id")
     private Announce announce;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
 
     @Column(columnDefinition="varchar(32) default 'CHILD'")
     @Enumerated(EnumType.STRING)
