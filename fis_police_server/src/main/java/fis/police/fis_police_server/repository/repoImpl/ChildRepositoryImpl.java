@@ -2,7 +2,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Child;
 import fis.police.fis_police_server.domain.enumType.Accept;
-import fis.police.fis_police_server.repository.ChildRepository;
+import fis.police.fis_police_server.repository.interfaces.ChildRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

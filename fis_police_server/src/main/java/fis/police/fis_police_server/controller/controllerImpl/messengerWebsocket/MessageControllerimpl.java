@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocket;
 
-import fis.police.fis_police_server.service.MessengerService;
+import fis.police.fis_police_server.service.interfaces.MessengerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

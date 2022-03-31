@@ -1,19 +1,15 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.ParentController;
-import fis.police.fis_police_server.domain.Parent;
-import fis.police.fis_police_server.dto.AddChildRequest;
+import fis.police.fis_police_server.controller.interfaces.ParentController;
 import fis.police.fis_police_server.dto.ParentSaveRequest;
-import fis.police.fis_police_server.service.ParentService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.ParentService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor

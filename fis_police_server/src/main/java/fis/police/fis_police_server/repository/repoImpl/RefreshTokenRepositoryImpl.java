@@ -1,7 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.RefreshToken;
-import fis.police.fis_police_server.repository.RefreshTokenRepository;
+import fis.police.fis_police_server.repository.interfaces.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

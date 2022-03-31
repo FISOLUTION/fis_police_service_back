@@ -1,11 +1,10 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.AppLoginController;
+import fis.police.fis_police_server.controller.interfaces.AppLoginController;
 import fis.police.fis_police_server.dto.AppLoginRequest;
-import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
-import fis.police.fis_police_server.service.AppLoginService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.AppLoginService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,24 +1,21 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 
-import fis.police.fis_police_server.controller.BoardController;
+import fis.police.fis_police_server.controller.interfaces.BoardController;
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.BoardDeleteRequest;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
-import fis.police.fis_police_server.dto.BoardResponse;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
-import fis.police.fis_police_server.repository.OfficialsRepository;
-import fis.police.fis_police_server.service.BoardService;
-import fis.police.fis_police_server.service.OfficialService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.BoardService;
+import fis.police.fis_police_server.service.interfaces.OfficialService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -122,6 +119,11 @@ public class BoardControllerImpl implements BoardController {
         } catch (NullPointerException e) {
             throw new NullPointerException("NoBoard");
         }
+    }
+
+    @Override
+    public List<Board> getBoard() throws IOException {
+        return null;
     }
 
     /**

@@ -2,10 +2,8 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.repository.CallRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @Transactional

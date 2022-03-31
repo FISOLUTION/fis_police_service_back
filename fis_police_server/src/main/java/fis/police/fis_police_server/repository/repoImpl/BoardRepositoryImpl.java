@@ -1,7 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Board;
-import fis.police.fis_police_server.repository.BoardRepository;
+import fis.police.fis_police_server.repository.interfaces.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

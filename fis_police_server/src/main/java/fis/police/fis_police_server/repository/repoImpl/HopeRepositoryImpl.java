@@ -2,7 +2,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Hope;
 import fis.police.fis_police_server.domain.enumType.Complete;
-import fis.police.fis_police_server.repository.HopeRepository;
+import fis.police.fis_police_server.repository.interfaces.HopeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

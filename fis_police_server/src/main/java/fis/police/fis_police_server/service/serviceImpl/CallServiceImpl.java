@@ -7,7 +7,7 @@ import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImpl;
-import fis.police.fis_police_server.service.CallService;
+import fis.police.fis_police_server.service.interfaces.CallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

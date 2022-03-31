@@ -5,7 +5,7 @@ import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.ScheduleRepository;
+import fis.police.fis_police_server.repository.interfaces.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
