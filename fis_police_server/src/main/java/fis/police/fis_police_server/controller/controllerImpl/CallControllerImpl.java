@@ -1,12 +1,12 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.CallController;
+import fis.police.fis_police_server.controller.interfaces.CallController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.UserService;
 import fis.police.fis_police_server.service.serviceImpl.CallServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,13 @@
 package fis.police.fis_police_server.dto;
 
+
 import com.querydsl.core.annotations.QueryProjection;
 import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Child;
 import fis.police.fis_police_server.domain.Officials;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -17,8 +19,8 @@ import java.util.List;
  *    작성자 : 원보라
  *    작성내용 : board 알림장 게시글 list
  */
-@RequiredArgsConstructor
 @Data
+@NoArgsConstructor
 public class BoardListDTO {
     //게시글 정보
     private Long board_id;
@@ -67,5 +69,10 @@ public class BoardListDTO {
         this.aclass_id = aclass_id;
         this.name = name;
         this.child_id = child_id;
+    }
+
+    public BoardListDTO(Long board_id, String title) {
+        this.board_id = board_id;
+        this.title = title;
     }
 }

@@ -4,18 +4,15 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.AcceptOfficialDTO;
 import fis.police.fis_police_server.dto.OfficialDTO;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import fis.police.fis_police_server.dto.Result;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.OfficialsRepository;
-import fis.police.fis_police_server.service.OfficialService;
+import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
+import fis.police.fis_police_server.service.interfaces.OfficialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +67,7 @@ public class OfficialServiceImpl implements OfficialService {
     public Result findOfficialsWaitingAccept(Long center_id) {
         List<Officials> officialsWaitingAccept = officialsRepository.findOfficialsWaitingAccept(center_id, Accept.TBD);
         List<OfficialDTO> collect = officialsWaitingAccept.stream()
-                .map(official -> new OfficialDTO(official.getId(), official.getO_name(), official.getO_ph(), official.getO_email()))
+                .map(official -> new OfficialDTO(official.getId(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getAccept()))
                 .collect(Collectors.toList());
         return new Result(collect);
 

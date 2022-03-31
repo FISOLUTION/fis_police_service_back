@@ -1,31 +1,7 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.domain.enumType.HasCar;
-import fis.police.fis_police_server.domain.enumType.Participation;
-import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.ScheduleByDateResponse;
-import fis.police.fis_police_server.dto.ScheduleModifyRequest;
-import fis.police.fis_police_server.dto.ScheduleSaveRequest;
-import fis.police.fis_police_server.repository.AgentRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.ScheduleRepository;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.ScheduleService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

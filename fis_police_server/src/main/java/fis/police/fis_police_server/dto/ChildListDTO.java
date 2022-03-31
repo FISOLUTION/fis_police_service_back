@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChildListDTO {
+    private Long child_id;
     private String child_name;
     private String child_birth;
     private String center_name;

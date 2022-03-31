@@ -32,5 +32,6 @@ public class LoginResponse {
     private String token;
     private String refreshToken;
 
-    private Result children;
+    private List<ChildListDTO> children;
+    private CenterDataResponse center;
 }

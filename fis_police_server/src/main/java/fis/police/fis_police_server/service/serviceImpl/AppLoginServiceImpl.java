@@ -3,11 +3,10 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.AgentRepository;
-import fis.police.fis_police_server.repository.OfficialsRepository;
-import fis.police.fis_police_server.repository.ParentRepository;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.AppLoginService;
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
+import fis.police.fis_police_server.repository.interfaces.ParentRepository;
+import fis.police.fis_police_server.service.interfaces.AppLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -87,7 +86,7 @@ public class AppLoginServiceImpl implements AppLoginService {
                 loginFail(loginResponse, "idFail");
                 return loginResponse;
             }
-        } else if (role == UserAuthority.CHILD || role == UserAuthority.PARENT) {
+        } else if (role == UserAuthority.PARENT) {
             log.info("[로그인 요청 역할 {}]", role);
             List<Parent> parent = parentRepository.findByNickname(nickname);
             if (!parent.isEmpty()) {
@@ -118,6 +117,12 @@ public class AppLoginServiceImpl implements AppLoginService {
             loginResponse.setSc("success");
             loginResponse.setU_name(officials.get(0).getO_name());
             loginResponse.setU_auth(officials.get(0).getU_auth());
+            Center center = officials.get(0).getCenter();
+            List<Aclass> aclassList = center.getAclassList();
+            List<ClassDataDTO> classes = aclassList.stream()
+                    .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))
+                    .collect(Collectors.toList());
+            loginResponse.setCenter(new CenterDataResponse(center.getId(), center.getC_name(), center.getC_address(), center.getC_zipcode(), center.getC_ph(), classes, null));
         }
         return loginResponse;
     }
@@ -127,10 +132,10 @@ public class AppLoginServiceImpl implements AppLoginService {
         } else {
             loginResponse.setSc("success");
             List<Child> childList = parents.get(0).getChildList();
-            List<ChildListDTO> collect = childList.stream()
-                            .map(child -> new ChildListDTO(child.getName(), child.getBirthday(), child.getAclass().getCenter().getC_name(), child.getAclass().getName(), child.getAccept()))
+            List<ChildListDTO> children = childList.stream()
+                            .map(child -> new ChildListDTO(child.getId(), child.getName(), child.getBirthday(), child.getAclass().getCenter().getC_name(), child.getAclass().getName(), child.getAccept()))
                                     .collect(Collectors.toList());
-            loginResponse.setChildren(new Result(collect));
+            loginResponse.setChildren(children);
             loginResponse.setU_name(parents.get(0).getName());
             loginResponse.setU_auth(parents.get(0).getU_auth());
         }

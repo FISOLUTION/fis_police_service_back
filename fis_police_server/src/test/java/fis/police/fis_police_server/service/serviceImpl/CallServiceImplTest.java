@@ -6,13 +6,7 @@ import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
-import fis.police.fis_police_server.dto.LoginRequest;
-import fis.police.fis_police_server.dto.UserSaveRequest;
-import fis.police.fis_police_server.repository.CallRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.service.LoginService;
-import fis.police.fis_police_server.service.UserService;
-import org.assertj.core.api.Assertions;
+import fis.police.fis_police_server.repository.interfaces.CallRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDate;
-
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest

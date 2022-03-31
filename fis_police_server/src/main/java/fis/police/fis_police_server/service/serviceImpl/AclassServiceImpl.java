@@ -4,8 +4,8 @@ import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.ClassSaveRequest;
-import fis.police.fis_police_server.repository.AclassRepository;
-import fis.police.fis_police_server.service.AclassService;
+import fis.police.fis_police_server.repository.interfaces.AclassRepository;
+import fis.police.fis_police_server.service.interfaces.AclassService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +27,17 @@ public class AclassServiceImpl implements AclassService {
     @Override
     public Aclass findById(Long id) {
         return aclassRepository.findById(id);
+    }
+
+    public void getInfo(Center center, Aclass aclass, Officials officials) throws IllegalAccessException {
+        Aclass byId = this.findById(officials.getAclass().getId());
+        validateClass(aclass, byId);
+
+    }
+
+    private void validateClass(Aclass aclass, Aclass byId) throws IllegalAccessException {
+        if (!aclass.equals(byId)) {
+            throw new IllegalAccessException("접근이 허용되지 않은 교사입니다.");
+        }
     }
 }

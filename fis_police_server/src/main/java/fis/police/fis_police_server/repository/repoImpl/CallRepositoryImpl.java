@@ -3,13 +3,12 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.QCall;
-import fis.police.fis_police_server.domain.QUser;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.dto.CallAvgDTO;
 import fis.police.fis_police_server.dto.CallTodayDTO;
 import fis.police.fis_police_server.dto.QCallAvgDTO;
 import fis.police.fis_police_server.dto.QCallTodayDTO;
-import fis.police.fis_police_server.repository.CallRepository;
+import fis.police.fis_police_server.repository.interfaces.CallRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

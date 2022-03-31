@@ -1,27 +1,17 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.LoginController;
-import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.controller.interfaces.LoginController;
 import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
-import fis.police.fis_police_server.service.LoginService;
-import fis.police.fis_police_server.service.TokenService;
-import fis.police.fis_police_server.service.UserService;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import fis.police.fis_police_server.service.interfaces.LoginService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.Duration;
-import java.util.Date;
 
 
 @RestController

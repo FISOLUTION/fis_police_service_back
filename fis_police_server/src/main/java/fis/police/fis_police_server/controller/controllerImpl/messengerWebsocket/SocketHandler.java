@@ -3,8 +3,8 @@ package fis.police.fis_police_server.controller.controllerImpl.messengerWebsocke
 import fis.police.fis_police_server.domain.Messenger;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.MessengerService;
+import fis.police.fis_police_server.repository.interfaces.UserRepository;
+import fis.police.fis_police_server.service.interfaces.MessengerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
