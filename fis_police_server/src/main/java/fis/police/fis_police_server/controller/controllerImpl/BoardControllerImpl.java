@@ -124,7 +124,7 @@ public class BoardControllerImpl implements BoardController {
 
     /**
      * 게시글 조회
-     *
+     * 삭제된 게시글은 안보임
      * @return List<BoardListDTO>
      */
     @Override

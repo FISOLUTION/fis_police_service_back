@@ -147,6 +147,12 @@ public class initDb2 {
 
             Aclass aclass = new Aclass("햇님반", center2);
             em.persist(aclass);
+
+            Child child1 = new Child("원보라","1998-03-29");
+            em.persist(child1);
+
+            Child child2 = new Child("칸쵸","2013-11-30");
+            em.persist(child2);
         }
     }
 }

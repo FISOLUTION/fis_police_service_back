@@ -19,8 +19,8 @@ import java.util.List;
  *    작성자 : 원보라
  *    작성내용 : board 알림장 게시글 list
  */
-@Data
 @NoArgsConstructor
+@Data
 public class BoardListDTO {
     //게시글 정보
     private Long board_id;
@@ -48,11 +48,11 @@ public class BoardListDTO {
     private String name;
 
     //게시글 읽은 아이 정보
-    private Long child_id;
+    private List<Long> childList;
 
 
     @QueryProjection
-    public BoardListDTO(Long board_id, String title, String content, String file, String registration_date, String registration_time, String modify_date, String modify_time, String delete_date, String delete_time, Long official_id, String o_name, String o_nickname, Long aclass_id, String name, Long child_id) {
+    public BoardListDTO(Long board_id, String title, String content, String file, String registration_date, String registration_time, String modify_date, String modify_time, String delete_date, String delete_time, Long official_id, String o_name, String o_nickname, Long aclass_id, String name) {
         this.board_id = board_id;
         this.title = title;
         this.content = content;
@@ -68,7 +68,6 @@ public class BoardListDTO {
         this.o_nickname = o_nickname;
         this.aclass_id = aclass_id;
         this.name = name;
-        this.child_id = child_id;
     }
 
     public BoardListDTO(Long board_id, String title) {
