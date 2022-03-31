@@ -1,8 +1,12 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import com.mysema.commons.lang.Pair;
+import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.dto.CenterDataResponse;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
+import fis.police.fis_police_server.dto.ClassDataDTO;
+import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.MapService;
@@ -15,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service //이걸안써서 오류 내\? 후 조심합시디
 @Transactional
@@ -74,5 +79,21 @@ public class CenterServiceImpl implements CenterService {
        } catch (NoResultException e) {
            throw new NoResultException("시설 id 존재하지 않음.");
        }
+    }
+
+    @Override
+    public CenterDataResponse getCenterData(Center center) {
+        CenterDataResponse centerDataResponse = new CenterDataResponse();
+        centerDataResponse.setCenter_id(center.getId());
+        centerDataResponse.setC_name(center.getC_name());
+        centerDataResponse.setC_address(center.getC_address());
+        centerDataResponse.setC_zipcode(center.getC_zipcode());
+        centerDataResponse.setC_ph(center.getC_ph());
+        List<Aclass> aclassList = center.getAclassList();
+        List<ClassDataDTO> collect = aclassList.stream()
+                .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))
+                .collect(Collectors.toList());
+        centerDataResponse.setClasses(collect);
+        return centerDataResponse;
     }
 }

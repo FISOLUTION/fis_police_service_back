@@ -1,12 +1,14 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.dto.CenterDataResponse;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import org.json.simple.parser.ParseException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface CenterService {
@@ -26,4 +28,7 @@ public interface CenterService {
     List<Center> getCenter();
 
     Center findById(Long id);
+
+
+    CenterDataResponse getCenterData(Center center);
 }

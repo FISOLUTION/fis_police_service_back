@@ -1,5 +1,7 @@
 package fis.police.fis_police_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import fis.police.fis_police_server.dto.ClassSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,13 @@ public class Aclass {
     @OneToMany(mappedBy = "aclass")
     private List<Announce> announceList = new ArrayList<Announce>();
 
+    public static Aclass createClass(ClassSaveRequest request, Center center, Officials officials) {
+        Aclass aclass = new Aclass();
+        aclass.name = request.getClass_name();
+        aclass.center = center;
+        aclass.officialsList.add(officials);
+        return aclass;
+    }
 
     //init_Db test
     public Aclass(String name, Center center) {

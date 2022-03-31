@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
@@ -87,6 +88,9 @@ public class Center {
 
     @OneToMany(mappedBy = "center")
     private List<Aclass> aclassList = new ArrayList<Aclass>();
+
+    @OneToMany(mappedBy = "center")
+    private List<Officials> officialsList = new ArrayList<Officials>();
 
     /*
         작성 날짜: 2022/03/17 1:13 오후

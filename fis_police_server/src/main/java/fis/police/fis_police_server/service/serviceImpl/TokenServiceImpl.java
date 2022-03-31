@@ -2,10 +2,12 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.Parent;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.LoginResponse;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.OfficialsRepository;
+import fis.police.fis_police_server.repository.ParentRepository;
 import fis.police.fis_police_server.service.TokenService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class TokenServiceImpl implements TokenService {
 
     private final AgentRepository agentRepository;
     private final OfficialsRepository officialsRepository;
+    private final ParentRepository parentRepository;
 
     @Override
     public Agent getAgentFromRequest(String authorization) {
@@ -39,6 +42,13 @@ public class TokenServiceImpl implements TokenService {
         Claims token = parseJwtToken(authorization);
         Long official_id = Long.valueOf(token.get("id").toString());
         return officialsRepository.findById(official_id);
+    }
+
+    @Override
+    public Parent getParentFromRequest(String authorization) {
+        Claims token = parseJwtToken(authorization);
+        Long parent_id = Long.valueOf(token.get("id").toString());
+        return parentRepository.findById(parent_id);
     }
 
     @Override

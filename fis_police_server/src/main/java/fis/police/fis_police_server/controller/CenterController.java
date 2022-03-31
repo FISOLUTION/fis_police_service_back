@@ -35,4 +35,5 @@ public interface CenterController {
 
     // 시설 조회
     List<Object> getCenter(Long center, HttpServletRequest request);
+
 }

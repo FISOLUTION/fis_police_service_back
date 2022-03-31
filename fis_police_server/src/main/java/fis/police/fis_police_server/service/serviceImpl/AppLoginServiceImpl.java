@@ -1,14 +1,11 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
-import fis.police.fis_police_server.dto.AppLoginRequest;
-import fis.police.fis_police_server.dto.LoginRequest;
-import fis.police.fis_police_server.dto.LoginResponse;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.OfficialsRepository;
+import fis.police.fis_police_server.repository.ParentRepository;
 import fis.police.fis_police_server.repository.UserRepository;
 import fis.police.fis_police_server.service.AppLoginService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 /*
     작성 날짜: 2022/03/23 2:38 오후
     작성자: 고준영
@@ -30,6 +29,7 @@ public class AppLoginServiceImpl implements AppLoginService {
 
     private final AgentRepository agentRepository;
     private final OfficialsRepository officialsRepository;
+    private final ParentRepository parentRepository;
 
     @Override
     public Long getPrimaryKey(AppLoginRequest request) {
@@ -40,13 +40,21 @@ public class AppLoginServiceImpl implements AppLoginService {
                     return agent.get(0).getId();
                 }
             }
-        } else if (request.getRole() == UserAuthority.OFFICIAL) {
+        } else if (request.getRole() == UserAuthority.OFFICIAL || request.getRole() == UserAuthority.TEACHER) {
             List<Officials> officials = officialsRepository.findByNickname(request.getU_nickname());
             if (officials.size() != 0) {
                 if (officials.get(0).getO_pwd().equals(request.getU_pwd())) {
                     return officials.get(0).getId();
                 }
             }
+        } else if (request.getRole() == UserAuthority.CHILD || request.getRole() == UserAuthority.PARENT){
+            List<Parent> parent = parentRepository.findByNickname(request.getU_nickname());
+            if (!parent.isEmpty()) {
+                if (parent.get(0).getP_pwd().equals(request.getU_pwd())) {
+                    return parent.get(0).getId();
+                }
+            }
+
         } else {
             throw new IllegalArgumentException("role 정보 오류");
         }
@@ -70,11 +78,20 @@ public class AppLoginServiceImpl implements AppLoginService {
                 loginFail(loginResponse, "idFail");
                 return loginResponse;
             }
-        } else if (role == UserAuthority.OFFICIAL) {
+        } else if (role == UserAuthority.OFFICIAL || role == UserAuthority.TEACHER) {
             log.info("[로그인 요청 역할 {}]", role);
             List<Officials> officials = officialsRepository.findByNickname(nickname);
             if (!officials.isEmpty()) {
                 return authenticateOfficial(officials, loginResponse, pwd);
+            } else {
+                loginFail(loginResponse, "idFail");
+                return loginResponse;
+            }
+        } else if (role == UserAuthority.CHILD || role == UserAuthority.PARENT) {
+            log.info("[로그인 요청 역할 {}]", role);
+            List<Parent> parent = parentRepository.findByNickname(nickname);
+            if (!parent.isEmpty()) {
+                return authenticateParent(parent, loginResponse, pwd);
             } else {
                 loginFail(loginResponse, "idFail");
                 return loginResponse;
@@ -101,6 +118,21 @@ public class AppLoginServiceImpl implements AppLoginService {
             loginResponse.setSc("success");
             loginResponse.setU_name(officials.get(0).getO_name());
             loginResponse.setU_auth(officials.get(0).getU_auth());
+        }
+        return loginResponse;
+    }
+    private LoginResponse authenticateParent(List<Parent> parents, LoginResponse loginResponse, String pwd) {
+        if (!parents.get(0).getP_pwd().equals(pwd)) {
+            loginFail(loginResponse, "pwdFail");
+        } else {
+            loginResponse.setSc("success");
+            List<Child> childList = parents.get(0).getChildList();
+            List<ChildListDTO> collect = childList.stream()
+                            .map(child -> new ChildListDTO(child.getName(), child.getBirthday(), child.getAclass().getCenter().getC_name(), child.getAclass().getName(), child.getAccept()))
+                                    .collect(Collectors.toList());
+            loginResponse.setChildren(new Result(collect));
+            loginResponse.setU_name(parents.get(0).getName());
+            loginResponse.setU_auth(parents.get(0).getU_auth());
         }
         return loginResponse;
     }

@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.UserSaveRequest;
 import lombok.Getter;
