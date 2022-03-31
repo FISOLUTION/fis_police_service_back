@@ -49,7 +49,7 @@ public class Board {
     private Aclass aclass;
 
     @OneToMany(mappedBy = "board")
-    private List<Child> childList = new ArrayList<Child>();
+    private List<Check> checkList = new ArrayList<Check>();
 
 
 
