@@ -1,16 +1,13 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.ScheduleController;
-import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.controller.interfaces.ScheduleController;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.service.ScheduleService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.ScheduleService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

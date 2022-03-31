@@ -1,16 +1,15 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Aclass;
-import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Child;
 import fis.police.fis_police_server.domain.Parent;
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.dto.ChildModifyRequest;
 import fis.police.fis_police_server.dto.ChildSaveRequest;
-import fis.police.fis_police_server.repository.AclassRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.ChildRepository;
-import fis.police.fis_police_server.service.ChildService;
+import fis.police.fis_police_server.repository.interfaces.AclassRepository;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.repository.interfaces.ChildRepository;
+import fis.police.fis_police_server.service.interfaces.ChildService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+
 import com.querydsl.core.annotations.QueryProjection;
 import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Child;
@@ -67,5 +68,10 @@ public class BoardListDTO {
         this.o_nickname = o_nickname;
         this.aclass_id = aclass_id;
         this.name = name;
+    }
+
+    public BoardListDTO(Long board_id, String title) {
+        this.board_id = board_id;
+        this.title = title;
     }
 }

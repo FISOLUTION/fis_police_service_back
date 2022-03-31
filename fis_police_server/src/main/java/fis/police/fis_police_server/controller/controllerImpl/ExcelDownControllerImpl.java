@@ -1,8 +1,8 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.ExcelDownController;
+import fis.police.fis_police_server.controller.interfaces.ExcelDownController;
 import fis.police.fis_police_server.dto.ScheduleByDateResponse;
-import fis.police.fis_police_server.service.ScheduleService;
+import fis.police.fis_police_server.service.interfaces.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;

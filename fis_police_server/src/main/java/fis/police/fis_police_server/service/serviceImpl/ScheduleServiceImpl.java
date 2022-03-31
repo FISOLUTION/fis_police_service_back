@@ -1,42 +1,28 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import ch.qos.logback.core.spi.PreSerializationTransformer;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.Complete;
-import fis.police.fis_police_server.domain.enumType.HasCar;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.AgentRepository;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.ScheduleRepository;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.ScheduleService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.repository.interfaces.ScheduleRepository;
+import fis.police.fis_police_server.repository.interfaces.UserRepository;
+import fis.police.fis_police_server.service.interfaces.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.print.attribute.standard.PresentationDirection;
-import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
     작성날짜: 2022/01/12 4:42 PM

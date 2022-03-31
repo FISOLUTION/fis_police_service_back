@@ -1,6 +1,5 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
-import com.sun.net.httpserver.Authenticator;
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
@@ -8,14 +7,13 @@ import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.CallRepository;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.repository.interfaces.CallRepository;
+import fis.police.fis_police_server.repository.interfaces.UserRepository;
+import fis.police.fis_police_server.service.interfaces.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

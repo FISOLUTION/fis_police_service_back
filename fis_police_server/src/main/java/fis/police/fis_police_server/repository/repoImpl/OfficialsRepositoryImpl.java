@@ -2,9 +2,8 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.domain.enumType.Accept;
-import fis.police.fis_police_server.repository.OfficialsRepository;
+import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

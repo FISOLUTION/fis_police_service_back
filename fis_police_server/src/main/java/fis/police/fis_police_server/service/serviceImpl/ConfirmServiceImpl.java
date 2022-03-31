@@ -3,13 +3,12 @@ package fis.police.fis_police_server.service.serviceImpl;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.*;
-import fis.police.fis_police_server.service.AgentService;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.ConfirmService;
-import fis.police.fis_police_server.service.OfficialService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import fis.police.fis_police_server.repository.interfaces.ConfirmRepository;
+import fis.police.fis_police_server.repository.interfaces.ScheduleRepository;
+import fis.police.fis_police_server.service.interfaces.AgentService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.ConfirmService;
+import fis.police.fis_police_server.service.interfaces.OfficialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,11 +30,11 @@ public class ConfirmServiceImpl implements ConfirmService {
 
     // 확인서 저장
     @Override
-    public WellSaveResponse saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
+    public WellDoneResponse saveConfirm(ConfirmFromAgentRequest request, Schedule schedule) {
         Confirm confirm = Confirm.createConfirm(request, schedule);
         confirmRepository.save(confirm);
         scheduleRepository.updateScheduleWaiting(schedule.getId(), Complete.waiting);
-        return new WellSaveResponse("200", "created");
+        return new WellDoneResponse("200", "created");
     }
 
     // 확인서 하나로 묶기

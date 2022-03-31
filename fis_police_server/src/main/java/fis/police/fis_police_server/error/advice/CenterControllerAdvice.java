@@ -1,11 +1,9 @@
 package fis.police.fis_police_server.error.advice;
 
 import fis.police.fis_police_server.controller.controllerImpl.CenterControllerImpl;
-import fis.police.fis_police_server.controller.controllerImpl.ConfirmControllerImpl;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
-import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

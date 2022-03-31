@@ -2,7 +2,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Messenger;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.repository.MessengerRepository;
+import fis.police.fis_police_server.repository.interfaces.MessengerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

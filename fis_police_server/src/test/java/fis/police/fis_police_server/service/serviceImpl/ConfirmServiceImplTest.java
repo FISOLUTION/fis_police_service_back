@@ -1,19 +1,16 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Confirm;
 import fis.police.fis_police_server.domain.enumType.Participation;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.repository.ConfirmRepository;
-import fis.police.fis_police_server.service.ConfirmService;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.repository.interfaces.ConfirmRepository;
+import fis.police.fis_police_server.service.interfaces.ConfirmService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest

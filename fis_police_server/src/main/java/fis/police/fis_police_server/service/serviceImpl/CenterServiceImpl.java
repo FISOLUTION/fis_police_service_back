@@ -6,11 +6,10 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.CenterDataResponse;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.dto.ClassDataDTO;
-import fis.police.fis_police_server.dto.Result;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.MapService;
-import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.MapService;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
@@ -83,17 +82,11 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public CenterDataResponse getCenterData(Center center) {
-        CenterDataResponse centerDataResponse = new CenterDataResponse();
-        centerDataResponse.setCenter_id(center.getId());
-        centerDataResponse.setC_name(center.getC_name());
-        centerDataResponse.setC_address(center.getC_address());
-        centerDataResponse.setC_zipcode(center.getC_zipcode());
-        centerDataResponse.setC_ph(center.getC_ph());
         List<Aclass> aclassList = center.getAclassList();
-        List<ClassDataDTO> collect = aclassList.stream()
+        List<ClassDataDTO> classes = aclassList.stream()
                 .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))
                 .collect(Collectors.toList());
-        centerDataResponse.setClasses(collect);
-        return centerDataResponse;
+
+        return new CenterDataResponse(center.getId(), center.getC_name(), center.getC_address(), center.getC_zipcode(), center.getC_ph(), classes, null);
     }
 }

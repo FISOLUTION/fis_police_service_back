@@ -2,9 +2,9 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.CallRepository;
-import fis.police.fis_police_server.repository.UserRepository;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.repository.interfaces.CallRepository;
+import fis.police.fis_police_server.repository.interfaces.UserRepository;
+import fis.police.fis_police_server.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

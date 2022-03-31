@@ -2,12 +2,10 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
-import fis.police.fis_police_server.dto.QAgentLocation;
 import fis.police.fis_police_server.dto.QCenterSelectDateResponseDTO;
-import fis.police.fis_police_server.repository.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
