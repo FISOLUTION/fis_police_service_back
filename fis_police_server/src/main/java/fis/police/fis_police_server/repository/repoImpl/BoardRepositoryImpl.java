@@ -46,8 +46,7 @@ public class BoardRepositoryImpl implements BoardRepository {
                 .leftJoin(qBoard.officials, qOfficials)
                 .leftJoin(qBoard.aclass, qAclass)
                 .leftJoin(qBoard.childList, qChild)
+                .where(qBoard.delete_date.isNull())
                 .fetch();
-//        return em.createQuery("select b from Board b", Board.class)
-//                .getResultList();
     }
 }

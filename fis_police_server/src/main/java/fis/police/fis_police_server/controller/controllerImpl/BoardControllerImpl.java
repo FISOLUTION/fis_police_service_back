@@ -124,14 +124,11 @@ public class BoardControllerImpl implements BoardController {
     /**
      * 게시글 조회
      *
-     * @return
+     * @return List<BoardListDTO>
      */
     @Override
     @GetMapping("/board")
     public List<BoardListDTO> getBoard() {
-        System.out.println("========================================== = ");
-        List<BoardListDTO> boardListDTOS = boardService.getBoard();
-        System.out.println("========================================== = ");
-        return boardListDTOS;
+        return boardService.getBoard();
     }
 }
