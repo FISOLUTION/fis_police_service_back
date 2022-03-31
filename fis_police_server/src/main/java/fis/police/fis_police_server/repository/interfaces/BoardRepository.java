@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.interfaces;
 
 import fis.police.fis_police_server.domain.Board;
+import fis.police.fis_police_server.dto.BoardListDTO;
 
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface BoardRepository {
 
     Board findById(Long id);
 
-    List<Board> findAll();
+    List<BoardListDTO> findAll();
+
 }

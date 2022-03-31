@@ -10,6 +10,7 @@ import fis.police.fis_police_server.dto.BoardSaveRequest;
 import fis.police.fis_police_server.service.interfaces.BoardService;
 import fis.police.fis_police_server.service.interfaces.OfficialService;
 import fis.police.fis_police_server.service.interfaces.TokenService;
+import fis.police.fis_police_server.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -121,20 +122,14 @@ public class BoardControllerImpl implements BoardController {
         }
     }
 
-    @Override
-    public List<Board> getBoard() throws IOException {
-        return null;
-    }
-
     /**
      * 게시글 조회
      *
-     * @return
+     * @return List<BoardListDTO>
      */
-//    @Override
-//    @GetMapping("/board")
-//    public List<Board> getBoard() {
-//        System.out.println("boardService.getBoard() = " + boardService.getBoard());
-//        return boardService.getBoard();
-//    }
+    @Override
+    @GetMapping("/board")
+    public List<BoardListDTO> getBoard() {
+        return boardService.getBoard();
+    }
 }

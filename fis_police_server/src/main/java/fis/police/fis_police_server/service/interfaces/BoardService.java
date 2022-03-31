@@ -3,6 +3,7 @@ package fis.police.fis_police_server.service.interfaces;
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.BoardDeleteRequest;
+import fis.police.fis_police_server.dto.BoardListDTO;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 
@@ -27,5 +28,5 @@ public interface BoardService {
     Board findById(Long id);
 
     //알림장 전체 조회
-    List<Board> getBoard();
+    List<BoardListDTO> getBoard();
 }
