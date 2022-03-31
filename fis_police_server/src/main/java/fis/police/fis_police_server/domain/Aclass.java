@@ -49,4 +49,10 @@ public class Aclass {
         aclass.officialsList.add(officials);
         return aclass;
     }
+
+    //init_Db test
+    public Aclass(String name, Center center) {
+        this.name = name;
+        this.center = center;
+    }
 }

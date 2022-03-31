@@ -6,7 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
+/**
+ * 2022/03/29/ 11:06 오전
+ * 원보라
+ * 유치원 -반
+ */
 @Repository
 @RequiredArgsConstructor
 public class AclassRepositoryImpl implements AclassRepository {
@@ -21,5 +27,10 @@ public class AclassRepositoryImpl implements AclassRepository {
     @Override
     public Aclass findById(Long id) {
         return em.find(Aclass.class, id);
+    }
+
+    @Override
+    public List<Aclass> findAll() {
+        return null;
     }
 }

@@ -1,5 +1,8 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.dto.BoardDeleteRequest;
+import fis.police.fis_police_server.dto.BoardModifyRequest;
+import fis.police.fis_police_server.dto.BoardSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +27,7 @@ public class Board {
 
     @Lob
     private String content;
+
     private String file;
 
     private String registration_date;
@@ -48,6 +52,7 @@ public class Board {
     private List<Child> childList = new ArrayList<Child>();
 
 
+
     //연관관계 매소드
     public void mappingOfficials(Officials officials) {
         this.officials = officials;
@@ -59,5 +64,32 @@ public class Board {
         aclass.getBoardList().add(this);
     }
 
+    //알림장 게시글 저장
+    public static Board createBoard(Officials officials, Aclass aclass, BoardSaveRequest boardSaveRequest) {
+        Board board = new Board();
+        board.mappingOfficials(officials);
+        board.mappingAclass(aclass);
+        board.title = boardSaveRequest.getTitle();
+        board.content = boardSaveRequest.getContent();
+        board.file = boardSaveRequest.getFile();
+        board.registration_date = boardSaveRequest.getRegistration_date();
+        board.registration_time = boardSaveRequest.getRegistration_time();
+        return board;
+    }
 
+    //알림장 게시글 수정
+    public void updateBoard(Aclass aclass, BoardModifyRequest boardModifyRequest) {
+        this.mappingAclass(aclass);
+        this.title=boardModifyRequest.getTitle();
+        this.content=boardModifyRequest.getContent();
+        this.file=boardModifyRequest.getFile();
+        this.modify_date=boardModifyRequest.getModify_date();
+        this.modify_time=boardModifyRequest.getModify_time();
+    }
+
+    //알림장 게시글 삭제
+    public void deleteBoard(BoardDeleteRequest boardDeleteRequest){
+        this.delete_date=boardDeleteRequest.getDelete_date();
+        this.delete_time=boardDeleteRequest.getDelete_time();
+    }
 }

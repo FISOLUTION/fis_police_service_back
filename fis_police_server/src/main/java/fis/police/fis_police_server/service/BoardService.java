@@ -1,6 +1,9 @@
 package fis.police.fis_police_server.service;
 
 import fis.police.fis_police_server.domain.Board;
+import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.dto.BoardDeleteRequest;
+import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 
 import java.util.List;
@@ -12,10 +15,13 @@ import java.util.List;
  */
 public interface BoardService {
     //알림장 게시물 추가
-    Board saveBoard(BoardSaveRequest boardSaveRequest);
+    Board saveBoard(Officials officials, BoardSaveRequest boardSaveRequest);
 
     //알림장 게시물 수정
-    Board modifyBoard(BoardSaveRequest boardSaveRequest);
+    Board modifyBoard(BoardModifyRequest boardModifyRequest);
+
+    //알림장 게시물 삭제
+    Board deleteBoard(BoardDeleteRequest boardDeleteRequest);
 
     //알림장 하나 조회
     Board findById(Long id);
