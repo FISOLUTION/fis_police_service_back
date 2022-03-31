@@ -4,6 +4,7 @@ import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.BoardDeleteRequest;
+import fis.police.fis_police_server.dto.BoardListDTO;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 import fis.police.fis_police_server.repository.AclassRepository;
@@ -64,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoard() {
+    public List<BoardListDTO> getBoard() {
         return boardRepository.findAll();
     }
 }

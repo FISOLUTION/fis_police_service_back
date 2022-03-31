@@ -4,10 +4,7 @@ package fis.police.fis_police_server.controller.controllerImpl;
 import fis.police.fis_police_server.controller.BoardController;
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.dto.BoardDeleteRequest;
-import fis.police.fis_police_server.dto.BoardModifyRequest;
-import fis.police.fis_police_server.dto.BoardResponse;
-import fis.police.fis_police_server.dto.BoardSaveRequest;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.OfficialsRepository;
 import fis.police.fis_police_server.service.BoardService;
 import fis.police.fis_police_server.service.OfficialService;
@@ -127,12 +124,11 @@ public class BoardControllerImpl implements BoardController {
     /**
      * 게시글 조회
      *
-     * @return
+     * @return List<BoardListDTO>
      */
-//    @Override
-//    @GetMapping("/board")
-//    public List<Board> getBoard() {
-//        System.out.println("boardService.getBoard() = " + boardService.getBoard());
-//        return boardService.getBoard();
-//    }
+    @Override
+    @GetMapping("/board")
+    public List<BoardListDTO> getBoard() {
+        return boardService.getBoard();
+    }
 }
