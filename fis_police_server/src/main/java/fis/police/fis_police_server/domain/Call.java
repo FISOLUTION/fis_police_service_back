@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import fis.police.fis_police_server.domain.enumType.InOut;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CallSaveRequest;

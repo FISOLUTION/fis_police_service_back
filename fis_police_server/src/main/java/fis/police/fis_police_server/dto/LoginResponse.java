@@ -1,11 +1,14 @@
 package fis.police.fis_police_server.dto;
 
+import fis.police.fis_police_server.domain.Child;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -28,4 +31,6 @@ public class LoginResponse {
     */
     private String token;
     private String refreshToken;
+
+    private Result children;
 }

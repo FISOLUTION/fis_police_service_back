@@ -68,6 +68,7 @@ public class Officials {
     private Aclass aclass;
 
     // 교사 승인 여부
+    @Enumerated(EnumType.STRING)
     private Accept accept;
 
 
@@ -76,7 +77,7 @@ public class Officials {
         작성자: 고준영
         작성 내용: 시설 담당자, 시설 묶기
     */
-    public static Officials createOfficials(OfficialSaveRequest request, Center center) {
+    public static Officials createOfficials(OfficialSaveRequest request, Center center, Accept accept) {
         Officials officials = new Officials();
         officials.o_name = request.getO_name();
         officials.o_ph = request.getO_ph();
@@ -85,6 +86,7 @@ public class Officials {
         officials.o_pwd = request.getO_pwd();
         officials.center = center;
         officials.u_auth = request.getU_auth();
+        officials.accept = accept;
         return officials;
     }
 

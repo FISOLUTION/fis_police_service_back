@@ -9,6 +9,7 @@ import fis.police.fis_police_server.service.excelService.ExcelService;
 import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ExcelUploadControllerImpl implements ExcelUploadController {
 
     private final CenterService centerService;
@@ -34,6 +36,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
     @Override
     @PostMapping("excel/read")
     public Object readExcel(@ModelAttribute MultipartFile excelFile) throws IOException, NoSuchMethodException {
+        log.info("[url: {}] [요청: 엑셀 -> 디비 업로드]", "/excel/read");
         List<Object> object = excelService.excelToJson(excelFile, ExcelCenterDTO.class);
         object.stream().forEach(center -> {
             try {

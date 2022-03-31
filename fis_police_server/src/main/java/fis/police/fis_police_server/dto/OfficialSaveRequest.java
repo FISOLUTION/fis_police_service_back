@@ -16,5 +16,5 @@ public class OfficialSaveRequest {
     private String o_pwd;
     private String o_ph;
     private String o_email;
-    private UserAuthority u_auth;
+    private UserAuthority u_auth;   // OFFICIAL or TEACHER
 }
