@@ -1,6 +1,8 @@
 package fis.police.fis_police_server.repository;
 
+import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.domain.enumType.Accept;
 
 import java.util.List;
 
@@ -15,4 +17,7 @@ public interface OfficialsRepository {
     Officials findById(Long id);
     List<Officials> findAll();
     List<Officials> findByNickname(String nickname);
+    void acceptOfficial(Long id, Accept accept);
+    List<Officials> findOfficialsWaitingAccept(Long center_id, Accept accept);
+    void mappingClass(Long official_id, Aclass aclass);
 }
