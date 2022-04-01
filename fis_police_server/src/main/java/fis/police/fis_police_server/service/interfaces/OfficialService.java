@@ -22,4 +22,6 @@ public interface OfficialService {
     Officials findById(Long id);
     void acceptOfficial(Long official_id, Accept accept);
     Result findOfficialsWaitingAccept(Long center_id);
+
+    void mappingClass(Long official_id, Long class_id);
 }

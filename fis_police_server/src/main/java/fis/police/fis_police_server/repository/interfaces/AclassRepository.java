@@ -2,6 +2,7 @@ package fis.police.fis_police_server.repository.interfaces;
 
 
 import fis.police.fis_police_server.domain.Aclass;
+import fis.police.fis_police_server.domain.Center;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface AclassRepository {
     Aclass findById(Long id);
 
     List<Aclass> findAll();
+
+    List<Aclass> classByCenter(Center center);
 }
 

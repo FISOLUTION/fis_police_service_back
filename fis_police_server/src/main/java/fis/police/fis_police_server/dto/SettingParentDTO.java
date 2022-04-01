@@ -13,7 +13,7 @@ public class SettingParentDTO {
     private String parent_name;
     private String parent_ph;
     private String parent_email;
-    private List<ChildListDTO> childList;
+    private List<ChildListDTO> children;
 
     public SettingParentDTO(String name, String ph, String email) {
         this.parent_name = name;

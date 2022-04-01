@@ -133,7 +133,10 @@ public class AppLoginServiceImpl implements AppLoginService {
             loginResponse.setSc("success");
             List<Child> childList = parents.get(0).getChildList();
             List<ChildListDTO> children = childList.stream()
-                            .map(child -> new ChildListDTO(child.getId(), child.getName(), child.getBirthday(), child.getAclass().getCenter().getC_name(), child.getAclass().getName(), child.getAccept()))
+                            .map(child -> new ChildListDTO(child.getId(), child.getName(), child.getBirthday(),
+                                    new CenterNameDTO(child.getAclass().getCenter().getId(), child.getAclass().getCenter().getC_name()),
+                                    new ClassDataDTO(child.getAclass().getId(), child.getAclass().getName()),
+                                    child.getAccept()))
                                     .collect(Collectors.toList());
             loginResponse.setChildren(children);
             loginResponse.setU_name(parents.get(0).getName());
