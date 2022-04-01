@@ -46,6 +46,7 @@ public class TokenServiceImpl implements TokenService {
     public Parent getParentFromRequest(String authorization) {
         Claims token = parseJwtToken(authorization);
         Long parent_id = Long.valueOf(token.get("id").toString());
+        Parent parent = parentRepository.findById(parent_id);
         return parentRepository.findById(parent_id);
     }
 

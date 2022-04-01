@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.enumType.Accept;
@@ -7,6 +8,7 @@ import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.OfficialDTO;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.repository.interfaces.AclassRepository;
 import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
 import fis.police.fis_police_server.service.interfaces.OfficialService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class OfficialServiceImpl implements OfficialService {
 
     private final OfficialsRepository officialsRepository;
+    private final AclassRepository aclassRepository;
 
     @Override
     public void saveOfficials(OfficialSaveRequest request, Center center) {
@@ -71,6 +74,12 @@ public class OfficialServiceImpl implements OfficialService {
                 .collect(Collectors.toList());
         return new Result(collect);
 
+    }
+
+    @Override
+    public void mappingClass(Long official_id, Long class_id) {
+        Aclass aclass = aclassRepository.findById(class_id);
+        officialsRepository.mappingClass(official_id, aclass);
     }
 
 }

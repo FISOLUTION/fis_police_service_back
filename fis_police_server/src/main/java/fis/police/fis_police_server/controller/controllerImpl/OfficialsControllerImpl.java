@@ -54,16 +54,30 @@ public class OfficialsControllerImpl implements OfficialsController {
 
     // 내 시설에 아직 승인되지 않은 직원 리스트 (TBD)
     @GetMapping("/officials/accept")
-    public Result waitingOfficial(@RequestParam Long center_id, HttpServletRequest request) {
-//        String authorization = request.getHeader("Authorization");
-//        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
-//        Long id = officialFromRequest.getCenter().getId();
+    public Result waitingOfficial(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
+        Long center_id = officialFromRequest.getCenter().getId();
         return officialService.findOfficialsWaitingAccept(center_id);
     }
 
+    // 시설 직원 승인
     @PostMapping("/officials/accept")
-    public void acceptOfficial(@RequestBody AcceptOfficialDTO officialDTO, HttpServletRequest request) {
+    public void acceptOfficial(@RequestBody AcceptOfficialDTO officialDTO, HttpServletRequest request) throws IllegalAccessException {
+        String authorization = request.getHeader("Authorization");
+        if (!tokenService.parseJwtToken(authorization).get("role").toString().equals("OFFICIAL")) {
+            throw new IllegalAccessException("접근이 허용되지 않은 사용자입니다.");
+        }
         officialService.acceptOfficial(officialDTO.getOfficial_id(), officialDTO.getAccept());
     }
 
+    // 시설 담당자가 맡을 반 연결해주기
+    // 시설 담당자 회원가입 하고~? 교실 고르도록.!
+    // 이후 작업에서는 official 이면 모두 접근 가능하게 하고, teacher 이면 교실 비교하도록 하는 로직 사용
+    @PostMapping("/officials/class")
+    public void mappingClass(HttpServletRequest request, @RequestParam Long class_id) throws IllegalAccessException {
+        String authorization = request.getHeader("Authorization");
+        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
+        officialService.mappingClass(officialFromRequest.getId(), class_id);
+    }
 }

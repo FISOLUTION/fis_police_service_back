@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Aclass;
+import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.repository.interfaces.AclassRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,12 @@ public class AclassRepositoryImpl implements AclassRepository {
     @Override
     public List<Aclass> findAll() {
         return null;
+    }
+
+    @Override
+    public List<Aclass> classByCenter(Center center) {
+        return em.createQuery("select c from Aclass c where c.center =: center", Aclass.class)
+                .setParameter("center", center)
+                .getResultList();
     }
 }
