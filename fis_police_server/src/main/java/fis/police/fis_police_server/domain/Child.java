@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -29,9 +31,11 @@ public class Child {
     @Enumerated(EnumType.STRING)
     private Accept accept;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "board_id")
+//    private Board board;
+    @OneToMany(mappedBy = "child")
+    private List<Check> checkList = new ArrayList<Check>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aclass_id")
@@ -70,4 +74,13 @@ public class Child {
         this.birthday = request.getBirthday();
         this.aclass = aclass;
     }
+
+
+    //for init db
+    public Child(String name, String birthday) {
+        this.name = name;
+        this.birthday = birthday;
+        this.accept = Accept.TBD;
+    }
+
 }

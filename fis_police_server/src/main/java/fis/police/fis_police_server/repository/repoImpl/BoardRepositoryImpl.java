@@ -1,5 +1,7 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
+import com.querydsl.jpa.JPAExpressions;
+
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.repository.interfaces.BoardRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,6 +29,7 @@ public class BoardRepositoryImpl implements BoardRepository {
     QBoard qBoard = QBoard.board;
     QOfficials qOfficials = QOfficials.officials;
     QAclass qAclass = QAclass.aclass;
+    QCheck qCheck = QCheck.check;
     QChild qChild = QChild.child;
 
     @Override
@@ -39,15 +42,22 @@ public class BoardRepositoryImpl implements BoardRepository {
         return em.find(Board.class, id);
     }
 
+    //삭제한건 안나옴
     @Override
     public List<BoardListDTO> findAll() {
         return jpaQueryFactory
-                .select(new QBoardListDTO(qBoard.id, qBoard.title, qBoard.content, qBoard.file, qBoard.registration_date, qBoard.registration_time, qBoard.modify_date, qBoard.modify_time, qBoard.delete_date, qBoard.delete_time, qOfficials.id, qOfficials.o_name, qOfficials.o_nickname, qAclass.id, qAclass.name, qChild.id))
+                .select(new QBoardListDTO(qBoard.id, qBoard.title, qBoard.content, qBoard.file, qBoard.registration_date, qBoard.registration_time, qBoard.modify_date, qBoard.modify_time, qBoard.delete_date, qBoard.delete_time, qOfficials.id, qOfficials.o_name, qOfficials.o_nickname, qAclass.id, qAclass.name))
                 .from(qBoard)
                 .leftJoin(qBoard.officials, qOfficials)
                 .leftJoin(qBoard.aclass, qAclass)
-                .leftJoin(qBoard.childList, qChild)
+                .leftJoin(qBoard.checkList, qCheck)
+//                .letfJoin(qChild.child, qChild)
                 .where(qBoard.delete_date.isNull())
                 .fetch();
+//                .where(qChild.id.eq(
+//                        JPAExpressions
+//                        .select(qChild.id)
+//                        .from(qBoard, qCheck)
+//                        .where(qBoard.id.eq(qCheck.board.id)))
     }
 }
