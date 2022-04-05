@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.error.advice;
 
-import fis.police.fis_police_server.controller.controllerImpl.AclassControllerImpl;
+import fis.police.fis_police_server.controller.controllerImpl.AppCenterController;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestControllerAdvice(assignableTypes = AclassControllerImpl.class)
-public class AclassControllerAdvice {
+@RestControllerAdvice(assignableTypes = AppCenterController.class)
+public class AppCenterControllerAdvice {
 
     // 토큰 만료 됐을 때
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

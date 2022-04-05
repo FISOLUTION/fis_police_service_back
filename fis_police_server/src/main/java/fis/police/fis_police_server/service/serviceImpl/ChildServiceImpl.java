@@ -34,11 +34,20 @@ public class ChildServiceImpl implements ChildService {
     public void modify(ChildModifyRequest request) {
         Child child = childRepository.findById(request.getChild_id());
         Aclass aclass = aclassRepository.findById(request.getClass_id());
+        if (child.getAclass() != aclass) {
+            child.modifyChild(request, aclass);
+            child.acceptChild(Accept.TBD);
+        }
         child.modifyChild(request, aclass);
     }
 
     @Override
     public void acceptChild(Long id, Accept accept) {
         childRepository.acceptChild(id, accept);
+    }
+
+    @Override
+    public Child findById(Long id) {
+        return childRepository.findById(id);
     }
 }
