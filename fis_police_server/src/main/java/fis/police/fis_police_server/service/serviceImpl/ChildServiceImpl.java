@@ -35,8 +35,6 @@ public class ChildServiceImpl implements ChildService {
         Child child = childRepository.findById(request.getChild_id());
         Aclass aclass = aclassRepository.findById(request.getClass_id());
         child.modifyChild(request, aclass);
-
-
     }
 
     @Override

@@ -6,6 +6,7 @@ import fis.police.fis_police_server.dto.CenterDataResponse;
 import fis.police.fis_police_server.dto.CenterSearchDTO;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.service.interfaces.AclassService;
 import fis.police.fis_police_server.service.interfaces.CenterService;
 import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class AppCenterController {
 
     private final CenterService centerService;
     private final TokenService tokenService;
+    private final AclassService aclassService;
 
     // 여기서 만약 오류가 생긴다면, Result<어쩌구> 이거 지우고 그냥 Result 로 하셈
     @GetMapping("/center/search")
@@ -48,8 +50,8 @@ public class AppCenterController {
         }
     }
 
-
-    @GetMapping("/center/by/official")
+    // 내 시설에 접속 -> 시설 정보 + 교실 정보 + 직원 정보
+    @GetMapping("/center")
     public CenterDataResponse getCenterData(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
@@ -61,5 +63,12 @@ public class AppCenterController {
         } catch (NullPointerException e) {
             throw new NullPointerException("NoCenter");
         }
+    }
+
+    // 시설별 교실 정보
+    @GetMapping("/class/by/center")
+    public Result classByCenter(@RequestParam Long center_id, HttpServletRequest request) throws IllegalAccessException {
+        Center center = centerService.findById(center_id);
+        return new Result(aclassService.classByCenter(center));
     }
 }
