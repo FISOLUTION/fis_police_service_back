@@ -2,7 +2,9 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
-import fis.police.fis_police_server.repository.CheckRepository;
+import fis.police.fis_police_server.dto.QReadBoardList;
+import fis.police.fis_police_server.dto.ReadBoardList;
+import fis.police.fis_police_server.repository.interfaces.CheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -45,5 +47,15 @@ public class CheckRepositoryImpl implements CheckRepository {
                 .where(qCheck.board.id.eq(board_id)
                         .and(qCheck.child.id.eq(child_id)))
                 .fetchOne();
+    }
+
+    @Override
+    public List<ReadBoardList> checkBoard(Long board_id) {
+        return jpaQueryFactory
+                .select(new QReadBoardList(qCheck.child.id, qChild.name, qCheck.check_date, qCheck.check_time))
+                .from(qCheck)
+                .leftJoin(qCheck.child, qChild)
+                .where(qCheck.board.id.eq(board_id))
+                .fetch();
     }
 }

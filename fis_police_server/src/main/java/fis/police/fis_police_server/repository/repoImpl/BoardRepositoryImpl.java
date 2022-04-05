@@ -51,13 +51,7 @@ public class BoardRepositoryImpl implements BoardRepository {
                 .leftJoin(qBoard.officials, qOfficials)
                 .leftJoin(qBoard.aclass, qAclass)
                 .leftJoin(qBoard.checkList, qCheck)
-//                .letfJoin(qChild.child, qChild)
                 .where(qBoard.delete_date.isNull())
                 .fetch();
-//                .where(qChild.id.eq(
-//                        JPAExpressions
-//                        .select(qChild.id)
-//                        .from(qBoard, qCheck)
-//                        .where(qBoard.id.eq(qCheck.board.id)))
     }
 }

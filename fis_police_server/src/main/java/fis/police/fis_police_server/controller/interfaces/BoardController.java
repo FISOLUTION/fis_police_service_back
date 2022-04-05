@@ -30,7 +30,7 @@ public interface BoardController {
     //조회(해당하는 유치원의 반 알림장만 조회)
     List<BoardListDTO> getBoard() throws IOException;
 
-//    //읽음 확인 버튼(누가누가 읽었는지)
-//    void checkBoard(Board board, HttpServletRequest httpServletRequest, HttpServletResponse response);
+    //리스트 눌렀을 떄 읽은 child list 주기
+    List<ReadBoardList> checkBoard(Long board, HttpServletRequest httpServletRequest, HttpServletResponse response);
 
 }

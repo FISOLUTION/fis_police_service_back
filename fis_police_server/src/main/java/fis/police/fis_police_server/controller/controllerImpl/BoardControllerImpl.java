@@ -8,6 +8,7 @@ import fis.police.fis_police_server.dto.BoardDeleteRequest;
 import fis.police.fis_police_server.dto.BoardModifyRequest;
 import fis.police.fis_police_server.dto.BoardSaveRequest;
 import fis.police.fis_police_server.service.interfaces.BoardService;
+import fis.police.fis_police_server.service.interfaces.CheckService;
 import fis.police.fis_police_server.service.interfaces.OfficialService;
 import fis.police.fis_police_server.service.interfaces.TokenService;
 import fis.police.fis_police_server.dto.*;
@@ -33,6 +34,7 @@ public class BoardControllerImpl implements BoardController {
     private final BoardService boardService;
     private final TokenService tokenService;
     private final OfficialService officialService;
+    private final CheckService checkService;
 
 
     /**
@@ -123,7 +125,7 @@ public class BoardControllerImpl implements BoardController {
     }
 
     /**
-     * 게시글 조회
+     * 게시글 리스트 조회
      * 삭제된 게시글은 안보임
      * @return List<BoardListDTO>
      */
@@ -131,5 +133,11 @@ public class BoardControllerImpl implements BoardController {
     @GetMapping("/board")
     public List<BoardListDTO> getBoard() {
         return boardService.getBoard();
+    }
+
+    @Override
+    @GetMapping("/board/check")
+    public List<ReadBoardList> checkBoard(@RequestParam("board_id") Long board_id,HttpServletRequest httpServletRequest, HttpServletResponse response) {
+        return checkService.checkBoard(board_id);
     }
 }

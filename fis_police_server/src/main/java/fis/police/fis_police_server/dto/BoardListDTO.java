@@ -47,9 +47,6 @@ public class BoardListDTO {
     private Long aclass_id;
     private String name;
 
-    //게시글 읽은 아이 정보
-    private List<Long> childList;
-
 
     @QueryProjection
     public BoardListDTO(Long board_id, String title, String content, String file, String registration_date, String registration_time, String modify_date, String modify_time, String delete_date, String delete_time, Long official_id, String o_name, String o_nickname, Long aclass_id, String name) {
