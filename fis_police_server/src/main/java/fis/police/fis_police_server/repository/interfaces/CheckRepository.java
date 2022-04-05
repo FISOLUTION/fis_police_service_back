@@ -1,4 +1,4 @@
-package fis.police.fis_police_server.repository;
+package fis.police.fis_police_server.repository.interfaces;
 
 import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Check;

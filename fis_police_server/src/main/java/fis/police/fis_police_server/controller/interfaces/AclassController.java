@@ -1,9 +1,7 @@
 package fis.police.fis_police_server.controller.interfaces;
 
-import fis.police.fis_police_server.dto.ClassDataDTO;
-import fis.police.fis_police_server.dto.ClassInfoDTO;
-import fis.police.fis_police_server.dto.ClassSaveRequest;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.*;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,5 +15,5 @@ import java.util.List;
 public interface AclassController {
     void save(ClassSaveRequest request, HttpServletRequest httpServletRequest);
     void delete(Long id);
-    ClassInfoDTO list(@RequestParam Long class_id, HttpServletRequest request) throws IllegalAccessException;
+    ClassInfoDTO list(@RequestBody AccessClassDTO classDTO, HttpServletRequest request) throws IllegalAccessException;
 }

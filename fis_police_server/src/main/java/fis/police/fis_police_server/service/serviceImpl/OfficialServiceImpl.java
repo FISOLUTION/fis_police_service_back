@@ -67,12 +67,12 @@ public class OfficialServiceImpl implements OfficialService {
     }
 
     @Override
-    public Result findOfficialsWaitingAccept(Long center_id) {
+    public List<OfficialDTO> findOfficialsWaitingAccept(Long center_id) {
         List<Officials> officialsWaitingAccept = officialsRepository.findOfficialsWaitingAccept(center_id, Accept.TBD);
         List<OfficialDTO> collect = officialsWaitingAccept.stream()
                 .map(official -> new OfficialDTO(official.getId(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getAccept()))
                 .collect(Collectors.toList());
-        return new Result(collect);
+        return collect;
 
     }
 

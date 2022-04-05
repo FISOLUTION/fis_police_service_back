@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /*
     작성 날짜: 2022/02/14 11:35 오전
@@ -54,7 +55,7 @@ public class OfficialsControllerImpl implements OfficialsController {
 
     // 내 시설에 아직 승인되지 않은 직원 리스트 (TBD)
     @GetMapping("/officials/accept")
-    public Result waitingOfficial(HttpServletRequest request) {
+    public List<OfficialDTO> waitingOfficial(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
         Long center_id = officialFromRequest.getCenter().getId();
@@ -72,12 +73,12 @@ public class OfficialsControllerImpl implements OfficialsController {
     }
 
     // 시설 담당자가 맡을 반 연결해주기
-    // 시설 담당자 회원가입 하고~? 교실 고르도록.!
-    // 이후 작업에서는 official 이면 모두 접근 가능하게 하고, teacher 이면 교실 비교하도록 하는 로직 사용
     @PostMapping("/officials/class")
-    public void mappingClass(HttpServletRequest request, @RequestParam Long class_id) throws IllegalAccessException {
+    public void mappingClass(HttpServletRequest request, @RequestBody ClassForOfficialDTO classForOfficialDTO) throws IllegalAccessException {
         String authorization = request.getHeader("Authorization");
-        Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
-        officialService.mappingClass(officialFromRequest.getId(), class_id);
+        if (!tokenService.parseJwtToken(authorization).get("role").toString().equals("OFFICIAL")) {
+            throw new IllegalAccessException("접근이 허용되지 않은 사용자입니다.");
+        }
+        officialService.mappingClass(classForOfficialDTO.getOfficial_id(), classForOfficialDTO.getClass_id());
     }
 }
