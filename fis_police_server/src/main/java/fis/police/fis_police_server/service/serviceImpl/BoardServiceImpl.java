@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 2022/03/29/ 11:22 오전
@@ -65,7 +68,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardListDTO> getBoard() {
-        return boardRepository.findAll();
+    public List<BoardListDTO> getBoard(List<Long> checkBoardList) {
+        List<BoardListDTO> boardList = boardRepository.findAll();
+        boardList.stream().forEach(board -> {
+            for (Long aLong : checkBoardList) {
+                if (aLong.equals(board.getBoard_id())) {
+                    board.setCheck(true);
+                }
+            }
+        });
+        return boardList;
     }
 }

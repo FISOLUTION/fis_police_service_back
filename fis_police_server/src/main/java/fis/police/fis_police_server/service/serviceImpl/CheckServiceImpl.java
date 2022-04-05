@@ -4,13 +4,16 @@ import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Check;
 import fis.police.fis_police_server.domain.Child;
 import fis.police.fis_police_server.dto.CheckRequest;
-import fis.police.fis_police_server.repository.BoardRepository;
-import fis.police.fis_police_server.repository.CheckRepository;
-import fis.police.fis_police_server.repository.ChildRepository;
-import fis.police.fis_police_server.service.CheckService;
+import fis.police.fis_police_server.dto.ReadBoardList;
+import fis.police.fis_police_server.repository.interfaces.CheckRepository;
+import fis.police.fis_police_server.repository.interfaces.BoardRepository;
+import fis.police.fis_police_server.repository.interfaces.ChildRepository;
+import fis.police.fis_police_server.service.interfaces.CheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 날짜 : 2022/03/31 4:28 오후
@@ -42,4 +45,15 @@ public class CheckServiceImpl implements CheckService {
             throw new IllegalCallerException("이미 확인한 알림장의 게시글 입니다.");
         }
     }
+
+    @Override
+    public List<ReadBoardList> checkBoard(Long board_id) {
+        return checkRepository.checkBoard(board_id);
+    }
+
+    @Override
+    public List<Long> getCheck(Long child_id) {
+        return checkRepository.getCheck(child_id);
+    }
+
 }

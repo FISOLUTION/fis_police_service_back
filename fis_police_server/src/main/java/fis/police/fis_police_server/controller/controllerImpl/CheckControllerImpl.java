@@ -1,14 +1,9 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.CheckController;
-import fis.police.fis_police_server.domain.Child;
-import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.domain.Parent;
+import fis.police.fis_police_server.controller.interfaces.CheckController;
 import fis.police.fis_police_server.dto.CheckRequest;
-import fis.police.fis_police_server.service.BoardService;
-import fis.police.fis_police_server.service.CheckService;
-import fis.police.fis_police_server.service.ChildService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.CheckService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

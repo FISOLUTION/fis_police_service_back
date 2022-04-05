@@ -1,4 +1,4 @@
-package fis.police.fis_police_server.controller;
+package fis.police.fis_police_server.controller.interfaces;
 
 import fis.police.fis_police_server.dto.CheckRequest;
 
