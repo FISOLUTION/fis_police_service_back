@@ -14,6 +14,7 @@ import fis.police.fis_police_server.service.interfaces.TokenService;
 import fis.police.fis_police_server.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -127,17 +128,27 @@ public class BoardControllerImpl implements BoardController {
     /**
      * 게시글 리스트 조회
      * 삭제된 게시글은 안보임
+     *
      * @return List<BoardListDTO>
      */
     @Override
     @GetMapping("/board")
-    public List<BoardListDTO> getBoard() {
-        return boardService.getBoard();
+    public List<BoardListDTO> getBoard(@RequestParam("child_id") Long child_id, HttpServletRequest httpServletRequest, HttpServletResponse response) {
+        try {
+            List<Long> checkBoardList = checkService.getCheck(child_id);
+            return boardService.getBoard(checkBoardList);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        }
     }
 
     @Override
     @GetMapping("/board/check")
-    public List<ReadBoardList> checkBoard(@RequestParam("board_id") Long board_id,HttpServletRequest httpServletRequest, HttpServletResponse response) {
-        return checkService.checkBoard(board_id);
+    public List<ReadBoardList> checkBoard(@RequestParam("board_id") Long board_id, HttpServletRequest httpServletRequest, HttpServletResponse response) {
+        try {
+            return checkService.checkBoard(board_id);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        }
     }
 }

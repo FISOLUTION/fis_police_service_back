@@ -51,4 +51,9 @@ public class CheckServiceImpl implements CheckService {
         return checkRepository.checkBoard(board_id);
     }
 
+    @Override
+    public List<Long> getCheck(Long child_id) {
+        return checkRepository.getCheck(child_id);
+    }
+
 }

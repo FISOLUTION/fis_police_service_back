@@ -16,4 +16,6 @@ public interface CheckService {
 
     //알림장 게시글 확인한 child list
     List<ReadBoardList> checkBoard(Long board_id);
+
+    List<Long> getCheck(Long child_id);
 }

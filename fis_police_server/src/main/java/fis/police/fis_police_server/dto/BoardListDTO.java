@@ -48,6 +48,9 @@ public class BoardListDTO {
     private String name;
 
 
+    //child 별 확인 여부
+    private boolean check;
+
     @QueryProjection
     public BoardListDTO(Long board_id, String title, String content, String file, String registration_date, String registration_time, String modify_date, String modify_time, String delete_date, String delete_time, Long official_id, String o_name, String o_nickname, Long aclass_id, String name) {
         this.board_id = board_id;

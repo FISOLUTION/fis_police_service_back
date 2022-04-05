@@ -28,7 +28,7 @@ public interface BoardController {
     void deleteBoard(BoardDeleteRequest boardDeleteRequest, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
 
     //조회(해당하는 유치원의 반 알림장만 조회)
-    List<BoardListDTO> getBoard() throws IOException;
+    List<BoardListDTO> getBoard(Long child_id, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
 
     //리스트 눌렀을 떄 읽은 child list 주기
     List<ReadBoardList> checkBoard(Long board, HttpServletRequest httpServletRequest, HttpServletResponse response);

@@ -58,4 +58,13 @@ public class CheckRepositoryImpl implements CheckRepository {
                 .where(qCheck.board.id.eq(board_id))
                 .fetch();
     }
+
+    @Override
+    public List<Long> getCheck(Long child_id) {
+        return jpaQueryFactory
+                .select(qCheck.board.id)
+                .from(qCheck)
+                .where(qCheck.child.id.eq(child_id))
+                .fetch();
+    }
 }
