@@ -27,6 +27,6 @@ public interface BoardService {
     //알림장 하나 조회
     Board findById(Long id);
 
-    //알림장 전체 조회
-    List<BoardListDTO> getBoard();
+    //child 별 알림장 전체 조회 (확인 미확인 child 별로 보여줘야 하니까)
+    List<BoardListDTO> getBoard(List<Long> checkBoardList);
 }

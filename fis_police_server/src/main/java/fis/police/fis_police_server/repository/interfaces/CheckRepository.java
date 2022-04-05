@@ -1,8 +1,7 @@
 package fis.police.fis_police_server.repository.interfaces;
 
-import fis.police.fis_police_server.domain.Board;
 import fis.police.fis_police_server.domain.Check;
-import fis.police.fis_police_server.domain.Child;
+import fis.police.fis_police_server.dto.ReadBoardList;
 
 import java.util.List;
 
@@ -17,4 +16,8 @@ public interface CheckRepository {
     Check findById(Long id);
 
     Long findByBoard_Child(Long board_id, Long child_id);
+
+    List<ReadBoardList> checkBoard(Long board_id);
+
+    List<Long> getCheck(Long child_id);
 }
