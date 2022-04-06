@@ -145,8 +145,11 @@ public class initDb2 {
             em.persist(call11);
 
 
-            Aclass aclass = new Aclass("햇님반", center2);
-            em.persist(aclass);
+            Aclass aclass1 = new Aclass("햇님반", center2);
+            em.persist(aclass1);
+
+            Aclass aclass2 = new Aclass("전체반", center2);
+            em.persist(aclass2);
 
             Child child1 = new Child("원보라","1998-03-29");
             em.persist(child1);
