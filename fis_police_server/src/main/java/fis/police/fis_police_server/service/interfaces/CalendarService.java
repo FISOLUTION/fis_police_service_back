@@ -15,16 +15,16 @@ import java.util.List;
  * 작성내용 : 일정표
  */
 public interface CalendarService {
-    //알림장 게시물 추가
+    //일정 게시물 추가
     Calendar saveCalendar(Officials officials, CalendarSaveRequest calendarSaveRequest);
 
-    //알림장 게시물 수정
+    //일정 게시물 수정
     Calendar modifyCalendar(CalendarModifyRequest calendarModifyRequest);
 
-    //알림장 게시물 삭제
+    //일정 게시물 삭제
     Calendar deleteCalendar(CalendarDeleteRequest calendarDeleteRequest);
 
-    //알림장 하나 조회
+    //일정 하나 조회
     Calendar findById(Long id);
 
     //모든 일정 조회

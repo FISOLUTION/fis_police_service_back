@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.error.advice;
 
+import fis.police.fis_police_server.controller.controllerImpl.AnnounceControllerImpl;
 import fis.police.fis_police_server.controller.controllerImpl.CalendarControllerImpl;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
 import io.jsonwebtoken.JwtException;
@@ -18,8 +19,8 @@ import java.util.Map;
 
 
 @Slf4j
-@RestControllerAdvice(assignableTypes = CalendarControllerImpl.class)
-public class CalendarControllerAdvice {
+@RestControllerAdvice(assignableTypes = {CalendarControllerImpl.class, AnnounceControllerImpl.class})
+public class Calendar_AnnounceAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtException.class)
     public ErrorResult jwtExHandler(JwtException e) {

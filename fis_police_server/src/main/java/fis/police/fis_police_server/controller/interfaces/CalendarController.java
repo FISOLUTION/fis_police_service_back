@@ -27,6 +27,4 @@ public interface CalendarController {
 
     //조회
     List<CalendarListDTO> getCalendar(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
-
-
 }
