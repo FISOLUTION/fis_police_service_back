@@ -116,7 +116,7 @@ public class BoardControllerImpl implements BoardController {
                 boardService.deleteBoard(boardDeleteRequest);            //성공시 200 ok
                 log.info("알림장 게시물 삭제 업데이트");
             } else {
-                throw new IllegalArgumentException("DifferentOfficial"); //다른 사람이 수정하려 할 때
+                throw new IllegalArgumentException("DifferentOfficial"); //다른 사람이 삭제하려 할 때
             }
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");

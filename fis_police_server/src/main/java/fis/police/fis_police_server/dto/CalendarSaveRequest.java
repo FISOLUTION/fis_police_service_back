@@ -4,23 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /**
- * 2022/03/29/ 11:14 오전
- * 원보라
- * 알림장
+ *    날짜 : 2022/04/05 3:35 오후
+ *    작성자 : 원보라
+ *    작성내용 : 일정표 저장
  */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BoardSaveRequest {
+public class CalendarSaveRequest {
     private Long aclass_id;
 
+    private String date;                //해당하는 날짜
     private String title;               //글 제목
     private String content;             //글 내용
-    private String file;                //첨부파일
 
     private String registration_date;   //등록 날짜
-    private String registration_time;   //등록 시간
 }
