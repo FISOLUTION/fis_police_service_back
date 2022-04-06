@@ -4,6 +4,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.dto.AcceptOfficialDTO;
+import fis.police.fis_police_server.dto.OfficialDTO;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import fis.police.fis_police_server.dto.Result;
 
@@ -21,7 +22,7 @@ public interface OfficialService {
     void modifyOfficials(Officials officialFromRequest, OfficialSaveRequest request, Center center);
     Officials findById(Long id);
     void acceptOfficial(Long official_id, Accept accept);
-    Result findOfficialsWaitingAccept(Long center_id);
+    List<OfficialDTO> findOfficialsWaitingAccept(Long center_id);
 
     void mappingClass(Long official_id, Long class_id);
 }

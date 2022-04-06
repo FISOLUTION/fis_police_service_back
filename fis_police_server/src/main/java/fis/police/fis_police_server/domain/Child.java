@@ -75,6 +75,10 @@ public class Child {
         this.aclass = aclass;
     }
 
+    public void acceptChild(Accept accept) {
+        this.accept = accept;
+    }
+
 
     //for init db
     public Child(String name, String birthday) {

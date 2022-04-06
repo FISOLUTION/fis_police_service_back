@@ -1,17 +1,12 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
 import fis.police.fis_police_server.controller.interfaces.AclassController;
-import fis.police.fis_police_server.domain.Aclass;
-import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.domain.Parent;
+import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
-import fis.police.fis_police_server.dto.ClassDataDTO;
-import fis.police.fis_police_server.dto.ClassInfoDTO;
-import fis.police.fis_police_server.dto.ClassSaveRequest;
-import fis.police.fis_police_server.dto.Result;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.service.interfaces.AclassService;
 import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.ChildService;
 import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +24,7 @@ public class AclassControllerImpl implements AclassController {
     private final AclassService aclassService;
     private final TokenService tokenService;
     private final CenterService centerService;
+    private final ChildService childService;
 
     // 시설에 학급 추가
     @Override
@@ -54,13 +50,28 @@ public class AclassControllerImpl implements AclassController {
     // 교실 접속
     @Override
     @GetMapping("/class")
-    public ClassInfoDTO list(@RequestParam Long class_id, HttpServletRequest request) throws IllegalAccessException {
-        Aclass aclass = aclassService.findById(class_id);
-//        if (! 원장) {
-//            if (직원의 교실 != 접속하려는 교실) {
-//                throw new IllegalAccessException("접근 불가")
-//            }
-//        }
+    public ClassInfoDTO list(@RequestBody AccessClassDTO classDTO, HttpServletRequest request) throws IllegalAccessException {
+        Aclass aclass = aclassService.findById(classDTO.getClass_id());
+        String authorization = request.getHeader("Authorization");
+        String role = tokenService.parseJwtToken(authorization).get("role").toString();
+        if (role.equals("TEACHER")) {
+            Officials officialFromRequest = tokenService.getOfficialFromRequest(authorization);
+            if (!officialFromRequest.getAclass().equals(aclass)) {
+                throw new IllegalAccessException("담당 교실이 아닌 교실 페이지로는 접속할 수 없습니다.");
+            }
+            System.out.println("officialFromRequest.getAccept() = " + officialFromRequest.getAccept());
+            if (officialFromRequest.getAccept() != Accept.accept) {
+                throw new IllegalAccessException("접속이 승인되지 않았습니다.");
+            }
+        } else if (role.equals("PARENT")) {
+            Child child = childService.findById(classDTO.getChild_id());
+            if (!child.getAclass().equals(aclass)) {
+                throw new IllegalAccessException("담당 교실이 아닌 교실 페이지로는 접속할 수 없습니다.");
+            }
+            if (child.getAccept() != Accept.accept) {
+                throw new IllegalAccessException("접속이 승인되지 않았습니다.");
+            }
+        }
         return aclassService.getClassInfo(aclass);
     }
 
