@@ -121,8 +121,7 @@ public class CalendarControllerImpl implements CalendarController {
         }
     }
 
-    //todo 모든 일정을 보내주는데 달별로 보내줘야할까?
-    //todo 나중에 데이터 많이 쌓이면 쓸데없이 과거 일정을 많이 보내주는거 아닐까?
+
     /**
      * 일정 모두 조회
      * 삭제된 일정은 안보임
@@ -137,6 +136,26 @@ public class CalendarControllerImpl implements CalendarController {
     public List<CalendarListDTO> getCalendar(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
         try {
             return calendarService.findAll();
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("NoToken");
+        }
+    }
+
+    /**
+     * 선택한 year,month에 해당하는 일정 조회
+     *
+     * @param year
+     * @param month
+     * @param httpServletRequest
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @Override
+    @GetMapping("/calendar/date")
+    public List<CalendarListDTO> getSelectedCalendar(@RequestParam("year") String year,@RequestParam("month") String month, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
+        try {
+            return calendarService.getSelectedCalendar(year, month);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");
         }

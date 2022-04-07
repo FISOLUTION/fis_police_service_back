@@ -16,15 +16,15 @@ public interface CalendarController {
     //게시글 추가
     void saveCalendar(CalendarSaveRequest calendarSaveRequest, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
 
-
     //게시글 수정
     void modifyCalendar(CalendarModifyRequest calendarModifyRequest, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
-
 
     //게시글 삭제 컬럼 업데이트
     void deleteCalendar(CalendarDeleteRequest calendarDeleteRequest, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
 
-
-    //조회
+    //모든 일정 조회
     List<CalendarListDTO> getCalendar(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
+
+    //선택한 년도, 월의 일정 조회
+    List<CalendarListDTO> getSelectedCalendar(String year, String month, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException;
 }

@@ -63,4 +63,9 @@ public class CalendarServiceImpl implements CalendarService {
         return calendarRepository.findAll();
     }
 
+    @Override
+    public List<CalendarListDTO> getSelectedCalendar(String year, String month) {
+        return calendarRepository.getSelectedCalendar(year,month);
+    }
+
 }

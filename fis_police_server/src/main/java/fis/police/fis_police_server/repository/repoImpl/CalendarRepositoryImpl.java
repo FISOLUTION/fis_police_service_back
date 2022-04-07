@@ -51,4 +51,17 @@ public class CalendarRepositoryImpl implements CalendarRepository {
                 .orderBy(qCalendar.date.desc())  //일정의 날짜로 정렬해서 주기
                 .fetch();
     }
+
+    @Override
+    public List<CalendarListDTO> getSelectedCalendar(String year, String month) {
+        return jpaQueryFactory
+                .select(new QCalendarListDTO(qCalendar.id, qCalendar.date, qCalendar.title, qCalendar.content, qCalendar.registration_date, qCalendar.modify_date, qCalendar.delete_date,qOfficials.id, qOfficials.o_name, qOfficials.o_nickname, qAclass.id, qAclass.name))
+                .from(qCalendar)
+                .leftJoin(qCalendar.officials, qOfficials)
+                .leftJoin(qCalendar.aclass, qAclass)
+                .where(qCalendar.delete_date.isNull()
+                .and(qCalendar.date.startsWith(year+"-"+month+"-")))  //연도와 월이 일치하는 일정
+                .orderBy(qCalendar.date.desc())  //일정의 날짜로 정렬해서 주기
+                .fetch();
+    }
 }
