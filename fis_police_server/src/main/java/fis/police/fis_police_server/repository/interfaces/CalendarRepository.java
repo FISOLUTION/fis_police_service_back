@@ -19,4 +19,7 @@ public interface CalendarRepository {
 
     //모든 일정 찾기
     List<CalendarListDTO> findAll();
+
+    //선택한 년도, 월의 일정 조회
+    List<CalendarListDTO> getSelectedCalendar(String year, String month);
 }
