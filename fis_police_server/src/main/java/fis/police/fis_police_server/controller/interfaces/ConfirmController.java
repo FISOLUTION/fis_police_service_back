@@ -26,4 +26,7 @@ public interface ConfirmController {
 
     // /confirm/calendar -> 현장요원별 확인서가 제출된 날짜만 출력? 이건 아직 미정
     CalendarResponse confirmDay(HttpServletRequest request);
+
+
+    // todo  앱을 다운받지 않은 시설은 오프라인으로 확인서를 작성한 후 오프라인 확인서 작성완료 버튼을 눌러 지문등록을 완료 했음을 알려줌
 }
