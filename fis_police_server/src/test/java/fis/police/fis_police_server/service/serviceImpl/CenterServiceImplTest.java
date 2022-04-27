@@ -6,12 +6,22 @@ import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
 import fis.police.fis_police_server.dto.CenterSearchDTO;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
+<<<<<<< HEAD
 import fis.police.fis_police_server.repository.AgentRepository;
 import fis.police.fis_police_server.repository.CenterRepository;
 import fis.police.fis_police_server.service.AgentService;
 import fis.police.fis_police_server.service.CenterService;
 import fis.police.fis_police_server.service.MapService;
 import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+=======
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.service.interfaces.AgentService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.MapService;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
+import org.assertj.core.api.Assertions;
+>>>>>>> d7f555aca36e550b51c77aac433708bb9e6ff886
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +99,7 @@ class CenterServiceImplTest {
         center.setLocation(location);
         User user = new User("테스트", "test", "1234", "010-xxxx-xxxx", LocalDate.now(), UserAuthority.USER);
         AgentSaveRequest agent1 = new AgentSaveRequest("이승범", "010-6715-0071", "555",
-                "구로구 벚꽃로 68길 10", false, "", null);
+                "구로구 벚꽃로 68길 10", false, "", null, UserAuthority.AGENT, null, null);
         agentService.saveAgent(agent1);
         Agent agent = agentRepository.findByA_code("555").get(0);
 

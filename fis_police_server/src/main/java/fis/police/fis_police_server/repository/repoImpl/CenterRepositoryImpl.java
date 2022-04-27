@@ -6,7 +6,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.QCenter;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
-import fis.police.fis_police_server.repository.CenterRepository;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
 import fis.police.fis_police_server.repository.queryMethod.CenterQueryMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -123,7 +123,7 @@ public class CenterRepositoryImpl extends CenterQueryMethod implements CenterRep
     /*
         작성 날짜: 2022/02/04 3:13 오후
         작성자: 고준영
-        작성 내용: 센터의 참여여부를 콜 기록을 바탕으로 업데이트 하기 위함! 근데 쿼리가 안날라가~~~~~
+        작성 내용: 센터의 참여여부를 콜 기록을 바탕으로 업데이트 하기 위함! 근데 쿼리가 안날라가~~~~~ -> executeUpdate() 로 해결!
     */
     @Override
     @Modifying

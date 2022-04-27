@@ -1,8 +1,10 @@
 package fis.police.fis_police_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
+import fis.police.fis_police_server.dto.ExcelCenterDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -70,24 +72,75 @@ public class Center {
     private List<Schedule> scheduleList = new ArrayList<Schedule>();
 
     /*
+        작성 날짜: 2022/02/14 1:35 오후
+        작성자: 고준영
+        작성 내용: 신청서와 시설을 연결
+    */
+    @OneToMany(mappedBy = "center")
+    private List<Hope> hopeList = new ArrayList<Hope>();
+    /*
+        날짜 : 2022/02/10 4:40 오후
+        작성자 : 원보라
+        작성내용 : 앱 도메인 추가
+    */
+    @OneToMany(mappedBy = "center")
+    private List<Confirm> confirmList = new ArrayList<Confirm>();
+
+    @OneToMany(mappedBy = "center")
+    private List<Aclass> aclassList = new ArrayList<Aclass>();
+
+    @OneToMany(mappedBy = "center")
+    private List<Officials> officialsList = new ArrayList<Officials>();
+
+    /*
+        작성 날짜: 2022/03/17 1:13 오후
+        작성자: 고준영
+        작성 내용: excel 용 생성자
+    */
+    public Center(String c_sido, String c_sigungu, String c_name, String c_type, String c_status, String c_address, String c_zipcode, String c_ph, String c_faxNum, String c_people, String c_hpAddress) {
+        this.c_sido = c_sido;
+        this.c_sigungu = c_sigungu;
+        this.c_name = c_name;
+        this.c_type = c_type;
+        this.c_status = c_status;
+        this.c_address = c_address;
+        this.c_zipcode = c_zipcode;
+        this.c_ph = c_ph;
+        this.c_faxNum = c_faxNum;
+        this.c_people = c_people;
+        this.c_hpAddress = c_hpAddress;
+    }
+
+    /*
         날짜 : 2022/01/13 3:51 오후
         작성자 : 현승구
         작성내용 : 위도 경도 설정자
     */
+
     public void setLocation(Pair<Double, Double> location){
         this.c_longitude = location.getFirst();
         this.c_latitude = location.getSecond();
     }
-
     /*
         날짜 : 2022/01/11 1:27 오후
         작성자 : 현승구
         작성내용 : 테스트용 생성자
     */
+
     public Center(String c_name, String c_address, String c_ph){
         this.c_name = c_name;
         this.c_address = c_address;
         this.c_ph = c_ph;
+    }
+    /*
+        작성 날짜: 2022/03/17 10:08 오전
+        작성자: 고준영
+        작성 내용: confirm test 용 생성자
+    */
+    public Center(String c_name, String c_ph, String c_people, Participation participation) {
+        this.c_ph = c_ph;
+        this.c_people = c_people;
+        this.participation = participation;
     }
 
     public Center(String c_name, String c_address, String c_ph, Double c_latitude, Double c_longitude) {
@@ -114,6 +167,32 @@ public class Center {
         this.c_address = center.getC_address();
     }
 
+    /*
+        작성 날짜: 2022/02/11 10:32 오전
+        작성자: 고준영
+        작성 내용: center modify dto, center save dto 용 생성자 (confirm list가
+    */
+
+    public Center(Long id, String c_sido, String c_sigungu, String c_name, String c_type, String c_status, String c_address, String c_zipcode, String c_ph, String c_faxNum, String c_people, String c_hpAddress, Double c_latitude, Double c_longitude, Participation participation, Visited visited, List<Call> callList, List<Schedule> scheduleList) {
+        this.id = id;
+        this.c_sido = c_sido;
+        this.c_sigungu = c_sigungu;
+        this.c_name = c_name;
+        this.c_type = c_type;
+        this.c_status = c_status;
+        this.c_address = c_address;
+        this.c_zipcode = c_zipcode;
+        this.c_ph = c_ph;
+        this.c_faxNum = c_faxNum;
+        this.c_people = c_people;
+        this.c_hpAddress = c_hpAddress;
+        this.c_latitude = c_latitude;
+        this.c_longitude = c_longitude;
+        this.participation = participation;
+        this.visited = visited;
+        this.callList = callList;
+        this.scheduleList = scheduleList;
+    }
 
     @Override
     public String toString() {

@@ -1,20 +1,16 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.LoginController;
-import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.controller.interfaces.LoginController;
 import fis.police.fis_police_server.dto.LoginRequest;
 import fis.police.fis_police_server.dto.LoginResponse;
-import fis.police.fis_police_server.service.LoginService;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.service.interfaces.LoginService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -24,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class LoginControllerImpl implements LoginController {
 
     private final LoginService loginService;
-    private final UserService userService;
+    private final TokenService tokenService;
 
     @Override
     @PostMapping("/login")
@@ -42,7 +38,6 @@ public class LoginControllerImpl implements LoginController {
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
         HttpSession session = request.getSession(); //디폴트 True: 기존있으면 기존반환, 없을 때 새로 생성  <-> false: 없을 때 새로 생성안함
 
-
         //세션에 로그인 회원 정보 보관
         //로그인 페이지로 이동시 세션 만료 됨
         if (!session.isNew()) {
@@ -53,7 +48,6 @@ public class LoginControllerImpl implements LoginController {
         log.info("[로그인 id값: {}] [url: {}] [로그인 성공]",loginUserId,"/login");
         return loginResponse;
     }
-
 
     @Override
     @PostMapping("/logout")

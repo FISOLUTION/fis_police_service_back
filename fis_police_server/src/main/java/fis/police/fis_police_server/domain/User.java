@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.UserSaveRequest;
 import lombok.Getter;
@@ -50,10 +51,10 @@ public class User {
     private UserAuthority u_auth;                  // '권한'
 
     @OneToMany(mappedBy = "user")
-    List<Call> callList = new ArrayList<Call>();
+    private List<Call> callList = new ArrayList<Call>();
 
     @OneToMany(mappedBy = "user")
-    List<Messenger> messengerList = new ArrayList<Messenger>();
+    private List<Messenger> messengerList = new ArrayList<Messenger>();
 
 
     /*

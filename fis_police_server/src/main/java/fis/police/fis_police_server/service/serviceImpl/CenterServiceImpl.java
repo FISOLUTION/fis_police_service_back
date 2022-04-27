@@ -1,12 +1,17 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
 import com.mysema.commons.lang.Pair;
+import fis.police.fis_police_server.domain.Aclass;
 import fis.police.fis_police_server.domain.Center;
+import fis.police.fis_police_server.domain.Officials;
+import fis.police.fis_police_server.dto.CenterDataResponse;
 import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.MapService;
-import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+import fis.police.fis_police_server.dto.ClassDataDTO;
+import fis.police.fis_police_server.dto.OfficialDTO;
+import fis.police.fis_police_server.repository.interfaces.CenterRepository;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.MapService;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service //이걸안써서 오류 내\? 후 조심합시디
 @Transactional
@@ -33,17 +39,13 @@ public class CenterServiceImpl implements CenterService {
     public List<CenterSearchResponseDTO> findCenterList(String c_name, String c_address, String c_ph) throws NoResultException {
        List<CenterSearchResponseDTO> centerList = centerRepository.findBySearchCenterDTO(c_name, c_address, c_ph);
        if(centerList.isEmpty())
-           throw new NoResultException("조건에 맞는 center가 존재하지 않습니다");
+           throw new NoResultException("조건에 맞는 center 가 존재하지 않습니다");
        else return centerList;
     }
 
     @Override
     public Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException {
-       try {
-           return centerRepository.findByIdAndFetchAll(center_id);
-       } catch (NoResultException | NonUniqueResultException noResultException){
-           throw noResultException;
-       }
+        return centerRepository.findByIdAndFetchAll(center_id);
     }
 
     @Override
@@ -71,8 +73,25 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public Center findById(Long id) throws NoResultException{
-        Center center = centerRepository.findById(id);
-        if(center == null) throw new NoResultException("center_id: " + id + "가 존재하지 않습니다");
-        return center;
+       try {
+           return centerRepository.findById(id);
+       } catch (NullPointerException e) {
+           throw new NullPointerException("관련 시설이 존재하지 않음.");
+       } catch (NoResultException e) {
+           throw new NoResultException("시설 id 존재하지 않음.");
+       }
+    }
+
+    @Override
+    public CenterDataResponse getCenterData(Center center) {
+        List<Aclass> aclassList = center.getAclassList();
+        List<ClassDataDTO> classes = aclassList.stream()
+                .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))
+                .collect(Collectors.toList());
+        List<Officials> officialsList = center.getOfficialsList();
+        List<OfficialDTO> officials = officialsList.stream()
+                .map(official -> new OfficialDTO(official.getId(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getAccept()))
+                .collect(Collectors.toList());
+        return new CenterDataResponse(center.getId(), center.getC_name(), center.getC_address(), center.getC_zipcode(), center.getC_ph(), classes, officials);
     }
 }

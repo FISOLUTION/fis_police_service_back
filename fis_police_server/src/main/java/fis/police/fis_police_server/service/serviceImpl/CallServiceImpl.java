@@ -7,7 +7,7 @@ import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
 import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
 import fis.police.fis_police_server.repository.repoImpl.CenterRepositoryImpl;
-import fis.police.fis_police_server.service.CallService;
+import fis.police.fis_police_server.service.interfaces.CallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,15 +44,9 @@ public class CallServiceImpl implements CallService {
         CallSaveResponse response = new CallSaveResponse();
         response.setCenter_id(call.getCenter().getId());
         response.setCall_id(call.getId());
-        response.setStatus_code("잘 저장됨");
+        response.setStatus_code("200");
 
         return response;
-    }
-
-    // 콜 기록에 저장될 기관 찾기
-    public Center findCenter(CallSaveRequest request) {
-        Center findCenter = centerRepository.findById(request.getCenter_id());
-        return findCenter;
     }
 
 }
