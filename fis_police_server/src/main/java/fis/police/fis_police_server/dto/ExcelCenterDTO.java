@@ -1,16 +1,7 @@
 package fis.police.fis_police_server.dto;
 
-import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Schedule;
-import fis.police.fis_police_server.domain.enumType.Participation;
-import fis.police.fis_police_server.domain.enumType.Visited;
-import fis.police.fis_police_server.service.excelService.ExcelColumn;
 import lombok.Data;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class ExcelCenterDTO {
@@ -22,7 +13,6 @@ public class ExcelCenterDTO {
     private String c_address;     // '주소',
     private String c_zipcode;     // '우편번호',
     private String c_ph;          // '전화번호',
-    private String c_faxNum;      // '팩스번호',
     private String c_people;      // '현원',
     private String c_hpAddress;   // '홈페이지주소',
 
@@ -31,6 +21,6 @@ public class ExcelCenterDTO {
                 centerDTO.getC_name(), centerDTO.getC_type(),
                 centerDTO.getC_status(), centerDTO.getC_address(),
                 centerDTO.getC_zipcode(), centerDTO.getC_ph(),
-                centerDTO.getC_faxNum(), centerDTO.getC_people(), centerDTO.getC_hpAddress());
+                centerDTO.getC_people(), centerDTO.getC_hpAddress());
     }
 }

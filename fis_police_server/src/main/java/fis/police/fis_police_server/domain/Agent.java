@@ -37,7 +37,7 @@ public class Agent {
     private String a_ph;                               //'현장 요원 전화번호',
 
     @NotBlank
-    @Column(length = 100, unique = true)
+    @Column(length = 100)
     private String a_code;                             //'현장 요원 코드'
 
     @NotBlank

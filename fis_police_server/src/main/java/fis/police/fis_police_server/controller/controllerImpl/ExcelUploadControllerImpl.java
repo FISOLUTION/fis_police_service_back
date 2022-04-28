@@ -80,7 +80,6 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
             data.setC_address(row.getCell(5).getStringCellValue());
             data.setC_zipcode(Integer.toString((int) row.getCell(7).getNumericCellValue()));
             data.setC_ph(row.getCell(8).getStringCellValue());
-            data.setC_faxNum(row.getCell(9).getStringCellValue());
             data.setC_people(Integer.toString((int) row.getCell(10).getNumericCellValue()));
             data.setC_hpAddress(row.getCell(11).getStringCellValue());
 
@@ -92,7 +91,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
                     dto.getC_name(), dto.getC_type(),
                     dto.getC_status(), dto.getC_address(),
                     dto.getC_zipcode(), dto.getC_ph(),
-                    dto.getC_faxNum(), dto.getC_people(), dto.getC_hpAddress());
+                    dto.getC_people(), dto.getC_hpAddress());
             System.out.println("dto.getC_name() = " + dto.getC_name());
             System.out.println("center.getC_name() = " + center.getC_name());
             System.out.println("center = " + center);
