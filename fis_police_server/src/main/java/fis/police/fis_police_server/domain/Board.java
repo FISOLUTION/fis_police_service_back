@@ -14,6 +14,7 @@ import java.util.List;
 // 알림장
 @Entity
 @Getter
+@Table(name = "CALL_BOARD")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Board {

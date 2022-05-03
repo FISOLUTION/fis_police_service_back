@@ -2,8 +2,6 @@ package fis.police.fis_police_server;
 
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.*;
-import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.dto.ScheduleSaveRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,40 +67,40 @@ public class initDb2 {
             em.persist(center3);
 
 
-            Officials official1 = new Officials(null,"official1", "01012341234", "mail@mail.com", "official_id1", "1234", center1, null, UserAuthority.OFFICIAL, null, null, null, null, null);
+            Officials official1 = new Officials(null,"official1", "01012341234", "mail@mail.com", "official_id1", "1234", center1, null, UserAuthority.DIRECTOR, null, null, null, null, null);
             em.persist(official1);
-            Officials official2 = new Officials(null,"official2", "01012341234", "mail@mail.com", "official_id2", "3564", center2, null, UserAuthority.OFFICIAL, null, null, null, null, null);
+            Officials official2 = new Officials(null,"official2", "01012341234", "mail@mail.com", "official_id2", "3564", center2, null, UserAuthority.DIRECTOR, null, null, null, null, null);
             em.persist(official2);
-            Officials official3 = new Officials(null,"official3", "01012341234", "mail@mail.com", "official_id3", "2345", center3, null, UserAuthority.OFFICIAL, null, null, null, null, null);
+            Officials official3 = new Officials(null,"official3", "01012341234", "mail@mail.com", "official_id3", "2345", center3, null, UserAuthority.DIRECTOR, null, null, null, null, null);
             em.persist(official3);
-            Officials official4 = new Officials(null,"official4", "01012341234", "mail@mail.com", "official_id4", "8567", center1, null, UserAuthority.OFFICIAL, null, null, null, null, null);
+            Officials official4 = new Officials(null,"official4", "01012341234", "mail@mail.com", "official_id4", "8567", center1, null, UserAuthority.DIRECTOR, null, null, null, null, null);
             em.persist(official4);
-            Officials official5 = new Officials(null,"official5", "01012341234", "mail@mail.com", "official_id5", "1243", center2, null, UserAuthority.OFFICIAL, null, null, null, null, null);
+            Officials official5 = new Officials(null,"official5", "01012341234", "mail@mail.com", "official_id5", "1243", center2, null, UserAuthority.DIRECTOR, null, null, null, null, null);
             em.persist(official5);
 
 
             Schedule schedule1 = Schedule.createSchedule(center1, user1, agent1, LocalDate.now(),
-                    LocalDate.now(),LocalTime.parse("09:00:00"), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.now(),LocalTime.parse("09:00:00"), 500, "특이사항 없음", "특이사항 없음", Accept.ACCEPT,null);
             em.persist(schedule1);
             Schedule schedule2 = Schedule.createSchedule(center2, user2, agent1, LocalDate.now(),
-                    LocalDate.parse("2099-01-01"),LocalTime.parse("10:00:00"), 500, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2099-01-01"),LocalTime.parse("10:00:00"), 500, "특이사항 없음", "특이사항 없음",Accept.ACCEPT,"차가 막혀요");
             em.persist(schedule2);
 
             Schedule schedule3 = Schedule.createSchedule(center1, user1, agent3, LocalDate.now(),
-                    LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.accept,null);
+                    LocalDate.now(), LocalTime.now(), 500, "특이사항 없음", "특이사항 없음", Accept.ACCEPT,null);
             em.persist(schedule3);
             Schedule schedule4 = Schedule.createSchedule(center2, user2, agent1, LocalDate.now(),
-                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 444, "특이사항 없음", "특이사항 없음",Accept.ACCEPT,"차가 막혀요");
             em.persist(schedule4);
 
             Schedule schedule5 = Schedule.createSchedule(center2, user1, agent3, LocalDate.now(),
-                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음", Accept.TBD,null);
+                    LocalDate.parse("2022-09-09"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음", Accept.WAITING,null);
             em.persist(schedule5);
             Schedule schedule6 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
-                    LocalDate.parse("2022-10-10"),LocalTime.parse("10:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2022-10-10"),LocalTime.parse("10:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.ACCEPT,"차가 막혀요");
             em.persist(schedule6);
             Schedule schedule7 = Schedule.createSchedule(center2, user2, agent2, LocalDate.now(),
-                    LocalDate.parse("2022-03-11"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.accept,"차가 막혀요");
+                    LocalDate.parse("2022-03-11"),LocalTime.parse("09:00:00"), 333, "특이사항 없음", "특이사항 없음",Accept.ACCEPT,"차가 막혀요");
             em.persist(schedule7);
 
 /*

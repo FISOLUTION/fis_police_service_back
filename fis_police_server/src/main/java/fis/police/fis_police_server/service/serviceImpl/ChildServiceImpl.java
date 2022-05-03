@@ -36,7 +36,7 @@ public class ChildServiceImpl implements ChildService {
         Aclass aclass = aclassRepository.findById(request.getClass_id());
         if (child.getAclass() != aclass) {
             child.modifyChild(request, aclass);
-            child.acceptChild(Accept.TBD);
+            child.acceptChild(Accept.WAITING);
         }
         child.modifyChild(request, aclass);
     }

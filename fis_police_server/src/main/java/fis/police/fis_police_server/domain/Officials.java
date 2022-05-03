@@ -16,26 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 @AllArgsConstructor
-public class Officials {
-    @Id
-    @GeneratedValue
-    @Column(name = "official_id")
-    private Long id;
-
-    @Column(length = 100)
-    private String o_name;
-
-    @Column(length = 100)
-    private String o_ph;
-
-    @Column(length = 100)
-    private String o_email;
-
-    @Column(length = 100)
-    private String o_nickname;
-
-    @Column(length = 100)
-    private String o_pwd;
+@Table(name = "teacher")
+public class Officials extends UserTeacher{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_id")
@@ -51,6 +33,7 @@ public class Officials {
     */
     @NotNull // enum 때문에 notblank 안됨
     @Enumerated(EnumType.STRING)
+    @Column(name = "auth")
     private UserAuthority u_auth;                  // '권한'
 
     // 작성 글
@@ -99,4 +82,15 @@ public class Officials {
         this.center = center;
     }
 
+    public Officials(Long id, String o_name, String o_ph, String o_email, String o_nickname, String o_pwd, Center center, List<Hope> hopeList, UserAuthority u_auth, List<Board> boardList, List<Calendar> calendarList, List<Announce> announceList, Aclass aclass, Accept accept) {
+        super(id, o_name, o_ph, o_email, o_nickname, o_pwd);
+        this.center = center;
+        this.hopeList = hopeList;
+        this.u_auth = u_auth;
+        this.boardList = boardList;
+        this.calendarList = calendarList;
+        this.announceList = announceList;
+        this.aclass = aclass;
+        this.accept = accept;
+    }
 }

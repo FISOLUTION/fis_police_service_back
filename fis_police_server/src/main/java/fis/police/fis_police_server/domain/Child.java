@@ -4,7 +4,6 @@ import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.ChildModifyRequest;
 import fis.police.fis_police_server.dto.ChildSaveRequest;
-import fis.police.fis_police_server.dto.ParentSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "CALL_CHILD")
 @Getter
 public class Child {
     @Id
@@ -60,7 +60,7 @@ public class Child {
         // 아래 두개 연관관계 매핑으로 묶어야하겠지???
         child.aclass = aclass;
         child.mappingParent(parent);
-        child.accept = Accept.TBD;
+        child.accept = Accept.WAITING;
         return child;
     }
 
@@ -84,7 +84,7 @@ public class Child {
     public Child(String name, String birthday) {
         this.name = name;
         this.birthday = birthday;
-        this.accept = Accept.TBD;
+        this.accept = Accept.WAITING;
     }
 
 }

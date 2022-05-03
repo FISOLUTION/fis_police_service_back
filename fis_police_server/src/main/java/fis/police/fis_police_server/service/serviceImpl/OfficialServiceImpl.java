@@ -7,7 +7,6 @@ import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.OfficialDTO;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
-import fis.police.fis_police_server.dto.Result;
 import fis.police.fis_police_server.repository.interfaces.AclassRepository;
 import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
 import fis.police.fis_police_server.service.interfaces.OfficialService;
@@ -30,11 +29,11 @@ public class OfficialServiceImpl implements OfficialService {
     public void saveOfficials(OfficialSaveRequest request, Center center) {
 //        nicknameService.CheckNicknameOverlap(request.getO_nickname());
         checkDuplicateByNickname(request.getO_nickname());
-        if (request.getU_auth() == UserAuthority.OFFICIAL) {
-            Officials officials = Officials.createOfficials(request, center, Accept.accept);
+        if (request.getU_auth() == UserAuthority.DIRECTOR) {
+            Officials officials = Officials.createOfficials(request, center, Accept.ACCEPT);
             officialsRepository.saveOfficials(officials);
         } else if (request.getU_auth() == UserAuthority.TEACHER) {
-            Officials officials = Officials.createOfficials(request, center, Accept.TBD);
+            Officials officials = Officials.createOfficials(request, center, Accept.WAITING);
             officialsRepository.saveOfficials(officials);
         }
     }
@@ -68,7 +67,7 @@ public class OfficialServiceImpl implements OfficialService {
 
     @Override
     public List<OfficialDTO> findOfficialsWaitingAccept(Long center_id) {
-        List<Officials> officialsWaitingAccept = officialsRepository.findOfficialsWaitingAccept(center_id, Accept.TBD);
+        List<Officials> officialsWaitingAccept = officialsRepository.findOfficialsWaitingAccept(center_id, Accept.WAITING);
         List<OfficialDTO> collect = officialsWaitingAccept.stream()
                 .map(official -> new OfficialDTO(official.getId(), official.getO_name(), official.getO_ph(), official.getO_email(), official.getAccept()))
                 .collect(Collectors.toList());

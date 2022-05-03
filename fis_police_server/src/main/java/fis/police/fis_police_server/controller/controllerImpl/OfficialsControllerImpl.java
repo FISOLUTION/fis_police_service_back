@@ -45,7 +45,7 @@ public class OfficialsControllerImpl implements OfficialsController {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         log.info("[로그인 id값: {}] [url: {}] [요청: 시설 담당자 정보 수정]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/officials");
         Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
-        if (officialFromRequest.getAccept() == Accept.reject) {
+        if (officialFromRequest.getAccept() == Accept.REJECT) {
             throw new IllegalStateException("승인되지 않은 사용자입니다.");
         }
         Center center = centerService.findById(request.getCenter_id());

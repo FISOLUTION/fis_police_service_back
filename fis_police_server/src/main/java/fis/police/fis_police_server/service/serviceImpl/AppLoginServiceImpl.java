@@ -39,7 +39,7 @@ public class AppLoginServiceImpl implements AppLoginService {
                     return agent.get(0).getId();
                 }
             }
-        } else if (request.getRole() == UserAuthority.OFFICIAL || request.getRole() == UserAuthority.TEACHER) {
+        } else if (request.getRole() == UserAuthority.DIRECTOR || request.getRole() == UserAuthority.TEACHER) {
             List<Officials> officials = officialsRepository.findByNickname(request.getU_nickname());
             if (officials.size() != 0) {
                 if (officials.get(0).getO_pwd().equals(request.getU_pwd())) {
@@ -77,7 +77,7 @@ public class AppLoginServiceImpl implements AppLoginService {
                 loginFail(loginResponse, "idFail");
                 return loginResponse;
             }
-        } else if (role == UserAuthority.OFFICIAL || role == UserAuthority.TEACHER) {
+        } else if (role == UserAuthority.DIRECTOR || role == UserAuthority.TEACHER) {
             log.info("[로그인 요청 역할 {}]", role);
             List<Officials> officials = officialsRepository.findByNickname(nickname);
             if (!officials.isEmpty()) {

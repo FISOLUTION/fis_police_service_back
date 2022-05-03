@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -60,7 +59,7 @@ public class AclassControllerImpl implements AclassController {
                 throw new IllegalAccessException("담당 교실이 아닌 교실 페이지로는 접속할 수 없습니다.");
             }
             System.out.println("officialFromRequest.getAccept() = " + officialFromRequest.getAccept());
-            if (officialFromRequest.getAccept() != Accept.accept) {
+            if (officialFromRequest.getAccept() != Accept.ACCEPT) {
                 throw new IllegalAccessException("접속이 승인되지 않았습니다.");
             }
         } else if (role.equals("PARENT")) {
@@ -68,7 +67,7 @@ public class AclassControllerImpl implements AclassController {
             if (!child.getAclass().equals(aclass)) {
                 throw new IllegalAccessException("담당 교실이 아닌 교실 페이지로는 접속할 수 없습니다.");
             }
-            if (child.getAccept() != Accept.accept) {
+            if (child.getAccept() != Accept.ACCEPT) {
                 throw new IllegalAccessException("접속이 승인되지 않았습니다.");
             }
         }

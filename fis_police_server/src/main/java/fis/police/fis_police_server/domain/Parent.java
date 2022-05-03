@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name = "CALL_PARENT")
 public class Parent {
 
     @Id

@@ -1,7 +1,6 @@
 package fis.police.fis_police_server.domain;
 
 import com.mysema.commons.lang.Pair;
-import fis.police.fis_police_server.domain.embeddable.OtherInfo;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.AllArgsConstructor;
@@ -63,8 +62,8 @@ public class Center {
     @Enumerated(EnumType.STRING)
     private Visited visited;
 
-    @Embedded
-    private OtherInfo otherInfo;            // 지문등록 사업에서 사용하는 정보들 집합
+//    @Embedded
+//    private OtherInfo otherInfo;            // 지문등록 사업에서 사용하는 정보들 집합
 
     @OneToMany(mappedBy = "center", cascade = CascadeType.PERSIST)
     private List<Call> callList = new ArrayList<Call>();
