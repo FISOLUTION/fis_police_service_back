@@ -38,6 +38,8 @@ public class QHope extends EntityPathBase<Hope> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath now_date = createString("now_date");
+
     public final QOfficials officials;
 
     public QHope(String variable) {
