@@ -65,7 +65,7 @@ public class QConfirm extends EntityPathBase<Confirm> {
     public QConfirm(Class<? extends Confirm> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.agent = inits.isInitialized("agent") ? new QAgent(forProperty("agent")) : null;
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
     }
 
 }

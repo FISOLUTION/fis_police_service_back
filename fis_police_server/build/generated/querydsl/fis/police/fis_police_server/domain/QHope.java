@@ -60,7 +60,7 @@ public class QHope extends EntityPathBase<Hope> {
 
     public QHope(Class<? extends Hope> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
         this.officials = inits.isInitialized("officials") ? new QOfficials(forProperty("officials"), inits.get("officials")) : null;
     }
 

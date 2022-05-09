@@ -56,7 +56,7 @@ public class QAclass extends EntityPathBase<Aclass> {
 
     public QAclass(Class<? extends Aclass> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
     }
 
 }

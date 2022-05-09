@@ -18,6 +18,8 @@ public class QCenter extends EntityPathBase<Center> {
 
     private static final long serialVersionUID = 1419835668L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QCenter center = new QCenter("center");
 
     public final ListPath<Aclass, QAclass> aclassList = this.<Aclass, QAclass>createList("aclassList", Aclass.class, QAclass.class, PathInits.DIRECT2);
@@ -56,6 +58,8 @@ public class QCenter extends EntityPathBase<Center> {
 
     public final ListPath<Officials, QOfficials> officialsList = this.<Officials, QOfficials>createList("officialsList", Officials.class, QOfficials.class, PathInits.DIRECT2);
 
+    public final fis.police.fis_police_server.domain.embeddable.QOtherInfo otherInfo;
+
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Participation> participation = createEnum("participation", fis.police.fis_police_server.domain.enumType.Participation.class);
 
     public final ListPath<Schedule, QSchedule> scheduleList = this.<Schedule, QSchedule>createList("scheduleList", Schedule.class, QSchedule.class, PathInits.DIRECT2);
@@ -63,15 +67,24 @@ public class QCenter extends EntityPathBase<Center> {
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Visited> visited = createEnum("visited", fis.police.fis_police_server.domain.enumType.Visited.class);
 
     public QCenter(String variable) {
-        super(Center.class, forVariable(variable));
+        this(Center.class, forVariable(variable), INITS);
     }
 
     public QCenter(Path<? extends Center> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QCenter(PathMetadata metadata) {
-        super(Center.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QCenter(PathMetadata metadata, PathInits inits) {
+        this(Center.class, metadata, inits);
+    }
+
+    public QCenter(Class<? extends Center> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.otherInfo = inits.isInitialized("otherInfo") ? new fis.police.fis_police_server.domain.embeddable.QOtherInfo(forProperty("otherInfo"), inits.get("otherInfo")) : null;
     }
 
 }

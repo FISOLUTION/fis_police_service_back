@@ -77,7 +77,7 @@ public class QOfficials extends EntityPathBase<Officials> {
     public QOfficials(Class<? extends Officials> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.aclass = inits.isInitialized("aclass") ? new QAclass(forProperty("aclass"), inits.get("aclass")) : null;
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
     }
 
 }
