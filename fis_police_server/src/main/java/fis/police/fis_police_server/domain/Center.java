@@ -50,7 +50,7 @@ public class Center {
     @Column(length = 100, name = "cur_child_cnt")
     private String c_people;      // '현원',
 
-    @Column(length = 100, name = "homepage")
+    @Column(name = "homepage")
     private String c_hpAddress;   // '홈페이지주소',
 
     @Column(name = "latitude")
