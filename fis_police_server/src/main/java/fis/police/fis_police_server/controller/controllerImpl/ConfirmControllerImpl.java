@@ -1,23 +1,21 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.ConfirmController;
+import fis.police.fis_police_server.controller.interfaces.ConfirmController;
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.service.ConfirmService;
-import fis.police.fis_police_server.service.ScheduleService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.service.interfaces.ConfirmService;
+import fis.police.fis_police_server.service.interfaces.ScheduleService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Null;
 import java.util.List;
 
 
@@ -40,7 +38,7 @@ public class ConfirmControllerImpl implements ConfirmController {
     // 현장요원이 확인서 작성하여 제출 (확인서 정보 + 현장요원 정보) 현장요원 별 하나씩
     @Override
     @PostMapping("/confirm/write/{schedule_id}")
-    public WellSaveResponse postConfirm(@RequestBody ConfirmFromAgentRequest formRequest, HttpServletRequest request, @PathVariable Long schedule_id) {
+    public WellDoneResponse postConfirm(@RequestBody ConfirmFromAgentRequest formRequest, HttpServletRequest request, @PathVariable Long schedule_id) {
         String authorizationHeader = request.getHeader("Authorization");
         Agent agent = tokenService.getAgentFromRequest(authorizationHeader);    // jwt token exception in tokenService -> 따로 잡을 필요 없음.
         log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 저장]", agent.getId(), "/confirm/write/" + schedule_id);
@@ -79,7 +77,7 @@ public class ConfirmControllerImpl implements ConfirmController {
     // 시설이 확인서에 결재 후 전송 => 확인서의 '확인' 컬럼 업데이트
     @Override
     @PostMapping("/confirm/check/{schedule_id}")
-    public WellSaveResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) throws IllegalAccessException {
+    public WellDoneResponse updateConfirmComplete(@RequestBody UpdateRequest request, @PathVariable Long schedule_id, HttpServletRequest servletRequest) throws IllegalAccessException {
         String authorizationHeader = servletRequest.getHeader("Authorization");
         Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
         log.info("[로그인 id값: {}] [url: {}] [요청: 확인서 결재]", tokenService.getOfficialFromRequest(authorizationHeader).getId(), "/confirm/check");
@@ -95,7 +93,7 @@ public class ConfirmControllerImpl implements ConfirmController {
             for (Schedule schedule : sameSchedule) {
                 scheduleService.updateSchedule(schedule.getId());
             }
-            return new WellSaveResponse("200", "updated");
+            return new WellDoneResponse("200", "updated");
         } catch (IllegalStateException e) {
             throw new IllegalStateException("NoToken");
         } catch (HttpMessageNotReadableException e) {

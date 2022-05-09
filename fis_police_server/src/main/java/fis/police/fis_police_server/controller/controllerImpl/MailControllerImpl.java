@@ -1,18 +1,13 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.MailController;
+import fis.police.fis_police_server.controller.interfaces.MailController;
 import fis.police.fis_police_server.dto.MailSendResponse;
-import fis.police.fis_police_server.repository.repoImpl.CallRepositoryImpl;
-import fis.police.fis_police_server.service.MailService;
-import fis.police.fis_police_server.service.serviceImpl.MailServiceImpl;
+import fis.police.fis_police_server.service.interfaces.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 /*

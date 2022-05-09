@@ -5,7 +5,7 @@ import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.Complete;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.repository.ScheduleRepository;
+import fis.police.fis_police_server.repository.interfaces.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -95,7 +95,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
-                        .and(qSchedule.accept.in(Accept.TBD , Accept.accept))    //현장요원이 수락하거나 미정인것들
+                        .and(qSchedule.accept.in(Accept.WAITING , Accept.ACCEPT))    //현장요원이 수락하거나 미정인것들
                         .and(qSchedule.visit_date.goe(today))   //오늘 날짜 일정과 그 이후의 날짜에 예약된 일정을 보여줌
                 )
                 .orderBy(qSchedule.visit_date.asc())//날짜 정렬해서 주기
@@ -112,7 +112,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.center.id.eq(center_id)) //해당 센터에 대한
-                        .and(qSchedule.accept.eq(Accept.accept))    //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.accept.eq(Accept.ACCEPT))    //현장요원이 수락한 즉 성립된 일정인
                         .and(qSchedule.visit_date.eq(today))   //오늘 날짜 일정
                 )
                 .fetch();
@@ -156,13 +156,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleAgentResponse> findByAgent(Long agent_id, LocalDate today) {
         return jpaQueryFactory
                 .select(new QAppScheduleAgentResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc,qSchedule.accept,qSchedule.late_comment
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.eq(Accept.accept)) //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.accept.eq(Accept.ACCEPT)) //현장요원이 수락한 즉 성립된 일정인
                         .and(qSchedule.visit_date.eq(today))    //오늘 날짜에 해당하는 일정을 보여줌
                 )
                 .orderBy(qSchedule.visit_time.asc())//시간으로 정렬해서 주기
@@ -174,13 +174,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentIncompleteSchedule(Long agent_id) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.eq(Accept.TBD)) //현장요원이 수락|거부를 하지 않은 (accept 값이 TBD인 것들)
+                        .and(qSchedule.accept.eq(Accept.WAITING)) //현장요원이 수락|거부를 하지 않은 (accept 값이 TBD인 것들)
                 )
                 .orderBy(qSchedule.visit_date.asc(),qSchedule.visit_time.asc())// 방문 예쩡 날짜로 정렬해서 주기
                 .fetch();
@@ -191,13 +191,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentAllSchedule(Long agent_id,LocalDate today) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.eq(Accept.accept)) //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.accept.eq(Accept.ACCEPT)) //현장요원이 수락한 즉 성립된 일정인
                         .and(qSchedule.visit_date.goe(today))    //오늘과 미래의 일정들
                 )
                 .orderBy(qSchedule.visit_date.asc(), qSchedule.visit_time.asc())//시간으로 정렬해서 주기
@@ -208,13 +208,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     public List<AppScheduleResponse> findByAgentOldSchedule(Long agent_id, LocalDate today) {
         return jpaQueryFactory
                 .select(new QAppScheduleResponse(qSchedule.id, qSchedule.visit_date,qSchedule.visit_time,qSchedule.estimate_num, qSchedule.center_etc,qSchedule.agent_etc,qSchedule.total_etc
-                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qCenter.c_faxNum,qSchedule.complete))
+                        ,qCenter.id ,qCenter.c_name, qCenter.c_address, qCenter.c_zipcode, qCenter.c_ph, qSchedule.complete))
                 .from(qSchedule)
                 .leftJoin(qSchedule.center, qCenter)
                 .distinct()
                 .where(qSchedule.valid.eq(true) //스케쥴이 취소되지 않은 정상 스케쥴들 중에
                         .and(qSchedule.agent.id.eq(agent_id)) //해당 현장요원에 대한
-                        .and(qSchedule.accept.eq(Accept.accept)) //현장요원이 수락한 즉 성립된 일정인
+                        .and(qSchedule.accept.eq(Accept.ACCEPT)) //현장요원이 수락한 즉 성립된 일정인
 //                        .and(qSchedule.complete.eq(Complete.complete)) //확인서작성 완료한 (근데 혹시 확인서 당일에 못썼을 수 있으니까 주석처리 ....)
                         .and(qSchedule.visit_date.lt(today))    //과거 일정들
                 )

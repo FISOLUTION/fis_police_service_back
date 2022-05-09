@@ -37,7 +37,7 @@ public class Agent {
     private String a_ph;                               //'현장 요원 전화번호',
 
     @NotBlank
-    @Column(length = 100, unique = true)
+    @Column(length = 100)
     private String a_code;                             //'현장 요원 코드'
 
     @NotBlank
@@ -67,8 +67,8 @@ public class Agent {
         작성자: 고준영
         작성 내용: 요원 권한 -> AGENT, 요원아이디&비번
     */
-//    @NotNull // enum 때문에 notblank 안됨
-    @Column
+    @NotNull // enum 때문에 notblank 안됨
+    @Column(columnDefinition="varchar(32) default 'AGENT'")
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
 

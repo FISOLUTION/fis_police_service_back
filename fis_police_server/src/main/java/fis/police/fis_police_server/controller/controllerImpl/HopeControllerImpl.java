@@ -1,21 +1,18 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.HopeController;
+import fis.police.fis_police_server.controller.interfaces.HopeController;
 import fis.police.fis_police_server.domain.Center;
-import fis.police.fis_police_server.domain.Hope;
 import fis.police.fis_police_server.domain.Officials;
 import fis.police.fis_police_server.dto.HopeSaveRequest;
-import fis.police.fis_police_server.dto.HopeStatusResponse;
 import fis.police.fis_police_server.dto.Result;
-import fis.police.fis_police_server.dto.WellSaveResponse;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.HopeService;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.dto.WellDoneResponse;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.HopeService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /*
     작성 날짜: 2022/02/14 11:33 오전
@@ -32,7 +29,7 @@ public class HopeControllerImpl implements HopeController {
 
     @Override
     @PostMapping("/app/hope")
-    public WellSaveResponse saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
+    public WellDoneResponse saveHope(HttpServletRequest request, @RequestBody HopeSaveRequest hopeRequest) {
         try {
             String authorizationHeader = request.getHeader("Authorization");
             Officials officialFromRequest = tokenService.getOfficialFromRequest(authorizationHeader);
@@ -53,7 +50,7 @@ public class HopeControllerImpl implements HopeController {
 
     @Override
     @PostMapping("/hope/{hope_id}")
-    public WellSaveResponse updateComplete(@PathVariable Long hope_id) {
+    public WellDoneResponse updateComplete(@PathVariable Long hope_id) {
          return hopeService.updateHopeComplete(hope_id);
     }
 

@@ -1,14 +1,13 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.ExcelUploadController;
+import fis.police.fis_police_server.controller.interfaces.ExcelUploadController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.ExcelCenterDTO;
-import fis.police.fis_police_server.repository.CenterRepository;
-import fis.police.fis_police_server.service.CenterService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
 import fis.police.fis_police_server.service.excelService.ExcelService;
-import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,7 +15,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.parser.ParseException;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ExcelUploadControllerImpl implements ExcelUploadController {
 
     private final CenterService centerService;
@@ -34,6 +33,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
     @Override
     @PostMapping("excel/read")
     public Object readExcel(@ModelAttribute MultipartFile excelFile) throws IOException, NoSuchMethodException {
+        log.info("[url: {}] [요청: 엑셀 -> 디비 업로드]", "/excel/read");
         List<Object> object = excelService.excelToJson(excelFile, ExcelCenterDTO.class);
         object.stream().forEach(center -> {
             try {
@@ -80,7 +80,6 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
             data.setC_address(row.getCell(5).getStringCellValue());
             data.setC_zipcode(Integer.toString((int) row.getCell(7).getNumericCellValue()));
             data.setC_ph(row.getCell(8).getStringCellValue());
-            data.setC_faxNum(row.getCell(9).getStringCellValue());
             data.setC_people(Integer.toString((int) row.getCell(10).getNumericCellValue()));
             data.setC_hpAddress(row.getCell(11).getStringCellValue());
 
@@ -92,7 +91,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
                     dto.getC_name(), dto.getC_type(),
                     dto.getC_status(), dto.getC_address(),
                     dto.getC_zipcode(), dto.getC_ph(),
-                    dto.getC_faxNum(), dto.getC_people(), dto.getC_hpAddress());
+                    dto.getC_people(), dto.getC_hpAddress());
             System.out.println("dto.getC_name() = " + dto.getC_name());
             System.out.println("center.getC_name() = " + center.getC_name());
             System.out.println("center = " + center);

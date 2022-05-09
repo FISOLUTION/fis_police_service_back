@@ -1,11 +1,12 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.CenterController;
+import fis.police.fis_police_server.controller.interfaces.CenterController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.service.AgentService;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.exceptions.DuplicateSaveException;
+import fis.police.fis_police_server.service.interfaces.AgentService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.TokenService;
+import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import fis.police.fis_police_server.service.serviceImpl.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class CenterControllerImpl implements CenterController {
     private final CenterService centerService;
     private final MapServiceImpl mapService;
     private final AgentService agentService;
+    private final TokenService tokenService;
 
     @GetMapping("/center/search")
     @Override

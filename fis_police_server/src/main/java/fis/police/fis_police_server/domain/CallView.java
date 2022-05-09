@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 import org.hibernate.annotations.Synchronize;

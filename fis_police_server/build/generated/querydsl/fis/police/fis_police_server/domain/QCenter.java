@@ -20,9 +20,9 @@ public class QCenter extends EntityPathBase<Center> {
 
     public static final QCenter center = new QCenter("center");
 
-    public final StringPath c_address = createString("c_address");
+    public final ListPath<Aclass, QAclass> aclassList = this.<Aclass, QAclass>createList("aclassList", Aclass.class, QAclass.class, PathInits.DIRECT2);
 
-    public final StringPath c_faxNum = createString("c_faxNum");
+    public final StringPath c_address = createString("c_address");
 
     public final StringPath c_hpAddress = createString("c_hpAddress");
 
@@ -53,6 +53,8 @@ public class QCenter extends EntityPathBase<Center> {
     public final ListPath<Hope, QHope> hopeList = this.<Hope, QHope>createList("hopeList", Hope.class, QHope.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final ListPath<Officials, QOfficials> officialsList = this.<Officials, QOfficials>createList("officialsList", Officials.class, QOfficials.class, PathInits.DIRECT2);
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.Participation> participation = createEnum("participation", fis.police.fis_police_server.domain.enumType.Participation.class);
 

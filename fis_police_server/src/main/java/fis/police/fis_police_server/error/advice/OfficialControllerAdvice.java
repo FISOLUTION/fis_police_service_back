@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.error.advice;
 
-import fis.police.fis_police_server.controller.OfficialsController;
+import fis.police.fis_police_server.controller.interfaces.OfficialsController;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
