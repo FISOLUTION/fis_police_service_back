@@ -20,7 +20,6 @@ public class Center {
 
     @Id
     @GeneratedValue
-    @Column(name = "center_id")
     private Long id;     // 'primary_key',
 
     @Column(length = 100, name = "sido")
