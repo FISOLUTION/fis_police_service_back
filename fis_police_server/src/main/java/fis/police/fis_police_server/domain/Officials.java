@@ -6,6 +6,8 @@ import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Table(name = "teacher")
+@OnDelete(action = OnDeleteAction.CASCADE)
+@DiscriminatorValue("Teacher")
 public class Officials extends UserTeacher{
 
     @ManyToOne(fetch = FetchType.LAZY)
