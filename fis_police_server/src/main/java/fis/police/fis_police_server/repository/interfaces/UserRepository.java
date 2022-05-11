@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.repository.interfaces;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ public interface UserRepository {
     User findById(Long id);
     List<User> findByNickname(String nickname);
     List<User> findAll();
+
+    List<Call> findUserAndCallByDate(String date, Long userId);
 }
