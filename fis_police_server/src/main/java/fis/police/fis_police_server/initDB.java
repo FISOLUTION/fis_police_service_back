@@ -25,10 +25,10 @@ public class initDB {
         this.initService = initService;
     }
 
-    @PostConstruct
-    public void in() {
-        initService.dbInit1();
-    }
+//    @PostConstruct
+//    public void in() {
+//        initService.dbInit1();
+//    }
 
     @Component
     @Transactional
