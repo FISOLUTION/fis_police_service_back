@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.service.serviceImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
 import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.interfaces.CallRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,6 +98,45 @@ public class UserServiceImpl implements UserService {
     public List<CallAvgDTO> totalCallNum() {
         List<CallAvgDTO> CallTotalDTOList = callRepository.totalCallNum();
         return CallTotalDTOList;
+    }
+
+    @Override
+    public List<CallHistoryResponse> findUserAndCallByDate(String date) {
+        List<CallHistoryResponse> response = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            addCallHistory(date, response, user);
+        }
+        return response;
+    }
+
+    private void addCallHistory(String date, List<CallHistoryResponse> response, User user) {
+        List<Call> calls = userRepository.findUserAndCallByDate(date, user.getId());
+        int total = calls.size();
+        int p = 0;
+        int r = 0;
+        int h = 0;
+        int n = 0;
+        for (Call call : calls) {
+            switch (call.getParticipation()) {
+                case PARTICIPATION:
+                    p++;
+                    break;
+                case REJECT:
+                    r++;
+                    break;
+                case HOLD:
+                    h++;
+                    break;
+                case NONE:
+                    n++;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + call.getParticipation());
+            }
+        }
+        response.add(new CallHistoryResponse(user.getId(), user.getU_nickname(), user.getU_name(),
+                user.getU_auth(), total, p, r, h, n));
     }
 
 }

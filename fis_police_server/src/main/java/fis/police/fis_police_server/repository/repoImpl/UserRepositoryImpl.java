@@ -1,12 +1,16 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.CallHistoryResponse;
 import fis.police.fis_police_server.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /*
@@ -43,4 +47,25 @@ public class UserRepositoryImpl implements UserRepository {
         return em.createQuery("select u from User u", User.class)
                 .getResultList();
     }
+
+    @Override
+    public List<Call> findUserAndCallByDate(String date, Long userId) {
+        return em.createQuery("select c " +
+                        "from Call c left join c.user u " +
+                        "where c.date = :date and u.id = :userId", Call.class)
+                .setParameter("date", date)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
+//    public Map<Long, List<CallHistoryResponse>> findUserAndCallByDate2(String date) {
+//        List<Call> calls = em.createQuery("select c " +
+//                        "from Call c join fetch c.user u " +
+//                        "where c.date = :date", Call.class)
+//                .setParameter("date", date)
+//                .getResultList();
+//        return calls.stream().collect(Collectors.groupingBy((call) -> {
+//            return call.getUser().getId();
+//        }));
+//    }
 }
