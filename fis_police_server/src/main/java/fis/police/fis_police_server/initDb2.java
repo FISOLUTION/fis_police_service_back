@@ -108,13 +108,13 @@ public class initDb2 {
     작성자 : 원보라
     작성내용 : call init db 추가
 */
-            Call call1 = new Call(center1, user1, "2022-01-18", "12:23:12", Participation.PARTICIPATION, InOut.IN, "담당자1", "010-1111-1111", "rooni97@naver.com", 20, "...", "...");
+            Call call1 = new Call(center1, user1, "2022-01-18", "12:23:12", Participation.PARTICIPATION, InOut.IN, "담당자1", "010-1111-1111", "godoly1211@naver.com", 20, "...", "...");
             em.persist(call1);
 
             Call call2 = new Call(center2, user1, "2022-01-18", "18:49:48", Participation.PARTICIPATION, InOut.IN, "담당자2", "010-2222-2222", "godoly1211@naver.com", 20, "...", "...");
             em.persist(call2);
 
-            Call call3 = new Call(center1, user2, "2022-01-18", "10:37:12", Participation.PARTICIPATION, InOut.IN, "담당자3", "010-3333-3333", "rooni97@naver.com", 20, "...", "...");
+            Call call3 = new Call(center1, user2, "2022-01-18", "10:37:12", Participation.PARTICIPATION, InOut.IN, "담당자3", "010-3333-3333", "godoly1211@naver.com", 20, "...", "...");
             em.persist(call3);
 
 
