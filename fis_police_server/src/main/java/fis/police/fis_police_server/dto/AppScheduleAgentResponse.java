@@ -2,9 +2,7 @@ package fis.police.fis_police_server.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import fis.police.fis_police_server.domain.enumType.Accept;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,11 +24,10 @@ public class AppScheduleAgentResponse {
     private String c_address;       //시설주소
     private String c_zipcode;       //우편번호
     private String c_ph;            //전화번호
-    private String c_faxNum;        //팩스번호
 
 
     @QueryProjection
-    public AppScheduleAgentResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Accept accept, String late_comment, Long center_id, String c_name, String c_address, String c_zipcode, String c_ph, String c_faxNum) {
+    public AppScheduleAgentResponse(Long schedule_id, LocalDate visit_date, LocalTime visit_time, Integer estimate_num, String center_etc, String agent_etc, String total_etc, Accept accept, String late_comment, Long center_id, String c_name, String c_address, String c_zipcode, String c_ph) {
         this.schedule_id = schedule_id;
         this.visit_date = visit_date;
         this.visit_time = visit_time;
@@ -45,6 +42,5 @@ public class AppScheduleAgentResponse {
         this.c_address = c_address;
         this.c_zipcode = c_zipcode;
         this.c_ph = c_ph;
-        this.c_faxNum = c_faxNum;
     }
 }

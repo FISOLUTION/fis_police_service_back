@@ -1,7 +1,8 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
+import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
-import fis.police.fis_police_server.repository.UserRepository;
+import fis.police.fis_police_server.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -43,4 +44,15 @@ public class UserRepositoryImpl implements UserRepository {
         return em.createQuery("select u from User u", User.class)
                 .getResultList();
     }
+
+    @Override
+    public List<Call> findUserAndCallByDate(String date, Long userId) {
+        return em.createQuery("select c " +
+                        "from Call c left join c.user u " +
+                        "where c.date = :date and u.id = :userId", Call.class)
+                .setParameter("date", date)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
 }

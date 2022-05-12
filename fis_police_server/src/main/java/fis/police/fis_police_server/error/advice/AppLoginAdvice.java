@@ -1,6 +1,6 @@
 package fis.police.fis_police_server.error.advice;
 
-import fis.police.fis_police_server.controller.AppLoginController;
+import fis.police.fis_police_server.controller.interfaces.AppLoginController;
 import fis.police.fis_police_server.error.error_result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

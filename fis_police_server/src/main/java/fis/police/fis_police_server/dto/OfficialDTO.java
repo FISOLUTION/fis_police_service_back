@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.dto;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,4 +16,5 @@ public class OfficialDTO {
     private String o_name;
     private String o_ph;
     private String o_email;
+    private Accept accept;
 }

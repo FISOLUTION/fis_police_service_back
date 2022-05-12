@@ -1,10 +1,13 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.domain.enumType.Accept;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.OfficialSaveRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,26 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 @AllArgsConstructor
-public class Officials {
-    @Id
-    @GeneratedValue
-    @Column(name = "official_id")
-    private Long id;
-
-    @Column(length = 100)
-    private String o_name;
-
-    @Column(length = 100)
-    private String o_ph;
-
-    @Column(length = 100)
-    private String o_email;
-
-    @Column(length = 100)
-    private String o_nickname;
-
-    @Column(length = 100)
-    private String o_pwd;
+@Table(name = "teacher")
+@OnDelete(action = OnDeleteAction.CASCADE)
+@DiscriminatorValue("Teacher")
+public class Officials extends UserTeacher{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_id")
@@ -49,9 +36,27 @@ public class Officials {
         작성 내용: 시설관리자 권한 -> OFFICIAL
     */
     @NotNull // enum 때문에 notblank 안됨
-    @Column
     @Enumerated(EnumType.STRING)
+    @Column(name = "auth")
     private UserAuthority u_auth;                  // '권한'
+
+    // 작성 글
+    @OneToMany(mappedBy = "officials")
+    private List<Board> boardList = new ArrayList<Board>();
+    // 작성 일정
+    @OneToMany(mappedBy = "officials")
+    private List<Calendar> calendarList = new ArrayList<Calendar>();
+
+    @OneToMany(mappedBy = "officials")
+    private List<Announce> announceList = new ArrayList<Announce>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aclass_id")
+    private Aclass aclass;
+
+    // 교사 승인 여부
+    @Enumerated(EnumType.STRING)
+    private Accept accept;
 
 
     /*
@@ -59,7 +64,7 @@ public class Officials {
         작성자: 고준영
         작성 내용: 시설 담당자, 시설 묶기
     */
-    public static Officials createOfficials(OfficialSaveRequest request, Center center) {
+    public static Officials createOfficials(OfficialSaveRequest request, Center center, Accept accept) {
         Officials officials = new Officials();
         officials.o_name = request.getO_name();
         officials.o_ph = request.getO_ph();
@@ -67,7 +72,8 @@ public class Officials {
         officials.o_nickname = request.getO_nickname();
         officials.o_pwd = request.getO_pwd();
         officials.center = center;
-        officials.u_auth = UserAuthority.OFFICIAL;
+        officials.u_auth = request.getU_auth();
+        officials.accept = accept;
         return officials;
     }
 
@@ -80,4 +86,15 @@ public class Officials {
         this.center = center;
     }
 
+    public Officials(Long id, String o_name, String o_ph, String o_email, String o_nickname, String o_pwd, Center center, List<Hope> hopeList, UserAuthority u_auth, List<Board> boardList, List<Calendar> calendarList, List<Announce> announceList, Aclass aclass, Accept accept) {
+        super(id, o_name, o_ph, o_email, o_nickname, o_pwd);
+        this.center = center;
+        this.hopeList = hopeList;
+        this.u_auth = u_auth;
+        this.boardList = boardList;
+        this.calendarList = calendarList;
+        this.announceList = announceList;
+        this.aclass = aclass;
+        this.accept = accept;
+    }
 }

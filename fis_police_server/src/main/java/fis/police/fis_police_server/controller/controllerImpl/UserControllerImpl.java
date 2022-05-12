@@ -1,8 +1,8 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.UserController;
+import fis.police.fis_police_server.controller.interfaces.UserController;
 import fis.police.fis_police_server.dto.*;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

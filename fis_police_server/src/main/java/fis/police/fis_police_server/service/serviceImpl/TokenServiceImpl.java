@@ -2,18 +2,18 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.Officials;
-import fis.police.fis_police_server.domain.enumType.UserAuthority;
+import fis.police.fis_police_server.domain.Parent;
 import fis.police.fis_police_server.dto.LoginResponse;
-import fis.police.fis_police_server.repository.AgentRepository;
-import fis.police.fis_police_server.repository.OfficialsRepository;
-import fis.police.fis_police_server.service.TokenService;
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.OfficialsRepository;
+import fis.police.fis_police_server.repository.interfaces.ParentRepository;
+import fis.police.fis_police_server.service.interfaces.TokenService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Objects;
@@ -26,6 +26,7 @@ public class TokenServiceImpl implements TokenService {
 
     private final AgentRepository agentRepository;
     private final OfficialsRepository officialsRepository;
+    private final ParentRepository parentRepository;
 
     @Override
     public Agent getAgentFromRequest(String authorization) {
@@ -39,6 +40,14 @@ public class TokenServiceImpl implements TokenService {
         Claims token = parseJwtToken(authorization);
         Long official_id = Long.valueOf(token.get("id").toString());
         return officialsRepository.findById(official_id);
+    }
+
+    @Override
+    public Parent getParentFromRequest(String authorization) {
+        Claims token = parseJwtToken(authorization);
+        Long parent_id = Long.valueOf(token.get("id").toString());
+        Parent parent = parentRepository.findById(parent_id);
+        return parentRepository.findById(parent_id);
     }
 
     @Override
@@ -79,7 +88,7 @@ public class TokenServiceImpl implements TokenService {
     // access token 생성 (1시간)
     private JwtBuilder accessToken(String access, JwtBuilder jwtBuilder) {
         Date now = new Date();
-        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(60).toMillis()))
+        return jwtBuilder.setExpiration(new Date(now.getTime() + Duration.ofMinutes(480).toMillis()))
                 .setIssuer(access);
     }
 

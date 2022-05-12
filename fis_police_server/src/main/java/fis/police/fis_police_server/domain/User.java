@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@Table(name = "CallUser")
 public class User {
 
     @Id

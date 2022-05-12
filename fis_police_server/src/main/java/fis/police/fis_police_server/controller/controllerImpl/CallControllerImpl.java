@@ -1,21 +1,21 @@
 package fis.police.fis_police_server.controller.controllerImpl;
 
-import fis.police.fis_police_server.controller.CallController;
+import fis.police.fis_police_server.controller.interfaces.CallController;
 import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.CallHistoryResponse;
 import fis.police.fis_police_server.dto.CallSaveRequest;
 import fis.police.fis_police_server.dto.CallSaveResponse;
-import fis.police.fis_police_server.service.CenterService;
-import fis.police.fis_police_server.service.UserService;
+import fis.police.fis_police_server.service.interfaces.CenterService;
+import fis.police.fis_police_server.service.interfaces.UserService;
 import fis.police.fis_police_server.service.serviceImpl.CallServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /*
     작성 날짜: 2022/01/10 1:13 오후
@@ -53,4 +53,9 @@ public class CallControllerImpl implements CallController {
         return callService.saveCall(request, center, user, date, time);
     }
 
+    @Override
+    @GetMapping("/call")
+    public List<CallHistoryResponse> searchAllByDate(@RequestParam String date) {
+        return userService.findUserAndCallByDate(date);
+    }
 }

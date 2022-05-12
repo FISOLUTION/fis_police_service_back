@@ -4,15 +4,10 @@ import fis.police.fis_police_server.domain.Agent;
 import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import fis.police.fis_police_server.dto.AgentModifyRequest;
 import fis.police.fis_police_server.dto.AgentSaveRequest;
-import fis.police.fis_police_server.repository.AgentRepository;
-import org.assertj.core.api.Assertions;
-import org.json.simple.parser.ParseException;
+import fis.police.fis_police_server.repository.interfaces.AgentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
