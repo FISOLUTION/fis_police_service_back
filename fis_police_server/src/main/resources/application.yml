@@ -38,11 +38,7 @@ spring:
 
   jpa:
     hibernate:
-<<<<<<< HEAD
       ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
-=======
-      ddl-auto: update # 작성자 이승범 ddl-auto: create-drop 해놓음
->>>>>>> f079f65f65d9c5cdac01dc661710bbeeb6e8b80c
     properties:
       hibernate:
         show_sql: true
