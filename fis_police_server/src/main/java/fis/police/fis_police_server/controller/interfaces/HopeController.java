@@ -20,11 +20,8 @@ public interface HopeController {
     Result getHope();
 
     // 신청서 -> 스케쥴 잡힘  complete 컬럼 업데이트
-<<<<<<< HEAD:fis_police_server/src/main/java/fis/police/fis_police_server/controller/HopeController.java
-    WellSaveResponse updateComplete(@PathVariable Long hope_id);
 
-=======
     WellDoneResponse updateComplete(@PathVariable Long hope_id);
->>>>>>> f079f65f65d9c5cdac01dc661710bbeeb6e8b80c:fis_police_server/src/main/java/fis/police/fis_police_server/controller/interfaces/HopeController.java
+
     Result currentSituation(HttpServletRequest request);
 }
