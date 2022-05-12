@@ -38,6 +38,8 @@ public class QHope extends EntityPathBase<Hope> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath now_date = createString("now_date");
+
     public final QOfficials officials;
 
     public QHope(String variable) {
@@ -58,7 +60,7 @@ public class QHope extends EntityPathBase<Hope> {
 
     public QHope(Class<? extends Hope> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
         this.officials = inits.isInitialized("officials") ? new QOfficials(forProperty("officials"), inits.get("officials")) : null;
     }
 

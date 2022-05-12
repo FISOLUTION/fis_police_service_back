@@ -22,21 +22,39 @@ public class QOfficials extends EntityPathBase<Officials> {
 
     public static final QOfficials officials = new QOfficials("officials");
 
+    public final QUserTeacher _super = new QUserTeacher(this);
+
+    public final EnumPath<fis.police.fis_police_server.domain.enumType.Accept> accept = createEnum("accept", fis.police.fis_police_server.domain.enumType.Accept.class);
+
+    public final QAclass aclass;
+
+    public final ListPath<Announce, QAnnounce> announceList = this.<Announce, QAnnounce>createList("announceList", Announce.class, QAnnounce.class, PathInits.DIRECT2);
+
+    public final ListPath<Board, QBoard> boardList = this.<Board, QBoard>createList("boardList", Board.class, QBoard.class, PathInits.DIRECT2);
+
+    public final ListPath<Calendar, QCalendar> calendarList = this.<Calendar, QCalendar>createList("calendarList", Calendar.class, QCalendar.class, PathInits.DIRECT2);
+
     public final QCenter center;
 
     public final ListPath<Hope, QHope> hopeList = this.<Hope, QHope>createList("hopeList", Hope.class, QHope.class, PathInits.DIRECT2);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
-    public final StringPath o_email = createString("o_email");
+    //inherited
+    public final StringPath o_email = _super.o_email;
 
-    public final StringPath o_name = createString("o_name");
+    //inherited
+    public final StringPath o_name = _super.o_name;
 
-    public final StringPath o_nickname = createString("o_nickname");
+    //inherited
+    public final StringPath o_nickname = _super.o_nickname;
 
-    public final StringPath o_ph = createString("o_ph");
+    //inherited
+    public final StringPath o_ph = _super.o_ph;
 
-    public final StringPath o_pwd = createString("o_pwd");
+    //inherited
+    public final StringPath o_pwd = _super.o_pwd;
 
     public final EnumPath<fis.police.fis_police_server.domain.enumType.UserAuthority> u_auth = createEnum("u_auth", fis.police.fis_police_server.domain.enumType.UserAuthority.class);
 
@@ -58,7 +76,8 @@ public class QOfficials extends EntityPathBase<Officials> {
 
     public QOfficials(Class<? extends Officials> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.aclass = inits.isInitialized("aclass") ? new QAclass(forProperty("aclass"), inits.get("aclass")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
     }
 
 }

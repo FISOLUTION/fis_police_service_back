@@ -67,13 +67,8 @@ public class Agent {
         작성자: 고준영
         작성 내용: 요원 권한 -> AGENT, 요원아이디&비번
     */
-<<<<<<< HEAD
-//    @NotNull // enum 때문에 notblank 안됨
-    @Column
-=======
     @NotNull // enum 때문에 notblank 안됨
     @Column(columnDefinition="varchar(32) default 'AGENT'")
->>>>>>> f079f65f65d9c5cdac01dc661710bbeeb6e8b80c
     @Enumerated(EnumType.STRING)
     private UserAuthority u_auth;                  // '권한'
 

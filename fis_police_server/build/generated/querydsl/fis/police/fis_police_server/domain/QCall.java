@@ -66,7 +66,7 @@ public class QCall extends EntityPathBase<Call> {
 
     public QCall(Class<? extends Call> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center")) : null;
+        this.center = inits.isInitialized("center") ? new QCenter(forProperty("center"), inits.get("center")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
