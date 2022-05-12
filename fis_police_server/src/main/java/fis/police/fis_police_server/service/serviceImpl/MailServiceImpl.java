@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.*;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -78,11 +79,11 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr2 = new FileSystemResource(file2);
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
-        Path relativePath = Paths.get("");
-        String path = relativePath.toAbsolutePath().toString();
-        String file = path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp";
-        log.info(path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp");
+        String file = "./src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp";
+
         FileSystemResource fsr = new FileSystemResource(file);
+
+        log.info(fsr.getPath());
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
