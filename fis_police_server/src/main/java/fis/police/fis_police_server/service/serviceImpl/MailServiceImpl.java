@@ -80,7 +80,7 @@ public class MailServiceImpl implements MailService {
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
         String rootPath = System.getProperty("user.home");
-        String file = rootPath + "/attachFile/22년 아동 등 사전등록신청서.hwp";
+        String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
 
         FileSystemResource fsr = new FileSystemResource(file);
 
@@ -96,7 +96,7 @@ public class MailServiceImpl implements MailService {
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
-        mimeMessageHelper.addAttachment("22년 아동 등 사전등록신청서.hwp", fsr);
+        mimeMessageHelper.addAttachment("22년_아동_등_사전등록신청서.hwp", fsr);
 
         return mimeMessageHelper;
     }
