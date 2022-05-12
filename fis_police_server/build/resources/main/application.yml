@@ -2,6 +2,8 @@ server:
   shutdown: graceful
 spring:
   datasource:
+    hikari:
+      maximum-pool-size: 20
     url: jdbc:mysql://13.209.40.36:3306/police
     username: fisadmin
     password: fisserver1207!

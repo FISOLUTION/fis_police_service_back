@@ -58,14 +58,5 @@ public class UserRepositoryImpl implements UserRepository {
                 .getResultList();
     }
 
-//    public Map<Long, List<CallHistoryResponse>> findUserAndCallByDate2(String date) {
-//        List<Call> calls = em.createQuery("select c " +
-//                        "from Call c join fetch c.user u " +
-//                        "where c.date = :date", Call.class)
-//                .setParameter("date", date)
-//                .getResultList();
-//        return calls.stream().collect(Collectors.groupingBy((call) -> {
-//            return call.getUser().getId();
-//        }));
-//    }
 }
+

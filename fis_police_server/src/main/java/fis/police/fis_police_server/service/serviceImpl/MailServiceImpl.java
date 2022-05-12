@@ -79,11 +79,14 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr2 = new FileSystemResource(file2);
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
-        Path relativePath = Paths.get("");
-        String path = relativePath.toAbsolutePath().toString();
-        String file = path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp";
-        log.info(path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp");
+        String rootPath = System.getProperty("user.home");
+        String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
+
         FileSystemResource fsr = new FileSystemResource(file);
+
+        log.info(this.getClass().getResource("").getPath());
+        log.info(fsr.getPath());
+
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
         mimeMessageHelper.setFrom(from);
@@ -92,8 +95,8 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setText(body.toString(), true);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
-//        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
-        mimeMessageHelper.addAttachment("22년 아동 등 사전등록신청서.hwp", fsr);
+//        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3)
+        mimeMessageHelper.addAttachment("22년_아동_등_사전등록신청서.hwp", fsr);
 
         return mimeMessageHelper;
     }

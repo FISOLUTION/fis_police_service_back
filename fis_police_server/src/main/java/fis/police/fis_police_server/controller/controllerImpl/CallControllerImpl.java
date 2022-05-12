@@ -58,5 +58,4 @@ public class CallControllerImpl implements CallController {
     public List<CallHistoryResponse> searchAllByDate(@RequestParam String date) {
         return userService.findUserAndCallByDate(date);
     }
-
 }
