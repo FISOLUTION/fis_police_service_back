@@ -79,10 +79,12 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr2 = new FileSystemResource(file2);
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
-        String file = "./src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp";
+        String rootPath = System.getProperty("user.home");
+        String file = rootPath + "/attachFile/22년 아동 등 사전등록신청서.hwp";
 
         FileSystemResource fsr = new FileSystemResource(file);
 
+        log.info(this.getClass().getResource("").getPath());
         log.info(fsr.getPath());
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
