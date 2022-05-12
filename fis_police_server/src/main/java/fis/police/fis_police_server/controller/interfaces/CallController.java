@@ -4,6 +4,7 @@ import fis.police.fis_police_server.dto.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /*
     작성 날짜: 2022/02/14 11:32 오전
@@ -13,4 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface CallController {
     // 연락기록 저장
     CallSaveResponse saveCall(CallSaveRequest request, HttpServletRequest req) throws MessagingException;
+
+    // 날짜 별 콜직원 통화 이력
+    List<CallHistoryResponse> searchAllByDate(String date);
 }

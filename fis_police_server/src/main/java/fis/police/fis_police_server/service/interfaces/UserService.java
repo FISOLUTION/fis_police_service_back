@@ -33,5 +33,5 @@ public interface UserService {
     List<CallAvgDTO> totalCallNum();
 
 
-
+    List<CallHistoryResponse> findUserAndCallByDate(String date);
 }
