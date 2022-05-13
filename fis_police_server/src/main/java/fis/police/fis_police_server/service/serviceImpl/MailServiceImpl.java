@@ -81,7 +81,7 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
         String rootPath = System.getProperty("user.home");
         String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
-        String file2 = rootPath + "/attachFile/협조요청_공문_부산.pdf";
+        String file2 = rootPath + "/attachFile/22년_협조요청_공문_부산.pdf";
 
         FileSystemResource fsr = new FileSystemResource(file);
         FileSystemResource fsr2 = new FileSystemResource(file2);
@@ -99,7 +99,7 @@ public class MailServiceImpl implements MailService {
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3)
         mimeMessageHelper.addAttachment("22년_아동_등_사전등록신청서.hwp", fsr);
-        mimeMessageHelper.addAttachment("협조요청_공문_부산.pdf", fsr2);
+        mimeMessageHelper.addAttachment("22년_협조요청_공문_부산.pdf", fsr2);
 
         return mimeMessageHelper;
     }
