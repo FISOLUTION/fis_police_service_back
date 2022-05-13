@@ -81,13 +81,14 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
         String rootPath = System.getProperty("user.home");
         String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
-        String file2 = rootPath + "/attachFile/22년_협조요청_공문_부산.pdf";
+        String file2 = rootPath + "/attachFile/22_request_for_cooperation.pdf";
 
         FileSystemResource fsr = new FileSystemResource(file);
         FileSystemResource fsr2 = new FileSystemResource(file2);
 
         log.info(this.getClass().getResource("").getPath());
         log.info(fsr.getPath());
+        log.info(fsr2.getPath());
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
