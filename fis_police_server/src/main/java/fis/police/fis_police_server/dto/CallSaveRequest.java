@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 /*
     작성 날짜: 2022/01/10 1:15 오후
@@ -28,6 +29,8 @@ public class CallSaveRequest {
     private InOut in_out;
     private String c_manager;
     private String m_ph;
+
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     private String m_email;
     private Integer num;
     private String center_etc;
