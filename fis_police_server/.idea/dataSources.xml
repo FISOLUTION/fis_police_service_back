@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="FIS_POLICE" uuid="ffd41684-7465-42b2-87ed-851817ad418f">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <remarks>경찰청 지문등록 사업</remarks>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://54.175.8.114:3306/test</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-<<<<<<< HEAD
-    <data-source source="LOCAL" name="police@13.209.40.36" uuid="aba27fb5-e86d-4890-a84c-745519806b33">
+    <data-source source="LOCAL" name="@13.209.40.36" uuid="7372c1a2-7c88-4ed1-bb6d-22b8d5bc1672">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://13.209.40.36:3306/police</jdbc-url>
-=======
-    <data-source source="LOCAL" name="test@3.35.135.214" uuid="d317e989-f3f4-46ec-a1dd-36d149851b44">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://3.35.135.214:3306/test</jdbc-url>
->>>>>>> 8fcfa6fafc13191594de0db19949598141f3db6d
+      <jdbc-url>jdbc:mysql://13.209.40.36:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

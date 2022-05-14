@@ -43,11 +43,10 @@ public class MailServiceImpl implements MailService {
             MailSendResponse response = new MailSendResponse();
 
             Call recentCall = callRepository.recentcall(center_id);
-            Center findCenter = centerRepository.findById(center_id);
 
             String to = recentCall.getM_email();
             MimeMessage message = mailSender.createMimeMessage();
-            createMessage(to, message, findCenter.getC_sido());
+            createMessage(to, message, recentCall.getCenter().getC_sido());
 
             validateMailAddr(to);
             sendMail(message, response, recentCall);
