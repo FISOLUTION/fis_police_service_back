@@ -45,6 +45,11 @@ public class MailServiceImpl implements MailService {
             MailSendResponse response = new MailSendResponse();
 
             Call recentCall = callRepository.recentcall(center_id);
+            Center findCenter = centerRepository.findById(center_id);
+            if (findCenter == null) {
+                log.error(null);
+            }
+            log.info(findCenter.getC_sido());
 
             String to = recentCall.getM_email();
             MimeMessage message = mailSender.createMimeMessage();
@@ -78,11 +83,16 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr2 = new FileSystemResource(file2);
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
-        Path relativePath = Paths.get("");
-        String path = relativePath.toAbsolutePath().toString();
-        String file = path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp";
-        log.info(path + "/src/main/java/fis/police/fis_police_server/attachFile/22년 아동 등 사전등록신청서.hwp");
+        String rootPath = System.getProperty("user.home"); // 시스템 루트 경로 (~)
+        String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
+        String file2 = rootPath + "/attachFile"; // 협조공문 파일경로
+
+        log.info(file);
+        log.info(file2);
+
+        file2 += "/22_request_for_cooperation.pdf";
         FileSystemResource fsr = new FileSystemResource(file);
+        FileSystemResource fsr2 = new FileSystemResource(file2);
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -93,7 +103,8 @@ public class MailServiceImpl implements MailService {
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 현장방문 사업추진 관련 협조 요청.pdf", fsr);
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
-        mimeMessageHelper.addAttachment("22년 아동 등 사전등록신청서.hwp", fsr);
+        mimeMessageHelper.addAttachment("22년_아동_등_사전등록신청서.hwp", fsr);
+        mimeMessageHelper.addAttachment("22_협조요청_공문_부산.pdf", fsr2);
 
         return mimeMessageHelper;
     }
