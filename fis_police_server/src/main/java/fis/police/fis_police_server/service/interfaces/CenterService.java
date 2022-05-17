@@ -6,6 +6,7 @@ import fis.police.fis_police_server.dto.CenterSearchResponseDTO;
 import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
 import org.json.simple.parser.ParseException;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import java.util.List;
@@ -18,10 +19,10 @@ public interface CenterService {
     Center centerInfo(Long center_id)  throws NoResultException, NonUniqueResultException;
 
     // 시설 추기
-    void saveCenter(Center center) throws ParseException, DuplicateSaveException;
+    void saveCenter(Center center) throws ParseException, DuplicateSaveException, AddressException;
 
     // 시설 수정
-    void modifyCenter(Center center) throws ParseException;
+    void modifyCenter(Center center) throws ParseException, AddressException;
 
     // 시설 조회
     List<Center> getCenter();

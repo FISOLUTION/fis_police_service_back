@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import java.util.List;
@@ -49,7 +50,7 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public void saveCenter(Center center) throws ParseException, DuplicateSaveException {
+    public void saveCenter(Center center) throws ParseException, DuplicateSaveException, AddressException {
        if(centerRepository.findNameAndPh(center.getC_name(),center.getC_ph()).size() != 0){
            throw new DuplicateSaveException("중복된 센터 존재 에러발생");
        }
@@ -59,7 +60,7 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public void modifyCenter(Center center) throws ParseException {
+    public void modifyCenter(Center center) throws ParseException, AddressException {
         Center target = centerRepository.findById(center.getId());
         target.modifyCenter(center);
         Pair<Double, Double> location = mapService.addressToLocation(target.getC_address());

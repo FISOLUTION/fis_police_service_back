@@ -2,12 +2,12 @@ server:
   shutdown: graceful
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 20
     url: jdbc:mysql://13.209.40.36:3306/police
     username: fisadmin
     password: fisserver1207!
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
   # 작성자: 원보라, 작성내용: swagger 라이브러리 오류 방지
   mvc:
     pathmatch:
@@ -52,5 +52,8 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: info
-    org.hibernate.Type: info
+    org.hibernate.SQL: debug
+    org.hibernate.Type: trace
+    com.zaxxer.hikari.HikariConfig: debug
+    com.zaxxer.hikari: trace
+

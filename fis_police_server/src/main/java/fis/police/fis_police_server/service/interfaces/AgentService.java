@@ -8,15 +8,16 @@ import org.json.simple.parser.ParseException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.internet.AddressException;
 import java.util.List;
 
 public interface AgentService {
     // 현장요원 추기
     Agent saveAgent(AgentSaveRequest agentSaveResponse) throws ParseException,
-            RestClientException, IllegalStateException, IndexOutOfBoundsException;
+            RestClientException, IllegalStateException, IndexOutOfBoundsException, AddressException;
 
     // 현장요원 수정
-    Agent modifyAgent(AgentModifyRequest agentModifyRequest) throws  ParseException, IllegalStateException;
+    Agent modifyAgent(AgentModifyRequest agentModifyRequest) throws ParseException, IllegalStateException, AddressException;
 
     Agent findById(Long id);
 

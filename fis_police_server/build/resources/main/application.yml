@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 server:
   shutdown: graceful
 spring:
@@ -8,6 +9,14 @@ spring:
     username: fisadmin
     password: fisserver1207!
     driver-class-name: com.mysql.cj.jdbc.Driver
+=======
+spring:
+  datasource:
+    url:  jdbc:h2:tcp://localhost/~/fis_police
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+>>>>>>> 36a73703006b7f04850f6a9b6cee12e2b1f536e5
   # 작성자: 원보라, 작성내용: swagger 라이브러리 오류 방지
   mvc:
     pathmatch:
@@ -40,12 +49,17 @@ spring:
 
   jpa:
     hibernate:
+<<<<<<< HEAD
       ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
+=======
+      ddl-auto: update # 작성자 이승범 ddl-auto: create-drop 해놓음
+>>>>>>> 36a73703006b7f04850f6a9b6cee12e2b1f536e5
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+<<<<<<< HEAD
 #  작성자 이승범 graceful shutdown을 위한 설정
   lifecycle:
     timeout-per-shutdown-phase: 20s
@@ -54,3 +68,11 @@ logging:
   level:
     org.hibernate.SQL: info
     org.hibernate.Type: info
+=======
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.Type: trace
+
+
+>>>>>>> 36a73703006b7f04850f6a9b6cee12e2b1f536e5

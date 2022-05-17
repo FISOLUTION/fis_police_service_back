@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
@@ -50,7 +51,7 @@ public class AgentControllerImpl implements AgentController {
     */
     @Override
     @PostMapping("/agent")
-    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletRequest servletRequest) throws ParseException {
+    public void saveAgent(@RequestBody AgentSaveRequest request, HttpServletRequest servletRequest) throws ParseException, AddressException {
         log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 추가]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
         try {
             agentService.saveAgent(request);
@@ -67,7 +68,7 @@ public class AgentControllerImpl implements AgentController {
 
     @Override
     @PatchMapping("/agent")
-    public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException {
+    public void modifyAgent(AgentModifyRequest request, HttpServletRequest servletRequest) throws ParseException, AddressException {
         log.info("[로그인 id 값: {}] [url: {}] [요청: 현장요원 수정]", servletRequest.getSession().getAttribute("loginUser"), "/agent");
         try {
             log.info("현장요원 agent_id ===============[{}]", request.getAgent_id());

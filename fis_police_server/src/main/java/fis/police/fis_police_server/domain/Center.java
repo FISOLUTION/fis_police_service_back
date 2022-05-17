@@ -5,6 +5,7 @@ import fis.police.fis_police_server.domain.embeddable.OtherInfo;
 import fis.police.fis_police_server.domain.enumType.Participation;
 import fis.police.fis_police_server.domain.enumType.Visited;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -99,6 +100,7 @@ public class Center {
         작성자: 고준영
         작성 내용: excel 용 생성자
     */
+    @Builder
     public Center(String c_sido, String c_sigungu, String c_name, String c_type, String c_status, String c_address, String c_zipcode, String c_ph, String c_people, String c_hpAddress) {
         this.c_sido = c_sido;
         this.c_sigungu = c_sigungu;

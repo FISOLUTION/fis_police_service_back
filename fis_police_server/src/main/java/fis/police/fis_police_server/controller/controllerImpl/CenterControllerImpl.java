@@ -15,6 +15,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +37,12 @@ public class CenterControllerImpl implements CenterController {
 
     @GetMapping("/center/search")
     @Override
-    public Result searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph, HttpServletRequest request){
+    public Result searchCenter(@RequestParam @Nullable String c_name, @RequestParam @Nullable String c_address, @RequestParam @Nullable String c_ph, HttpServletRequest request) {
         log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설검색]", request.getSession().getAttribute("loginUser"), "/center/search");
         try {
             List<CenterSearchResponseDTO> results = centerService.findCenterList(c_name, c_address, c_ph);
             return new Result(results);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new NullPointerException("결과 없음.");
         }
     }
@@ -55,7 +56,7 @@ public class CenterControllerImpl implements CenterController {
     @Override
     public Result selectCenter(@RequestParam Long center_id, HttpServletRequest request) {
         log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 선택 시 콜기록, 일정 등 정보 조회]", request.getSession().getAttribute("loginUser"), "/center/select?center_id=" + center_id);
-        try{
+        try {
             Center center = centerService.centerInfo(center_id);
             List<CenterSearchNearCenterDTO> centerSearchNearCenterDTOList = new ArrayList<CenterSearchNearCenterDTO>();
             mapService.centerNearCenter(center).stream()
@@ -64,9 +65,9 @@ public class CenterControllerImpl implements CenterController {
                         centerSearchNearCenterDTOList.add(new CenterSearchNearCenterDTO(e, distance));
                     });
             return new Result(new CenterSelectResponseDTO(center, centerSearchNearCenterDTOList));
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             throw new NoResultException("검색 결과 없음.");
-        } catch (NonUniqueResultException e){
+        } catch (NonUniqueResultException e) {
             throw new NonUniqueResultException("해당 시설 id에 여러 시설 존재, DB 확인 필요");
         }
     }
@@ -84,7 +85,7 @@ public class CenterControllerImpl implements CenterController {
         Center center = centerService.findById(center_id);
         LocalDate visit_date = LocalDate.parse(date);
         return new Result(mapService.agentNearCenter(center, 2L).stream()
-                .map(e -> new CenterSelectDateResponseDTO(agentService.findById(e.getAgent_id()),visit_date))  // 2022-03-24 원보라 바꿈
+                .map(e -> new CenterSelectDateResponseDTO(agentService.findById(e.getAgent_id()), visit_date))  // 2022-03-24 원보라 바꿈
                 .collect(Collectors.toList()));
     }
 
@@ -115,14 +116,20 @@ public class CenterControllerImpl implements CenterController {
 
     @Override
     @PostMapping("/center")
-    public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO, HttpServletResponse response, HttpServletRequest request) throws DuplicateSaveException {
+    public void saveCenter(@RequestBody CenterSaveDTO centerSaveDTO, HttpServletResponse response, HttpServletRequest request) throws DuplicateSaveException, AddressException {
         log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 저장]", request.getSession().getAttribute("loginUser"), "/center");
         try {
-            Center center = CenterSaveDTO.convertToCenter(centerSaveDTO);
+            Center center = Center.builder()
+                    .c_sido(centerSaveDTO.getC_sido())
+                    .c_sigungu(centerSaveDTO.getC_sigungu())
+                    .c_name(centerSaveDTO.getC_name())
+                    .c_ph(centerSaveDTO.getC_ph())
+                    .c_address(centerSaveDTO.getC_address())
+                    .build();
             centerService.saveCenter(center);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             throw new IllegalArgumentException("잘못된 주소 정보 입력됨.");
-        } catch (RestClientException e){
+        } catch (RestClientException e) {
             throw new RestClientException("naver map api 호출 중 에러 발생");
         }
     }
@@ -134,14 +141,14 @@ public class CenterControllerImpl implements CenterController {
     */
     @Override
     @PatchMapping("/center")
-    public void modifyCenter(@RequestBody CenterModifyDTO centerModifyDTO, HttpServletRequest request) {
+    public void modifyCenter(@RequestBody CenterModifyDTO centerModifyDTO, HttpServletRequest request) throws AddressException {
         log.info("[로그인 id 값 : {}] [url : {}] [요청 : 시설 수정]", request.getSession().getAttribute("loginUser"), "/center");
         try {
             Center center = CenterModifyDTO.convertToCenter(centerModifyDTO);
             centerService.modifyCenter(center);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             throw new IllegalArgumentException("잘못된 주소 정보 입력됨.");
-        } catch (RestClientException e){
+        } catch (RestClientException e) {
             throw new RestClientException("naver map api 호출 중 에러 발생");
         }
     }
@@ -158,7 +165,6 @@ public class CenterControllerImpl implements CenterController {
     public List<Object> getCenter(@RequestParam Long center, HttpServletRequest request) {
         return null;
     }
-
 
 
 }

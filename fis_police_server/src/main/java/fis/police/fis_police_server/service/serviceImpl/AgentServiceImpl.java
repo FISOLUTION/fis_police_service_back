@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.internet.AddressException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,8 +42,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     @Transactional // 현장요원 추가
-    public Agent saveAgent(AgentSaveRequest request) throws ParseException, RestClientException,
-            IllegalStateException, IndexOutOfBoundsException {
+    public Agent saveAgent(AgentSaveRequest request) throws AddressException, ParseException {
 
         validateDuplicateAgent(request.getA_code()); // 현장요원 코드 중복 검사
         checkDuplicateByNickname(request.getNickname());
@@ -60,8 +60,7 @@ public class AgentServiceImpl implements AgentService {
     @Override
     @Transactional // 현장요원 수정
     // 수정사항 없어도 update 쿼리 나가는 이슈있음
-    public Agent modifyAgent(AgentModifyRequest request) throws IllegalStateException, ParseException,
-            IndexOutOfBoundsException, RestClientException {
+    public Agent modifyAgent(AgentModifyRequest request) throws AddressException, ParseException {
 
         Agent findAgent = agentRepository.findById(request.getAgent_id());
 

@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
                 ExcelCenterDTO excelCenterDTO = (ExcelCenterDTO) center;
                 System.out.println("excelCenterDTO = " + excelCenterDTO);
                 centerService.saveCenter(ExcelCenterDTO.createCenter(excelCenterDTO));
-            } catch (ParseException | DuplicateSaveException e) {
+            } catch (ParseException | DuplicateSaveException | AddressException e) {
                 e.printStackTrace();
             }
         });
@@ -48,7 +49,7 @@ public class ExcelUploadControllerImpl implements ExcelUploadController {
     }
 
     @PostMapping("app/excel/read/test")
-    public ExcelCenterDTO r(@RequestBody MultipartFile excelFile) throws IOException, DuplicateSaveException, ParseException {
+    public ExcelCenterDTO r(@RequestBody MultipartFile excelFile) throws IOException, DuplicateSaveException, ParseException, AddressException {
         List<ExcelCenterDTO> centerList = new ArrayList<>();
 
         String extension = FilenameUtils.getExtension(excelFile.getOriginalFilename());
