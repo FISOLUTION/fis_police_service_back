@@ -18,9 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.*;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -46,10 +43,15 @@ public class MailServiceImpl implements MailService {
             MailSendResponse response = new MailSendResponse();
 
             Call recentCall = callRepository.recentcall(center_id);
+            Center findCenter = centerRepository.findById(center_id);
+            if (findCenter == null) {
+                log.error(null);
+            }
+            log.info(findCenter.getC_sido());
 
             String to = recentCall.getM_email();
             MimeMessage message = mailSender.createMimeMessage();
-            createMessage(to, message);
+            createMessage(to, message, findCenter.getC_sido(), findCenter.getC_sigungu());
 
             validateMailAddr(to);
             sendMail(message, response, recentCall);
@@ -62,7 +64,7 @@ public class MailServiceImpl implements MailService {
         }
     }
 
-    private MimeMessageHelper createMessage(String toAddress, MimeMessage message) throws MessagingException {
+    private MimeMessageHelper createMessage(String toAddress, MimeMessage message, String sido, String sigungu) throws MessagingException {
         String from = "fis182@fisolution.co.kr";
         String to = toAddress;
         String subject = "지문 등 사전등록신청서 양식 입니다.";
@@ -79,8 +81,12 @@ public class MailServiceImpl implements MailService {
 //        FileSystemResource fsr2 = new FileSystemResource(file2);
 //        String file3 = "/Users/junyeong/study/spring/fis_police_service_back/fis_police_server/src/main/java/fis/police/fis_police_server/attachFile/21년 지문등 사전등록 신청서_양식.hwp";
 //        FileSystemResource fsr3 = new FileSystemResource(file3);
-        String rootPath = System.getProperty("user.home");
+        String rootPath = System.getProperty("user.home"); // 시스템 루트 경로 (~)
         String file = rootPath + "/attachFile/22년_아동_등_사전등록신청서.hwp";
+        String file2 = rootPath + "/attachFile"; // 협조공문 파일경로
+
+        log.info(file);
+        log.info(file2);
 
         FileSystemResource fsr = new FileSystemResource(file);
 
@@ -97,8 +103,32 @@ public class MailServiceImpl implements MailService {
 //        mimeMessageHelper.addAttachment("2021_경찰청_팝업_배부용.jpeg", fsr2);
 //        mimeMessageHelper.addAttachment("21년 지문등 사전등록 신청서_양식.hwp", fsr3);
         mimeMessageHelper.addAttachment("22년_아동_등_사전등록신청서.hwp", fsr);
+        switch (sido) {
+            case "경기도":
+                if (sigungu.contains("고양") || sigungu.contains("동두천") || sigungu.contains("파주") ||
+                        sigungu.contains("구리") || sigungu.contains("양주") || sigungu.contains("포천") ||
+                        sigungu.contains("남양주") || sigungu.contains("의정부") || sigungu.contains("가평") ||
+                        sigungu.contains("연천")) {
+                    file2 += "/22_request_for_cooperation_northern_gyeonggi.pdf";
+                    String fileName = "22년_협조요청_공문_경기북부.pdf";
+                    addAttachFile(file2, mimeMessageHelper, fileName);
+                }
+                break;
+            case "부산광역시":
+                file2 += "/22_request_for_cooperation_busan.pdf";
+                String fileName = "22년_협조요청_공문_부산.pdf";
+                addAttachFile(file2, mimeMessageHelper, fileName);
+                break;
+            default:
+                break;
+        }
 
         return mimeMessageHelper;
+    }
+
+    private void addAttachFile(String file2, MimeMessageHelper mimeMessageHelper, String fileName) throws MessagingException {
+        FileSystemResource fsr2 = new FileSystemResource(file2);
+        mimeMessageHelper.addAttachment(fileName, fsr2);
     }
 
     private void validateMailAddr(String mail) throws AddressException {

@@ -20,6 +20,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class CheckRepositoryImpl implements CheckRepository {
+
     private final EntityManager em;
 
     private final JPAQueryFactory jpaQueryFactory;
