@@ -111,7 +111,7 @@ public class CenterControllerImpl implements CenterController {
     /*
         날짜 : 2022/01/11 8:25 오후
         작성자 : 현승구
-        작성내용 : 관리자 페이지에서 시설 저장
+        작성내용 : 관리자 페이지에서 시설 저장.
     */
 
     @Override
