@@ -1,4 +1,4 @@
-package fis.police.fis_police_server.config;
+package fis.police.fis_police_server.controller.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

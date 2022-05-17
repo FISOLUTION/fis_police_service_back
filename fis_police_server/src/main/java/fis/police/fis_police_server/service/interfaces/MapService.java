@@ -5,6 +5,7 @@ import fis.police.fis_police_server.domain.Center;
 import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
 import org.json.simple.parser.ParseException;
 
+import javax.mail.internet.AddressException;
 import java.util.List;
 
 public interface MapService {
@@ -15,7 +16,7 @@ public interface MapService {
     //선택된 시설 중심으로 일정거리(distance)의 Center List 보낸다
     List<Center> centerNearCenter(Center center);
 
-    Pair<Double, Double> addressToLocation(String address) throws ParseException;
+    Pair<Double, Double> addressToLocation(String address) throws ParseException, AddressException;
 
     Double distance(double lat1, double lon1, double lat2, double lon2);
 }

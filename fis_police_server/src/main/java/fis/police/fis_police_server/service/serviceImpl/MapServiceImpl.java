@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.NoResultException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -91,19 +92,23 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public Pair<Double, Double> addressToLocation(String address) throws ParseException, IndexOutOfBoundsException,
-            RestClientException {
-        RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
-        httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
-        String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + address;
-        ResponseEntity<String> responseEntity =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
-        JSONParser jsonParser = new JSONParser();
-        JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
-        JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
-        JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
-        return new Pair<Double, Double>(Double.parseDouble(addressResponse.get("x").toString()), Double.parseDouble(addressResponse.get("y").toString()));
+            RestClientException, AddressException {
+        try {
+            RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("X-NCP-APIGW-API-KEY-ID", mapConfig.getApiId());
+            httpHeaders.add("X-NCP-APIGW-API-KEY", mapConfig.getApiKey());
+            String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + address;
+            ResponseEntity<String> responseEntity =
+                    restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), String.class);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject fullResponse = (JSONObject) jsonParser.parse(responseEntity.getBody());
+            JSONArray jsonAddress = (JSONArray) fullResponse.get("addresses");
+            JSONObject addressResponse = (JSONObject) jsonAddress.get(0);
+            return new Pair<Double, Double>(Double.parseDouble(addressResponse.get("x").toString()), Double.parseDouble(addressResponse.get("y").toString()));
+        } catch (Exception exception){
+            throw new AddressException("주소가 잘못되었습니다");
+        }
     }
 
     @Override
