@@ -34,4 +34,6 @@ public interface UserService {
 
 
     List<CallHistoryResponse> findUserAndCallByDate(String date);
+
+    List<CallHistoryResponse> findUserAndCallByDateOptimize(String date);
 }
