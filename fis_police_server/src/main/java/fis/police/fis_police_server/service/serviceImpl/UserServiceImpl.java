@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -137,6 +138,42 @@ public class UserServiceImpl implements UserService {
         }
         response.add(new CallHistoryResponse(user.getId(), user.getU_nickname(), user.getU_name(),
                 user.getU_auth(), total, p, r, h, n));
+    }
+
+    @Override
+    public List<CallHistoryResponse> findUserAndCallByDateOptimize(String date) {
+        List<CallHistoryResponse> callRecordsResponse = userRepository.findUsers();
+        List<Call> calls = userRepository.findWithCalls(date);
+        Map<Long, List<Call>> callMap = calls.stream()
+                .collect(Collectors.groupingBy(c -> c.getUser().getId()));
+        callRecordsResponse.forEach(u -> {
+            List<Call> callsByUser = callMap.getOrDefault(u.getUser_id(), new ArrayList<>());
+            if (callsByUser.isEmpty()) {
+                return;
+            }
+            int t = callsByUser.size();
+            int p = 0, r = 0, h = 0, n = 0;
+            for (Call call : callsByUser) {
+                switch (call.getParticipation()) {
+                    case PARTICIPATION:
+                        p++;
+                        break;
+                    case REJECT:
+                        r++;
+                        break;
+                    case HOLD:
+                        h++;
+                        break;
+                    case NONE:
+                        n++;
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + call.getParticipation());
+                }
+            }
+            u.updateCallRecords(t, p, r, h, n);
+        });
+        return callRecordsResponse;
     }
 
 }

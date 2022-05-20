@@ -22,4 +22,19 @@ public class CallHistoryResponse {
     private int reject_num;         //거부 건수
     private int hold_num;           //보류 건수
     private int none_num;           //기타 건수
+
+    public CallHistoryResponse(Long user_id, String u_nickname, String u_name, UserAuthority u_auth) {
+        this.user_id = user_id;
+        this.u_nickname = u_nickname;
+        this.u_name = u_name;
+        this.u_auth = u_auth;
+    }
+
+    public void updateCallRecords(int today_call_num, int participation_num, int reject_num, int hold_num, int none_num) {
+        this.today_call_num = today_call_num;
+        this.participation_num = participation_num;
+        this.reject_num = reject_num;
+        this.hold_num = hold_num;
+        this.none_num = none_num;
+    }
 }
