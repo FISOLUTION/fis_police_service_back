@@ -58,5 +58,25 @@ public class UserRepositoryImpl implements UserRepository {
                 .getResultList();
     }
 
+    @Override
+    public List<Call> findWithCalls(String date) {
+        return em.createQuery(
+                "select c" +
+                        " from Call c" +
+                        " join fetch c.user u" +
+                        " where c.date = :date", Call.class
+        )
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
+    public List<CallHistoryResponse> findUsers() {
+        return em.createQuery(
+                "select new fis.police.fis_police_server.dto.CallHistoryResponse(u.id, u.u_nickname, u.u_name, u.u_auth)" +
+                        " from User u", CallHistoryResponse.class)
+                .getResultList();
+    }
+
 }
 

@@ -2,6 +2,7 @@ package fis.police.fis_police_server.repository.interfaces;
 
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.CallHistoryResponse;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface UserRepository {
     List<User> findAll();
 
     List<Call> findUserAndCallByDate(String date, Long userId);
+
+    List<Call> findWithCalls(String date);
+
+    List<CallHistoryResponse> findUsers();
 }
