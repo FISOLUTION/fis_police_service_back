@@ -117,6 +117,16 @@ public class MailServiceImpl implements MailService {
                 String fileName = "22년_협조요청_공문_부산.pdf";
                 addAttachFile(file2, mimeMessageHelper, fileName);
                 break;
+            case "경상북도":
+                file2 += "/22_request_for_cooperation_gyeongbuk.pdf";
+                fileName = "22년_협조요청_공문_경북.pdf";
+                addAttachFile(file2, mimeMessageHelper, fileName);
+                break;
+            case "광주광역시":
+                file2 += "/22_request_for_cooperation_gwangju.pdf";
+                fileName = "22년_협조요청_공문_광주.pdf";
+                addAttachFile(file2, mimeMessageHelper, fileName);
+                break;
             default:
                 break;
         }

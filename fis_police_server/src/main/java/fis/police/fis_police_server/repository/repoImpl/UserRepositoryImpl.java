@@ -2,6 +2,7 @@ package fis.police.fis_police_server.repository.repoImpl;
 
 import fis.police.fis_police_server.domain.Call;
 import fis.police.fis_police_server.domain.User;
+import fis.police.fis_police_server.dto.CallHistoryResponse;
 import fis.police.fis_police_server.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,26 @@ public class UserRepositoryImpl implements UserRepository {
                         "where c.date = :date and u.id = :userId", Call.class)
                 .setParameter("date", date)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Call> findWithCalls(String date) {
+        return em.createQuery(
+                "select c" +
+                        " from Call c" +
+                        " join fetch c.user u" +
+                        " where c.date = :date", Call.class
+        )
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
+    public List<CallHistoryResponse> findUsers() {
+        return em.createQuery(
+                "select new fis.police.fis_police_server.dto.CallHistoryResponse(u.id, u.u_nickname, u.u_name, u.u_auth)" +
+                        " from User u", CallHistoryResponse.class)
                 .getResultList();
     }
 
