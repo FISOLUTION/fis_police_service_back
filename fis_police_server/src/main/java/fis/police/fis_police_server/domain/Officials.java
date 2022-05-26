@@ -35,7 +35,6 @@ public class Officials extends UserTeacher{
         작성자: 고준영
         작성 내용: 시설관리자 권한 -> OFFICIAL
     */
-    @NotNull // enum 때문에 notblank 안됨
     @Enumerated(EnumType.STRING)
     @Column(name = "auth")
     private UserAuthority u_auth;                  // '권한'
