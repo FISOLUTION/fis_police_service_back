@@ -46,6 +46,7 @@ public class initDB {
             작성내용 : init 할것 추가
         */
 
+
         public void dbInit1() {
             Center center = new Center("센터1", Participation.PARTICIPATION);
             System.out.println("em.getClass() = " + em.getClass());

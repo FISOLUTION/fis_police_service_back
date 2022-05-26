@@ -118,6 +118,9 @@ public class AppLoginServiceImpl implements AppLoginService {
             loginResponse.setU_name(officials.get(0).getO_name());
             loginResponse.setU_auth(officials.get(0).getU_auth());
             Center center = officials.get(0).getCenter();
+            loginResponse.setCenter(
+                    new CenterDataResponse(center.getId(), center.getC_name(), center.getC_address(),
+                            center.getC_zipcode(), center.getC_ph(), null));
             List<Aclass> aclassList = center.getAclassList();
             List<ClassDataDTO> classes = aclassList.stream()
                     .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))
