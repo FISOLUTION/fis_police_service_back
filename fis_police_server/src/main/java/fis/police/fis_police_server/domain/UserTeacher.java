@@ -28,7 +28,7 @@ public class UserTeacher {
     @Column(length = 100, name = "emailAddress")
     protected String o_email;
 
-    @Column(length = 100, name = "loginId")
+    @Column(length = 100, name = "loginid")
     protected String o_nickname;
 
     @Column(length = 100, name = "password")

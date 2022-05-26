@@ -6,12 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityManager;
 
-@Component
+@Configuration
 public class BeanConfig {
     @Bean
     JPAQueryFactory JpaQueryFactory(EntityManager em){
@@ -25,4 +26,10 @@ public class BeanConfig {
         factory.setConnectionRequestTimeout(5000);
         return factory;
     }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 }
