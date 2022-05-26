@@ -152,28 +152,32 @@ public class UserServiceImpl implements UserService {
                 return;
             }
             int t = callsByUser.size();
-            int p = 0, r = 0, h = 0, n = 0;
-            for (Call call : callsByUser) {
-                switch (call.getParticipation()) {
-                    case PARTICIPATION:
-                        p++;
-                        break;
-                    case REJECT:
-                        r++;
-                        break;
-                    case HOLD:
-                        h++;
-                        break;
-                    case NONE:
-                        n++;
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + call.getParticipation());
-                }
-            }
-            u.updateCallRecords(t, p, r, h, n);
+            addCallRecords(u, callsByUser, t);
         });
         return callRecordsResponse;
+    }
+
+    private void addCallRecords(CallHistoryResponse u, List<Call> callsByUser, int t) {
+        int p = 0, r = 0, h = 0, n = 0;
+        for (Call call : callsByUser) {
+            switch (call.getParticipation()) {
+                case PARTICIPATION:
+                    p++;
+                    break;
+                case REJECT:
+                    r++;
+                    break;
+                case HOLD:
+                    h++;
+                    break;
+                case NONE:
+                    n++;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + call.getParticipation());
+            }
+        }
+        u.updateCallRecords(t, p, r, h, n);
     }
 
 }
