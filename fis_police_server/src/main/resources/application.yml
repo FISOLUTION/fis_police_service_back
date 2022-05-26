@@ -38,7 +38,11 @@ spring:
 
   jpa:
     hibernate:
+<<<<<<< HEAD
       ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
+=======
+      ddl-auto: update # 작성자 이승범 ddl-auto: create-drop 해놓음
+>>>>>>> a6bd445718b2b43023245ac3693c72355a3c0396
     properties:
       hibernate:
         show_sql: true
@@ -52,6 +56,4 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.Type: trace
-    com.zaxxer.hikari.HikariConfig: debug
-    com.zaxxer.hikari: trace
 
