@@ -9,6 +9,7 @@ import fis.police.fis_police_server.repository.interfaces.ParentRepository;
 import fis.police.fis_police_server.service.interfaces.AppLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class AppLoginServiceImpl implements AppLoginService {
     private final AgentRepository agentRepository;
     private final OfficialsRepository officialsRepository;
     private final ParentRepository parentRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public Long getPrimaryKey(AppLoginRequest request) {
@@ -111,13 +113,17 @@ public class AppLoginServiceImpl implements AppLoginService {
         return loginResponse;
     }
     private LoginResponse authenticateOfficial(List<Officials> officials, LoginResponse loginResponse, String pwd) {
-        if(!officials.get(0).getO_pwd().equals(pwd)) {
+//        if(!officials.get(0).getO_pwd().equals(pwd)) {
+        if(!encoder.matches(pwd, officials.get(0).getO_pwd())) {
             loginFail(loginResponse, "pwdFail");
         } else {
             loginResponse.setSc("success");
             loginResponse.setU_name(officials.get(0).getO_name());
             loginResponse.setU_auth(officials.get(0).getU_auth());
             Center center = officials.get(0).getCenter();
+            loginResponse.setCenter(
+                    new CenterDataResponse(center.getId(), center.getC_name(), center.getC_address(),
+                            center.getC_zipcode(), center.getC_ph(), null));
             List<Aclass> aclassList = center.getAclassList();
             List<ClassDataDTO> classes = aclassList.stream()
                     .map(aclass -> new ClassDataDTO(aclass.getId(), aclass.getName()))

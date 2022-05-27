@@ -6,8 +6,6 @@ spring:
     username: fisadmin
     password: fisserver1207!
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: 20
   # 작성자: 원보라, 작성내용: swagger 라이브러리 오류 방지
   mvc:
     pathmatch:
@@ -40,7 +38,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # 작성자 이승범 ddl-auto: create-drop 해놓음
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -54,6 +52,4 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.Type: trace
-    com.zaxxer.hikari.HikariConfig: debug
-    com.zaxxer.hikari: trace
 
