@@ -141,7 +141,7 @@ public class MailServiceImpl implements MailService {
                 break;
             case "전라남도":
                 file2 += "/22_request_for_cooperation_jeonnam.hwp";
-                fileName = "22년_협조요청_공문_전남.pdf";
+                fileName = "22년_협조요청_공문_전남.hwp";
                 addAttachFile(file2, mimeMessageHelper, fileName);
                 break;
             case "제주특별자치도":
