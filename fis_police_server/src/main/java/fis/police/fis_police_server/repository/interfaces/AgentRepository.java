@@ -1,6 +1,7 @@
 package fis.police.fis_police_server.repository.interfaces;
 
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.dto.AgentByMonthDTO;
 import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface AgentRepository {
     List<Agent> findByNickname(String nickname);
 
     void deletePicture(Long agent_id);
+
+    List<Agent> searchByMonthAndKeyword(String month, String keyword);
 }

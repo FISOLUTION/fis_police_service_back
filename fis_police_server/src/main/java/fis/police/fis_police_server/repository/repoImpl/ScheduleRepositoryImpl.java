@@ -237,4 +237,16 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .setParameter("complete", complete)
                 .executeUpdate();
     }
+
+    @Override
+    public List<Schedule> findByAgentAndMonth(Long agent_id, String month) {
+        LocalDate start = LocalDate.parse(month + "-01");
+        LocalDate end = LocalDate.parse(month + "-31");
+        return em.createQuery("select s from Schedule s " +
+                        "where s.agent.id = :agentId and s.visit_date between :start and :end", Schedule.class)
+                .setParameter("agentId", agent_id)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getResultList();
+    }
 }
