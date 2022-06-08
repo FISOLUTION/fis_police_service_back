@@ -1,9 +1,7 @@
 package fis.police.fis_police_server.service.interfaces;
 
 import fis.police.fis_police_server.domain.Agent;
-import fis.police.fis_police_server.dto.AgentLocation;
-import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentSaveRequest;
+import fis.police.fis_police_server.dto.*;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,4 +34,6 @@ public interface AgentService {
     void deletePicture(Long agent_id);
 
     void saveCurrentLocation(Long agent_id, AgentLocation agentLocation);
+
+    List<AgentByMonthDTO> searchByMonth(String month, String keyword);
 }

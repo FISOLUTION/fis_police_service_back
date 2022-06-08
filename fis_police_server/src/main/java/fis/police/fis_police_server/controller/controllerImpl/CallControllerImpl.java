@@ -56,6 +56,6 @@ public class CallControllerImpl implements CallController {
     @Override
     @GetMapping("/call")
     public List<CallHistoryResponse> searchAllByDate(@RequestParam String date) {
-        return userService.findUserAndCallByDateOptimize(date);
+        return userService.findUserAndCallByDate(date);
     }
 }
