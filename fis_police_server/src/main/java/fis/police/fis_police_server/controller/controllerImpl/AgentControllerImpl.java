@@ -146,6 +146,14 @@ public class AgentControllerImpl implements AgentController {
         }
     }
 
+    @Override
+    @GetMapping("/agent/{month}")
+    public Result searchAgent(@PathVariable("month") String month, @RequestParam("keyword") String keyword, HttpServletRequest request) {
+        log.info("[로그인 id 값 : {}] [url : {}] [요청 : 선택된 달 + 키워드 검색된 현장요원 조회]", request.getSession().getAttribute("loginUser"), "/agent/" + month + "?keyword=" + keyword);
+        List<AgentByMonthDTO> agents = agentService.searchByMonth(month, keyword);
+        return new Result<>(agents);
+    }
+
 
     /*
         날짜 : 2022/03/11 1:47 오후

@@ -2,6 +2,9 @@ package fis.police.fis_police_server.controller.interfaces;
 
 import fis.police.fis_police_server.dto.*;
 import org.json.simple.parser.ParseException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,9 @@ public interface AgentController {
         작성내용 : 현장요원 사진 추가
     */
     void updatePicture(Long Agent_id, MultipartFile multipartFile);
+
+    @GetMapping("/agent/{month}")
+    Result searchAgent(@PathVariable("month") String month, @RequestParam("keyword") String keyword, HttpServletRequest request);
 
     void saveCurrentLocation(AgentLocation request, HttpServletResponse response, HttpServletRequest req);
 }

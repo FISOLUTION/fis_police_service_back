@@ -2,12 +2,12 @@ package fis.police.fis_police_server.service.serviceImpl;
 
 import com.mysema.commons.lang.Pair;
 import fis.police.fis_police_server.domain.Agent;
+import fis.police.fis_police_server.domain.Schedule;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
 import fis.police.fis_police_server.domain.enumType.HasCar;
-import fis.police.fis_police_server.dto.AgentLocation;
-import fis.police.fis_police_server.dto.AgentModifyRequest;
-import fis.police.fis_police_server.dto.AgentSaveRequest;
+import fis.police.fis_police_server.dto.*;
 import fis.police.fis_police_server.repository.interfaces.AgentRepository;
+import fis.police.fis_police_server.repository.interfaces.ScheduleRepository;
 import fis.police.fis_police_server.service.interfaces.AgentService;
 import fis.police.fis_police_server.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
     작성날짜: 2022/01/10 5:41 PM
@@ -38,6 +43,7 @@ public class AgentServiceImpl implements AgentService {
 
     private final AgentRepository agentRepository;
     private final MapService mapService;
+    private final ScheduleRepository scheduleRepository;
 
     @Override
     @Transactional // 현장요원 추가
@@ -175,5 +181,23 @@ public class AgentServiceImpl implements AgentService {
     public void saveCurrentLocation(Long agent_id, AgentLocation agentLocation) {
         Agent agent = agentRepository.findById(agent_id);
         agent.saveCurLocation(agentLocation.getA_cur_lat(), agentLocation.getA_cur_long());
+    }
+
+    @Override
+    public List<AgentByMonthDTO> searchByMonth(String month, String keyword) {
+        List<AgentByMonthDTO> result = new ArrayList<>();
+        List<Agent> agents = agentRepository.searchByMonthAndKeyword(month, keyword);
+        agents.forEach(a -> {
+            List<Schedule> schedules = scheduleRepository.findByAgentAndMonth(a.getId(), month);
+            Map<LocalDate, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(s -> s.getVisit_date()));
+            AgentByMonthDTO dto = new AgentByMonthDTO(a);
+            scheduleMap.forEach((date, sched) -> {
+                List<AgentByMonthDTO.ScheduleDTO> scheduleDTOS = sched.stream().map(s -> new AgentByMonthDTO.ScheduleDTO(s))
+                        .collect(Collectors.toList());
+                dto.getScheduleList().add(new AgentByMonthDTO.ScheduleByDTO(date, scheduleDTOS));
+            });
+            result.add(dto);
+        });
+        return result;
     }
 }
