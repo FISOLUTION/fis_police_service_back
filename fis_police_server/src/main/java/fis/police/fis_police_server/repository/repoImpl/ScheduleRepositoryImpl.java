@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 /*
@@ -236,5 +238,17 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .setParameter("schedule_id", schedule_id)
                 .setParameter("complete", complete)
                 .executeUpdate();
+    }
+
+    @Override
+    public List<Schedule> findByAgentAndMonth(Long agent_id, String month) {
+        LocalDate start = LocalDate.parse(month + "-01");
+        LocalDate end = start.with(TemporalAdjusters.lastDayOfMonth());
+        return em.createQuery("select s from Schedule s " +
+                        "where s.agent.id = :agentId and s.visit_date between :start and :end", Schedule.class)
+                .setParameter("agentId", agent_id)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getResultList();
     }
 }

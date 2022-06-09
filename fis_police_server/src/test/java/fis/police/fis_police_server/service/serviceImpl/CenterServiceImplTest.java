@@ -12,6 +12,10 @@ import fis.police.fis_police_server.service.interfaces.AgentService;
 import fis.police.fis_police_server.service.interfaces.CenterService;
 import fis.police.fis_police_server.service.interfaces.MapService;
 import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
+<<<<<<< HEAD
+=======
+import org.assertj.core.api.Assertions;
+>>>>>>> c5c680617d00f729906e50088ae72dddfdd0459e
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

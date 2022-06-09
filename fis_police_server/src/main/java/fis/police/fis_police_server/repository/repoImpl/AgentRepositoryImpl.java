@@ -3,7 +3,9 @@ package fis.police.fis_police_server.repository.repoImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.AgentStatus;
+import fis.police.fis_police_server.dto.AgentByMonthDTO;
 import fis.police.fis_police_server.dto.CenterSelectDateResponseDTO;
+import fis.police.fis_police_server.dto.QAgentByMonthDTO;
 import fis.police.fis_police_server.dto.QCenterSelectDateResponseDTO;
 import fis.police.fis_police_server.repository.interfaces.AgentRepository;
 import lombok.RequiredArgsConstructor;
@@ -103,6 +105,23 @@ public class AgentRepositoryImpl implements AgentRepository {
         em.createQuery("update Agent a set a.a_picture=null where a.id= :agent_id")
                 .setParameter("agent_id", agent_id)
                 .executeUpdate();
+    }
+
+    /**
+     * 작성자 : 이창윤
+     * 작성내용 : 현장요원 월 + 키워드 검색 결과로 관련 스케줄까지 연관지어 보내줌
+     * @param month
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<Agent> searchByMonthAndKeyword(String month, String keyword) {
+        List<Agent> agents = jpaQueryFactory.select(qAgent)
+                .from(qAgent)
+                .where((qAgent.a_name.contains(keyword)).or
+                        (qAgent.a_code.contains(keyword)))
+                .fetch();
+        return agents;
     }
 
 }
