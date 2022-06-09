@@ -185,18 +185,21 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public List<AgentByMonthDTO> searchByMonth(String month, String keyword) {
         List<AgentByMonthDTO> result = new ArrayList<>();
-        List<Agent> agents = agentRepository.searchByMonthAndKeyword(month, keyword);
-        agents.forEach(a -> {
-            List<Schedule> schedules = scheduleRepository.findByAgentAndMonth(a.getId(), month);
-            Map<LocalDate, List<Schedule>> scheduleMap = schedules.stream().collect(Collectors.groupingBy(s -> s.getVisit_date()));
+
+        Map<Agent, List<Schedule>> scheduleMap = scheduleRepository.findByAgentsAndMonth(keyword, month)
+                .stream().collect(Collectors.groupingBy(Schedule::getAgent));
+
+        scheduleMap.forEach((a, s) -> {
             AgentByMonthDTO dto = new AgentByMonthDTO(a);
-            scheduleMap.forEach((date, sched) -> {
-                List<AgentByMonthDTO.ScheduleDTO> scheduleDTOS = sched.stream().map(s -> new AgentByMonthDTO.ScheduleDTO(s))
-                        .collect(Collectors.toList());
-                dto.getScheduleList().add(new AgentByMonthDTO.ScheduleByDTO(date, scheduleDTOS));
+            Map<LocalDate, List<Schedule>> scheduleDateMap = s.stream().collect(Collectors.groupingBy(Schedule::getVisit_date));
+            scheduleDateMap.forEach((d, sc) -> {
+                List<AgentByMonthDTO.ScheduleDTO> scheduleDTOS = sc.stream().map(AgentByMonthDTO.ScheduleDTO::new).collect(Collectors.toList());
+                AgentByMonthDTO.ScheduleByDTO scheduleByDTO = new AgentByMonthDTO.ScheduleByDTO(d, scheduleDTOS);
+                dto.getScheduleList().add(scheduleByDTO);
             });
             result.add(dto);
         });
+
         return result;
     }
 }
