@@ -49,6 +49,5 @@ public interface ScheduleRepository {
     void updateScheduleComplete(Long schedule_id, Complete complete);
     void updateScheduleWaiting(Long schedule_id, Complete complete);
 
-
-    List<Schedule> findByAgentAndMonth(Long agent_id, String month);
+    List<Schedule> findByAgentsAndMonth(String keyword, String month);
 }
