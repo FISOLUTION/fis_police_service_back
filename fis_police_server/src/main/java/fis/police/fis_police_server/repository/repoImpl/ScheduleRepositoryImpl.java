@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.repository.repoImpl;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import fis.police.fis_police_server.domain.*;
 import fis.police.fis_police_server.domain.enumType.Accept;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 /*
@@ -239,14 +241,18 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<Schedule> findByAgentAndMonth(Long agent_id, String month) {
+    public List<Schedule> findByAgentsAndMonth(String keyword, String month) {
         LocalDate start = LocalDate.parse(month + "-01");
-        LocalDate end = LocalDate.parse(month + "-31");
-        return em.createQuery("select s from Schedule s " +
-                        "where s.agent.id = :agentId and s.visit_date between :start and :end", Schedule.class)
-                .setParameter("agentId", agent_id)
-                .setParameter("start", start)
-                .setParameter("end", end)
-                .getResultList();
+        LocalDate end = start.with(TemporalAdjusters.lastDayOfMonth());
+        return jpaQueryFactory.select(qSchedule)
+                .from(qSchedule)
+                .join(qSchedule.agent, qAgent).fetchJoin()
+                .where(qSchedule.visit_date.between(start, end), agentContains(keyword))
+                .fetch();
+    }
+
+    private BooleanExpression agentContains(String keyword) {
+        return (keyword == null || keyword.equals("")) ? null :
+                qAgent.a_name.contains(keyword).or(qAgent.a_code.contains(keyword));
     }
 }
