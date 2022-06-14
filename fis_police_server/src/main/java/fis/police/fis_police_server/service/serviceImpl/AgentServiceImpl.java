@@ -109,7 +109,7 @@ public class AgentServiceImpl implements AgentService {
     @Override // 전체 현장요원 조회
     public List<Agent> getAgents() {
 //        return agentRepository.findAll();
-        return agentRepository.findAllByNameASC();
+        return agentRepository.findAllByNameDESC();
     }
 
     // 현장요원 코드 중복 검사

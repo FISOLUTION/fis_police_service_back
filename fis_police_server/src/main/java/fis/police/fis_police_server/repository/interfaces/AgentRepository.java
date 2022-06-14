@@ -14,7 +14,7 @@ public interface AgentRepository {
 
     List<Agent> findAll();
 
-    List<Agent> findAllByNameASC();
+    List<Agent> findAllByNameDESC();
 
     void save(Agent agent);
 
