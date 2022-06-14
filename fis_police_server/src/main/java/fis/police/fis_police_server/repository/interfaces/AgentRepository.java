@@ -14,6 +14,8 @@ public interface AgentRepository {
 
     List<Agent> findAll();
 
+    List<Agent> findAllByNameASC();
+
     void save(Agent agent);
 
     List<CenterSelectDateResponseDTO> findNearAgent(Double latitude, Double longitude, Long range);

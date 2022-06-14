@@ -51,6 +51,12 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
+    public List<Agent> findAllByNameASC() {
+        return em.createQuery("select a from Agent a order by a.a_name", Agent.class)
+                .getResultList();
+    }
+
+    @Override
     public void save(Agent agent) {
         em.persist(agent);
     }

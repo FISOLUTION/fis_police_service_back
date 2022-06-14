@@ -101,9 +101,15 @@ public class AgentServiceImpl implements AgentService {
         }
     }
 
+    /**
+     * 작성자 : 이창윤
+     * 내용 : 현장 요원 이름 가나다 순으로 띄워달라는 요청 사항있어서 변경함.
+     * @return
+     */
     @Override // 전체 현장요원 조회
     public List<Agent> getAgents() {
-        return agentRepository.findAll();
+//        return agentRepository.findAll();
+        return agentRepository.findAllByNameASC();
     }
 
     // 현장요원 코드 중복 검사
