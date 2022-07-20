@@ -44,7 +44,7 @@ public class AppLoginServiceImpl implements AppLoginService {
         } else if (request.getRole() == UserAuthority.DIRECTOR || request.getRole() == UserAuthority.TEACHER) {
             List<Officials> officials = officialsRepository.findByNickname(request.getU_nickname());
             if (officials.size() != 0) {
-                if (officials.get(0).getO_pwd().equals(request.getU_pwd())) {
+                if (encoder.matches(request.getU_pwd(), officials.get(0).getO_pwd())) {
                     return officials.get(0).getId();
                 }
             }

@@ -38,6 +38,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Officials getOfficialFromRequest(String authorization) {
         Claims token = parseJwtToken(authorization);
+        System.out.println("token = " + token);
         Long official_id = Long.valueOf(token.get("id").toString());
         return officialsRepository.findById(official_id);
     }
@@ -57,6 +58,7 @@ public class TokenServiceImpl implements TokenService {
         }
         String token = authorizationHeader.substring("Bearer ".length());
         try {
+            System.out.println("\"@@@@@@@@@@@@@@@@@\" = " + "@@@@@@@@@@@@@@@@@");
             return Jwts.parser()
                     .setSigningKey("secret")
                     .parseClaimsJws(token)

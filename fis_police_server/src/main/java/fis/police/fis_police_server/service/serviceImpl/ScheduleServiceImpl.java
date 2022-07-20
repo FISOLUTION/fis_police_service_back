@@ -133,6 +133,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional
     public List<AppScheduleCenterResponse> findByCenter(Long center_id, LocalDate today) throws IOException {
         List<AppScheduleCenterResponse> allList = scheduleRepository.findByCenter(center_id, today);
+        System.out.println("allList =======@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + allList);
 
         for (AppScheduleCenterResponse appScheduleCenterResponse : allList) {
             Long agent_id = appScheduleCenterResponse.getAgent_id();
