@@ -35,9 +35,10 @@ public class Officials extends UserTeacher{
         작성자: 고준영
         작성 내용: 시설관리자 권한 -> OFFICIAL
     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "auth")
-    private UserAuthority u_auth;                  // '권한'
+
+    //@Enumerated(EnumType.STRING)
+    //@Column(name = "auth")
+    //private UserAuthority u_auth;                  // '권한'
 
     // 작성 글
     @OneToMany(mappedBy = "officials")
@@ -86,7 +87,7 @@ public class Officials extends UserTeacher{
     }
 
     public Officials(Long id, String o_name, String o_ph, String o_email, String o_nickname, String o_pwd, Center center, List<Hope> hopeList, UserAuthority u_auth, List<Board> boardList, List<Calendar> calendarList, List<Announce> announceList, Aclass aclass, Accept accept) {
-        super(id, o_name, o_ph, o_email, o_nickname, o_pwd);
+        super(id, o_name, o_ph, o_email, o_nickname, o_pwd, u_auth);
         this.center = center;
         this.hopeList = hopeList;
         this.u_auth = u_auth;
