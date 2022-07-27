@@ -1,5 +1,6 @@
 package fis.police.fis_police_server.domain;
 
+import fis.police.fis_police_server.domain.enumType.UserAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,9 @@ public class UserTeacher {
 
     @Column(length = 100, name = "password")
     protected String o_pwd;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth")
+    protected UserAuthority u_auth;                  // '권한'
+
 }
