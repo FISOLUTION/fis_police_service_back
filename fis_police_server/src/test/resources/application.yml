@@ -4,6 +4,9 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 # 작성자: 고준영, 작성내용: mailjet 의 smtp를 사용하였다. 하루, 한달 전송량의 제한이 있으므로 업데이트 하고 싶으면 유료 결제를 통해 업그레이드 해야함;
   mail:
     host: in-v3.mailjet.com
