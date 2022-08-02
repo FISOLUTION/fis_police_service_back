@@ -12,10 +12,9 @@ import fis.police.fis_police_server.service.interfaces.AgentService;
 import fis.police.fis_police_server.service.interfaces.CenterService;
 import fis.police.fis_police_server.service.interfaces.MapService;
 import fis.police.fis_police_server.error.exceptions.DuplicateSaveException;
-<<<<<<< HEAD
-=======
+
 import org.assertj.core.api.Assertions;
->>>>>>> c5c680617d00f729906e50088ae72dddfdd0459e
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
@@ -102,8 +102,8 @@ class CenterServiceImplTest {
         schedule.mappingUser(user);
 
         Schedule schedule1 = new Schedule(center, "특이사항2");
-        schedule.mappingAgent(agent);
-        schedule.mappingUser(user);
+        schedule1.mappingAgent(agent);
+        schedule1.mappingUser(user);
 
 
         Call call = new Call();
@@ -114,6 +114,7 @@ class CenterServiceImplTest {
         em.persist(user);
         em.persist(agent);
         em.persist(schedule);
+        em.persist(schedule1);
         em.persist(call);
 
         Long centerId = center.getId();
@@ -126,10 +127,14 @@ class CenterServiceImplTest {
         em.clear();
         List<Center> centerList = em.createQuery("select center from Center center join fetch center.scheduleList", Center.class).getResultList();
         System.out.println(centerList.get(0).getScheduleList().toString());
+        Assertions.assertThat(centerList.get(0).getScheduleList().size()).isEqualTo(2);
+
 
         em.clear();
         List<Center> centerList2 = em.createQuery("select center from Center center join fetch center.scheduleList as schedule where schedule.center_etc ='특이사항2'", Center.class).getResultList();
         System.out.println(centerList2.get(0).getScheduleList().toString());
+        Assertions.assertThat(centerList2.get(0).getScheduleList().size()).isEqualTo(1);
+
         //then
 //        Assertions.assertThat(center1.getId()).isEqualTo(center.getId());
 //        Assertions.assertThat(center1.getScheduleList().get(0).getId()).isEqualTo(schedule.getId());
@@ -151,7 +156,10 @@ class CenterServiceImplTest {
         //then
 
         centerService.saveCenter(center1);
-        assertThrows(IndexOutOfBoundsException.class, () -> {
+/*        assertThrows(IndexOutOfBoundsException.class, () -> {
+            centerService.saveCenter(center2);
+        });*/
+        assertThrows(AddressException.class, () -> {
             centerService.saveCenter(center2);
         });
         assertThrows(DuplicateSaveException.class, () -> {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.AddressException;
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolationException;
 
@@ -70,8 +71,10 @@ class AgentServiceImplTest {
         // when
 
         // then
+        /*assertThatThrownBy(() -> agentService.saveAgent(agentSaveRequest))
+                .isInstanceOf(IndexOutOfBoundsException.class);*/
         assertThatThrownBy(() -> agentService.saveAgent(agentSaveRequest))
-                .isInstanceOf(IndexOutOfBoundsException.class);
+                .isInstanceOf(AddressException.class);
     }
 
     @Test
